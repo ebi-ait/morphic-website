@@ -11,7 +11,7 @@ services:
       - solr-precreate 
       - data-catalogue
     healthcheck:
-      test: "curl -f http://localhost:8983/solr"
+      test: "curl -f http://solr:8983/solr"
       interval: 30s
       retries: 3
 volumes:
