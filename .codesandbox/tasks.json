@@ -1,0 +1,32 @@
+{
+  "$schema": "https://codesandbox.io/schemas/tasks.json",
+  "setupTasks": [
+    {
+      "name": "Install Dependencies",
+      "command": "npm install"
+    }
+  ],
+  "tasks": {
+    "ng": {
+      "name": "ng",
+      "command": "npm run ng"
+    },
+    "start": {
+      "name": "start",
+      "command": "npm run start_sandbox",
+      "runAtStart": true
+    },
+    "build": {
+      "name": "build",
+      "command": "npm run build"
+    },
+    "watch": {
+      "name": "watch",
+      "command": "npm run watch"
+    },
+    "test": {
+      "name": "test",
+      "command": "npm run test"
+    }
+  }
+}
