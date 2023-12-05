@@ -1,5 +1,23 @@
 <p>grid works!</p>
 
+
+<!--<div class="facet-wrapper">-->
+<!--  <h3>Filter</h3>-->
+<!--  <div>Readout Assay</div>-->
+<!--  <div>-->
+<!--    <input type="text" value="scRNA-seq">-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div>-->
+  <mat-form-field>
+    <mat-label>Toppings</mat-label>
+    <mat-select [formControl]="toppings" multiple>
+      <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+<!--</div>-->
+
 <div class="example-wrapper">
   <div class="example-header">
     <span>Quick Filter:</span>
