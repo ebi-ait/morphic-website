@@ -14,6 +14,7 @@ import {
 import { MorphicRecord } from "../interfaces";
 import { UrlCellRenderer } from "../url-cell-renderer.component";
 import {AgGridModule} from "ag-grid-angular";
+import {FormControl} from "@angular/forms";
 
 
 @Component({
@@ -24,6 +25,9 @@ import {AgGridModule} from "ag-grid-angular";
   styleUrls: ['./grid.component.scss']
 })
 export class GridComponent {private gridApi!: GridApi<MorphicRecord>;
+
+  toppings = new FormControl('');
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
 
   rowData1 = [
     { mission: "Voyager", company: "NASA", location: "Cape Canaveral", date: "1977-09-05", rocket: "Titan-Centaur ", price: 86580000, successful: true },
