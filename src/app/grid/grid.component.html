@@ -1,32 +1,21 @@
-<p>grid works!</p>
 
+<div class="facet-wrapper">
+  <h3>Filters</h3>
 
-<!--<div class="facet-wrapper">-->
-<!--  <h3>Filter</h3>-->
-<!--  <div>Readout Assay</div>-->
-<!--  <div>-->
-<!--    <input type="text" value="scRNA-seq">-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--<div>-->
   <mat-form-field>
-    <mat-label>Toppings</mat-label>
-    <mat-select [formControl]="toppings" multiple>
-      <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+    <mat-label>Readout Assay</mat-label>
+    <mat-select [formControl]="readoutAssayFilter" multiple (selectionchange)="externalFilterChanged($event)">
+      <mat-option (click)="externalFilterChanged(facet)" *ngFor="let facet of readoutAssayFilterValues"
+                  [value]="facet">{{facet}}</mat-option>
     </mat-select>
   </mat-form-field>
-<!--</div>-->
+</div>
+
 
 <div class="example-wrapper">
   <div class="example-header">
     <span>Quick Filter:</span>
-    <input
-      type="text"
-      id="filter-text-box"
-      placeholder="Filter..."
-      (input)="onFilterTextBoxChanged()"
-    />
+    <input type="text" id="filter-text-box" placeholder="Filter..." (input)="onFilterTextBoxChanged()"/>
   </div>
 
   <ag-grid-angular
@@ -40,10 +29,4 @@
     (gridReady)="onGridReady($event)"
   ></ag-grid-angular>
 
-<!--  <ag-grid-angular-->
-<!--    class="ag-theme-quartz"-->
-<!--    style="height: 500px;"-->
-<!--    [columnDefs]="colDefs1"-->
-<!--    [rowData]="rowData1"-->
-<!--  ></ag-grid-angular>-->
 </div>

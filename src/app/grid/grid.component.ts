@@ -1,50 +1,32 @@
 import { HttpClient } from "@angular/common/http";
-import { Component } from "@angular/core";
+import {Component, OnChanges, OnInit} from "@angular/core";
 import {
   ColDef,
   GridApi,
   GridOptions,
   GridReadyEvent,
   SideBarDef,
+  IRowNode
 } from "ag-grid-community";
-// import "ag-grid-community/styles/ag-grid.css";
-// import "ag-grid-community/styles/ag-theme-alpine.css";
+
 // import "ag-grid-enterprise";
 
 import { MorphicRecord } from "../interfaces";
 import { UrlCellRenderer } from "../url-cell-renderer.component";
-import {AgGridModule} from "ag-grid-angular";
 import {FormControl} from "@angular/forms";
+import {filter} from "rxjs";
 
 
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
-  // standalone: true,
-  // imports: [AgGridModule],
   styleUrls: ['./grid.component.scss']
 })
-export class GridComponent {private gridApi!: GridApi<MorphicRecord>;
+export class GridComponent implements OnInit  {
+  private gridApi!: GridApi<MorphicRecord>;
 
-  toppings = new FormControl('');
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-
-  rowData1 = [
-    { mission: "Voyager", company: "NASA", location: "Cape Canaveral", date: "1977-09-05", rocket: "Titan-Centaur ", price: 86580000, successful: true },
-    { mission: "Apollo 13", company: "NASA", location: "Kennedy Space Center", date: "1970-04-11", rocket: "Saturn V", price: 3750000, successful: false },
-    { mission: "Falcon 9", company: "SpaceX", location: "Cape Canaveral", date: "2015-12-22", rocket: "Falcon 9", price: 9750000, successful: true }
-  ];
-
-  // Column Definitions: Defines & controls grid columns.
-  colDefs1: ColDef[] = [
-    { field: "mission" },
-    { field: "company" },
-    { field: "location" },
-    { field: "date" },
-    { field: "price" },
-    { field: "successful" },
-    { field: "rocket" }
-  ];
+  readoutAssayFilter = new FormControl('');
+  readoutAssayFilterValues: Set<String> = new Set();
 
   public columnDefs: ColDef[] = [
     { field: "id" },
@@ -101,26 +83,62 @@ export class GridComponent {private gridApi!: GridApi<MorphicRecord>;
     // Define your grid options here
     // enableColResize: true, //isuru commented
     // enableColumnsToolPanel: true, //isuru commented
+    // onRowDataUpdated: this.generateFacets
+    doesExternalFilterPass: this.doesExternalFilterPass.bind(this),
+    isExternalFilterPresent: this.isExternalFilterPresent.bind(this)
   };
+  public rowData!: MorphicRecord[];
 
-  onGridReady(params: GridReadyEvent<MorphicRecord>) {
-    this.gridApi = params.api;
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
     this.http.get<MorphicRecord[]>("assets/test-data.json").subscribe(
       (data) => {
         this.rowData = data;
+        this.generateFacets(data);
       },
       (error) => {
         console.error("Error fetching data:", error);
       },
     );
   }
-  public rowData!: MorphicRecord[];
 
-  constructor(private http: HttpClient) {}
+  onGridReady(params: GridReadyEvent<MorphicRecord>) {
+    this.gridApi = params.api;
+  }
 
   onFilterTextBoxChanged() {
     this.gridApi.setQuickFilter(
       (document.getElementById("filter-text-box") as HTMLInputElement).value,
     );
   }
+
+  generateFacets(data: any[]) {
+    data.forEach(node => {
+      this.readoutAssayFilterValues.add(node.readout_assay);
+    })
+  }
+
+  isExternalFilterPresent(): boolean {
+    return true;
+  }
+
+  doesExternalFilterPass(node: IRowNode<MorphicRecord>): boolean {
+    if (node.data) {
+      let filterValues = this.readoutAssayFilter.value;
+      if (filterValues) {
+        return filterValues.length == 0 || filterValues.includes(node.data.readout_assay);
+      }
+      return true;
+    }
+    return true;
+  }
+
+  externalFilterChanged(value: any) {
+    console.log("Filter changes: " + value);
+    let filterValues = this.readoutAssayFilter.value;
+    console.log(filterValues);
+    this.gridApi.onFilterChanged();
+  }
+
 }
