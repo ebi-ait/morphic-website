@@ -1,0 +1,7 @@
+<mat-form-field>
+  <mat-label>Readout Assay</mat-label>
+  <mat-select [formControl]="facetControl" multiple>
+    <mat-option (click)="applyFilter(facet)" *ngFor="let facet of facetValues"
+                [value]="facet">{{facet}}</mat-option>
+  </mat-select>
+</mat-form-field>
