@@ -1,31 +1,31 @@
-
-<div class="facet-wrapper">
-  <h3>Filters</h3>
-
-  <mat-form-field>
-    <mat-label>Readout Assay</mat-label>
-    <mat-select [formControl]="readoutAssayFilter" multiple (selectionchange)="externalFilterChanged($event)">
-      <mat-option (click)="externalFilterChanged(facet)" *ngFor="let facet of readoutAssayFilterValues"
-                  [value]="facet">{{facet}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
-
-<div class="example-wrapper">
-  <div class="example-header">
-    <span>Quick Filter:</span>
-    <input type="text" id="filter-text-box" placeholder="Filter..." (input)="onFilterTextBoxChanged()"/>
+<div class="grid-component">
+  <div class="facet-wrapper">
+    <h3>Filters</h3>
+    <mat-form-field>
+      <mat-label>Readout Assay</mat-label>
+      <mat-select [formControl]="readoutAssayFilter" multiple (selectionchange)="externalFilterChanged($event)">
+        <mat-option (click)="externalFilterChanged(facet)" *ngFor="let facet of readoutAssayFilterValues"
+                    [value]="facet">{{facet}}</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 
-  <ag-grid-angular
-    style="width: 100%; height: 100vh;"
-    class="ag-theme-alpine"
-    [columnDefs]="columnDefs"
-    [defaultColDef]="defaultColDef"
-    [rowData]="rowData"
-    [gridOptions]="gridOptions"
-    [pagination]="true"
-    (gridReady)="onGridReady($event)"
-  ></ag-grid-angular>
+  <div class="grid-wrapper">
+    <div class="grid-header">
+      <span>Quick Filter:</span>
+      <input type="text" id="filter-text-box" placeholder="Filter..." (input)="onFilterTextBoxChanged()"/>
+    </div>
 
+    <ag-grid-angular
+      style="width: 100%; height: 100vh;"
+      class="ag-theme-alpine"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [rowData]="rowData"
+      [gridOptions]="gridOptions"
+      [pagination]="true"
+      (gridReady)="onGridReady($event)"
+    ></ag-grid-angular>
+
+  </div>
 </div>

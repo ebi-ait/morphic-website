@@ -1,20 +1,27 @@
+.grid-component {
+  overflow: hidden;
+}
 
-.example-wrapper {
+.grid-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  width: calc(100% - 325px);
+  height: calc(100vh - 120px);
+  float: left;
+}
+
+.facet-wrapper {
+  float: left;
+  width: 300px;
+  height: calc(100vh - 138px);
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid black;
+  background: #f5f6f7;
+  border-radius: 5px;
 }
 
 #myGrid {
   flex: 1 1 0px;
   width: 100%;
-}
-
-.facet-wrapper {
-  width: 300px;
-  margin: 5px;
-  padding: 5px;
-  border: 1px solid black;
-  background: azure;
-  border-radius: 5px;
 }
