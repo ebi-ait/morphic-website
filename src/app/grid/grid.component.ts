@@ -1,20 +1,10 @@
-import { HttpClient } from "@angular/common/http";
-import {Component, OnChanges, OnInit} from "@angular/core";
-import {
-  ColDef,
-  GridApi,
-  GridOptions,
-  GridReadyEvent,
-  SideBarDef,
-  IRowNode
-} from "ag-grid-community";
+import {HttpClient} from "@angular/common/http";
+import {Component, OnInit} from "@angular/core";
+import {ColDef, GridApi, GridOptions, GridReadyEvent, IRowNode} from "ag-grid-community";
 
-// import "ag-grid-enterprise";
-
-import { MorphicRecord } from "../interfaces";
-import { UrlCellRenderer } from "../url-cell-renderer.component";
-import {FormControl} from "@angular/forms";
-import {filter} from "rxjs";
+import {MorphicRecord} from "../interfaces";
+import {Facet, FacetField, Filter} from "../types/facet";
+import {GridUtilsService} from "../services/grid-utils.service";
 
 
 @Component({
@@ -22,74 +12,23 @@ import {filter} from "rxjs";
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss']
 })
-export class GridComponent implements OnInit  {
+export class GridComponent implements OnInit {
+  public columnDefs: ColDef[] = GridUtilsService.COLUMN_DEFINITIONS;
+  public defaultColDef: ColDef = GridUtilsService.DEFAULT_COLUMN_DEFINITIONS;
+  private facetsFields: string[] = GridUtilsService.FACET_FIELDS;
+
   private gridApi!: GridApi<MorphicRecord>;
+  public rowData!: MorphicRecord[];
+  private filters: Map<string, Filter> = new Map<string, Filter>();
+  facets: Facet[] = [];
 
-  readoutAssayFilter = new FormControl('');
-  readoutAssayFilterValues: Set<String> = new Set();
-
-  public columnDefs: ColDef[] = [
-    { field: "id" },
-    { field: "dpc", hide: false },
-    { field: "short_study_label" },
-    { field: "upload_status" },
-    { field: "study_title", hide: false },
-    { field: "cell_line", hide: false },
-    { field: "readout_assay", hide: false },
-    { field: "perturbation_type", hide: false },
-    { field: "target_genes", hide: false },
-    { field: "model_system" },
-    { field: "pooled_perturbation" },
-    { field: "longitudinal_study" },
-    { field: "duo_code_for_data_sharing_restriction" },
-    { field: "number_of_datasets" },
-    { field: "expected_release", cellDataType: "dateString", hide: false },
-    {
-      field: "available_datasets",
-      hide: false,
-      cellRenderer: UrlCellRenderer,
-    },
-    { field: "publication" },
-    { field: "data_upload_contact_name" },
-    { field: "data_upload_contact_email_address" },
-    { field: "contact" },
-    { field: "donor_ancestry" },
-    { field: "gender" },
-    { field: "protocols_io_link_cell_culture" },
-    { field: "protocols_io_link_for_differentiation_and_maintenance" },
-    { field: "general_comments" },
-    { field: "sharing_mechanism_with_DRACC" },
-    { field: "comments" },
-  ];
-  public defaultColDef: ColDef = {
-    flex: 1,
-    minWidth: 100,
-    sortable: true,
-    filter: true,
-    floatingFilter: false,
-    resizable: true,
-    menuTabs: ["filterMenuTab", "generalMenuTab", "columnsMenuTab"],
-    initialHide: true,
-  };
-  public autoGroupColumnDef: ColDef = {
-    minWidth: 200,
-  };
-  public groupDefaultExpanded = 0;
-  public sideBar: SideBarDef | string | string[] | boolean | null = {
-    toolPanels: ["filters", "columns"],
-  };
-
-  public gridOptions: GridOptions<any> = {
-    // Define your grid options here
-    // enableColResize: true, //isuru commented
-    // enableColumnsToolPanel: true, //isuru commented
-    // onRowDataUpdated: this.generateFacets
+  public gridOptions: GridOptions = {
     doesExternalFilterPass: this.doesExternalFilterPass.bind(this),
     isExternalFilterPresent: this.isExternalFilterPresent.bind(this)
   };
-  public rowData!: MorphicRecord[];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   ngOnInit(): void {
     this.http.get<MorphicRecord[]>("assets/test-data.json").subscribe(
@@ -98,7 +37,7 @@ export class GridComponent implements OnInit  {
         this.generateFacets(data);
       },
       (error) => {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching data: ", error);
       },
     );
   }
@@ -114,9 +53,28 @@ export class GridComponent implements OnInit  {
   }
 
   generateFacets(data: any[]) {
-    data.forEach(node => {
-      this.readoutAssayFilterValues.add(node.readout_assay);
-    })
+    this.facetsFields.forEach(field => {
+      let facetValueMap = new Map<string, number>();
+      data.forEach(node => {
+        let value = node[field] as string;
+        if (facetValueMap.has(value)) {
+          facetValueMap.set(value, facetValueMap.get(value)! + 1);
+        } else {
+          facetValueMap.set(value, 1);
+        }
+      });
+      let facetFields: FacetField[] = [];
+      facetValueMap.forEach((value: number, key: string) => {
+        facetFields.push({
+          "value": key,
+          "count": value
+        })
+      });
+      this.facets.push({
+        "title": field,
+        "values": facetFields
+      })
+    });
   }
 
   isExternalFilterPresent(): boolean {
@@ -124,20 +82,25 @@ export class GridComponent implements OnInit  {
   }
 
   doesExternalFilterPass(node: IRowNode<MorphicRecord>): boolean {
+    let filterPass = true;
     if (node.data) {
-      let filterValues = this.readoutAssayFilter.value;
-      if (filterValues) {
-        return filterValues.length == 0 || filterValues.includes(node.data.readout_assay);
-      }
-      return true;
+      this.filters.forEach((filter, filterTitle) => {
+        let record = node.data! as any;
+        let rowValue = record[filterTitle] as string;
+        if (!filter.values.includes(rowValue)) {
+          filterPass = false;
+        }
+      });
     }
-    return true;
+    return filterPass;
   }
 
-  externalFilterChanged(value: any) {
-    console.log("Filter changes: " + value);
-    let filterValues = this.readoutAssayFilter.value;
-    console.log(filterValues);
+  applyFilters(filter: Filter) {
+    if (filter.values.length == 0) {
+      this.filters.delete(filter.title);
+    } else {
+      this.filters.set(filter.title, filter);
+    }
     this.gridApi.onFilterChanged();
   }
 

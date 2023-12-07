@@ -11,6 +11,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {ReactiveFormsModule} from "@angular/forms";
+import {HeaderComponent} from "./header/header.component";
+import {FooterComponent} from "./footer/footer.component";
+import {FacetComponent} from "./shared/facet/facet.component";
 
 @NgModule({
   declarations: [
@@ -18,16 +21,19 @@ import {ReactiveFormsModule} from "@angular/forms";
     GridComponent,
     UrlCellRenderer
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    AgGridModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    MatSelectModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        AgGridModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        HeaderComponent,
+        FooterComponent,
+        FacetComponent
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

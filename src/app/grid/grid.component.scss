@@ -10,6 +10,10 @@
   float: left;
 }
 
+.grid-header {
+  margin: 15px 8px;
+}
+
 .facet-wrapper {
   float: left;
   width: 300px;
@@ -19,9 +23,4 @@
   border: 1px solid black;
   background: #f5f6f7;
   border-radius: 5px;
-}
-
-#myGrid {
-  flex: 1 1 0px;
-  width: 100%;
 }
