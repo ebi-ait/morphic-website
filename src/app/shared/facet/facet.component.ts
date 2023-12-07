@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {Facet, Filter} from "../../types/facet";
+import {StringUtilsService} from "../../services/string-utils.service";
 
 @Component({
   selector: 'app-facet',
@@ -13,19 +15,25 @@ import {FormControl, ReactiveFormsModule} from "@angular/forms";
     MatOptionModule,
     MatSelectModule,
     NgForOf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ],
   templateUrl: './facet.component.html',
   styleUrl: './facet.component.scss'
 })
 export class FacetComponent {
   facetControl = new FormControl('');
-  facetValues: Set<String> = new Set();
+  @Input() facet: Facet;
+  @Output() filterChangedEvent = new EventEmitter<Filter>();
 
-  applyFilter(value: any) {
-    console.log("Filter changes: " + value);
-    let filterValues = this.facetControl.value;
-    console.log(filterValues);
-    this.gridApi.onFilterChanged();
+  filterChanged(value: any) {
+    let filterValues = this.facetControl.value! as unknown as string[];
+    let filter = {
+      "title": this.facet.title,
+      "values": filterValues
+    }
+    this.filterChangedEvent.emit(filter);
   }
+
+  protected readonly StringUtilsService = StringUtilsService;
 }
