@@ -21,12 +21,8 @@ export class GridUtilsService {
     {field: "longitudinal_study"},
     {field: "duo_code_for_data_sharing_restriction"},
     {field: "number_of_datasets"},
-    {field: "expected_release", cellDataType: "dateString", hide: false},
-    {
-      field: "available_datasets",
-      hide: false,
-      cellRenderer: UrlCellRenderer,
-    },
+    {field: "expected_release", hide: false, cellDataType: "dateString"},
+    {field: "available_datasets", hide: false, cellRenderer: UrlCellRenderer},
     {field: "publication"},
     {field: "data_upload_contact_name"},
     {field: "data_upload_contact_email_address"},
@@ -49,7 +45,7 @@ export class GridUtilsService {
     menuTabs: ["filterMenuTab", "generalMenuTab", "columnsMenuTab"],
     initialHide: true,
   };
-  public static readonly FACET_FIELDS: string[] = ["readout_assay", "perturbation_type"];
+  public static readonly FACET_FIELDS: string[] = ["readout_assay", "perturbation_type", "cell_line"];
 
   constructor() {
   }
