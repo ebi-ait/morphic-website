@@ -26,6 +26,7 @@
     [rowData]="rowData"
     [gridOptions]="gridOptions"
     [pagination]="true"
+    (click)="onRowClick()"
     (gridReady)="onGridReady($event)"
   ></ag-grid-angular>
 

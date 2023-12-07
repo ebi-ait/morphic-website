@@ -11,12 +11,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {ReactiveFormsModule} from "@angular/forms";
+import {QuickviewComponent} from "./grid/quickview.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     GridComponent,
-    UrlCellRenderer
+    UrlCellRenderer,
+    QuickviewComponent
   ],
   imports: [
     BrowserModule,

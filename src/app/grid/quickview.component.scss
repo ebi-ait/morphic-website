@@ -1,0 +1,20 @@
+
+.example-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#myGrid {
+  flex: 1 1 0px;
+  width: 100%;
+}
+
+.quickview-wrapper {
+  width: 300px;
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid black;
+  background: azure;
+  border-radius: 5px;
+}

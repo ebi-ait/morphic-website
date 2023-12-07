@@ -15,6 +15,7 @@ import { MorphicRecord } from "../interfaces";
 import { UrlCellRenderer } from "../url-cell-renderer.component";
 import {FormControl} from "@angular/forms";
 import {filter} from "rxjs";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -79,6 +80,12 @@ export class GridComponent implements OnInit  {
     toolPanels: ["filters", "columns"],
   };
 
+  onRowClick() {
+    console.log("Row clicked" );
+    this.router.navigate(['/quickview-component']);
+    //window.open("/quickview-component");
+  }
+
   public gridOptions: GridOptions<any> = {
     // Define your grid options here
     // enableColResize: true, //isuru commented
@@ -89,7 +96,7 @@ export class GridComponent implements OnInit  {
   };
   public rowData!: MorphicRecord[];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private router: Router) {}
 
   ngOnInit(): void {
     this.http.get<MorphicRecord[]>("assets/test-data.json").subscribe(
