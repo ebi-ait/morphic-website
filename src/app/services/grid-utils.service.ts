@@ -35,6 +35,7 @@ export class GridUtilsService {
     {field: "sharing_mechanism_with_DRACC"},
     {field: "comments"},
   ];
+
   public static readonly DEFAULT_COLUMN_DEFINITIONS: ColDef = {
     flex: 1,
     minWidth: 100,
@@ -45,6 +46,7 @@ export class GridUtilsService {
     menuTabs: ["filterMenuTab", "generalMenuTab", "columnsMenuTab"],
     initialHide: true,
   };
+
   public static readonly FACET_FIELDS: string[] = ["readout_assay", "perturbation_type", "cell_line"];
 
   constructor() {
