@@ -1,10 +1,9 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, OnInit} from "@angular/core";
 import {ColDef, GridApi, GridOptions, GridReadyEvent, IRowNode} from "ag-grid-community";
-
-import {MorphicRecord} from "../interfaces";
 import {Facet, FacetField, Filter} from "../types/facet";
 import {GridUtilsService} from "../services/grid-utils.service";
+import {GridRecord} from "../types/GridRecord";
 
 
 @Component({
@@ -17,8 +16,8 @@ export class GridComponent implements OnInit {
   public defaultColDef: ColDef = GridUtilsService.DEFAULT_COLUMN_DEFINITIONS;
   private facetsFields: string[] = GridUtilsService.FACET_FIELDS;
 
-  private gridApi!: GridApi<MorphicRecord>;
-  public rowData!: MorphicRecord[];
+  private gridApi!: GridApi<GridRecord>;
+  public rowData!: GridRecord[];
   private filters: Map<string, Filter> = new Map<string, Filter>();
   facets: Facet[] = [];
 
@@ -31,7 +30,7 @@ export class GridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get<MorphicRecord[]>("assets/data.json").subscribe(
+    this.http.get<GridRecord[]>("assets/data.json").subscribe(
       (data) => {
         this.rowData = data;
         this.generateFacets(data);
@@ -42,7 +41,7 @@ export class GridComponent implements OnInit {
     );
   }
 
-  onGridReady(params: GridReadyEvent<MorphicRecord>) {
+  onGridReady(params: GridReadyEvent<GridRecord>) {
     this.gridApi = params.api;
   }
 
@@ -81,7 +80,7 @@ export class GridComponent implements OnInit {
     return true;
   }
 
-  doesExternalFilterPass(node: IRowNode<MorphicRecord>): boolean {
+  doesExternalFilterPass(node: IRowNode<GridRecord>): boolean {
     let filterPass = true;
     if (node.data) {
       this.filters.forEach((filter, filterTitle) => {
