@@ -31,7 +31,7 @@ export class GridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get<MorphicRecord[]>("assets/test-data.json").subscribe(
+    this.http.get<MorphicRecord[]>("assets/data.json").subscribe(
       (data) => {
         this.rowData = data;
         this.generateFacets(data);
