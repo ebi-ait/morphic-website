@@ -2,25 +2,45 @@
   overflow: hidden;
 }
 
-.grid-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: calc(100% - 325px);
-  height: calc(100vh - 120px);
-  float: left;
-}
-
-.grid-header {
-  margin: 15px 8px;
-}
-
 .facet-wrapper {
   float: left;
-  width: 300px;
+  width: 200px;
   height: calc(100vh - 138px);
   margin: 5px;
   padding: 5px;
   border: 1px solid black;
   background: #f5f6f7;
   border-radius: 5px;
+}
+
+.grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 225px);
+  height: calc(100vh - 120px);
+  float: left;
+}
+
+.grid-header {
+  margin: 15px 0;
+}
+
+.grid-header-title {
+  float: left;
+  width: 130px;
+}
+
+.grid-header-input {
+  float: left;
+  width: calc(50% - 130px);
+}
+
+.grid-header-options {
+  float: right;
+  width: 40%;
+}
+
+.grid-header-options-ctl {
+  float: right;
+  margin-left: 10px;
 }
