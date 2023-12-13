@@ -8,8 +8,12 @@
 
   <div class="grid-wrapper">
     <div class="grid-header">
-      <span>Search Datasets: </span>
-      <input type="text" id="filter-text-box" placeholder="search by genes, cell lines, etc.." (input)="onFilterTextBoxChanged()"/>
+      <div class="grid-header-title">Search Datasets: </div>
+      <input type="text" id="filter-text-box" class="grid-header-input" placeholder="search by genes, cell lines, etc.." (input)="onFilterTextBoxChanged()"/>
+      <div class="grid-header-options">
+        <button class="grid-header-options-ctl" disabled>Columns</button>
+        <button class="grid-header-options-ctl" disabled>Download</button>
+      </div>
     </div>
 
     <ag-grid-angular
