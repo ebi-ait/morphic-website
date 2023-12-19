@@ -12,3 +12,8 @@ export interface Filter {
   title: string;
   values: string[];
 }
+
+export interface FacetDef {
+  field: string;
+  processor?: string;
+}
