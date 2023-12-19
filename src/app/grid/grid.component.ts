@@ -1,7 +1,7 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, OnInit} from "@angular/core";
 import {ColDef, GridApi, GridOptions, GridReadyEvent, IRowNode} from "ag-grid-community";
-import {Facet, FacetField, Filter} from "../types/facet";
+import {Facet, FacetDef, FacetField, Filter} from "../types/facet";
 import {GridUtilsService} from "../services/grid-utils.service";
 import {GridRecord} from "../types/GridRecord";
 
@@ -14,7 +14,7 @@ import {GridRecord} from "../types/GridRecord";
 export class GridComponent implements OnInit {
   public columnDefs: ColDef[] = GridUtilsService.COLUMN_DEFINITIONS;
   public defaultColDef: ColDef = GridUtilsService.DEFAULT_COLUMN_DEFINITIONS;
-  private facetsFields: string[] = GridUtilsService.FACET_FIELDS;
+  private facetDefs: FacetDef[] = GridUtilsService.FACET_DEFINITIONS;
 
   private gridApi!: GridApi<GridRecord>;
   public rowData!: GridRecord[];
@@ -52,14 +52,15 @@ export class GridComponent implements OnInit {
   }
 
   generateFacets(data: any[]) {
-    this.facetsFields.forEach(field => {
+    this.facetDefs.forEach(field => {
       let facetValueMap = new Map<string, number>();
       data.forEach(node => {
-        let value = node[field] as string;
-        if (facetValueMap.has(value)) {
-          facetValueMap.set(value, facetValueMap.get(value)! + 1);
+        let value = node[field.field] as string;
+        if (field.processor && field.processor === 'csv') {
+          let values = value.split(",");
+          this.addValuesToMap(facetValueMap, values);
         } else {
-          facetValueMap.set(value, 1);
+          this.addValueToMap(facetValueMap, value);
         }
       });
       let facetFields: FacetField[] = [];
@@ -70,10 +71,24 @@ export class GridComponent implements OnInit {
         })
       });
       this.facets.push({
-        "title": field,
+        "title": field.field,
         "values": facetFields
       })
     });
+  }
+
+  addValueToMap(facetValueMap: Map<string, number>, value: string) {
+    if (facetValueMap.has(value)) {
+      facetValueMap.set(value, facetValueMap.get(value)! + 1);
+    } else {
+      facetValueMap.set(value, 1);
+    }
+  }
+
+  addValuesToMap(facetValueMap: Map<string, number>, values: string[]) {
+    for (let value of values) {
+     this.addValueToMap(facetValueMap, value.trim());
+    }
   }
 
   isExternalFilterPresent(): boolean {
@@ -86,12 +101,28 @@ export class GridComponent implements OnInit {
       this.filters.forEach((filter, filterTitle) => {
         let record = node.data! as any;
         let rowValue = record[filterTitle] as string;
-        if (!filter.values.includes(rowValue)) {
-          filterPass = false;
+        let facet = this.getFacetDefByTitle(filterTitle);
+        if (facet && facet.processor && facet.processor === 'csv') {
+          if (!rowValue.split(',').some(r => filter.values.includes(r.trim()))) {
+            filterPass = false;
+          }
+        } else {
+          if (!filter.values.includes(rowValue)) {
+            filterPass = false;
+          }
         }
       });
     }
     return filterPass;
+  }
+
+  getFacetDefByTitle(filterTitle: string): FacetDef | null {
+    for (let facet of this.facetDefs) {
+      if (facet.field === filterTitle) {
+        return facet
+      }
+    }
+    return null
   }
 
   applyFilters(filter: Filter) {
