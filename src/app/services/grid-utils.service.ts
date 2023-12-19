@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ColDef} from "ag-grid-community";
 import {UrlCellRenderer} from "../url-cell-renderer.component";
+import {FacetDef} from "../types/facet";
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +49,11 @@ export class GridUtilsService {
     {field: "comments"},
   ];
 
-  public static readonly FACET_FIELDS: string[] = ["cell_line", "readout_assay", "perturbation_type"];
+  public static readonly FACET_DEFINITIONS: FacetDef[] = [
+    {field: "cell_line", processor: "csv"},
+    {field: "readout_assay"},
+    {field: "perturbation_type"}
+  ]
 
   constructor() {
   }
