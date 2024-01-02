@@ -87,7 +87,7 @@ export class GridComponent implements OnInit {
 
   addValuesToMap(facetValueMap: Map<string, number>, values: string[]) {
     for (let value of values) {
-     this.addValueToMap(facetValueMap, value.trim());
+      this.addValueToMap(facetValueMap, value.trim());
     }
   }
 
