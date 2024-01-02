@@ -1,0 +1,8 @@
+name: Issue
+description: an issue with the data catalogue
+title: issue title
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe your issue
