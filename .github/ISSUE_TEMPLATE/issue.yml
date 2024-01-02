@@ -1,7 +1,7 @@
 name: Issue
 description: an issue with the data catalogue
 title: issue title
-labels: ["FAIRification", "data-catalogue"]
+labels: ["FAIRification", "Data Catalogue"]
 body:
   - type: textarea
     id: what-happened
