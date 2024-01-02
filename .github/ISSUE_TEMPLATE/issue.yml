@@ -12,8 +12,9 @@ body:
       value: "A bug happened!"
     validations:
       required: true
- - id: references
-   type: textarea
+ - type: textarea
+   id: references
    attributes:
      label: References
      description: Name of reporter if external to the team, link to slack
+     placeholder:
