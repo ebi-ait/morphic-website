@@ -1,5 +1,6 @@
 name: Issue
 description: an issue with the data catalogue
+labels: ["FAIRification", "Data Catalogue"]
 title: issue title
 body:
   - type: textarea
@@ -11,9 +12,3 @@ body:
       value: "A bug happened!"
     validations:
       required: true
- - type: textarea
-   id: references
-   attributes:
-     label: References
-     description: Name of reporter if external to the team, link to slack
-     placeholder:
