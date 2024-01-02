@@ -3,10 +3,6 @@ description: an issue with the data catalogue
 title: issue title
 labels: ["FAIRification", "data-catalogue"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Describe your issue
   - type: textarea
     id: what-happened
     attributes:
