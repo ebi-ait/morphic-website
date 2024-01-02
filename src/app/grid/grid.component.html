@@ -1,31 +1,41 @@
-<div class="grid-component">
-  <div class="facet-wrapper">
-    <h3>Filters</h3>
-    <div *ngFor="let facet of facets">
-      <app-facet [facet]="facet" (filterChangedEvent)="applyFilters($event)"></app-facet>
-    </div>
-  </div>
+<div class="catalog-container">
+  <mat-toolbar color="primary" class="catalog-toolbar">
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Search Datasets</span>
+    <input type="text" id="filter-text-box" class="grid-header-input" placeholder="search by genes, cell lines, etc.."
+           (input)="onFilterTextBoxChanged()"/>
+    <span class="grid-header-spacer"></span>
+    <button mat-icon-button class="catalog-toolbar-icon favorite-icon" aria-label="icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="catalog-toolbar-icon" aria-label="icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
 
-  <div class="grid-wrapper">
-    <div class="grid-header">
-      <div class="grid-header-title">Search Datasets: </div>
-      <input type="text" id="filter-text-box" class="grid-header-input" placeholder="search by genes, cell lines, etc.." (input)="onFilterTextBoxChanged()"/>
-      <div class="grid-header-options">
-        <button class="grid-header-options-ctl" disabled>Columns</button>
-        <button class="grid-header-options-ctl" disabled>Download</button>
+  <mat-sidenav-container class="catalog-sidenav-container">
+    <mat-sidenav #snav [mode]="'side'">
+      <div class="facet-wrapper">
+        <h3>Filters</h3>
+        <div *ngFor="let facet of facets">
+          <app-facet [facet]="facet" (filterChangedEvent)="applyFilters($event)"></app-facet>
+        </div>
       </div>
-    </div>
+    </mat-sidenav>
 
-    <ag-grid-angular
-      style="width: 100%; height: 100vh;"
-      class="ag-theme-alpine"
-      [columnDefs]="columnDefs"
-      [defaultColDef]="defaultColDef"
-      [rowData]="rowData"
-      [gridOptions]="gridOptions"
-      [pagination]="true"
-      (gridReady)="onGridReady($event)"
-    ></ag-grid-angular>
-
-  </div>
+    <mat-sidenav-content>
+      <ag-grid-angular
+        style="width: 100%; height: 100vh;"
+        class="ag-theme-alpine"
+        [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef"
+        [rowData]="rowData"
+        [gridOptions]="gridOptions"
+        [pagination]="true"
+        (gridReady)="onGridReady($event)"
+      ></ag-grid-angular>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
