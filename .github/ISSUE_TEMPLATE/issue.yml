@@ -1,6 +1,7 @@
 name: Issue
 description: an issue with the data catalogue
 title: issue title
+labels: ["FAIRification", "data-catalogue"]
 body:
   - type: markdown
     attributes:
