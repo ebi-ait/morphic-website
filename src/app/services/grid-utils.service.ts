@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ColDef} from "ag-grid-community";
 import {UrlCellRenderer} from "../url-cell-renderer.component";
 import {FacetDef} from "../types/facet";
+import {MorphicRecord} from "../interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,14 @@ export class GridUtilsService {
 
   public static readonly COLUMN_DEFINITIONS: ColDef[] = [
     {field: "id"},
+    { field: "", hide: false ,   valueFormatter: () => {
+        return '+'
+      }, onCellClicked: params =>  {
+        console.log("Cell clicked" +params.data.dpc);
+        // this.router.navigate(['/quickview-component']);
+        // this.gridApi.
+        window.open("/detail?id="+params.data.id,  '_blank');
+}},
     {field: "study_title", hide: false, headerName: "Study Title", flex: 2},
     {field: "target_genes", hide: false, headerName: "Target Genes"},
     {field: "cell_line", hide: false, headerName: "Cell Line"},
