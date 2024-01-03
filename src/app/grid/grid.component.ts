@@ -78,10 +78,13 @@ export class GridComponent implements OnInit {
   }
 
   addValueToMap(facetValueMap: Map<string, number>, value: string) {
-    if (facetValueMap.has(value)) {
-      facetValueMap.set(value, facetValueMap.get(value)! + 1);
-    } else {
-      facetValueMap.set(value, 1);
+    value = value.trim();
+    if (value) {
+      if (facetValueMap.has(value)) {
+        facetValueMap.set(value, facetValueMap.get(value)! + 1);
+      } else {
+        facetValueMap.set(value, 1);
+      }
     }
   }
 
