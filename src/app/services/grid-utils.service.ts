@@ -50,6 +50,7 @@ export class GridUtilsService {
   ];
 
   public static readonly FACET_DEFINITIONS: FacetDef[] = [
+    {field: "target_genes", processor: "csv"},
     {field: "cell_line", processor: "csv"},
     {field: "readout_assay"},
     {field: "perturbation_type"}
