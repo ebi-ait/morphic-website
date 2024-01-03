@@ -19,12 +19,14 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {DetailComponent} from "./detail/detail.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     GridComponent,
-    UrlCellRenderer
+    UrlCellRenderer,
+    DetailComponent
   ],
   imports: [
     BrowserModule,
