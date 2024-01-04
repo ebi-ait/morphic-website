@@ -70,6 +70,7 @@ export class GridComponent implements OnInit {
           "count": value
         })
       });
+      facetFields.sort((a, b) => a.value.localeCompare(b.value, undefined, {sensitivity: 'base'}))
       this.facets.push({
         "title": field.field,
         "values": facetFields
