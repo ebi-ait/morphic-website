@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ColDef} from "ag-grid-community";
 import {UrlCellRenderer} from "../url-cell-renderer.component";
 import {FacetDef} from "../types/facet";
+import {StatusColumnComponent} from "../extensions/status-column/status-column.component";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,8 @@ export class GridUtilsService {
     initialHide: true,
   };
 
+  // https://www.ag-grid.com/javascript-data-grid/value-getters/#example-getters-and-formatters
+  // valueGetter for aggregating columns
   public static readonly COLUMN_DEFINITIONS: ColDef[] = [
     {field: "id"},
     {field: "study_title", hide: false, headerName: "Study Title", flex: 2},
@@ -29,7 +32,7 @@ export class GridUtilsService {
     {field: "upload_status", hide: true, headerName: "Status"},
     {field: "dpc", hide: false, headerName: "Centre"},
     {field: "expected_release", hide: true, headerName: "Expected Release", cellDataType: "dateString"},
-    {field: "available_datasets", hide: false, headerName: "Available Datasets", cellRenderer: UrlCellRenderer},
+    {field: "available_datasets", headerName: "Available Datasets", cellRenderer: UrlCellRenderer},
     {field: "short_study_label"},
     {field: "model_system"},
     {field: "pooled_perturbation"},
@@ -47,6 +50,7 @@ export class GridUtilsService {
     {field: "general_comments"},
     {field: "sharing_mechanism_with_DRACC"},
     {field: "comments"},
+    {field: "status", hide: false, cellRenderer: StatusColumnComponent},
   ];
 
   public static readonly FACET_DEFINITIONS: FacetDef[] = [
