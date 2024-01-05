@@ -3,6 +3,7 @@ import {ColDef} from "ag-grid-community";
 import {UrlCellRenderer} from "../url-cell-renderer.component";
 import {FacetDef} from "../types/facet";
 import {MorphicRecord} from "../interfaces";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -20,15 +21,19 @@ export class GridUtilsService {
     initialHide: true,
   };
 
-  public static readonly COLUMN_DEFINITIONS: ColDef[] = [
+  public readonly COLUMN_DEFINITIONS: ColDef[] = [
     {field: "id"},
-    { field: "", hide: false ,   valueFormatter: () => {
+    { field: "",
+      hide: false ,
+      suppressMenu: true,
+      sortable: false,
+      maxWidth:25,
+      valueFormatter: () => {
         return '+'
       }, onCellClicked: params =>  {
         console.log("Cell clicked" +params.data.dpc);
-        // this.router.navigate(['/quickview-component']);
-        // this.gridApi.
-        window.open("/detail?id="+params.data.id,  '_blank');
+        const queryParams = { id: params.data.id};
+         this.router.navigate(["/detail"], { queryParams });
 }},
     {field: "study_title", hide: false, headerName: "Study Title", flex: 2},
     {field: "target_genes", hide: false, headerName: "Target Genes"},
@@ -64,7 +69,7 @@ export class GridUtilsService {
     {field: "perturbation_type"}
   ]
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
 }
