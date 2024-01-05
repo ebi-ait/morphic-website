@@ -1,7 +1,8 @@
-import { HttpClient } from "@angular/common/http";
 import {Component, OnChanges, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {MorphicRecord} from "../interfaces";
+import {DataService} from "../services/data.service";
+import {GridRecord} from "../types/GridRecord";
 
 
 
@@ -13,31 +14,33 @@ import {MorphicRecord} from "../interfaces";
 })
 export class DetailComponent implements OnInit  {
 
+  constructor(private dataService: DataService,private route: ActivatedRoute) {}
 
+  public detailRecord!: MorphicRecord;
 
-  constructor(private http: HttpClient,private route: ActivatedRoute) {}
-
-  public rowData!: MorphicRecord;
   ngOnInit(): void {
 
     this.route.queryParamMap
       .subscribe((params) => {
-
-        this.http.get<MorphicRecord[]>("assets/test-data.json").subscribe(
-          (data) => {
-            this.rowData = data.filter( d=> d.id==Number(params.get("id")))[0];
-          },
-          (error) => {
-            console.error("Error fetching data:", error);
-          },
-        );
-
+          if (this.dataService.isCached(DataService.dataKey)) {
+            this.detailRecord = this.filterRecord((Number(params.get("id"))), this.dataService.getFromCache(DataService.dataKey));
+          } else {
+            this.dataService.loadJsonData().subscribe(
+              (record) => {
+                this.detailRecord = this.filterRecord((Number(params.get("id"))), record);
+              }
+            )
+          }
         }
       );
-
-
   }
 
-
+  filterRecord(idToFilter:number, records: GridRecord[]) {
+    return records.filter((rec) => {
+      console.log("detail call inside filter");
+      let mrec = rec as MorphicRecord;
+      return mrec.id == idToFilter;
+    }).pop() as MorphicRecord;
+  }
 
 }
