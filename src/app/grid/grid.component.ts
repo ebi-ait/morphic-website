@@ -39,6 +39,7 @@ export class GridComponent implements OnInit {
         console.error("Error fetching data: ", error);
       },
     );
+    window.dispatchEvent(new Event('resize')); //this is a workaround for side-nav opened overlap behaviour
   }
 
   onGridReady(params: GridReadyEvent<GridRecord>) {
