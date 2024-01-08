@@ -7,13 +7,10 @@
     <input type="text" id="filter-text-box" class="grid-header-input" placeholder="search by genes, cell lines, etc.."
            (input)="onFilterTextBoxChanged()"/>
     <span class="grid-header-spacer"></span>
-<!--    <button mat-icon-button class="catalog-toolbar-icon" aria-label="icon-button with share icon">-->
-<!--      <mat-icon>apps</mat-icon>-->
-<!--    </button>-->
   </mat-toolbar>
 
   <mat-sidenav-container class="catalog-sidenav-container">
-    <mat-sidenav #snav [mode]="'side'">
+    <mat-sidenav #snav [mode]="'side'" opened="true">
       <div class="facet-wrapper">
         <h3>Filters</h3>
         <div *ngFor="let facet of facets">
