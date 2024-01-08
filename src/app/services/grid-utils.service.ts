@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ColDef} from "ag-grid-community";
 import {UrlCellRenderer} from "../url-cell-renderer.component";
 import {FacetDef} from "../types/facet";
-import {StatusColumnComponent} from "../extensions/status-column/status-column.component";
+import {StatusCellRendererComponent} from "../extensions/status-cell-renderer/status-cell-renderer.component";
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +50,7 @@ export class GridUtilsService {
     {field: "general_comments"},
     {field: "sharing_mechanism_with_DRACC"},
     {field: "comments"},
-    {field: "status", hide: false, cellRenderer: StatusColumnComponent},
+    {field: "status", hide: false, cellRenderer: StatusCellRendererComponent},
   ];
 
   public static readonly FACET_DEFINITIONS: FacetDef[] = [
