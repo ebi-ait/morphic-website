@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StatusColumnComponent } from './status-column.component';
+import { StatusCellRendererComponent } from './status-cell-renderer.component';
 
 describe('StatusColumnComponent', () => {
-  let component: StatusColumnComponent;
-  let fixture: ComponentFixture<StatusColumnComponent>;
+  let component: StatusCellRendererComponent;
+  let fixture: ComponentFixture<StatusCellRendererComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StatusColumnComponent]
+      imports: [StatusCellRendererComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(StatusColumnComponent);
+
+    fixture = TestBed.createComponent(StatusCellRendererComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -28,7 +28,7 @@ import {MatChipsModule} from "@angular/material/chips";
       font-size: 10px;
     }`]
 })
-export class StatusColumnComponent implements ICellRendererAngularComp {
+export class StatusCellRendererComponent implements ICellRendererAngularComp {
   released: boolean;
   releaseText: string;
 
