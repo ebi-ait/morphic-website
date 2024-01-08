@@ -34,12 +34,12 @@ export class GridComponent implements OnInit {
       (data) => {
         this.rowData = data;
         this.generateFacets(data);
+        window.dispatchEvent(new Event('resize')); //this is a workaround for side-nav opened overlap behaviour
       },
       (error) => {
         console.error("Error fetching data: ", error);
       },
     );
-    window.dispatchEvent(new Event('resize')); //this is a workaround for side-nav opened overlap behaviour
   }
 
   onGridReady(params: GridReadyEvent<GridRecord>) {
