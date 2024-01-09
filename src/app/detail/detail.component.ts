@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {MorphicRecord} from "../interfaces";
 import {DataService} from "../services/data.service";
 import {GridRecord} from "../types/GridRecord";
+import {GridUtilsService} from "../services/grid-utils.service";
 
 
 
@@ -14,9 +15,9 @@ import {GridRecord} from "../types/GridRecord";
 })
 export class DetailComponent implements OnInit  {
 
-  constructor(private dataService: DataService,private route: ActivatedRoute) {}
+  constructor(private dataService: DataService,private route: ActivatedRoute, public gridUtil: GridUtilsService ) {}
 
-  public detailRecord!: MorphicRecord;
+  public detailRecord!: any;
 
   ngOnInit(): void {
 
@@ -35,12 +36,11 @@ export class DetailComponent implements OnInit  {
       );
   }
 
-  filterRecord(idToFilter:number, records: GridRecord[]) {
+  filterRecord(idToFilter:number, records: GridRecord[]) : GridRecord {
     return records.filter((rec) => {
       console.log("detail call inside filter");
-      let mrec = rec as MorphicRecord;
-      return mrec.id == idToFilter;
-    }).pop() as MorphicRecord;
+      return rec.id == idToFilter;
+    }).pop() as any;
   }
 
 }

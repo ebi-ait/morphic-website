@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {ColDef} from "ag-grid-community";
 import {UrlCellRenderer} from "../url-cell-renderer.component";
 import {FacetDef} from "../types/facet";
-import {MorphicRecord} from "../interfaces";
 import {Router} from "@angular/router";
 
 @Injectable({
