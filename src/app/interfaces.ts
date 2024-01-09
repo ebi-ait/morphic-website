@@ -1,4 +1,6 @@
-export interface MorphicRecord {
+import {GridRecord} from "./types/GridRecord";
+
+export interface MorphicRecord extends GridRecord {
       "id": number;
       "dpc": string;
       "short_study_label": string;

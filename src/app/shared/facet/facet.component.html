@@ -1,0 +1,8 @@
+<mat-form-field class="facet-field" *ngIf="facet">
+  <mat-label>{{StringUtilsService.snakeCaseToTitle(facet.title)}}</mat-label>
+  <mat-select [formControl]="facetControl" multiple>
+    <mat-option (click)="filterChanged(f.value)"
+                *ngFor="let f of facet.values"
+                [value]="f.value">{{f.value}}</mat-option>
+  </mat-select>
+</mat-form-field>
