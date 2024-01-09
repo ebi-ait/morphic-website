@@ -19,6 +19,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -26,25 +27,26 @@ import {MatButtonModule} from "@angular/material/button";
     GridComponent,
     UrlCellRenderer
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    AgGridModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    HeaderComponent,
-    FooterComponent,
-    FacetComponent,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatButtonModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        AgGridModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        HeaderComponent,
+        FooterComponent,
+        FacetComponent,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule,
+        MatIconModule,
+        MatButtonModule,
+        FormsModule,
+        MatCheckboxModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

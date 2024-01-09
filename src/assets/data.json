@@ -26,7 +26,8 @@
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
     "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "",
-    "comments": "Publicly released to GEO in March 2021"
+    "comments": "Publicly released to GEO in March 2021",
+    "production": true
   },
   {
     "id": "2",
