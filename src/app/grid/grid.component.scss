@@ -1,20 +1,50 @@
-
-.example-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-#myGrid {
-  flex: 1 1 0px;
-  width: 100%;
+.grid-component {
+  overflow: hidden;
 }
 
 .facet-wrapper {
-  width: 300px;
   margin: 5px;
   padding: 5px;
-  border: 1px solid black;
-  background: azure;
+}
+
+.grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 225px);
+  height: calc(100vh - 120px);
+  float: left;
+}
+
+.grid-header-spacer {
+  flex: 1 1 auto;
+}
+
+.grid-header {
+  margin: 15px 0;
+}
+
+.grid-header-title {
+  float: left;
+}
+
+.grid-header-input {
+  float: left;
+  height: 31px;
   border-radius: 5px;
+  border: 1px solid #df1515;
+  margin-left: 18px;
+  padding-left: 10px;
+  font-size: 16px;
+  width: 100%;
+  //width: calc(50% - 130px);
+}
+
+.grid-header-options {
+  float: right;
+  width: 40%;
+}
+
+.grid-header-options-ctl {
+  float: right;
+  margin-left: 10px;
 }
