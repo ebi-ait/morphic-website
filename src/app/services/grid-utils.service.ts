@@ -47,6 +47,7 @@ export class GridUtilsService {
     {field: "general_comments"},
     {field: "sharing_mechanism_with_DRACC"},
     {field: "comments"},
+    {field: "production"},
   ];
 
   public static readonly FACET_DEFINITIONS: FacetDef[] = [

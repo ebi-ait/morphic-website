@@ -20,6 +20,7 @@ export class GridComponent implements OnInit {
   public rowData!: GridRecord[];
   private filters: Map<string, Filter> = new Map<string, Filter>();
   facets: Facet[] = [];
+  showDemoData = false;
 
   public gridOptions: GridOptions = {
     doesExternalFilterPass: this.doesExternalFilterPass.bind(this),
@@ -118,6 +119,15 @@ export class GridComponent implements OnInit {
         }
       });
     }
+
+    if (!this.showDemoData) {
+      let record = node.data! as any;
+      let rowValue = record['production'] as boolean;
+      if (!rowValue) {
+        filterPass = false;
+      }
+    }
+
     return filterPass;
   }
 
@@ -136,6 +146,11 @@ export class GridComponent implements OnInit {
     } else {
       this.filters.set(filter.title, filter);
     }
+    this.gridApi.onFilterChanged();
+  }
+
+  toggleDemoData() {
+    console.log("Show demo data");
     this.gridApi.onFilterChanged();
   }
 
