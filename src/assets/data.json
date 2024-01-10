@@ -15,7 +15,7 @@
     "duo_code_for_data_sharing_restriction": "already public",
     "number_of_datasets": 4,
     "expected_release": "",
-    "available_datasets_e_g_links_to_geo": "GSE150072",
+    "available_datasets": "GSE150072",
     "publication": "QSER1 Protects DNA Methylation Valleys from De Novo Methylation",
     "data_upload_contact_name": "",
     "data_upload_contact_email_address": "",
@@ -25,7 +25,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "",
+    "sharing_mechanism_with_DRACC": "",
     "comments": "Publicly released to GEO in March 2021",
     "production": true
   },
@@ -45,7 +45,7 @@
     "duo_code_for_data_sharing_restriction": "already public",
     "number_of_datasets": 4,
     "expected_release": "",
-    "available_datasets_e_g_links_to_geo": "GSE181480",
+    "available_datasets": "GSE181480",
     "publication": "CRISPR screening uncovers a central requirement for HHEX in pancreatic lineage commitment and plasticity restriction",
     "data_upload_contact_name": "",
     "data_upload_contact_email_address": "",
@@ -55,7 +55,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "",
+    "sharing_mechanism_with_DRACC": "",
     "comments": "Publicly released to GEO in April 2022"
   },
   {
@@ -74,7 +74,7 @@
     "duo_code_for_data_sharing_restriction": "already public",
     "number_of_datasets": null,
     "expected_release": "Apr 2022",
-    "available_datasets_e_g_links_to_geo": "GSE181480",
+    "available_datasets": "GSE181480",
     "publication": "CRISPR screening uncovers a central requirement for HHEX in pancreatic lineage commitment and plasticity restriction",
     "data_upload_contact_name": "",
     "data_upload_contact_email_address": "",
@@ -84,7 +84,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "",
+    "sharing_mechanism_with_DRACC": "",
     "comments": ""
   },
   {
@@ -103,7 +103,7 @@
     "duo_code_for_data_sharing_restriction": "already public",
     "number_of_datasets": null,
     "expected_release": "Apr 2022",
-    "available_datasets_e_g_links_to_geo": "GSE180521",
+    "available_datasets": "GSE180521",
     "publication": "CRISPR screening uncovers a central requirement for HHEX in pancreatic lineage commitment and plasticity restriction",
     "data_upload_contact_name": "",
     "data_upload_contact_email_address": "",
@@ -113,7 +113,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "",
+    "sharing_mechanism_with_DRACC": "",
     "comments": "needs metadata call and entry"
   },
   {
@@ -132,7 +132,7 @@
     "duo_code_for_data_sharing_restriction": "NPUNCU",
     "number_of_datasets": null,
     "expected_release": "Mar 2024",
-    "available_datasets_e_g_links_to_geo": "",
+    "available_datasets": "",
     "publication": "",
     "data_upload_contact_name": "Hyein Cho",
     "data_upload_contact_email_address": "choh@mskcc.org",
@@ -142,7 +142,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "AWS upload",
+    "sharing_mechanism_with_DRACC": "AWS upload",
     "comments": ""
   },
   {
@@ -161,7 +161,7 @@
     "duo_code_for_data_sharing_restriction": "NPUNCU",
     "number_of_datasets": null,
     "expected_release": "Nov 2023",
-    "available_datasets_e_g_links_to_geo": "",
+    "available_datasets": "",
     "publication": "",
     "data_upload_contact_name": "Hyein Cho",
     "data_upload_contact_email_address": "choh@mskcc.org",
@@ -171,7 +171,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "some data ready to share",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "AWS upload",
+    "sharing_mechanism_with_DRACC": "AWS upload",
     "comments": "call on the 31st Oct"
   },
   {
@@ -190,7 +190,7 @@
     "duo_code_for_data_sharing_restriction": "NRES",
     "number_of_datasets": null,
     "expected_release": "Jan 2024",
-    "available_datasets_e_g_links_to_geo": "",
+    "available_datasets": "",
     "publication": "",
     "data_upload_contact_name": "Bill Flynn",
     "data_upload_contact_email_address": "bill.flynn@jax.org",
@@ -200,7 +200,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "morphic-util",
+    "sharing_mechanism_with_DRACC": "morphic-util",
     "comments": "need protocol deposition mechanism"
   },
   {
@@ -219,7 +219,7 @@
     "duo_code_for_data_sharing_restriction": "NRES",
     "number_of_datasets": 21,
     "expected_release": "Nov 2023",
-    "available_datasets_e_g_links_to_geo": "",
+    "available_datasets": "",
     "publication": "",
     "data_upload_contact_name": "Bill Flynn",
     "data_upload_contact_email_address": "bill.flynn@jax.org",
@@ -229,7 +229,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "morphic-util",
+    "sharing_mechanism_with_DRACC": "morphic-util",
     "comments": "Original ETA Q4 2024 - typo?"
   },
   {
@@ -248,7 +248,7 @@
     "duo_code_for_data_sharing_restriction": "NRES",
     "number_of_datasets": 2,
     "expected_release": "Nov 2023",
-    "available_datasets_e_g_links_to_geo": "Working on it",
+    "available_datasets": "Working on it",
     "publication": "",
     "data_upload_contact_name": "Bill Flynn",
     "data_upload_contact_email_address": "bill.flynn@jax.org",
@@ -258,7 +258,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "morphic-util",
+    "sharing_mechanism_with_DRACC": "morphic-util",
     "comments": ""
   },
   {
@@ -277,7 +277,7 @@
     "duo_code_for_data_sharing_restriction": "NRES",
     "number_of_datasets": null,
     "expected_release": "Nov 2023",
-    "available_datasets_e_g_links_to_geo": "",
+    "available_datasets": "",
     "publication": "",
     "data_upload_contact_name": "Gina Kirsammer",
     "data_upload_contact_email_address": "g-kirsammer@northwestern.edu",
@@ -287,7 +287,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "Pending",
+    "sharing_mechanism_with_DRACC": "Pending",
     "comments": ""
   },
   {
@@ -306,7 +306,7 @@
     "duo_code_for_data_sharing_restriction": "NRES",
     "number_of_datasets": null,
     "expected_release": "Nov 2023",
-    "available_datasets_e_g_links_to_geo": "",
+    "available_datasets": "",
     "publication": "",
     "data_upload_contact_name": "",
     "data_upload_contact_email_address": "",
@@ -316,7 +316,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "Pending",
+    "sharing_mechanism_with_DRACC": "Pending",
     "comments": ""
   },
   {
@@ -335,7 +335,7 @@
     "duo_code_for_data_sharing_restriction": "NRES",
     "number_of_datasets": null,
     "expected_release": "",
-    "available_datasets_e_g_links_to_geo": "",
+    "available_datasets": "",
     "publication": "",
     "data_upload_contact_name": "",
     "data_upload_contact_email_address": "",
@@ -345,7 +345,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "Pending",
+    "sharing_mechanism_with_DRACC": "Pending",
     "comments": ""
   },
   {
@@ -364,7 +364,7 @@
     "duo_code_for_data_sharing_restriction": "NRES",
     "number_of_datasets": null,
     "expected_release": "",
-    "available_datasets_e_g_links_to_geo": "",
+    "available_datasets": "",
     "publication": "",
     "data_upload_contact_name": "",
     "data_upload_contact_email_address": "",
@@ -374,7 +374,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "Pending",
+    "sharing_mechanism_with_DRACC": "Pending",
     "comments": ""
   },
   {
@@ -393,7 +393,7 @@
     "duo_code_for_data_sharing_restriction": "NRES",
     "number_of_datasets": null,
     "expected_release": "",
-    "available_datasets_e_g_links_to_geo": "",
+    "available_datasets": "",
     "publication": "",
     "data_upload_contact_name": "",
     "data_upload_contact_email_address": "",
@@ -403,7 +403,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "Pending",
+    "sharing_mechanism_with_DRACC": "Pending",
     "comments": ""
   },
   {
@@ -422,7 +422,7 @@
     "duo_code_for_data_sharing_restriction": "NRES",
     "number_of_datasets": null,
     "expected_release": "",
-    "available_datasets_e_g_links_to_geo": "",
+    "available_datasets": "",
     "publication": "",
     "data_upload_contact_name": "",
     "data_upload_contact_email_address": "",
@@ -432,7 +432,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "Pending",
+    "sharing_mechanism_with_DRACC": "Pending",
     "comments": ""
   },
   {
@@ -445,13 +445,13 @@
     "readout_assay": "Perturb-seq",
     "perturbation_type": "CRISPR-dCas9 KD",
     "target_genes": "",
-    "model_system": "Multilineage\n",
+    "model_system": "Multilineage",
     "pooled_perturbation": "Yes",
     "longitudinal_study": "No",
     "duo_code_for_data_sharing_restriction": "",
     "number_of_datasets": null,
     "expected_release": "",
-    "available_datasets_e_g_links_to_geo": "",
+    "available_datasets": "",
     "publication": "",
     "data_upload_contact_name": "",
     "data_upload_contact_email_address": "",
@@ -461,7 +461,7 @@
     "protocols_io_link_cell_culture": "",
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
-    "sharing_mechanism_with_dracc_e_g_aws_upload_globus_etc_": "Unknown",
+    "sharing_mechanism_with_DRACC": "Unknown",
     "comments": "Original ETA was September 2023 but this now won't be achieved - Metadata in progress"
   }
 ]
