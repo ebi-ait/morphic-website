@@ -20,7 +20,7 @@ export class GridComponent implements OnInit {
   public rowData!: GridRecord[];
   private filters: Map<string, Filter> = new Map<string, Filter>();
   facets: Facet[] = [];
-  showDemoData = false;
+  showDemoData = true;
 
   public gridOptions: GridOptions = {
     doesExternalFilterPass: this.doesExternalFilterPass.bind(this),
