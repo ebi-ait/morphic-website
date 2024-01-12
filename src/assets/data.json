@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "1",
     "dpc": "MSKCC",
     "short_study_label": "MSK_genome-wide_CRISPR",
     "upload_status": "Not uploaded",
@@ -16,8 +16,7 @@
     "number_of_datasets": 4,
     "expected_release": "",
     "available_datasets": "GSE150072",
-    "publication":
-    "QSER1 Protects DNA Methylation Valleys from De Novo Methylation",
+    "publication": "QSER1 Protects DNA Methylation Valleys from De Novo Methylation",
     "data_upload_contact_name": "",
     "data_upload_contact_email_address": "",
     "contact": "",
@@ -30,7 +29,7 @@
     "comments": "Publicly released to GEO in March 2021"
   },
   {
-    "id": 2,
+    "id": "2",
     "dpc": "MSKCC",
     "short_study_label": "MSK_sequential_CRISPR",
     "upload_status": "Not uploaded",
@@ -46,8 +45,7 @@
     "number_of_datasets": 4,
     "expected_release": "",
     "available_datasets": "GSE181480",
-    "publication":
-    "CRISPR screening uncovers a central requirement for HHEX in pancreatic lineage commitment and plasticity restriction",
+    "publication": "CRISPR screening uncovers a central requirement for HHEX in pancreatic lineage commitment and plasticity restriction",
     "data_upload_contact_name": "",
     "data_upload_contact_email_address": "",
     "contact": "",
@@ -60,7 +58,7 @@
     "comments": "Publicly released to GEO in April 2022"
   },
   {
-    "id": 3,
+    "id": "3",
     "dpc": "MSKCC",
     "short_study_label": "MSK_KO_scRNA-seq",
     "upload_status": "Not uploaded",
@@ -69,16 +67,14 @@
     "readout_assay": "scRNA-seq ",
     "perturbation_type": "CRISPR-Cas9 KO",
     "target_genes": "HHEX",
-    "model_system":
-    "Definitive endoderm, Gut tube, Early pancreatic progenitors",
+    "model_system": "Definitive endoderm, Gut tube, Early pancreatic progenitors",
     "pooled_perturbation": "No",
     "longitudinal_study": "Yes",
     "duo_code_for_data_sharing_restriction": "already public",
     "number_of_datasets": null,
     "expected_release": "Apr 2022",
     "available_datasets": "GSE181480",
-    "publication":
-    "CRISPR screening uncovers a central requirement for HHEX in pancreatic lineage commitment and plasticity restriction",
+    "publication": "CRISPR screening uncovers a central requirement for HHEX in pancreatic lineage commitment and plasticity restriction",
     "data_upload_contact_name": "",
     "data_upload_contact_email_address": "",
     "contact": "",
@@ -91,7 +87,7 @@
     "comments": ""
   },
   {
-    "id": 4,
+    "id": "4",
     "dpc": "MSKCC",
     "short_study_label": "MSK_KO_RNA-seq",
     "upload_status": "Data in, metadata in progress",
@@ -100,16 +96,14 @@
     "readout_assay": "Bulk RNA-seq",
     "perturbation_type": "CRISPR-Cas9 KO",
     "target_genes": "HHEX",
-    "model_system":
-    "Definitive endoderm, Gut tube, Early pancreatic progenitors",
+    "model_system": "Definitive endoderm, Gut tube, Early pancreatic progenitors",
     "pooled_perturbation": "No",
     "longitudinal_study": "Yes",
     "duo_code_for_data_sharing_restriction": "already public",
     "number_of_datasets": null,
     "expected_release": "Apr 2022",
     "available_datasets": "GSE180521",
-    "publication":
-    "CRISPR screening uncovers a central requirement for HHEX in pancreatic lineage commitment and plasticity restriction",
+    "publication": "CRISPR screening uncovers a central requirement for HHEX in pancreatic lineage commitment and plasticity restriction",
     "data_upload_contact_name": "",
     "data_upload_contact_email_address": "",
     "contact": "",
@@ -122,18 +116,16 @@
     "comments": "needs metadata call and entry"
   },
   {
-    "id": 5,
+    "id": "5",
     "dpc": "MSKCC",
     "short_study_label": "MSK_PerturbSeq",
     "upload_status": "Not uploaded",
-    "study_title":
-    "Perturb-seq of stem cell lines with MorPhiC custom guide RNA library",
+    "study_title": "Perturb-seq of stem cell lines with MorPhiC custom guide RNA library",
     "cell_line": "H1",
     "readout_assay": "Perturb-seq, scRNA-seq",
     "perturbation_type": "CRISPRi (dCas9-KRAB)",
     "target_genes": "MSK MorPhiC genes",
-    "model_system":
-    "Gastruloid, Neural differentiation, Pancreatic differentiation",
+    "model_system": "Gastruloid, Neural differentiation, Pancreatic differentiation",
     "pooled_perturbation": "Yes",
     "longitudinal_study": "Maybe",
     "duo_code_for_data_sharing_restriction": "NPUNCU",
@@ -153,7 +145,7 @@
     "comments": ""
   },
   {
-    "id": 6,
+    "id": "6",
     "dpc": "MSKCC",
     "short_study_label": "MSK_Pooled_scRNAseq",
     "upload_status": "Not uploaded",
@@ -162,8 +154,7 @@
     "readout_assay": "multiplexed scRNA-seq",
     "perturbation_type": "CRISPR-Cas9 KO",
     "target_genes": "MSK MorPhiC genes",
-    "model_system":
-    "Gastruloid, Neural differentiation, Pancreatic differentiation",
+    "model_system": "Gastruloid, Neural differentiation, Pancreatic differentiation",
     "pooled_perturbation": "Yes",
     "longitudinal_study": "Yes",
     "duo_code_for_data_sharing_restriction": "NPUNCU",
@@ -183,12 +174,11 @@
     "comments": "call on the 31st Oct"
   },
   {
-    "id": 7,
+    "id": "7",
     "dpc": "JAX",
     "short_study_label": "JAX_Bulk_RNAseq_Neuroectoderm",
     "upload_status": "Not uploaded",
-    "study_title":
-    "Bulk RNA-seq of neuroectoderm with 3 strategies for KO of 6 genes",
+    "study_title": "Bulk RNA-seq of neuroectoderm with 3 strategies for KO of 6 genes",
     "cell_line": "KOLF2",
     "readout_assay": "RNA-seq",
     "perturbation_type": "CRISPR-Cas9 KO",
@@ -213,7 +203,7 @@
     "comments": "need protocol deposition mechanism"
   },
   {
-    "id": 8,
+    "id": "8",
     "dpc": "JAX",
     "short_study_label": "JAX_RNAseq_ExtraEmbryonic",
     "upload_status": "Data + metadata in",
@@ -242,7 +232,7 @@
     "comments": "Original ETA Q4 2024 - typo?"
   },
   {
-    "id": 9,
+    "id": "9",
     "dpc": "JAX",
     "short_study_label": "KOLF2.2J_WGS",
     "upload_status": "Data in, metadata in progress",
@@ -257,6 +247,7 @@
     "duo_code_for_data_sharing_restriction": "NRES",
     "number_of_datasets": 2,
     "expected_release": "Nov 2023",
+    "available_datasets": "Working on it",
     "publication": "",
     "data_upload_contact_name": "Bill Flynn",
     "data_upload_contact_email_address": "bill.flynn@jax.org",
@@ -270,10 +261,10 @@
     "comments": ""
   },
   {
-    "id": 10,
+    "id": "10",
     "dpc": "NW",
     "short_study_label": "NW_bulk_RNAseq",
-    "upload_status": "Data in, metadata in progress",
+    "upload_status": "Data + metadata in",
     "study_title": "Bulk RNA seq",
     "cell_line": "KOLF2",
     "readout_assay": "RNA-seq",
@@ -299,10 +290,10 @@
     "comments": ""
   },
   {
-    "id": 11,
+    "id": "11",
     "dpc": "NW",
     "short_study_label": "NW_ATACseq",
-    "upload_status": "Data in, metadata in progress",
+    "upload_status": "Data + metadata in",
     "study_title": "Bulk ATAC-seq",
     "cell_line": "KOLF2",
     "readout_assay": "ATAC-seq",
@@ -328,7 +319,7 @@
     "comments": ""
   },
   {
-    "id": 12,
+    "id": "12",
     "dpc": "NW",
     "short_study_label": "NW_pooled_pluripotency",
     "upload_status": "Not uploaded",
@@ -357,7 +348,7 @@
     "comments": ""
   },
   {
-    "id": 13,
+    "id": "13",
     "dpc": "NW",
     "short_study_label": "NW_pooled_endoderm",
     "upload_status": "Not uploaded",
@@ -386,7 +377,7 @@
     "comments": ""
   },
   {
-    "id": 14,
+    "id": "14",
     "dpc": "NW",
     "short_study_label": "NW_pooled_ectodifferentiation",
     "upload_status": "Not uploaded",
@@ -415,7 +406,7 @@
     "comments": ""
   },
   {
-    "id": 15,
+    "id": "15",
     "dpc": "NW",
     "short_study_label": "NW_pooled_mesoderm",
     "upload_status": "Not uploaded",
@@ -444,12 +435,11 @@
     "comments": ""
   },
   {
-    "id": 16,
+    "id": "16",
     "dpc": "UCSF",
     "short_study_label": "UCSF_PerturbSeq",
     "upload_status": "Not uploaded",
-    "study_title":
-    "Perturb-seq of embryoid bodies using a pooled custom guide RNA library",
+    "study_title": "Perturb-seq of embryoid bodies using a pooled custom guide RNA library",
     "cell_line": "hiPSC",
     "readout_assay": "Perturb-seq",
     "perturbation_type": "CRISPR-dCas9 KD",
@@ -459,7 +449,7 @@
     "longitudinal_study": "No",
     "duo_code_for_data_sharing_restriction": "",
     "number_of_datasets": null,
-    "expected_release": "2024-01-01",
+    "expected_release": "",
     "available_datasets": "",
     "publication": "",
     "data_upload_contact_name": "",
@@ -471,7 +461,6 @@
     "protocols_io_link_for_differentiation_and_maintenance": "",
     "general_comments": "",
     "sharing_mechanism_with_DRACC": "Unknown",
-    "comments":
-    "Original ETA was September 2023 but this now won't be achieved - Metadata in progress"
+    "comments": "Original ETA was September 2023 but this now won't be achieved - Metadata in progress"
   }
 ]

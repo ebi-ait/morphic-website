@@ -34,6 +34,7 @@ export class GridComponent implements OnInit {
       (data) => {
         this.rowData = data;
         this.generateFacets(data);
+        window.dispatchEvent(new Event('resize')); //this is a workaround for side-nav opened overlap behaviour
       },
       (error) => {
         console.error("Error fetching data: ", error);
@@ -70,6 +71,7 @@ export class GridComponent implements OnInit {
           "count": value
         })
       });
+      facetFields.sort((a, b) => a.value.localeCompare(b.value, undefined, {sensitivity: 'base'}))
       this.facets.push({
         "title": field.field,
         "values": facetFields
@@ -78,16 +80,19 @@ export class GridComponent implements OnInit {
   }
 
   addValueToMap(facetValueMap: Map<string, number>, value: string) {
-    if (facetValueMap.has(value)) {
-      facetValueMap.set(value, facetValueMap.get(value)! + 1);
-    } else {
-      facetValueMap.set(value, 1);
+    value = value.trim();
+    if (value) {
+      if (facetValueMap.has(value)) {
+        facetValueMap.set(value, facetValueMap.get(value)! + 1);
+      } else {
+        facetValueMap.set(value, 1);
+      }
     }
   }
 
   addValuesToMap(facetValueMap: Map<string, number>, values: string[]) {
     for (let value of values) {
-     this.addValueToMap(facetValueMap, value.trim());
+      this.addValueToMap(facetValueMap, value.trim());
     }
   }
 
