@@ -60,6 +60,12 @@ export class GridComponent implements OnInit {
         if (field.processor && field.processor === 'csv') {
           let values = value.split(",");
           this.addValuesToMap(facetValueMap, values);
+        } else if (field.processor && field.processor === 'array') {
+          let values = value as unknown as string[];
+          this.addValuesToMap(facetValueMap, values);
+        } else if (field.processor && field.processor === 'map') {
+          let values = value as unknown as object;
+          this.addValuesToMap(facetValueMap, Object.keys(values));
         } else {
           this.addValueToMap(facetValueMap, value);
         }

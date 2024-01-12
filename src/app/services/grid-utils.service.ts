@@ -19,41 +19,28 @@ export class GridUtilsService {
     initialHide: true,
   };
 
+  // todo can use colGroupDef to group headers ex. available data types.
+  //  https://www.ag-grid.com/javascript-data-grid/column-groups/
   public static readonly COLUMN_DEFINITIONS: ColDef[] = [
-    {field: "id"},
-    {field: "study_title", hide: false, headerName: "Study Title", flex: 2},
-    {field: "target_genes", hide: false, headerName: "Target Genes"},
-    {field: "cell_line", hide: false, headerName: "Cell Line"},
-    {field: "readout_assay", hide: false, headerName: "Assay"},
-    {field: "perturbation_type", hide: false, headerName: "Perturbation Type"},
-    {field: "upload_status", hide: true, headerName: "Status"},
-    {field: "dpc", hide: false, headerName: "Centre"},
-    {field: "expected_release", hide: true, headerName: "Expected Release", cellDataType: "dateString"},
-    {field: "available_datasets", hide: false, headerName: "Available Datasets", cellRenderer: UrlCellRenderer},
-    {field: "short_study_label"},
-    {field: "model_system"},
-    {field: "pooled_perturbation"},
-    {field: "longitudinal_study"},
-    {field: "duo_code_for_data_sharing_restriction"},
-    {field: "number_of_datasets"},
-    {field: "publication"},
-    {field: "data_upload_contact_name"},
-    {field: "data_upload_contact_email_address"},
-    {field: "contact"},
-    {field: "donor_ancestry"},
-    {field: "gender"},
-    {field: "protocols_io_link_cell_culture"},
-    {field: "protocols_io_link_for_differentiation_and_maintenance"},
-    {field: "general_comments"},
-    {field: "sharing_mechanism_with_DRACC"},
-    {field: "comments"},
+    {field: "cohort_name", hide: false, headerName: "Cohort Name", flex: 2},
+    {field: "countries", hide: false, headerName: "Countries"},
+    {field: "available_data_types.demographic", hide: false, headerName: "Demographic"},
+    {field: "available_data_types.surveillance", hide: false, headerName: "Surveillance"},
+    {field: "available_data_types.clinical", hide: false, headerName: "Clinical"},
+    {field: "available_data_types.environmental", hide: false, headerName: "Environmental"},
+    {field: "available_data_types.climate_data", hide: false, headerName: "Climate Data"},
+    {field: "available_data_types.genomic_human", hide: false, headerName: "Genomic Human"},
+    {field: "available_data_types.genomic_pathogen", hide: false, headerName: "Genomic Pathogen"},
+    {field: "available_data_types.image_data", hide: false, headerName: "Image Data"},
+    {field: "available_data_types.other", hide: false, headerName: "Other"},
+    {field: "license", hide: true, headerName: "License"},
+    {field: "website", hide: false, headerName: "Website", flex: 2}
   ];
 
   public static readonly FACET_DEFINITIONS: FacetDef[] = [
-    {field: "target_genes", processor: "csv"},
-    {field: "cell_line", processor: "csv"},
-    {field: "readout_assay"},
-    {field: "perturbation_type"}
+    {field: "cohort_name"},
+    {field: "countries", processor: "array"},
+    {field: "available_data_types", processor: "map"}
   ]
 
   constructor() {
