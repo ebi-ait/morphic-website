@@ -12,15 +12,15 @@ export class UrlCellRenderer implements ICellRendererAngularComp {
   public cellValue!: string;
 
   agInit(params: ICellRendererParams) {
-    this.cellValue = this.getValueToDisplay(params);
+    this.cellValue = this.renderValue(params);
   }
 
   refresh(params: ICellRendererParams) {
-    this.cellValue = this.getValueToDisplay(params);
+    this.cellValue = this.renderValue(params);
     return true;
   }
 
-  getValueToDisplay(params: ICellRendererParams) {
+  renderValue(params: ICellRendererParams) {
     return params.valueFormatted ? params.valueFormatted : params.value;
   }
 }
