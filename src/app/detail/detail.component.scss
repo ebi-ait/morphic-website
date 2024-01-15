@@ -11,10 +11,18 @@
 }
 
 .detail-wrapper {
-  width: 800px;
+  width: 60%;
   margin: 5px;
   padding: 5px;
   border: 1px solid black;
-  background: azure;
   border-radius: 5px;
+}
+
+.detail-card {
+
+  margin-bottom: 8px;
+  background: azure;
+}
+.card-subtitle {
+  color: black;
 }

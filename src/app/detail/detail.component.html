@@ -6,7 +6,12 @@
 
   <div *ngFor="let colDef of this.gridUtil.COLUMN_DEFINITIONS">
     <div *ngIf="colDef.field">
-      <p><b>{{colDef.field}}</b> &nbsp;&nbsp;:&nbsp;&nbsp;{{ this.detailRecord[colDef.field] }}</p>
+      <mat-card class="detail-card">
+        <mat-card-header>
+          <mat-card-subtitle class="card-subtitle">{{colDef.field}}</mat-card-subtitle>
+          <mat-card-title>{{ this.detailRecord[colDef.field] }}</mat-card-title>
+        </mat-card-header>
+      </mat-card>
     </div>
   </div>
 
