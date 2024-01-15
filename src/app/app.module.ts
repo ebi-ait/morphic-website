@@ -20,6 +20,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {DetailComponent} from "./detail/detail.component";
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -28,25 +29,26 @@ import {DetailComponent} from "./detail/detail.component";
     UrlCellRenderer,
     DetailComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    AgGridModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    HeaderComponent,
-    FooterComponent,
-    FacetComponent,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatButtonModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        AgGridModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        HeaderComponent,
+        FooterComponent,
+        FacetComponent,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule,
+        MatIconModule,
+        MatButtonModule,
+        FormsModule,
+        MatCardModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
