@@ -4,6 +4,7 @@ import {ColDef, GridApi, GridOptions, GridReadyEvent, IRowNode} from "ag-grid-co
 import {Facet, FacetDef, FacetField, Filter} from "../types/facet";
 import {GridUtilsService} from "../services/grid-utils.service";
 import {GridRecord} from "../types/GridRecord";
+import {AbstractColDef} from "ag-grid-community/dist/lib/entities/colDef";
 
 
 @Component({
@@ -12,7 +13,7 @@ import {GridRecord} from "../types/GridRecord";
   styleUrls: ['./grid.component.scss']
 })
 export class GridComponent implements OnInit {
-  public columnDefs: ColDef[] = GridUtilsService.COLUMN_DEFINITIONS;
+  public columnDefs: AbstractColDef[] = GridUtilsService.COLUMN_DEFINITIONS1;
   public defaultColDef: ColDef = GridUtilsService.DEFAULT_COLUMN_DEFINITIONS;
   private facetDefs: FacetDef[] = GridUtilsService.FACET_DEFINITIONS;
 
