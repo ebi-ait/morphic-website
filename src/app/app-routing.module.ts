@@ -5,10 +5,10 @@ import {DetailComponent} from "./detail/detail.component";
 import { HomeComponent } from '../home/home.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
-  { path: '', component: GridComponent },
+  { path: 'data-catalogue', component: GridComponent },
   { path: 'detail', component: DetailComponent }
-
 ];
 
 @NgModule({
