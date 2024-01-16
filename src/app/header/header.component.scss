@@ -1,4 +1,4 @@
-.header {
+.header-view {
   width: 100%;
   background: #ececec;
   overflow: hidden;
@@ -7,4 +7,41 @@
   ////background-image: url('https://www.icegif.com/wp-content/uploads/snow-icegif-28.gif');
   //background-size: contain;
   //color: white;
+}
+.header {
+  display: flex;
+  height: 11.5rem;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.70) 22.55%, rgba(0, 0, 0, 0.00) 100%);
+  z-index: 1;
+  position: absolute;
+  top: 0px;
+}
+.backdrop {
+  background: url('/assets/external/sangharshlohakare8olkmpo8ugunsplash11571-51ur-800h.png'), lightgray 0px -2px / 100% 109.164% no-repeat;
+  width: 90rem;
+  height: 39.5rem;
+  z-index: -1;
+}
+.logo {
+  margin-top:  2.19rem;
+  margin-left: 1.88rem;
+}
+.nav-links {
+  display: flex;
+  margin-left: auto;
+}
+.nav-link {
+  color: var(--Smart-White, #ECECEC);
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin-top: 3.19rem;
+}
+.space-left {
+  margin-left: 1.69rem;
 }
