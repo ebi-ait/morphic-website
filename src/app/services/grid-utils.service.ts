@@ -21,11 +21,12 @@ export class GridUtilsService {
   };
 
   // mix of colDef and groupColDef
-  public static readonly COLUMN_DEFINITIONS1 = [
+  public static readonly COLUMN_DEFINITIONS = [
     {field: "cohort_name", hide: false, headerName: "Cohort Name"},
     {field: "countries", hide: false, headerName: "Countries", tooltipField: "countries", flex: 2},
     {
       headerName: 'Available Data Types',
+      headerClass: 'grid-col-header-parent',
       children: [
         {
           field: "available_data_types.surveillance",

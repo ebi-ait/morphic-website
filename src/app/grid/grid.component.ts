@@ -13,7 +13,7 @@ import {AbstractColDef} from "ag-grid-community/dist/lib/entities/colDef";
   styleUrls: ['./grid.component.scss']
 })
 export class GridComponent implements OnInit {
-  public columnDefs: AbstractColDef[] = GridUtilsService.COLUMN_DEFINITIONS1;
+  public columnDefs: AbstractColDef[] = GridUtilsService.COLUMN_DEFINITIONS;
   public defaultColDef: ColDef = GridUtilsService.DEFAULT_COLUMN_DEFINITIONS;
   private facetDefs: FacetDef[] = GridUtilsService.FACET_DEFINITIONS;
 
@@ -114,9 +114,25 @@ export class GridComponent implements OnInit {
         let record = node.data! as any;
         let rowValue = record[filterTitle] as string;
         let facet = this.getFacetDefByTitle(filterTitle);
-        if (facet && facet.processor && facet.processor === 'csv') {
-          if (!rowValue.split(',').some(r => filter.values.includes(r.trim()))) {
+        if (facet && facet.processor) {
+          if (facet.processor === 'csv') {
+            if (!rowValue.split(',').some(r => filter.values.includes(r.trim()))) {
+              filterPass = false;
+            }
+          } else if (facet.processor === 'array') {
+            let valueArray = rowValue as unknown as string[]
+            if (!valueArray.some(r => filter.values.includes(r.trim()))) {
+              filterPass = false;
+            }
+          } else if (facet.processor === 'map') {
+            let valueMap = rowValue as unknown as {[key: string]: number | string | boolean};
             filterPass = false;
+            for (let val of filter.values) {
+              if (valueMap[val]) {
+                filterPass = true;
+                break;
+              }
+            }
           }
         } else {
           if (!filter.values.includes(rowValue)) {
