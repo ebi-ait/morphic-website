@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ColDef} from "ag-grid-community";
 import {UrlCellRenderer} from "../url-cell-renderer.component";
 import {FacetDef} from "../types/facet";
+import {Router} from "@angular/router";
 import {StatusCellRendererComponent} from "../extensions/status-cell-renderer/status-cell-renderer.component";
 
 @Injectable({
@@ -20,10 +21,23 @@ export class GridUtilsService {
     initialHide: true,
   };
 
-  // https://www.ag-grid.com/javascript-data-grid/value-getters/#example-getters-and-formatters
+
+// https://www.ag-grid.com/javascript-data-grid/value-getters/#example-getters-and-formatters
   // valueGetter for aggregating columns
-  public static readonly COLUMN_DEFINITIONS: ColDef[] = [
+  public readonly COLUMN_DEFINITIONS: ColDef[] = [
     {field: "id"},
+    { field: "",
+      hide: false ,
+      suppressMenu: true,
+      sortable: false,
+      maxWidth:25,
+      valueFormatter: () => {
+        return '+'
+      }, onCellClicked: params =>  {
+        console.log("Cell clicked" +params.data.dpc);
+        const queryParams = { id: params.data.id};
+         this.router.navigate(["/detail"], { queryParams });
+}},
     {field: "study_title", hide: false, headerName: "Study Title", flex: 2},
     {field: "target_genes", hide: false, headerName: "Target Genes"},
     {field: "cell_line", hide: false, headerName: "Cell Line"},
@@ -61,7 +75,7 @@ export class GridUtilsService {
     {field: "perturbation_type"}
   ]
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
 }
