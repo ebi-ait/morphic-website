@@ -19,13 +19,16 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {DetailComponent} from "./detail/detail.component";
+import {MatCardModule} from "@angular/material/card";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
     AppComponent,
     GridComponent,
-    UrlCellRenderer
+    UrlCellRenderer,
+    DetailComponent
   ],
     imports: [
         BrowserModule,
@@ -45,6 +48,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatIconModule,
         MatButtonModule,
         FormsModule,
+        MatCardModule,
         MatCheckboxModule
     ],
   providers: [],
