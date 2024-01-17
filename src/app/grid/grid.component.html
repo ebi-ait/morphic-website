@@ -7,21 +7,20 @@
     <input type="text" id="filter-text-box" class="grid-header-input" placeholder="search by genes, cell lines, etc.."
            (input)="onFilterTextBoxChanged()"/>
     <span class="grid-header-spacer"></span>
-    <button mat-icon-button class="catalog-toolbar-icon favorite-icon" aria-label="icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button mat-icon-button class="catalog-toolbar-icon" aria-label="icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
   </mat-toolbar>
 
   <mat-sidenav-container class="catalog-sidenav-container">
-    <mat-sidenav #snav [mode]="'side'">
+    <mat-sidenav #snav [mode]="'side'" opened="true">
       <div class="facet-wrapper">
         <h3>Filters</h3>
         <div *ngFor="let facet of facets">
           <app-facet [facet]="facet" (filterChangedEvent)="applyFilters($event)"></app-facet>
         </div>
+      </div>
+      <div class="demo-data-filter">
+        <mat-checkbox class="example-margin" [(ngModel)]="showDemoData" (change)="toggleDemoData()">
+          Show Demo Data
+        </mat-checkbox>
       </div>
     </mat-sidenav>
 

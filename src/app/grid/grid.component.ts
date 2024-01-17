@@ -22,6 +22,7 @@ export class GridComponent implements OnInit {
   public rowData!: GridRecord[];
   private filters: Map<string, Filter> = new Map<string, Filter>();
   facets: Facet[] = [];
+  showDemoData = true;
 
   public gridOptions: GridOptions = {
     doesExternalFilterPass: this.doesExternalFilterPass.bind(this),
@@ -35,6 +36,7 @@ export class GridComponent implements OnInit {
      this.dataService.loadJsonData().subscribe( jsonData => {
        this.rowData = jsonData;
        this.generateFacets(this.rowData);
+       window.dispatchEvent(new Event('resize')); 
      }
     );
   }
@@ -68,6 +70,7 @@ export class GridComponent implements OnInit {
           "count": value
         })
       });
+      facetFields.sort((a, b) => a.value.localeCompare(b.value, undefined, {sensitivity: 'base'}))
       this.facets.push({
         "title": field.field,
         "values": facetFields
@@ -76,10 +79,13 @@ export class GridComponent implements OnInit {
   }
 
   addValueToMap(facetValueMap: Map<string, number>, value: string) {
-    if (facetValueMap.has(value)) {
-      facetValueMap.set(value, facetValueMap.get(value)! + 1);
-    } else {
-      facetValueMap.set(value, 1);
+    value = value.trim();
+    if (value) {
+      if (facetValueMap.has(value)) {
+        facetValueMap.set(value, facetValueMap.get(value)! + 1);
+      } else {
+        facetValueMap.set(value, 1);
+      }
     }
   }
 
@@ -111,6 +117,15 @@ export class GridComponent implements OnInit {
         }
       });
     }
+
+    if (!this.showDemoData) {
+      let record = node.data! as any;
+      let rowValue = record['production'] as boolean;
+      if (!rowValue) {
+        filterPass = false;
+      }
+    }
+
     return filterPass;
   }
 
@@ -129,6 +144,11 @@ export class GridComponent implements OnInit {
     } else {
       this.filters.set(filter.title, filter);
     }
+    this.gridApi.onFilterChanged();
+  }
+
+  toggleDemoData() {
+    console.log("Show demo data");
     this.gridApi.onFilterChanged();
   }
 
