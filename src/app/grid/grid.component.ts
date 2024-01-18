@@ -1,10 +1,11 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, OnInit} from "@angular/core";
 import {ColDef, GridApi, GridOptions, GridReadyEvent, IRowNode} from "ag-grid-community";
-import {Facet, FacetDef, FacetField, Filter} from "../types/facet";
+import {Facet, FacetDef, Filter} from "../types/facet";
 import {GridUtilsService} from "../services/grid-utils.service";
 import {GridRecord} from "../types/GridRecord";
 import {AbstractColDef} from "ag-grid-community/dist/lib/entities/colDef";
+import {FacetUtilsService} from "../services/facet-utils.service";
 
 
 @Component({
@@ -60,47 +61,23 @@ export class GridComponent implements OnInit {
         let value = node[field.field] as string;
         if (field.processor && field.processor === 'csv') {
           let values = value.split(",");
-          this.addValuesToMap(facetValueMap, values);
+          FacetUtilsService.addFieldsToFacet(facetValueMap, values);
         } else if (field.processor && field.processor === 'array') {
           let values = value as unknown as string[];
-          this.addValuesToMap(facetValueMap, values);
+          FacetUtilsService.addFieldsToFacet(facetValueMap, values);
         } else if (field.processor && field.processor === 'map') {
           let values = value as unknown as object;
-          this.addValuesToMap(facetValueMap, Object.keys(values));
+          FacetUtilsService.addFieldsToFacet(facetValueMap, Object.keys(values));
         } else {
-          this.addValueToMap(facetValueMap, value);
+          FacetUtilsService.addFieldToFacet(facetValueMap, value);
         }
       });
-      let facetFields: FacetField[] = [];
-      facetValueMap.forEach((value: number, key: string) => {
-        facetFields.push({
-          "value": key,
-          "count": value
-        })
-      });
-      facetFields.sort((a, b) => a.value.localeCompare(b.value, undefined, {sensitivity: 'base'}))
+      let facetFields = FacetUtilsService.convertFacetMapToList(facetValueMap);
       this.facets.push({
         "title": field.field,
         "values": facetFields
       })
     });
-  }
-
-  addValueToMap(facetValueMap: Map<string, number>, value: string) {
-    value = value.trim();
-    if (value) {
-      if (facetValueMap.has(value)) {
-        facetValueMap.set(value, facetValueMap.get(value)! + 1);
-      } else {
-        facetValueMap.set(value, 1);
-      }
-    }
-  }
-
-  addValuesToMap(facetValueMap: Map<string, number>, values: string[]) {
-    for (let value of values) {
-      this.addValueToMap(facetValueMap, value.trim());
-    }
   }
 
   isExternalFilterPresent(): boolean {
@@ -112,30 +89,18 @@ export class GridComponent implements OnInit {
     if (node.data) {
       this.filters.forEach((filter, filterTitle) => {
         let record = node.data! as any;
-        let rowValue = record[filterTitle] as string;
+        let cellValue = record[filterTitle] as unknown;
         let facet = this.getFacetDefByTitle(filterTitle);
         if (facet && facet.processor) {
-          if (facet.processor === 'csv') {
-            if (!rowValue.split(',').some(r => filter.values.includes(r.trim()))) {
-              filterPass = false;
-            }
-          } else if (facet.processor === 'array') {
-            let valueArray = rowValue as unknown as string[]
-            if (!valueArray.some(r => filter.values.includes(r.trim()))) {
-              filterPass = false;
-            }
-          } else if (facet.processor === 'map') {
-            let valueMap = rowValue as unknown as {[key: string]: number | string | boolean};
+          if (!FacetUtilsService.doesFilterPassForCsvProcessor(cellValue, filter, facet)) {
             filterPass = false;
-            for (let val of filter.values) {
-              if (valueMap[val]) {
-                filterPass = true;
-                break;
-              }
-            }
+          } else if (!FacetUtilsService.doesFilterPassForArrayProcessor(cellValue, filter, facet)) {
+            filterPass = false;
+          } else if (!FacetUtilsService.doesFilterPassForMapProcessor(cellValue, filter, facet)) {
+            filterPass = false;
           }
         } else {
-          if (!filter.values.includes(rowValue)) {
+          if (!filter.values.includes(cellValue as string)) {
             filterPass = false;
           }
         }
