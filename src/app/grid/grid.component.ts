@@ -36,7 +36,7 @@ export class GridComponent implements OnInit {
      this.dataService.loadJsonData().subscribe( jsonData => {
        this.rowData = jsonData;
        this.generateFacets(this.rowData);
-       window.dispatchEvent(new Event('resize')); 
+       window.dispatchEvent(new Event('resize'));
      }
     );
   }
@@ -144,11 +144,6 @@ export class GridComponent implements OnInit {
     } else {
       this.filters.set(filter.title, filter);
     }
-    this.gridApi.onFilterChanged();
-  }
-
-  toggleDemoData() {
-    console.log("Show demo data");
     this.gridApi.onFilterChanged();
   }
 
