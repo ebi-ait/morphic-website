@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {ColDef} from "ag-grid-community";
 import {UrlCellRenderer} from "../url-cell-renderer.component";
 import {FacetDef} from "../types/facet";
+import {Router} from "@angular/router";
+import {StatusCellRendererComponent} from "../extensions/status-cell-renderer/status-cell-renderer.component";
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +21,23 @@ export class GridUtilsService {
     initialHide: true,
   };
 
-  public static readonly COLUMN_DEFINITIONS: ColDef[] = [
+
+// https://www.ag-grid.com/javascript-data-grid/value-getters/#example-getters-and-formatters
+  // valueGetter for aggregating columns
+  public readonly COLUMN_DEFINITIONS: ColDef[] = [
     {field: "id"},
+    { field: "",
+      hide: false ,
+      suppressMenu: true,
+      sortable: false,
+      maxWidth:25,
+      valueFormatter: () => {
+        return '+'
+      }, onCellClicked: params =>  {
+        console.log("Cell clicked" +params.data.dpc);
+        const queryParams = { id: params.data.id};
+         this.router.navigate(["/detail"], { queryParams });
+}},
     {field: "study_title", hide: false, headerName: "Study Title", flex: 2},
     {field: "target_genes", hide: false, headerName: "Target Genes"},
     {field: "cell_line", hide: false, headerName: "Cell Line"},
@@ -29,7 +46,7 @@ export class GridUtilsService {
     {field: "upload_status", hide: true, headerName: "Status"},
     {field: "dpc", hide: false, headerName: "Centre"},
     {field: "expected_release", hide: true, headerName: "Expected Release", cellDataType: "dateString"},
-    {field: "available_datasets", hide: false, headerName: "Available Datasets", cellRenderer: UrlCellRenderer},
+    {field: "available_datasets", headerName: "Available Datasets", cellRenderer: UrlCellRenderer},
     {field: "short_study_label"},
     {field: "model_system"},
     {field: "pooled_perturbation"},
@@ -47,6 +64,8 @@ export class GridUtilsService {
     {field: "general_comments"},
     {field: "sharing_mechanism_with_DRACC"},
     {field: "comments"},
+    {field: "production"},
+    {field: "status", hide: false, cellRenderer: StatusCellRendererComponent}
   ];
 
   public static readonly FACET_DEFINITIONS: FacetDef[] = [
@@ -56,7 +75,7 @@ export class GridUtilsService {
     {field: "perturbation_type"}
   ]
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
 }

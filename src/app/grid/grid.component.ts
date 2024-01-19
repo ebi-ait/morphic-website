@@ -4,7 +4,9 @@ import {ColDef, GridApi, GridOptions, GridReadyEvent, IRowNode} from "ag-grid-co
 import {Facet, FacetDef, FacetField, Filter} from "../types/facet";
 import {GridUtilsService} from "../services/grid-utils.service";
 import {GridRecord} from "../types/GridRecord";
-
+import {DataService} from "../services/data.service";
+import {Router} from "@angular/router";
+import {  CellClickedEvent } from 'ag-grid-community';
 
 @Component({
   selector: 'app-grid',
@@ -12,7 +14,7 @@ import {GridRecord} from "../types/GridRecord";
   styleUrls: ['./grid.component.scss']
 })
 export class GridComponent implements OnInit {
-  public columnDefs: ColDef[] = GridUtilsService.COLUMN_DEFINITIONS;
+  public columnDefs: ColDef[] = this.gridUtilService.COLUMN_DEFINITIONS;
   public defaultColDef: ColDef = GridUtilsService.DEFAULT_COLUMN_DEFINITIONS;
   private facetDefs: FacetDef[] = GridUtilsService.FACET_DEFINITIONS;
 
@@ -20,25 +22,22 @@ export class GridComponent implements OnInit {
   public rowData!: GridRecord[];
   private filters: Map<string, Filter> = new Map<string, Filter>();
   facets: Facet[] = [];
+  showDemoData = true;
 
   public gridOptions: GridOptions = {
     doesExternalFilterPass: this.doesExternalFilterPass.bind(this),
     isExternalFilterPresent: this.isExternalFilterPresent.bind(this)
   };
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dataService: DataService, private gridUtilService :GridUtilsService) {
   }
 
   ngOnInit(): void {
-    this.http.get<GridRecord[]>("assets/data.json").subscribe(
-      (data) => {
-        this.rowData = data;
-        this.generateFacets(data);
-        window.dispatchEvent(new Event('resize')); //this is a workaround for side-nav opened overlap behaviour
-      },
-      (error) => {
-        console.error("Error fetching data: ", error);
-      },
+     this.dataService.loadJsonData().subscribe( jsonData => {
+       this.rowData = jsonData;
+       this.generateFacets(this.rowData);
+       window.dispatchEvent(new Event('resize')); 
+     }
     );
   }
 
@@ -118,6 +117,15 @@ export class GridComponent implements OnInit {
         }
       });
     }
+
+    if (!this.showDemoData) {
+      let record = node.data! as any;
+      let rowValue = record['production'] as boolean;
+      if (!rowValue) {
+        filterPass = false;
+      }
+    }
+
     return filterPass;
   }
 
@@ -136,6 +144,11 @@ export class GridComponent implements OnInit {
     } else {
       this.filters.set(filter.title, filter);
     }
+    this.gridApi.onFilterChanged();
+  }
+
+  toggleDemoData() {
+    console.log("Show demo data");
     this.gridApi.onFilterChanged();
   }
 
