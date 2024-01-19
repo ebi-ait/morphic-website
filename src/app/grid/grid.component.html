@@ -17,6 +17,11 @@
           <app-facet [facet]="facet" (filterChangedEvent)="applyFilters($event)"></app-facet>
         </div>
       </div>
+      <div class="demo-data-filter">
+        <mat-checkbox class="example-margin" [(ngModel)]="showDemoData" (change)="toggleDemoData()">
+          Show Demo Data
+        </mat-checkbox>
+      </div>
     </mat-sidenav>
 
     <mat-sidenav-content>
@@ -30,6 +35,7 @@
         [pagination]="true"
         (gridReady)="onGridReady($event)"
       ></ag-grid-angular>
+      <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
