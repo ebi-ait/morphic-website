@@ -9,6 +9,33 @@ export class FacetUtilsService {
   constructor() {
   }
 
+  public static populateFacetMap(value: unknown, field: FacetDef, facetValueMap: Map<string, number>) {
+    if (field.processor && field.processor === 'csv') {
+      let values = (value as string).split(",");
+      FacetUtilsService.addFieldsToFacet(facetValueMap, values);
+    } else if (field.processor && field.processor === 'array') {
+      let values = value as string[];
+      FacetUtilsService.addFieldsToFacet(facetValueMap, values);
+    } else if (field.processor && field.processor === 'map') {
+      let values = value as object;
+      FacetUtilsService.addFieldsToFacet(facetValueMap, Object.keys(values));
+    } else {
+      FacetUtilsService.addFieldToFacet(facetValueMap, value as string);
+    }
+  }
+
+  public static doesFilterPassForProcessor(cellValue: unknown, filter: Filter, facet: FacetDef) {
+    let filterPass = true;
+    if (!FacetUtilsService.doesFilterPassForCsvProcessor(cellValue, filter, facet)) {
+      filterPass = false;
+    } else if (!FacetUtilsService.doesFilterPassForArrayProcessor(cellValue, filter, facet)) {
+      filterPass = false;
+    } else if (!FacetUtilsService.doesFilterPassForMapProcessor(cellValue, filter, facet)) {
+      filterPass = false;
+    }
+    return filterPass;
+  }
+
   public static doesFilterPassForCsvProcessor(cellValue: unknown, filter: Filter, facet: FacetDef): boolean {
     if (facet.processor === 'csv') {
       let stringCellValue = cellValue as string;

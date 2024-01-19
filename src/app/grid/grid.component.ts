@@ -58,19 +58,8 @@ export class GridComponent implements OnInit {
     this.facetDefs.forEach(field => {
       let facetValueMap = new Map<string, number>();
       data.forEach(node => {
-        let value = node[field.field] as string;
-        if (field.processor && field.processor === 'csv') {
-          let values = value.split(",");
-          FacetUtilsService.addFieldsToFacet(facetValueMap, values);
-        } else if (field.processor && field.processor === 'array') {
-          let values = value as unknown as string[];
-          FacetUtilsService.addFieldsToFacet(facetValueMap, values);
-        } else if (field.processor && field.processor === 'map') {
-          let values = value as unknown as object;
-          FacetUtilsService.addFieldsToFacet(facetValueMap, Object.keys(values));
-        } else {
-          FacetUtilsService.addFieldToFacet(facetValueMap, value);
-        }
+        let value = node[field.field] as unknown;
+        FacetUtilsService.populateFacetMap(value, field, facetValueMap);
       });
       let facetFields = FacetUtilsService.convertFacetMapToList(facetValueMap);
       this.facets.push({
@@ -92,11 +81,7 @@ export class GridComponent implements OnInit {
         let cellValue = record[filterTitle] as unknown;
         let facet = this.getFacetDefByTitle(filterTitle);
         if (facet && facet.processor) {
-          if (!FacetUtilsService.doesFilterPassForCsvProcessor(cellValue, filter, facet)) {
-            filterPass = false;
-          } else if (!FacetUtilsService.doesFilterPassForArrayProcessor(cellValue, filter, facet)) {
-            filterPass = false;
-          } else if (!FacetUtilsService.doesFilterPassForMapProcessor(cellValue, filter, facet)) {
+          if (!FacetUtilsService.doesFilterPassForProcessor(cellValue, filter, facet)) {
             filterPass = false;
           }
         } else {
