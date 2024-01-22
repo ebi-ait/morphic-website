@@ -427,6 +427,9 @@
   justify-content: center;
   background-color: var(--dl-color-default-orange);
   border: none;
+  a {
+    text-decoration: none;
+  }
 }
 .home-text041 {
   color: var(--dl-color-default-smartwhite);
