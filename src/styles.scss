@@ -1,13 +1,26 @@
 @import 'ag-grid-community/styles/ag-grid.css';
 @import 'ag-grid-community/styles/ag-theme-quartz.css';
-@import 'ag-grid-community/styles/ag-theme-alpine.css';
+@import '@angular/material/theming';
 
 html, body {
   //height: 100%;
 }
 
+.ag-theme-quartz {
+  --ag-background-color: #F7F7F7;
+  --ag-odd-row-background-color: #EBF2F3;
+  --ag-font-family: Inter, "Helvetica Neue", sans-serif;
+}
+
+//.mat-drawer {
+html {
+  --mat-sidenav-container-background-color: #F7F7F7;
+}
+
+.ag-theme-quartz .ag-header-cell-text {
+  text-transform: Uppercase;
+}
+
 body {
-  margin: 0;
-  padding: 0 5px;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Inter, "Helvetica Neue", sans-serif;
 }
