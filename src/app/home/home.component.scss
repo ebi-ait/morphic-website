@@ -416,20 +416,21 @@
   position: absolute;
 }
 .home-button {
-  gap: 10px;
-  top: 205px;
-  left: 78px;
-  display: flex;
-  padding: 7px 20px;
-  position: absolute;
-  align-items: center;
-  border-radius: 5px;
+  margin-left: 4.8rem;
+  display: inline-flex;
+  padding: 0.4375rem 1.25rem;
   justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 0.3125rem;
   background-color: var(--dl-color-default-orange);
   border: none;
   a {
     text-decoration: none;
   }
+}
+.adjust-left {
+  margin-left: 4.1rem;
 }
 .home-text041 {
   color: var(--dl-color-default-smartwhite);
@@ -489,13 +490,13 @@
   height: auto;
   position: absolute;
   font-size: 12px;
-  font-style: Medium;
   text-align: center;
   font-family: Inter;
   font-weight: 500;
   line-height: normal;
   font-stretch: normal;
   text-decoration: none;
+  text-transform: capitalize;
 }
 .home-text047 {
   top: 129px;
@@ -549,13 +550,13 @@
   height: auto;
   position: absolute;
   font-size: 12px;
-  font-style: Medium;
   text-align: left;
   font-family: Inter;
   font-weight: 500;
   line-height: normal;
   font-stretch: normal;
   text-decoration: none;
+  text-transform: capitalize;
 }
 .home-text055 {
   top: 20px;
@@ -564,13 +565,13 @@
   height: auto;
   position: absolute;
   font-size: 12px;
-  font-style: Medium;
   text-align: center;
   font-family: Inter;
   font-weight: 500;
   line-height: normal;
   font-stretch: normal;
   text-decoration: none;
+  text-transform: capitalize;
 }
 .home-component2 {
   gap: 10px;
@@ -1045,5 +1046,47 @@ background: linear-gradient(45deg, black 0%, black 26%, transparent 26%), linear
 .white-triangle {
   position: absolute;
   top: 19.28%;
-  right: 24.6%;
+}
+.white-about-rectangle {
+  border-radius: 0.5rem;
+  background: #F7F7F7;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 20.375rem;
+  height: 16.0625rem;
+  flex-shrink: 0;
+  .header-text {
+    color: var(--dl-color-gray-700);
+    text-align: center;
+    font-family: Inter;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.225rem;
+    text-transform: uppercase;
+    margin-top: 1.5rem;
+  }
+  .sentance {
+    color: var(--dl-color-default-smartblack);
+    text-align: center;
+    font-family: Inter;
+    font-size: 0.875rem;
+    font-style: normal;
+    line-height: normal;
+    margin-top: 6rem;
+    margin-bottom: 1.25rem;
+    span {
+      font-weight: 700;
+    }
+  }
+  .spacing-1 {
+    padding: 0 2.5rem;
+  }
+  .spacing {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+.left-space {
+  margin-left: 2rem;
 }
