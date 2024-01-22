@@ -6,8 +6,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   styleUrls: ['./carousel.component.css']
 })
 export class CarouselComponent implements OnInit, OnDestroy {
-  logos = ['../assets/external/logos/EMBL.png', '../assets/external/logos/Jackson.png', '../assets/external/logos/Miami.png'];
-  logoTitles = ['EMBL', 'The Jakson Lab', 'University of Miami'];
+  logos = ['../assets/external/logos/Fred-Hutch.png', '../assets/external/logos/Jackson.png', '../assets/external/logos/MSK.png','../assets/external/logos/Northwestern.png','../assets/external/logos/Stanford.png', '../assets/external/logos/UCSF.png', '../assets/external/logos/Washington.png'];
+  logoTitles = ['Fred Hutchinson Cancer Center', 'The Jackson Laboratory', 'Memorial Sloan Kettering Cancer Center', 'Northwestern University', 'Stanford University', 'University of California San Francisco', 'Washington University'];
   currentLogoIndex = 0;
   intervalId: any;
 
