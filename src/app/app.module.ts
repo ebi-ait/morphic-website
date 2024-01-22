@@ -22,13 +22,17 @@ import {MatButtonModule} from "@angular/material/button";
 import {DetailComponent} from "./detail/detail.component";
 import {MatCardModule} from "@angular/material/card";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { CarouselComponent } from './carousel/carousel.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GridComponent,
     UrlCellRenderer,
-    DetailComponent
+    DetailComponent,
+    HomeComponent,
+    CarouselComponent
   ],
     imports: [
         BrowserModule,
