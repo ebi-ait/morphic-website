@@ -4,6 +4,8 @@ import {ICellRendererParams} from "ag-grid-community";
 import {MatButtonModule} from "@angular/material/button";
 import {NgIf} from "@angular/common";
 import {MatChipsModule} from "@angular/material/chips";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @Component({
   selector: 'app-status-column',
@@ -11,16 +13,22 @@ import {MatChipsModule} from "@angular/material/chips";
   imports: [
     MatButtonModule,
     NgIf,
-    MatChipsModule
+    MatChipsModule,
+    MatIconModule,
+    MatTooltipModule,
   ],
   template: `
-    <div style="margin: 0 auto">
-      <button *ngIf="released" mat-raised-button color="primary" style="float: right">
-        <span class="inline-text">Download</span>
+    <div class="ag-cell-value">
+      <button *ngIf="released"
+              mat-icon-button>
+        <mat-icon>arrow_downward</mat-icon>
       </button>
-      <mat-chip *ngIf="!released" class="inline-chip" style="float: right;">
+      <button *ngIf="!released"
+              mat-icon-button
+              matTooltip="Available {{releaseText}}">
+        <mat-icon>watch</mat-icon>
         <span class="inline-text">Available {{releaseText}}</span>
-      </mat-chip>
+      </button>
     </div>
   `,
   styles: [`
