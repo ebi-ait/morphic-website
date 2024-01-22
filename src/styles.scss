@@ -15,6 +15,18 @@ html, body {
 html {
   --mat-sidenav-container-background-color: #F7F7F7;
 }
+.mat-accent {
+  --mat-option-selected-state-label-text-color: green;
+}
+
+//.mat-mdc-mini-fab {
+  //--mdc-fab-container-color: black;
+  //--mat-mdc-fab-color: #E84E0F;
+  //--mdc-fab-container-color: green;
+  //--mat-mdc-fab-color: green;
+  //
+  //--mat-mdc-fab-color: green;
+//}
 
 .ag-theme-quartz .ag-header-cell-text {
   text-transform: Uppercase;

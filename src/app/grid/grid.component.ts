@@ -5,8 +5,7 @@ import {Facet, FacetDef, FacetField, Filter} from "../types/facet";
 import {GridUtilsService} from "../services/grid-utils.service";
 import {GridRecord} from "../types/GridRecord";
 import {DataService} from "../services/data.service";
-import {Router} from "@angular/router";
-import {  CellClickedEvent } from 'ag-grid-community';
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-grid',
@@ -22,6 +21,7 @@ export class GridComponent implements OnInit {
   public rowData!: GridRecord[];
   private filters: Map<string, Filter> = new Map<string, Filter>();
   facets: Facet[] = [];
+  searchField: FormControl;
   showDemoData = true;
 
   public gridOptions: GridOptions = {
