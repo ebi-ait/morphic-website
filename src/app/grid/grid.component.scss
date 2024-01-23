@@ -2,16 +2,11 @@
   overflow: hidden;
 }
 
-.facet-wrapper {
-  margin: 5px;
-  padding: 5px;
-}
-
 .grid-wrapper {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 225px);
-  height: calc(100vh - 120px);
+  //width: calc(100% - 225px);
+  //height: calc(100vh - 120px);
   float: left;
 }
 
@@ -19,24 +14,8 @@
   flex: 1 1 auto;
 }
 
-.grid-header {
-  margin: 15px 0;
-}
-
 .grid-header-title {
   float: left;
-}
-
-.grid-header-input {
-  float: left;
-  height: 31px;
-  border-radius: 5px;
-  border: 1px solid #df1515;
-  margin-left: 18px;
-  padding-left: 10px;
-  font-size: 16px;
-  width: 100%;
-  //width: calc(50% - 130px);
 }
 
 .grid-header-options {
@@ -46,13 +25,5 @@
 
 .grid-header-options-ctl {
   float: right;
-  margin-left: 10px;
 }
 
-.demo-data-filter {
-  //position: absolute;
-  //bottom: 0;
-  //left: 0;
-  width: 100%;
-  background: #df1515;
-}
