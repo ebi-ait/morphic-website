@@ -10,7 +10,7 @@ import {FormControl} from "@angular/forms";
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.scss']
+  styleUrls: ['./grid.component.scss', '../header/header.component.scss']
 })
 export class GridComponent implements OnInit {
   public columnDefs: ColDef[] = this.gridUtilService.COLUMN_DEFINITIONS;
