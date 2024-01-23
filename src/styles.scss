@@ -2,36 +2,33 @@
 @import 'ag-grid-community/styles/ag-theme-quartz.css';
 @import '@angular/material/theming';
 
-html, body {
+// general (not theme, non project specific customisation)
+.ag-root-wrapper.ag-layout-normal {
+  border-radius: 0;
 }
 
+// theme/project related customisation
+// This section gets the style values from the theme file and configures the relevant
+// ag-grid and angular material design styling rules.
+// New themes would typically be defined in theme.scss
+@import "theme";
+
 .ag-theme-quartz {
-  --ag-background-color: #F7F7F7;
-  --ag-odd-row-background-color: #EBF2F3;
+  --ag-background-color: $grid-background-color;
+  --ag-odd-row-background-color: $grid-odd-row-background-color;
   --ag-row-border-style: none;
-  --ag-font-family: Inter, "Helvetica Neue", sans-serif;
+  --ag-font-family: $font, "Helvetica Neue", sans-serif;
 }
 
 html {
-  --mat-sidenav-container-background-color: #F7F7F7;
+  --mat-sidenav-container-background-color: $grid-background-color;
 }
-.mat-accent {
-  --mat-option-selected-state-label-text-color: green;
-}
-
-//.mat-mdc-mini-fab {
-  //--mdc-fab-container-color: black;
-  //--mat-mdc-fab-color: #E84E0F;
-  //--mdc-fab-container-color: green;
-  //--mat-mdc-fab-color: green;
-  //
-  //--mat-mdc-fab-color: green;
-//}
 
 .ag-theme-quartz .ag-header-cell-text {
-  text-transform: Uppercase;
+  text-transform: $grid-header-text-transform;
 }
 
 body {
   font-family: Inter, "Helvetica Neue", sans-serif;
 }
+
