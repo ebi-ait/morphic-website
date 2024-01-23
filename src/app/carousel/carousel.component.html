@@ -1,0 +1,27 @@
+<div class="carousel-container">
+  <div class="header-text">
+    <p>participants</p>
+  </div>
+  <p class="sentance spacing">
+    <img [src]="logos[currentLogoIndex]" [alt]="logos[currentLogoIndex]">
+  </p>
+  <div class="logo-title">
+    {{logoTitles[currentLogoIndex]}}
+  </div>
+  <div class="dots">
+    <span *ngFor="let logo of logos; let i = index" 
+          class="dot" 
+          [class.dot-active]="i === currentLogoIndex" 
+          (click)="selectLogo(i)">
+    </span>
+  </div>
+  <div class="adjust-height">
+    <button class="home-button adjust-left">
+      <a>
+        <span class="home-text041">
+          <span>See who’s involved</span>
+        </span>
+      </a>
+    </button>
+  </div>
+</div>
