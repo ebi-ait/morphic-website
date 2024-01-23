@@ -836,10 +836,12 @@
 }*/
 .home-vector4 {
   top: 79.8%;
-  left: 2.5%;
+  left: 1px;
   width: 1440px;
   height: 110px;
   position: absolute;
+  clip-path: polygon(0 0%, 100% 0, 100% 100%, 0 2%);
+  background-color: var(--dl-color-gray-triangle);
 }
 .home-rectangle5 {
   top: 1982px;
