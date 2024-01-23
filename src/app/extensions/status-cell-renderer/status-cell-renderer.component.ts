@@ -18,23 +18,22 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     MatTooltipModule,
   ],
   template: `
-    <div class="ag-cell-value">
-      <button *ngIf="released"
-              mat-icon-button>
+      <button mat-button *ngIf="released" color="accent">
         <mat-icon>arrow_downward</mat-icon>
+        Download
       </button>
-      <button *ngIf="!released"
-              mat-icon-button
-              matTooltip="Available {{releaseText}}">
+      <button mat-button *ngIf="!released"
+                disabled
+                matTooltip="Available {{releaseText}}">
         <mat-icon>watch</mat-icon>
-        <span class="inline-text">Available {{releaseText}}</span>
+        {{releaseText}}
       </button>
-    </div>
   `,
   styles: [`
-    .inline-text {
-      font-size: 10px;
-    }`]
+    .mat-icon {
+      vertical-align: middle;
+    }
+    `]
 })
 export class StatusCellRendererComponent implements ICellRendererAngularComp {
   released: boolean;
