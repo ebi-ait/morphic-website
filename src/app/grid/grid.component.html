@@ -3,16 +3,20 @@
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>Search Datasets</span>
-    <input type="text" id="filter-text-box" class="grid-header-input" placeholder="search by genes, cell lines, etc.."
-           (input)="onFilterTextBoxChanged()"/>
-    <span class="grid-header-spacer"></span>
   </mat-toolbar>
 
   <mat-sidenav-container class="catalog-sidenav-container">
     <mat-sidenav #snav [mode]="'side'" opened="true">
       <div class="facet-wrapper">
-        <h3>Filters</h3>
+      <mat-form-field>
+        <mat-icon matPrefix
+                  fontIcon="search"></mat-icon>
+        <input type="text"
+               matInput
+               id="filter-text-box"
+               placeholder="Search by Gene ID"
+               (input)="onFilterTextBoxChanged()"/>
+      </mat-form-field>
         <div *ngFor="let facet of facets">
           <app-facet [facet]="facet" (filterChangedEvent)="applyFilters($event)"></app-facet>
         </div>
@@ -23,7 +27,7 @@
     <mat-sidenav-content>
       <ag-grid-angular
         style="width: 100%; height: 100vh;"
-        class="ag-theme-alpine"
+        class="ag-theme-quartz"
         [columnDefs]="columnDefs"
         [defaultColDef]="defaultColDef"
         [rowData]="rowData"
