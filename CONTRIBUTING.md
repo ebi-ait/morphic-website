@@ -1,4 +1,4 @@
-In order to contriute to this project:
+In order to contribute to this project:
 
 1. Join the ebi-ait organisation
 2. associate your github account with your zenhub account

@@ -1,13 +1,34 @@
 @import 'ag-grid-community/styles/ag-grid.css';
 @import 'ag-grid-community/styles/ag-theme-quartz.css';
-@import 'ag-grid-community/styles/ag-theme-alpine.css';
+@import '@angular/material/theming';
 
-html, body {
-  //height: 100%;
+// general (not theme, non project specific customisation)
+.ag-root-wrapper.ag-layout-normal {
+  border-radius: 0;
+}
+
+// theme/project related customisation
+// This section gets the style values from the theme file and configures the relevant
+// ag-grid and angular material design styling rules.
+// New themes would typically be defined in theme.scss
+@import "theme";
+
+.ag-theme-quartz {
+  --ag-background-color: $grid-background-color;
+  --ag-odd-row-background-color: $grid-odd-row-background-color;
+  --ag-row-border-style: none;
+  --ag-font-family: $font, "Helvetica Neue", sans-serif;
+}
+
+html {
+  --mat-sidenav-container-background-color: $grid-background-color;
+}
+
+.ag-theme-quartz .ag-header-cell-text {
+  text-transform: $grid-header-text-transform;
 }
 
 body {
-  margin: 0;
-  padding: 0 5px;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Inter, "Helvetica Neue", sans-serif;
 }
+
