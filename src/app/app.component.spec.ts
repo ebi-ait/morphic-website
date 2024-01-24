@@ -29,6 +29,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('Data Catalogue');
+    expect(compiled.textContent).toContain('eLwazi Data Catalogue');
   });
 });
