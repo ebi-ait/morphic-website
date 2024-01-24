@@ -32,7 +32,7 @@ export class StatusCellRendererComponent implements ICellRendererAngularComp {
   released: boolean;
   releaseText: string;
 
-  monthYearRegExp: RegExp = /^([a-zA-Z]{3})\s+(20\d{2}|\d{2})$/;
+  monthYearRegExp: RegExp = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{2}|\d{4}$/i;
 
   agInit(params: ICellRendererParams) {
     this.generateCellValue(params);
