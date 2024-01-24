@@ -22,8 +22,8 @@ export class GridUtilsService {
 
   // mix of colDef and groupColDef
   public static readonly COLUMN_DEFINITIONS = [
-    {field: "cohort_name", hide: false, headerName: "Project Name"},
-    {field: "countries", hide: false, headerName: "Regions", tooltipField: "Regions", flex: 2},
+    {field: "project_name", hide: false, headerName: "Project Name"},
+    {field: "regions", hide: false, headerName: "Regions", tooltipField: "Regions", flex: 2},
     {
       headerName: 'Available Data Types',
       headerClass: 'grid-col-header-parent',
@@ -164,8 +164,8 @@ export class GridUtilsService {
   ];
 
   public static readonly FACET_DEFINITIONS: FacetDef[] = [
-    {field: "cohort_name"},
-    {field: "countries", processor: "array"},
+    {field: "project_name"},
+    {field: "regions", processor: "array"},
     {field: "available_data_types", processor: "map"}
   ]
 

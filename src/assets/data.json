@@ -1,6 +1,6 @@
 [
   {
-    "cohort_name": "CAMRA",
+    "project_name": "CAMRA",
     "website": "https://elwazi.org/",
     "license": " - ",
     "available_data_types": {
@@ -14,10 +14,10 @@
       "image_data": false,
       "other": []
     },
-    "countries": ["Nigeria", "Rwanda"]
+    "regions": ["Nigeria", "Rwanda"]
   },
   {
-    "cohort_name": "HE2AT",
+    "project_name": "HE2AT",
     "website": "https://elwazi.org/",
     "license": " - ",
     "available_data_types": {
@@ -31,10 +31,10 @@
       "image_data": false,
       "other": ["Geospatial data"]
     },
-    "countries": ["sub-Saharan Africa"]
+    "regions": ["sub-Saharan Africa"]
   },
   {
-    "cohort_name": "D-SINE",
+    "project_name": "D-SINE",
     "website": "https://elwazi.org/",
     "license": " - ",
     "available_data_types": {
@@ -48,10 +48,10 @@
       "image_data": false,
       "other": ["Context of injury"]
     },
-    "countries": ["sub-Saharan Africa", "Cameroon"]
+    "regions": ["sub-Saharan Africa", "Cameroon"]
   },
   {
-    "cohort_name": "MADIVA",
+    "project_name": "MADIVA",
     "website": "https://elwazi.org/",
     "license": " - ",
     "available_data_types": {
@@ -65,10 +65,10 @@
       "image_data": false,
       "other": []
     },
-    "countries": ["Kenya", "South Africa"]
+    "regions": ["Kenya", "South Africa"]
   },
   {
-    "cohort_name": "MUDSReH",
+    "project_name": "MUDSReH",
     "website": "https://elwazi.org/",
     "license": " - ",
     "available_data_types": {
@@ -82,10 +82,10 @@
       "image_data": true,
       "other": ["Geospatial data"]
     },
-    "countries": ["Ghana", "Kenya", "Uganda"]
+    "regions": ["Ghana", "Kenya", "Uganda"]
   },
   {
-    "cohort_name": "INFORM",
+    "project_name": "INFORM",
     "website": "https://elwazi.org/",
     "license": " - ",
     "available_data_types": {
@@ -99,10 +99,10 @@
       "image_data": false,
       "other": []
     },
-    "countries": ["Nigeria", "South Africa"]
+    "regions": ["Nigeria", "South Africa"]
   },
   {
-    "cohort_name": "UZIMA-DS",
+    "project_name": "UZIMA-DS",
     "website": "https://elwazi.org/",
     "license": " - ",
     "available_data_types": {
@@ -116,6 +116,6 @@
       "image_data": false,
       "other": ["Geospatial data"]
     },
-    "countries": ["Kenya"]
+    "regions": ["Kenya"]
   }
 ]
