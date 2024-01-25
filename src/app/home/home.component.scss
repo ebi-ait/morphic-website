@@ -824,7 +824,7 @@
   font-style: Semi Bold;
   text-align: center;
   font-family: Inter;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 62px;
   font-stretch: normal;
   text-decoration: none;
@@ -1058,4 +1058,8 @@ background: linear-gradient(45deg, black 0%, black 26%, transparent 26%), linear
   top: 530px;
   left: 935px;
   position: absolute;
+}
+
+.accordian-container {
+  margin-top: 15%;
 }
