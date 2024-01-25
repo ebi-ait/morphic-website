@@ -28,6 +28,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         <mat-icon>watch</mat-icon>
         {{releaseText}}
       </button>
+
   `,
   styles: [`
     .mat-icon {
@@ -39,6 +40,8 @@ export class StatusCellRendererComponent implements ICellRendererAngularComp {
   released: boolean;
   releaseText: string;
 
+  monthYearRegExp: RegExp = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{2}|\d{4}$/i;
+
   agInit(params: ICellRendererParams) {
     this.generateCellValue(params);
   }
@@ -49,9 +52,13 @@ export class StatusCellRendererComponent implements ICellRendererAngularComp {
   }
 
   public generateCellValue(params: ICellRendererParams) {
+
     if (params.data['expected_release']) {
       this.released = false;
       this.releaseText = params.data['expected_release'];
+      if(this.monthYearRegExp.test(this.releaseText)) {
+        this.releaseText = 'Available '+this.releaseText;
+      }
     } else {
       this.released = true;
     }
