@@ -1,5 +1,5 @@
 <form>
-  <mat-form-field class="example-chip-list" *ngIf="facet">
+  <mat-form-field class="catalog-facet" *ngIf="facet">
     <mat-label>{{StringUtilsService.snakeCaseToTitle(facet.title)}}</mat-label>
     <mat-chip-grid #chipGrid aria-label="Filter selection">
       <mat-chip-row *ngFor="let selectedFilter of selectedFilters" (removed)="remove(selectedFilter)">
