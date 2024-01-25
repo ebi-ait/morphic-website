@@ -18,7 +18,7 @@ export class CarouselComponent implements OnInit, OnDestroy {
   startCarousel(): void {
     this.intervalId = setInterval(() => {
       this.currentLogoIndex = (this.currentLogoIndex + 1) % this.logos.length;
-    }, 2000);
+    }, 3000);
   }
 
   ngOnDestroy(): void {
