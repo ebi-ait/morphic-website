@@ -32,7 +32,8 @@
   position: absolute;
   top: 2vh;
   z-index: 1;
-  width: -webkit-fill-available;
+  width: 95vw; /* Standard, for most browsers */
+  width: -webkit-fill-available; /* For webkit browsers */
 }
 
 .about-container {
