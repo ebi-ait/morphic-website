@@ -24,7 +24,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
       </button>
       <button mat-button *ngIf="!released"
                 disabled
-                matTooltip="Available {{releaseText}}">
+                matTooltip="{{releaseText}}">
         <mat-icon>watch</mat-icon>
         {{releaseText}}
       </button>
