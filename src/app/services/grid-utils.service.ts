@@ -19,6 +19,8 @@ export class GridUtilsService {
     resizable: true,
     menuTabs: ["filterMenuTab", "generalMenuTab", "columnsMenuTab"],
     initialHide: true,
+    wrapText: true,
+    autoHeight:true,
   };
 
 
@@ -65,7 +67,7 @@ export class GridUtilsService {
     {field: "sharing_mechanism_with_DRACC"},
     {field: "comments"},
     {field: "production"},
-    {field: "status", hide: false, cellRenderer: StatusCellRendererComponent}
+    {field: "status", hide: false, cellRenderer: StatusCellRendererComponent, autoHeight:false, wrapText:false}
   ];
 
   public static readonly FACET_DEFINITIONS: FacetDef[] = [
