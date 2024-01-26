@@ -24,6 +24,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { CarouselComponent } from './carousel/carousel.component';
 import { HomeComponent } from './home/home.component';
+import { CdkAccordionOverviewExample } from './accordion/accordion.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { HomeComponent } from './home/home.component';
         MatButtonModule,
         FormsModule,
         MatCardModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        CdkAccordionOverviewExample
     ],
   providers: [],
   bootstrap: [AppComponent]
