@@ -1,5 +1,5 @@
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {Component, ElementRef, EventEmitter, inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
@@ -10,8 +10,7 @@ import {StringUtilsService} from "../../services/string-utils.service";
 import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
 import {MatIconModule} from "@angular/material/icon";
 import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
-import {filter, map, Observable, startWith} from "rxjs";
-import {LiveAnnouncer} from "@angular/cdk/a11y";
+import {map, Observable, startWith} from "rxjs";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
@@ -19,14 +18,10 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
   selector: 'app-facet',
   standalone: true,
   imports: [
-    MatFormFieldModule,
     MatOptionModule,
     MatSelectModule,
     NgForOf,
-    ReactiveFormsModule,
     NgIf,
-
-
     FormsModule,
     MatFormFieldModule,
     MatChipsModule,
@@ -41,29 +36,17 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
   styleUrl: './facet.component.scss'
 })
 export class FacetComponent implements OnInit {
+  protected readonly StringUtilsService = StringUtilsService;
+
   @Input() facet: Facet;
   @Output() filterChangedEvent = new EventEmitter<Filter>();
-
-  protected readonly StringUtilsService = StringUtilsService;
+  @ViewChild('filterInput') filterInput: ElementRef<HTMLInputElement>;
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   facetControl = new FormControl('');
   filteredFacets: Observable<string[]>;
   selectedFilters: string[] = [];
   facetValues: string[] = [];
-
-  @ViewChild('filterInput') filterInput: ElementRef<HTMLInputElement>;
-  announcer = inject(LiveAnnouncer);
-
-  filterChanged(value: any) {
-    let filterValues = this.facetControl.value! as unknown as string[];
-    let filter = {
-      "title": this.facet.title,
-      "values": this.selectedFilters
-    }
-    this.filterChangedEvent.emit(filter);
-  }
-
 
   constructor() {
     this.filteredFacets = this.facetControl.valueChanges.pipe(
@@ -93,7 +76,7 @@ export class FacetComponent implements OnInit {
     const index = this.selectedFilters.indexOf(filter);
     if (index >= 0) {
       this.selectedFilters.splice(index, 1);
-      this.announcer.announce(`Removed ${filter}`);
+      // this.announcer.announce(`Removed ${filter}`);
     }
 
     this.filterChanged("");
@@ -117,6 +100,15 @@ export class FacetComponent implements OnInit {
 
   isFacetValueSelected(value: string): boolean {
     return this.selectedFilters.includes(value);
+  }
+
+  filterChanged(value: any) {
+    let filterValues = this.facetControl.value! as unknown as string[];
+    let filter = {
+      "title": this.facet.title,
+      "values": this.selectedFilters
+    }
+    this.filterChangedEvent.emit(filter);
   }
 
   private _filter(value: string): string[] {
