@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CAROUSEL_TIME } from '../config/constants';
 
 @Component({
   selector: 'app-carousel',
@@ -10,6 +11,7 @@ export class CarouselComponent implements OnInit, OnDestroy {
   logoTitles = ['Fred Hutchinson Cancer Center', 'The Jackson Laboratory', 'Memorial Sloan Kettering Cancer Center', 'Northwestern University', 'Stanford University', 'University of California San Francisco', 'Washington University'];
   currentLogoIndex = 0;
   intervalId: any;
+  timeInterval = CAROUSEL_TIME;
 
   ngOnInit(): void {
     this.startCarousel();
@@ -18,7 +20,7 @@ export class CarouselComponent implements OnInit, OnDestroy {
   startCarousel(): void {
     this.intervalId = setInterval(() => {
       this.currentLogoIndex = (this.currentLogoIndex + 1) % this.logos.length;
-    }, 2000);
+    }, this.timeInterval);
   }
 
   ngOnDestroy(): void {
