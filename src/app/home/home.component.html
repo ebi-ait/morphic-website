@@ -39,7 +39,11 @@
           <a href="{{gene_list_url}}" target="_blank">
             <span class="home-text012"><span>Gene list</span></span>
           </a>
-          <span class="home-text014"><span>FAQ</span></span>
+          <span>
+            <a href="#faq" (click)="scrollTo('faq')" class="home-text014">
+              <span>FAQ</span>
+            </a>
+          </span>
           <span class="home-text016"><span>Contact us</span></span>
           <span class="home-text018"><span>About</span></span>
         </div>
@@ -182,7 +186,11 @@
     <a href="{{gene_list_url}}" target="_blank">
       <span class="home-text065">Gene List</span>
     </a>
-    <span class="home-text067"><span>Faq</span></span>
+    <span>
+      <a href="#faq" (click)="scrollTo('faq')" class="home-text067">
+        <span>FAQ</span>
+      </a>
+    </span>
     <span class="home-text069"><span>Contact Us</span></span>
     <span class="home-text071">
       <span>
@@ -227,7 +235,7 @@
       alt="Rectangle51571"
       class="home-rectangle5"
     />
-    <div class="home-group15">
+    <div class="home-group15" id="faq">
       <span class="home-text088">
         <span>Frequently asked questions</span>
       </span>
