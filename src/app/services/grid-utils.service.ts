@@ -84,8 +84,8 @@ export class GridUtilsService {
 
     if (params.colDef.field === 'target_genes' && params.data.target_genes) {
       let targetGenesArr = params.data.target_genes.split(",");
-      if(targetGenesArr.length > 1) {
-        return targetGenesArr.pop() + ' + '+ targetGenesArr.length +' more';
+      if(targetGenesArr.length > 2) {
+        return targetGenesArr.pop() + ',' + targetGenesArr.pop()+ ' + '+ targetGenesArr.length +' more';
       }
     }
     return params.value;
