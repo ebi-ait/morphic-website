@@ -19,16 +19,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'data-catalogue'`, () => {
+  it(`should have as title 'study-tracker'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('data-catalogue');
+    expect(app.title).toEqual('study-tracker');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('Data Catalogue');
+    expect(compiled.textContent).toContain('Study Tracker');
   });
 });
