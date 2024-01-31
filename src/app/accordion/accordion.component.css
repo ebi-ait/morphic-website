@@ -36,6 +36,10 @@
 .example-accordion-item-body {
   color: var(--dl-color-default-smartwhite);
   font-weight: 300;
+  a {
+    text-decoration: none;
+    color: var(--dl-color-default-orange);
+  }
 }
 
 .example-accordion-item-header:hover {

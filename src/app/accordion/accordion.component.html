@@ -1,5 +1,5 @@
 <cdk-accordion class="example-accordion">
-  @for (item of items; track item; let index = $index) {
+  @for (item of faqs; track item; let index = $index) {
     <cdk-accordion-item
       #accordionItem="cdkAccordionItem"
       class="example-accordion-item"
@@ -21,7 +21,7 @@
           class="orange-polygon"
           [style.display]="accordionItem.expanded ? '' : 'none'"
         />
-        {{ item }}
+        {{ item.question }}
         <span class="border"></span>
       </div>
       <div
@@ -29,8 +29,8 @@
         role="region"
         [style.display]="accordionItem.expanded ? '' : 'none'"
         [attr.id]="'accordion-body-' + index"
-        [attr.aria-labelledby]="'accordion-header-' + index">
-        {{content[index]}}
+        [attr.aria-labelledby]="'accordion-header-' + index"
+        [innerHTML]="item.answer">
       </div>
     </cdk-accordion-item>
   }
