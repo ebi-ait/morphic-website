@@ -13,6 +13,7 @@
            [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
            (matChipInputTokenEnd)="add($event)"/>
+    <mat-icon matSuffix>arrow_right</mat-icon>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="toggleSelected($event)">
       <mat-option *ngFor="let filteredFacet of filteredFacets | async" [value]="filteredFacet">
         <mat-checkbox class="facet-field-checkbox" [checked]="isFacetValueSelected(filteredFacet)"></mat-checkbox>
