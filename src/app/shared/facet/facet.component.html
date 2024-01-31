@@ -1,8 +1,28 @@
 <mat-form-field class="facet-field" *ngIf="facet">
-  <mat-label>{{StringUtilsService.snakeCaseToTitle(facet.title)}}</mat-label>
-  <mat-select [formControl]="facetControl" multiple>
-    <mat-option (click)="filterChanged(f.value)"
-                *ngFor="let f of facet.values"
-                [value]="f.value">{{f.value}}</mat-option>
-  </mat-select>
+  <input placeholder="{{StringUtilsService.snakeCaseToTitle(facet.title)}}"
+         #facetInput
+         [formControl]="facetControl"
+         [matChipInputFor]="chipGrid"
+         [matAutocomplete]="auto"
+         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+         (matChipInputTokenEnd)="add($event)"/>
+  <mat-icon matSuffix>arrow_right</mat-icon>
+  <mat-chip-grid #chipGrid
+                 [attr.aria-label]="StringUtilsService.snakeCaseToTitle(facet.title)+' selection'">
+    <mat-chip-row *ngFor="let option of selectedOptions"
+                  (removed)="remove(option)">
+      {{option}}
+      <button matChipRemove [attr.aria-label]="'remove ' + option">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip-row>
+  </mat-chip-grid>
+
+  <mat-autocomplete #auto="matAutocomplete"
+                    (optionSelected)="selected($event)">
+    <mat-option *ngFor="let option of filteredOptions | async"
+                [value]="option">
+      {{option}}
+    </mat-option>
+  </mat-autocomplete>
 </mat-form-field>
