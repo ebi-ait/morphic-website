@@ -1,15 +1,16 @@
 <app-header></app-header>
 <div class="catalog-container">
-  <mat-toolbar color="primary" class="catalog-toolbar">
+  <mat-toolbar class="catalog-toolbar">
     <button mat-icon-button (click)="snav.toggle()">
-      <mat-icon>menu</mat-icon>
+      <mat-icon svgIcon="squares"></mat-icon>
     </button>
+    Study Tracker
   </mat-toolbar>
 
   <mat-sidenav-container class="catalog-sidenav-container">
     <mat-sidenav #snav [mode]="'side'" opened="true">
       <div class="facet-wrapper">
-      <mat-form-field>
+      <mat-form-field >
         <mat-icon matPrefix
                   fontIcon="search"></mat-icon>
         <input type="text"
