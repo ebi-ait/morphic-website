@@ -40,8 +40,9 @@ export class GridUtilsService {
         const queryParams = { id: params.data.id};
          this.router.navigate(["/detail"], { queryParams });
 }},
+
     {field: "study_title", hide: false, headerName: "Study Title", flex: 2},
-    {field: "target_genes", hide: false, headerName: "Target Genes", cellEditorParams:{separator:',',maxValue:2},
+    {field: "target_genes", hide: false, headerName: "Target Genes", wrapText: true, autoHeight: true, cellEditorParams:{separator:',',maxValue:2},
       valueFormatter: (params) => this.simplifyCellListValue(params, params.data.target_genes)},
     {field: "cell_line", hide: false, headerName: "Cell Line"},
     {field: "readout_assay", hide: false, headerName: "Assay"},
