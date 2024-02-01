@@ -1,103 +1,118 @@
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
-import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {AsyncPipe, NgFor, NgForOf, NgIf} from "@angular/common";
+import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Facet, Filter} from "../../types/facet";
 import {StringUtilsService} from "../../services/string-utils.service";
 import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
-import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {MatIconModule} from "@angular/material/icon";
+import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {map, Observable, startWith} from "rxjs";
-import {COMMA, ENTER} from "@angular/cdk/keycodes";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+
 
 @Component({
   selector: 'app-facet',
   standalone: true,
   imports: [
-    AsyncPipe,
-    MatAutocompleteModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatIconModule,
     MatOptionModule,
     MatSelectModule,
     NgForOf,
     NgIf,
+    FormsModule,
+    MatFormFieldModule,
+    MatChipsModule,
+    NgFor,
+    MatIconModule,
+    MatAutocompleteModule,
     ReactiveFormsModule,
+    AsyncPipe,
+    MatCheckboxModule,
   ],
   templateUrl: './facet.component.html',
   styleUrl: './facet.component.scss'
 })
 export class FacetComponent implements OnInit {
-  separatorKeysCodes: number[] = [ENTER, COMMA];
+  protected readonly StringUtilsService = StringUtilsService;
 
-  facetControl = new FormControl('');
   @Input() facet: Facet;
   @Output() filterChangedEvent = new EventEmitter<Filter>();
-  protected readonly StringUtilsService = StringUtilsService;
-  @ViewChild('facetInput') facetInput: ElementRef<HTMLInputElement>;
+  @ViewChild('filterInput') filterInput: ElementRef<HTMLInputElement>;
 
-  filteredOptions: Observable<string[]>;
-  selectedOptions: string[] = [];
-  allOptions: string[];
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  facetControl = new FormControl('');
+  filteredFacets: Observable<string[]>;
+  selectedFilters: string[] = [];
+  facetValues: string[] = [];
 
-  ngOnInit(): void {
-    this.allOptions = this.facet.values.map(f=>f.value);
-    this.filteredOptions = this.facetControl.valueChanges.pipe(
+  constructor() {
+    this.filteredFacets = this.facetControl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allOptions.slice())),
+      map((f: string | null) => (f ? this._filter(f) : this.facetValues.slice())),
     );
   }
+
+  ngOnInit(): void {
+    if (this.facet) {
+      this.facetValues = this.facet.values.map(f => f.value);
+    }
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.selectedFilters.push(value);
+    }
+    event.chipInput!.clear();
+    this.facetControl.setValue(null);
+
+    this.filterChanged("");
+  }
+
+  remove(filter: string): void {
+    const index = this.selectedFilters.indexOf(filter);
+    if (index >= 0) {
+      this.selectedFilters.splice(index, 1);
+      // this.announcer.announce(`Removed ${filter}`);
+    }
+
+    this.filterChanged("");
+  }
+
+  toggleSelected(event: MatAutocompleteSelectedEvent) {
+    let selectedValue = event.option.viewValue;
+    if (this.selectedFilters.includes(selectedValue)) {
+      const index = this.selectedFilters.indexOf(selectedValue, 0);
+      if (index > -1) {
+        this.selectedFilters.splice(index, 1);
+      }
+    } else {
+      this.selectedFilters.push(event.option.viewValue);
+    }
+    this.filterInput.nativeElement.value = '';
+    this.facetControl.setValue(null);
+
+    this.filterChanged("");
+  }
+
+  isFacetValueSelected(value: string): boolean {
+    return this.selectedFilters.includes(value);
+  }
+
   filterChanged(value: any) {
-    let filterValues = [value];
+    let filterValues = this.facetControl.value! as unknown as string[];
     let filter = {
       "title": this.facet.title,
-      "values": filterValues
+      "values": this.selectedFilters
     }
     this.filterChangedEvent.emit(filter);
-  }
-  add(event: MatChipInputEvent): void {
-    console.log(`add: ${event}`)
-
-    const value = (event.value || '').trim();
-
-    // Add our fruit
-    if (value) {
-      this.selectedOptions.push(value);
-    }
-
-    // Clear the input value
-    event.chipInput!.clear();
-
-    this.facetControl.setValue(null);
-    this.filterChanged(event.value)
-
-  }
-
-  remove(option: string): void {
-    console.log(`remove: ${option}`)
-    const index = this.selectedOptions.indexOf(option);
-
-    if (index >= 0) {
-      this.selectedOptions.splice(index, 1);
-    }
-    this.filterChanged(null);
-
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    console.log(`selected: ${event.option.value}`)
-    this.selectedOptions.push(event.option.viewValue);
-    this.facetInput.nativeElement.value = '';
-    this.facetControl.setValue(null);
-    this.filterChanged(event.option.value)
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
-    return this.allOptions.filter(value => value.toLowerCase().includes(filterValue));
+    return this.facetValues.filter(f => f.toLowerCase().includes(filterValue));
   }
 }

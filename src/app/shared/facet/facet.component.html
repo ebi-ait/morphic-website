@@ -1,28 +1,23 @@
-<mat-form-field class="facet-field" *ngIf="facet">
-  <input placeholder="{{StringUtilsService.snakeCaseToTitle(facet.title)}}"
-         #facetInput
-         [formControl]="facetControl"
-         [matChipInputFor]="chipGrid"
-         [matAutocomplete]="auto"
-         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-         (matChipInputTokenEnd)="add($event)"/>
-  <mat-icon matSuffix>arrow_right</mat-icon>
-  <mat-chip-grid #chipGrid
-                 [attr.aria-label]="StringUtilsService.snakeCaseToTitle(facet.title)+' selection'">
-    <mat-chip-row *ngFor="let option of selectedOptions"
-                  (removed)="remove(option)">
-      {{option}}
-      <button matChipRemove [attr.aria-label]="'remove ' + option">
-        <mat-icon>cancel</mat-icon>
-      </button>
-    </mat-chip-row>
-  </mat-chip-grid>
-
-  <mat-autocomplete #auto="matAutocomplete"
-                    (optionSelected)="selected($event)">
-    <mat-option *ngFor="let option of filteredOptions | async"
-                [value]="option">
-      {{option}}
-    </mat-option>
-  </mat-autocomplete>
-</mat-form-field>
+<form>
+  <mat-form-field class="catalog-facet" *ngIf="facet">
+    <mat-label>{{StringUtilsService.snakeCaseToTitle(facet.title)}}</mat-label>
+    <mat-chip-grid #chipGrid aria-label="Filter selection">
+      <mat-chip-row *ngFor="let selectedFilter of selectedFilters" (removed)="remove(selectedFilter)">
+        {{selectedFilter}}
+        <button matChipRemove [attr.aria-label]="'remove ' + selectedFilter">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+    </mat-chip-grid>
+    <input placeholder="filter..." #filterInput [formControl]="facetControl"
+           [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+           (matChipInputTokenEnd)="add($event)"/>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="toggleSelected($event)">
+      <mat-option *ngFor="let filteredFacet of filteredFacets | async" [value]="filteredFacet">
+        <mat-checkbox class="facet-field-checkbox" [checked]="isFacetValueSelected(filteredFacet)"></mat-checkbox>
+        {{filteredFacet}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
