@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
 import { Title } from '@angular/platform-browser'
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'home',
@@ -8,9 +9,16 @@ import { Title } from '@angular/platform-browser'
 })
 
 export class HomeComponent {
-  raw9tgq: string = ' '
-  rawhipw: string = ' '
-  constructor(private title: Title) {
-    this.title.setTitle('exported project')
+  gene_list_url: string = ' '
+  constructor() {
+    if(environment.gene_list_url) {
+      this.gene_list_url = environment.gene_list_url;
+    }
+  }
+  scrollTo(elementId: string): void {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 }

@@ -1,6 +1,6 @@
 .example-accordion {
   display: block;
-  max-width: 750px;
+  width: 750px;
 }
 
 .example-accordion-item {
