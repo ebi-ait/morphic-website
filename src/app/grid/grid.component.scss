@@ -1,3 +1,38 @@
+
+// This section configures the relevant ag-grid and angular material design styling rules.
+// The color definitions should move to a separate file.
+.ag-root-wrapper.ag-layout-normal {
+  border-radius: 0;
+}
+
+html {
+
+}
+:host {
+  --mat-toolbar-container-background-color: #F7F7F7;
+  --mat-toolbar-container-text-color: #1e1e1E;
+
+  --mat-sidenav-container-background-color: #F7F7F7;
+  --mdc-filled-text-field-container-color: white;
+}
+.mat-drawer {
+  background-color: #F7F7F7;
+}
+
+
+.ag-theme-quartz {
+  --ag-background-color: #F7F7F7;
+  --ag-odd-row-background-color: #EBF2F3;
+  --ag-row-border-style: none;
+  --ag-font-family: Inter, "Helvetica Neue", sans-serif;
+  --ag-grid-size: 2px;
+  --ag-row-height: 20px;
+}
+
+.ag-theme-quartz .ag-header-cell-text {
+  text-transform: uppercase;
+}
+
 .grid-component {
   overflow: hidden;
 }
@@ -34,10 +69,11 @@
   z-index: 1;
   width: 95vw; /* Standard, for most browsers */
   width: -webkit-fill-available; /* For webkit browsers */
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .about-container {
-  height: 1000px;
+  height: 950px;
   display: flex;
   overflow: hidden;
   position: relative;

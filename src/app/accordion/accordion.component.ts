@@ -9,15 +9,15 @@ import {CdkAccordionModule} from '@angular/cdk/accordion';
   imports: [CdkAccordionModule],
 })
 export class CdkAccordionOverviewExample {
-  items = ['Why was this gene list chosen?',
-    'Which cell lines have been chosen for studies?',
-    'Do you accept data on these genes from external contributors?',
-    'What is a null allele?'
+  items = ['What is the goal of the MorPhiC project?',
+    'How was the gene list for the MorPhic project chosen?',
+    'What is a null allele?',
+    'Who are the participants in the MorPhiC project?'
   ];
-  content = ["The MorPhiC programme aims to develop a consistent catalog of molecular and cellular phenotypes for null alleles for every human gene by using in-vitro multicellular systems. The catalog will be made available for broad use by the biomedical community.", 
-    "The MorPhiC programme aims to develop a consistent catalog of molecular and cellular phenotypes for null alleles for every human gene by using in-vitro multicellular systems. The catalog will be made available for broad use by the biomedical community.", 
-    "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", 
-    "Lorem ipsum dolor, sit amet consectetur adipisicing elit."
+  content = ["MorPhiC stands for Molecular Phenotypes of Null Alleles in Cells. MorPhiC is a collaborative research project that aims to functionally characterize all protein-coding human genes. The project focuses on developing a catalog of molecular and cellular phenotypes for null alleles for every protein-coding human gene. The ultimate goal is to provide a comprehensive understanding of the biological function of each human gene, filling the knowledge gap for the majority of genes that are currently underrepresented in scientific literature.",
+    "To prioritize gene targets, the MorPhiC consortium considers a set of genes involved in critical cellular and organismal functions, including essential genes, transcription factors, developmental regulators, and disease-associated genes. Full list of genes to be studied under MorPhic.",
+    "Within the MorPhiC project, null alleles are defined as genes with less than 10% of the normal level of functional protein.",
+    "The MorPhiC consortium consists of four Data Production Centers (DPCs), one Data Resource and Administrative Coordinating Center (DRACC), and three Data Analysis and Validation Centers (DAVs). The four DPCs are: The Jackson Laboratory (JAX), Memorial Sloan Kettering Cancer Center (MSK), Northwestern University (NWU), and University of California San Francisco (UCSF). The DRACC is composed of members from University of Miami (UM), European Bioinformatic Institute (EBI), University of Washington (UW), and Queen Mary University of London (QMUL). The three DAVs are: Fred Hutchinson Cancer Center (Fred-Hutch), The Jackson Laboratory (JAX), and Stanford University."
   ];
   expandedIndex = 0;
 }

@@ -10,10 +10,15 @@ import { environment } from '../../environments/environment';
 
 export class HomeComponent {
   gene_list_url: string = ' '
-  constructor(private title: Title) {
-    this.title.setTitle('exported project')
+  constructor() {
     if(environment.gene_list_url) {
       this.gene_list_url = environment.gene_list_url;
+    }
+  }
+  scrollTo(elementId: string): void {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 }
