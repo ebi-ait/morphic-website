@@ -65,6 +65,7 @@
     width: 100%;
   }
 }
+
 .div-17 {
   color: var(--dl-color-default-smartblack);
   letter-spacing: -0.68px;
@@ -92,6 +93,10 @@
   flex-direction: column;
   line-height: normal;
   width: 52%;
+  a {
+    text-decoration: none;
+    color: var(--dl-color-brand-orange);
+  }
 }
 @media (max-width: 991px) {
   .column-2 {
@@ -200,6 +205,10 @@
   letter-spacing: -0.51px;
   margin-top: 7px;
   font: 600 17px Inter, sans-serif;
+  a {
+    text-decoration: none;
+    color: var(--dl-color-brand-blue);
+  }
 }
 .div-30 {
   color: var(--dl-color-default-smartblack);
@@ -240,6 +249,10 @@
   letter-spacing: -0.51px;
   margin-top: 7px;
   font: 600 17px Inter, sans-serif;
+  a {
+    text-decoration: none;
+    color: var(--dl-color-brand-blue);
+  }
 }
 .div-34 {
   align-self: center;
@@ -299,6 +312,10 @@
   letter-spacing: -0.51px;
   margin-top: 7px;
   font: 600 17px Inter, sans-serif;
+  a {
+    text-decoration: none;
+    color: var(--dl-color-brand-blue);
+  }
 }
 
 .data-flow-container {
@@ -525,6 +542,10 @@
   margin-top: 6px;
   flex: 1;
   font: 600 17px Inter, sans-serif;
+  a {
+    text-decoration: none;
+    color: var(--dl-color-brand-blue);
+  }
 }
 .div-44 {
   align-self: center;

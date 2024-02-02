@@ -21,4 +21,11 @@ export class AboutComponent {
     const elm2 = document.querySelector<HTMLElement>('.white-circle')!;
     elm2.style.left = '70.35%';
   }
+
+  scrollTo(elementId: string): void {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }
