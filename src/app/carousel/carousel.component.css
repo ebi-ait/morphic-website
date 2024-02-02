@@ -25,7 +25,7 @@ img {
 }
 
 .dot-active {
-  background-color: var(--dl-color-dot-active);
+  background-color: var(--dl-color-brand-blue);
 }
 
 .header-text {
