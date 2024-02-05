@@ -20,7 +20,7 @@ body {
   --dl-color-danger-500: #BF2626;
   --dl-color-danger-700: #E14747;
   --dl-color-gray-black: #000000;
-  --dl-color-gray-white: #FFFFFF;
+  --dl-color-pure-white: #FFFFFF;
   --dl-size-size-medium: 96px;
   --dl-size-size-xlarge: 192px;
   --dl-size-size-xsmall: 16px;
@@ -66,7 +66,7 @@ body {
   border-color: var(--dl-color-gray-black);
   border-width: 1px;
   border-radius: 4px;
-  background-color: var(--dl-color-gray-white);
+  background-color: var(--dl-color-pure-white);
 }
 .input {
   color: var(--dl-color-gray-black);
@@ -75,7 +75,7 @@ body {
   border-color: var(--dl-color-gray-black);
   border-width: 1px;
   border-radius: 4px;
-  background-color: var(--dl-color-gray-white);
+  background-color: var(--dl-color-pure-white);
 }
 .textarea {
   color: var(--dl-color-gray-black);
@@ -84,7 +84,7 @@ body {
   border-color: var(--dl-color-gray-black);
   border-width: 1px;
   border-radius: 4px;
-  background-color: var(--dl-color-gray-white);
+  background-color: var(--dl-color-pure-white);
 }
 .list {
   width: 100%;
