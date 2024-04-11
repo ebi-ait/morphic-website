@@ -6,11 +6,29 @@ import {GridUtilsService} from "../services/grid-utils.service";
 import {GridRecord} from "../types/GridRecord";
 import {DataService} from "../services/data.service";
 import {FormControl} from "@angular/forms";
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.scss', '../header/header.component.scss']
+  styleUrls: ['./grid.component.scss', '../header/header.component.scss'],
+  animations: [
+    trigger('smoothClose', [
+      state('open', style({
+        width: '*' // or you can use a specific width like '200px'
+      })),
+      state('closed', style({
+        width: '0px', // or '0%' for full disappearance
+        opacity: 0
+      })),
+      transition('open => closed', [
+        animate('0.3s ease-out')
+      ]),
+      transition('closed => open', [
+        animate('0.3s ease-in')
+      ])
+    ])
+  ]
 })
 export class GridComponent implements OnInit {
   public columnDefs: ColDef[] = this.gridUtilService.COLUMN_DEFINITIONS;
@@ -23,6 +41,7 @@ export class GridComponent implements OnInit {
   facets: Facet[] = [];
   searchField: FormControl;
   showDemoData = true;
+  isMainFilterVisible: boolean = true;
 
   public gridOptions: GridOptions = {
     doesExternalFilterPass: this.doesExternalFilterPass.bind(this),
@@ -145,6 +164,10 @@ export class GridComponent implements OnInit {
       this.filters.set(filter.title, filter);
     }
     this.gridApi.onFilterChanged();
+  }
+
+  toggleSideNavs() {
+    this.isMainFilterVisible = !this.isMainFilterVisible;
   }
 
 }

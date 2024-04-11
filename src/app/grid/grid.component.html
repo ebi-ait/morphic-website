@@ -1,45 +1,58 @@
 <app-header></app-header>
 <div class="catalog-container">
   <mat-toolbar class="catalog-toolbar">
-    <button mat-icon-button (click)="snav.toggle()">
-      <mat-icon svgIcon="squares"></mat-icon>
+    <button mat-icon-button>
+      <mat-icon class="squares-icon" svgIcon="squares"></mat-icon>
     </button>
-    Study Tracker
+    <div class="grid-container">
+      <div class="title">
+        Study Tracker
+      </div>
+      <div class="sub-title">
+        Currently planned studies as part of the MorPhiC programme
+      </div>
+    </div>
   </mat-toolbar>
 
-  <mat-sidenav-container class="catalog-sidenav-container">
-    <mat-sidenav #snav [mode]="'side'" opened="true">
-      <div class="facet-wrapper">
-      <mat-form-field >
-        <mat-icon matPrefix
-                  fontIcon="search"></mat-icon>
-        <input type="text"
-               matInput
-               id="filter-text-box"
-               placeholder="Search by Gene ID"
-               (input)="onFilterTextBoxChanged()"/>
-      </mat-form-field>
-        <div *ngFor="let facet of facets">
-          <app-facet [facet]="facet" (filterChangedEvent)="applyFilters($event)"></app-facet>
+  <div class="main-container">
+    <div class="filter-container">
+      <mat-sidenav class="main-filter vertical-top" *ngIf="isMainFilterVisible" [@smoothClose]="isMainFilterVisible ? 'open' : 'closed'" (click)="toggleSideNavs();" [mode]="'side'" opened="true">
+        <div class="vertical-text">Filter</div>
+      </mat-sidenav>
+    </div>
+    <mat-sidenav-container class="catalog-sidenav-container">
+      <mat-sidenav [mode]="'side'" *ngIf="!isMainFilterVisible" opened="true">
+        <div class="inner-filter" (click)="toggleSideNavs();">Filter</div>
+        <div class="clear-all">Clear All</div>
+        <div class="facet-wrapper">
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-icon matPrefix fontIcon="search"></mat-icon>
+            <input type="text"
+                   matInput
+                   id="filter-text-box"
+                   placeholder="Search by Gene ID"
+                   (input)="onFilterTextBoxChanged()"/>
+          </mat-form-field>
+          <div *ngFor="let facet of facets">
+            <app-facet [facet]="facet" (filterChangedEvent)="applyFilters($event)"></app-facet>
+          </div>
         </div>
-      </div>
-
-    </mat-sidenav>
-
-    <mat-sidenav-content>
-      <ag-grid-angular
-        style="width: 100%; height: 100vh;"
-        class="ag-theme-quartz"
-        [columnDefs]="columnDefs"
-        [defaultColDef]="defaultColDef"
-        [rowData]="rowData"
-        [gridOptions]="gridOptions"
-        [pagination]="true"
-        (gridReady)="onGridReady($event)"
-      ></ag-grid-angular>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <ag-grid-angular
+          style="width: 100%; height: 100vh;"
+          class="ag-theme-quartz"
+          [columnDefs]="columnDefs"
+          [defaultColDef]="defaultColDef"
+          [rowData]="rowData"
+          [gridOptions]="gridOptions"
+          [pagination]="true"
+          (gridReady)="onGridReady($event)"
+        ></ag-grid-angular>
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
 </div>
 <div class="white-triangle"></div>
 <div class="about-container"></div>
