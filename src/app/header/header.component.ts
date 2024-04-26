@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -9,5 +10,10 @@ import { Component, Input } from '@angular/core';
   host: { class: 'header-comp' }
 })
 export class HeaderComponent {
-
+  gene_list_url: string = ' '
+  constructor() {
+    if(environment.gene_list_url) {
+      this.gene_list_url = environment.gene_list_url;
+    }
+  }
 }
