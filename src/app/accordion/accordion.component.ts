@@ -20,7 +20,7 @@ export class CdkAccordionOverviewExample {
       },
       {
         question: 'How was the gene list for the MorPhic project chosen?',
-        answer: this.sanitizer.bypassSecurityTrustHtml('To prioritize gene targets, the MorPhiC consortium considers a set of genes involved in critical cellular and organismal functions, including essential genes, transcription factors, developmental regulators, and disease-associated genes. <a href="https://morphic-genelist-app.shinyapps.io/shiny_genesetexplore/" target="_blank">Full list of genes to be studied under MorPhic.</a>')
+        answer: this.sanitizer.bypassSecurityTrustHtml('To prioritize gene targets, the MorPhiC consortium considers a set of genes involved in critical cellular and organismal functions, including essential genes, transcription factors, developmental regulators, and disease-associated genes. <a href="https://whri-phenogenomics.shinyapps.io/morphic_gene_list/" target="_blank">Full list of genes to be studied under MorPhic.</a>')
       },
       {
         question: 'What is a null allele?',
