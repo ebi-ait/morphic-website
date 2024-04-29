@@ -36,7 +36,6 @@ Overriding using variables doens't seem to work
 .div-3 {
   position: absolute;
   top: 2vh;
-  z-index: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -120,7 +119,8 @@ Overriding using variables doens't seem to work
   position: relative;
   align-self: center;
   z-index: 1;
-  width: 100%;
+  /*Make this 100% when /study-tracker is live again and uncomment HTML*/
+  width: 40%;
   max-width: 1040px;
   margin: -170px 0 -73px;
   padding: 0 20px;
@@ -641,42 +641,47 @@ Overriding using variables doens't seem to work
     margin-top: 40px;
   }
 }
-.div-70 {
+.div-70 a{
   color: var(--dl-color-default-smartwhite);
   text-transform: uppercase;
   align-self: start;
   flex-grow: 1;
   white-space: nowrap;
   font: 500 16px Inter, sans-serif;
+  text-decoration: none;
 }
 @media (max-width: 991px) {
   .div-70 {
     white-space: initial;
   }
 }
-.div-71 {
+.div-71 a {
   color: var(--dl-color-default-smartwhite);
   text-transform: uppercase;
   align-self: start;
   font: 500 16px Inter, sans-serif;
+  text-decoration: none;
 }
-.div-72 {
+.div-72 a{
   color: var(--dl-color-default-smartwhite);
   text-transform: uppercase;
   align-self: start;
   font: 500 16px Inter, sans-serif;
+  text-decoration: none;
 }
-.div-73 {
+.div-73 a{
   color: var(--dl-color-default-smartwhite);
   text-transform: uppercase;
   align-self: start;
   font: 500 16px Inter, sans-serif;
+  text-decoration: none;
 }
-.div-74 {
+.div-74 a{
   color: var(--dl-color-default-smartwhite);
   text-transform: uppercase;
   align-self: stretch;
   font: 500 16px Inter, sans-serif;
+  text-decoration: none;
 }
 .div-75 {
   color: var(--dl-color-default-smartwhite);
