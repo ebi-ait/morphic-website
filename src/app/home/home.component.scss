@@ -9,7 +9,29 @@
 Overriding using variables doens't seem to work
 */
 
+.triangle-container {
+  position: relative;
+  width: 100%;
+}
+
+.white-triangle {
+  position: absolute;
+  top: 19.38%;
+}
+
+.white-triangle-css {
+  clip-path: polygon(0 100%, 100% 110px, 100% 0%, 0px 100%);
+  background-color: var(--dl-color-default-smartwhite);
+  width: 100%;
+  height: 110px;
+  margin-top: 42px;
+  position: absolute;
+  top: -152px;
+  left: 0;
+}
+
 .div-2 {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-self: stretch;
@@ -798,18 +820,6 @@ Overriding using variables doens't seem to work
   height: 8.8%;
   background: linear-gradient(to top left, white 0%, white 27%, transparent 27%);
   right: 24%;
-}
-.white-triangle {
-  position: absolute;
-  top: 19.38%;
-}
-
-.white-triangle-css {
-  clip-path: polygon(0 100%, 100% 110px, 100% 0%, 0px 100%);
-  background-color: var(--dl-color-default-smartwhite);
-  max-width: 100%;
-  height: 110px;
-  margin-top: 42px;
 }
 
 .white-about-rectangle {
