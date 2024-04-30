@@ -64,3 +64,9 @@
   height: 0.3125rem;
   position: absolute;
 }
+
+@media (max-width: 991px) {
+  .nav-links {
+    margin-left: 30%;
+  }
+}

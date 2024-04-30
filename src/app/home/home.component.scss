@@ -30,6 +30,13 @@ Overriding using variables doens't seem to work
   left: 0;
 }
 
+@media (max-width: 991px) {
+  .white-triangle-css {
+    height: 60px;
+    top: -102px;
+  }
+}
+
 .div-2 {
   position: relative;
   display: flex;
@@ -118,7 +125,7 @@ Overriding using variables doens't seem to work
     max-width: 100%;
     font-size: 40px;
     line-height: 44px;
-    margin-top: 40px;
+    margin-top: 150px;
   }
 }
 .div-15 {
@@ -133,7 +140,7 @@ Overriding using variables doens't seem to work
 }
 @media (max-width: 991px) {
   .div-15 {
-    max-width: 100%;
+    max-width: 70%;
     margin-bottom: 40px;
   }
 }
@@ -156,12 +163,14 @@ Overriding using variables doens't seem to work
 .div-17 {
   gap: 20px;
   display: flex;
+  justify-content: center;
 }
 @media (max-width: 991px) {
   .div-17 {
     flex-direction: column;
     align-items: stretch;
     gap: 0px;
+    align-items: center;
   }
 }
 .column {
@@ -273,7 +282,7 @@ Overriding using variables doens't seem to work
 }
 @media (max-width: 991px) {
   .div-31 {
-    max-width: 100%;
+    max-width: 88%;
     margin-top: 40px;
   }
 }
@@ -357,6 +366,7 @@ Overriding using variables doens't seem to work
 @media (max-width: 991px) {
   .div-36 {
     margin-top: 30px;
+    text-align: center;
   }
 }
 .div-37 {
@@ -378,7 +388,7 @@ Overriding using variables doens't seem to work
 }
 @media (max-width: 991px) {
   .img-8 {
-    margin-top: 40px;
+    margin: 0 auto;
   }
 }
 .div-38 {
@@ -396,6 +406,13 @@ Overriding using variables doens't seem to work
   margin-top: 18px;
   font: 600 17px Inter, sans-serif;
 }
+
+@media (max-width: 991px) {
+  .div-39 {
+    padding: 0 50px;
+  }
+}
+
 .column-5 {
   display: flex;
   flex-direction: column;
@@ -443,6 +460,14 @@ Overriding using variables doens't seem to work
   margin-top: 17px;
   font: 600 17px Inter, sans-serif;
 }
+
+@media (max-width: 991px) {
+  .div-42 {
+    padding: 0 50px;
+    text-align: center;
+  }
+}
+
 .column-6 {
   display: flex;
   flex-direction: column;
@@ -490,6 +515,14 @@ Overriding using variables doens't seem to work
   margin-top: 17px;
   font: 600 17px Inter, sans-serif;
 }
+
+@media (max-width: 991px) {
+  .div-45 {
+    padding: 0 50px;
+    text-align: center;
+  }
+}
+
 .column-7 {
   display: flex;
   flex-direction: column;
@@ -537,6 +570,14 @@ Overriding using variables doens't seem to work
   margin-top: 17px;
   font: 600 17px Inter, sans-serif;
 }
+
+@media (max-width: 991px) {
+  .div-48 {
+    padding: 0 50px;
+    text-align: center;
+  }
+}
+
 .div-49 {
   color: var(--dl-color-brand-orange);
   letter-spacing: -0.42px;
@@ -562,6 +603,8 @@ Overriding using variables doens't seem to work
 @media (max-width: 991px) {
   .img-12 {
     max-width: 100%;
+    top: 1px;
+    position: relative;
   }
 }
 .div-50 {
@@ -590,6 +633,7 @@ Overriding using variables doens't seem to work
 @media (max-width: 991px) {
   .div-51 {
     margin-top: 40px;
+    min-height: 400px;
   }
 }
 .div-52 {
@@ -638,7 +682,7 @@ Overriding using variables doens't seem to work
 }
 @media (max-width: 991px) {
   .div-68 {
-    max-width: 100%;
+    max-width: 88%;
   }
 }
 .img-18 {
@@ -813,6 +857,12 @@ Overriding using variables doens't seem to work
   background-color: var(--dl-color-default-smartblack);
 }
 
+@media (max-width: 991px) {
+  .bottom-right-triangle {
+    clip-path:  polygon(0 0%, 110% 70px, 100% 0%, 0px 0%);
+  }
+}
+
 .right-ang-triangle {
   position: absolute;
   top: 14%;
@@ -864,6 +914,14 @@ Overriding using variables doens't seem to work
 .left-space {
   margin-left: 2rem;
 }
+
+@media (max-width: 991px) {
+  .left-space {
+    margin-left: 0;
+    margin-top: 2rem;
+  }
+}
+
 .bg-photo-credit {
   color: var(--dl-color-default-smartwhite);
   text-align: right;
