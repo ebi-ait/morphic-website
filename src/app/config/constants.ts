@@ -1,1 +1,0 @@
-export const CAROUSEL_TIME = 3000;
