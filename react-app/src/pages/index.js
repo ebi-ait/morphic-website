@@ -136,7 +136,7 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <Link to="/" className="home-news-link">News archive →</Link>
+          <Link to="/news" className="home-news-link">News archive →</Link>
         </div>
       </section>
       
