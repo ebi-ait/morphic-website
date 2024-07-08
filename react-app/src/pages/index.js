@@ -51,7 +51,7 @@ export default function Home() {
                 The Data Production Centres have planned studies on some of the essential genes, and they are coming <span className="bold">in 2024</span>.
               </p>
               <div>
-                <Link to="data" className="home-card-link">Open the data tracker</Link>
+                <Link to="/data" className="home-card-link">Open the data tracker</Link>
               </div>
             </div>
             <div className="home-card">
