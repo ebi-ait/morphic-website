@@ -16,22 +16,34 @@ export default function Policies() {
                 <h2 className="policies-card-title">policies</h2>
                 <ul>
                   <li>
-                    <a className="nav-link" href="#">Code of Conduct</a>
+                    <a className="nav-link" href="https://github.com/morphic-bio/morphic-bio.github.io/blob/main/Policies/Morphic%20Code%20of%20Conduct%20for%20Events.pdf" target="_blank" rel="noopener noreferrer">
+                        Code of Conduct
+                    </a>
                   </li>
                   <li>
-                    <a className="nav-link" href="#">Publication Policy</a>
+                    <a className="nav-link" href="https://github.com/morphic-bio/morphic-bio.github.io/blob/main/Policies/MorPhiC%20-%20Publication%20Policy.pdf" target="_blank" rel="noopener noreferrer">
+                      Publication Policy
+                    </a>
                   </li>
                   <li>
-                    <a className="nav-link" href="#">Software Sharing Policy</a>
+                    <a className="nav-link" href="https://github.com/morphic-bio/morphic-bio.github.io/blob/main/Policies/Morphic%20-%20Software%20Sharing%20Policy.pdf" target="_blank" rel="noopener noreferrer">
+                      Software Sharing Policy
+                    </a>
                   </li>
                   <li>
-                    <a className="nav-link" href="#">Human Genome Assembly Policy</a>
+                    <a className="nav-link" href="https://github.com/morphic-bio/morphic-bio.github.io/blob/main/Policies/Morphic%20-%20Human%20Genome%20Assembly%20Policy.pdf" target="_blank" rel="noopener noreferrer">
+                      Human Genome Assembly Policy
+                    </a>
                   </li>
                   <li>
-                    <a className="nav-link" href="#">Affiliate Membership Policy</a>
+                    <a className="nav-link" href="https://github.com/morphic-bio/morphic-bio.github.io/blob/main/Policies/MorPhiC%20Affiliate%20Membership.pdf" target="_blank" rel="noopener noreferrer">
+                      Affiliate Membership Policy
+                    </a>
                   </li>
                   <li>
-                    <a className="nav-link" href="#">Data Release and Use Policy</a>
+                    <a className="nav-link" href="https://github.com/morphic-bio/morphic-bio.github.io/blob/main/Policies/Morphic%20-%20Data%20Release%20and%20Use%20Policy.pdf" target="_blank" rel="noopener noreferrer">
+                      Data Release and Use Policy
+                    </a>
                   </li>
                 </ul>
               </div>
