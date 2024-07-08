@@ -51,9 +51,7 @@ export default function Home() {
                 The Data Production Centres have planned studies on some of the essential genes, and they are coming <span className="bold">in 2024</span>.
               </p>
               <div>
-                <a className="home-card-link">
-                  Open the data tracker
-                </a>
+                <Link to="data" className="home-card-link">Open the data tracker</Link>
               </div>
             </div>
             <div className="home-card">
@@ -64,7 +62,7 @@ export default function Home() {
               </p>
               <div>
                 <a className="home-card-link">
-                  See who’s involved
+                  See who's involved
                 </a>
               </div>
             </div>
@@ -86,6 +84,7 @@ export default function Home() {
                 src="../images/external/ellipse21572-saf-200h.png"
                 alt="Dr. Schürer and members of the MorPhiC DRACC"
                 placeholder="blurred"
+                className="home-news-card-img-wrap"
               />
               <time dateTime="2023-03-03">3 March 2023</time>
               <p>
@@ -99,6 +98,7 @@ export default function Home() {
                 src="../images/external/ellipse31572-mj5c-200h.png"
                 alt="Luke Gilbert, UCSF"
                 placeholder="blurred"
+                className="home-news-card-img-wrap"
               />
               <time dateTime="2023-09-27">27 September 2022</time>
               <p>
@@ -112,6 +112,7 @@ export default function Home() {
                 src="../images/external/ellipse41572-5cll-200h.png"
                 alt="Mazhar Adli, PhD"
                 placeholder="blurred"
+                className="home-news-card-img-wrap"
               />
               <time dateTime="2023-12-05">5 Dec 2022</time>
               <p>
@@ -125,6 +126,7 @@ export default function Home() {
                 src="../images/external/ellipse51572-6fwh-200h.png"
                 alt="Dr. Ka Yee Yeung and Dr. Ling-Hong Hung posing next to their poster"
                 placeholder="blurred"
+                className="home-news-card-img-wrap"
               />
               <time dateTime="2023-05-02">2 May 2023</time>
               <p>
@@ -149,22 +151,22 @@ export default function Home() {
             <p>The following policies were approved by the MorPhiC Steering Committee:</p>
             <ul>
               <li>
-                <Link>Code of Conduct</Link>
+                <Link to="/policies">Code of Conduct</Link>
               </li>
               <li>
-                <Link>Publication Policy</Link>
+                <Link to="/policies">Publication Policy</Link>
               </li>
               <li>
-                <Link>Software Sharing Policy</Link>
+                <Link to="/policies">Software Sharing Policy</Link>
               </li>
               <li>
-                <Link>Human Genome Assembly Policy</Link>
+                <Link to="/policies">Human Genome Assembly Policy</Link>
               </li>
               <li>
-                <Link>Affiliate Membership Policy</Link>
+                <Link to="/policies">Affiliate Membership Policy</Link>
               </li>
               <li>
-                <Link>Data Release and Use Policy</Link>
+                <Link to="/policies">Data Release and Use Policy</Link>
               </li>
             </ul>
           </div>

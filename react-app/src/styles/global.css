@@ -53,6 +53,7 @@ body {
   --dl-color-default-smartblack: rgba(30, 30, 30, 1); /*#1e1e1e*/
   --dl-color-default-smartwhite: rgba(236, 236, 236, 1); /*#ECECEC*/
   --dl-color-default-absolutewhite: rgba(255, 255, 255, 1);
+  --dl-color-default-grey: rgba(153, 153, 153, 1);
   --dl-space-space-oneandhalfunits: 24px;
   --dl-color-gray-triangle: #1e1e1e;
   --dl-color-smart-white: #ECECEC;
@@ -68,6 +69,7 @@ html {
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 
 button {
@@ -257,10 +259,6 @@ ul {
 .home-about .home-about-text {
   width: 784px;
   height: 150px;
-  top: 1002px;
-  left: 328px;
-  gap: 0px;
-  opacity: 0px;
 
   font-family: Inter;
   font-size: 17px;
@@ -287,7 +285,6 @@ ul {
 /* --- HOME CARD --- */
 .home-card-row {
   display: flex;
-  flex-wrap: wrap;
   gap: 2rem;
 
   position: absolute;
@@ -430,10 +427,14 @@ ul {
   max-width: 238px;
 }
 
-.home-news-card img {
-  margin-bottom: 30px;
+.home-news-card-img-wrap {
+  margin-bottom: 2rem;
+  
   width: 148px;
   height: 148px;
+  border: none;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .home-news-card time {
@@ -1679,11 +1680,7 @@ h2.gene-card-body-title {
 
 .gene-card-img-placeholder {
   width: 1082.87px;
-  height: 342.78px;
-  top: 1266px;
-  left: 297.13px;
-  gap: 0px;
-  opacity: 0px;  
+  height: 342.78px; 
   background-color: rgba(211, 211, 211, 0.25);
 }
 
