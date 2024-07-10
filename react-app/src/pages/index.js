@@ -3,6 +3,7 @@ import * as React from "react"
 import '../styles/global.css'
 
 import Navbar from '../components/Navbar'
+import Carousel from "../components/carousel"
 import FAQ from "../components/FAQ"
 import Footer from "../components/Footer"
 
@@ -51,15 +52,14 @@ export default function Home() {
                 The Data Production Centres have planned studies on some of the essential genes, and they are coming <span className="bold">in 2024</span>.
               </p>
               <div>
-                <Link to="/data" className="home-card-link">Open the data tracker</Link>
+                <Link to="/data" className="home-card-link">
+                  Open the data tracker
+                </Link>
               </div>
             </div>
             <div className="home-card">
               <h3 className="home-card-title">participants</h3>
-              <span aria-hidden className="home-card-logo logo-jackson"></span>
-              <p className="home-card-text">
-                The Jackson Laboratory
-              </p>
+              <Carousel />
               <div>
                 <a className="home-card-link">
                   See who's involved
@@ -83,7 +83,7 @@ export default function Home() {
               <StaticImage
                 src="../images/external/ellipse21572-saf-200h.png"
                 alt="Dr. Schürer and members of the MorPhiC DRACC"
-                placeholder="none"
+                placeholder="blurred"
                 className="home-news-card-img-wrap"
               />
               <time dateTime="2023-03-03">3 March 2023</time>
@@ -97,7 +97,7 @@ export default function Home() {
               <StaticImage
                 src="../images/external/ellipse31572-mj5c-200h.png"
                 alt="Luke Gilbert, UCSF"
-                placeholder="none"
+                placeholder="blurred"
                 className="home-news-card-img-wrap"
               />
               <time dateTime="2023-09-27">27 September 2022</time>
@@ -111,7 +111,7 @@ export default function Home() {
               <StaticImage
                 src="../images/external/ellipse41572-5cll-200h.png"
                 alt="Mazhar Adli, PhD"
-                placeholder="none"
+                placeholder="blurred"
                 className="home-news-card-img-wrap"
               />
               <time dateTime="2023-12-05">5 Dec 2022</time>
@@ -125,7 +125,7 @@ export default function Home() {
               <StaticImage
                 src="../images/external/ellipse51572-6fwh-200h.png"
                 alt="Dr. Ka Yee Yeung and Dr. Ling-Hong Hung posing next to their poster"
-                placeholder="none"
+                placeholder="blurred"
                 className="home-news-card-img-wrap"
               />
               <time dateTime="2023-05-02">2 May 2023</time>
