@@ -1,4 +1,3 @@
-import { StaticImage } from "gatsby-plugin-image";
 import React, { useState } from "react"
 
 export default function FAQ() {
@@ -29,19 +28,9 @@ export default function FAQ() {
                         <li>
                             <button onClick={handleFaq1}>
                               {faqNumber === 1 ?
-                                <StaticImage
-                                  src="../images/external/polygon21571-1aur.svg"
-                                  alt="Dropdown arrow to close"
-                                  className="dropdown-arrow"
-                                  placeholder="none"
-                                />
+                                <span aria-hidden className="icon-caret-down"></span>
                               :
-                                <StaticImage
-                                  src="../images/external/polygon11571-ri2.svg"
-                                  alt="Dropdown arrow to open"
-                                  className="dropdown-arrow"
-                                  placeholder="none"
-                                />
+                                <span aria-hidden className="icon-caret-right"></span>
                               }
                               <h4>What is the goal of the MorPhiC project?</h4>
                             </button>
@@ -52,19 +41,9 @@ export default function FAQ() {
                         <li>
                             <button onClick={handleFaq2}>
                               {faqNumber === 2 ?
-                                <StaticImage
-                                  src="../images/external/polygon21571-1aur.svg"
-                                  alt="Dropdown arrow to close"
-                                  className="dropdown-arrow"
-                                  placeholder="none"
-                                />
+                                <span aria-hidden className="icon-caret-down"></span>
                               :
-                                <StaticImage
-                                  src="../images/external/polygon11571-ri2.svg"
-                                  alt="Dropdown arrow to open"
-                                  className="dropdown-arrow"
-                                  placeholder="none"
-                                />
+                                <span aria-hidden className="icon-caret-right"></span>
                               }
                               <h4>How was the gene list for the MorPhic project chosen? </h4>
                             </button>
@@ -76,19 +55,9 @@ export default function FAQ() {
                         <li>
                             <button onClick={handleFaq3}>
                               {faqNumber === 3 ?
-                                <StaticImage
-                                  src="../images/external/polygon21571-1aur.svg"
-                                  alt="Dropdown arrow to close"
-                                  className="dropdown-arrow"
-                                  placeholder="none"
-                                />
+                                <span aria-hidden className="icon-caret-down"></span>
                               :
-                                <StaticImage
-                                  src="../images/external/polygon11571-ri2.svg"
-                                  alt="Dropdown arrow to open"
-                                  className="dropdown-arrow"
-                                  placeholder="none"
-                                />
+                                <span aria-hidden className="icon-caret-right"></span>
                               }
                               <h4>What is a null allele?</h4>
                             </button>
@@ -99,19 +68,9 @@ export default function FAQ() {
                         <li>
                             <button onClick={handleFaq4}>
                               {faqNumber === 4 ?
-                                <StaticImage
-                                  src="../images/external/polygon21571-1aur.svg"
-                                  alt="Dropdown arrow to close"
-                                  className="dropdown-arrow"
-                                  placeholder="none"
-                                />
+                                <span aria-hidden className="icon-caret-down"></span>
                               :
-                                <StaticImage
-                                  src="../images/external/polygon11571-ri2.svg"
-                                  alt="Dropdown arrow to open"
-                                  className="dropdown-arrow"
-                                  placeholder="none"
-                                />
+                                <span aria-hidden className="icon-caret-right"></span>
                               }
                             <h4>Who are the participants in the MorPhiC project?</h4>
                             </button>

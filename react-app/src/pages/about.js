@@ -40,7 +40,7 @@ export default function About() {
             <section id="about-morphic" className="about-section">
               <div className="about-section-subtitle-container">
                 <h2>About the MorPhiC Program</h2>
-                <a href="#">↑ Back to top</a>
+                <a href="#">↑ Back to top</a>
               </div>
               <div className="about-section-description-container">
                 <p>The MorPhiC programme aims to develop a consistent catalog of molecular and cellular phenotypes for null alleles for every human gene by using in-vitro multicellular systems. The catalog will be made available for broad use by the biomedical community. MorPhiC has three components: the Data Production Research and Development Centers (DPCs), the Data Analysis and Validation Centers (DAVs) and the Data Resource and Administrative Coordinating Center (DRACC).</p>
@@ -50,7 +50,7 @@ export default function About() {
             <section id="publications" className="about-section">
               <div className="about-section-subtitle-container">
                 <h2>Publications</h2>
-                <a href="#">↑ Back to top</a>
+                <a href="#">↑ Back to top</a>
               </div>
               <div className="about-section-description-container">
                 <p className="bold">Description statement for the MorPhiC programme</p>
@@ -61,7 +61,7 @@ export default function About() {
             <section id="data-flow" className="about-section">
               <div className="about-section-subtitle-container">
                 <h2>Data flow and availability</h2>
-                <a href="#">↑ Back to top</a>
+                <a href="#">↑ Back to top</a>
               </div>
               <div className="about-section-description-container">
                 <p>The MorPhiC programme aims to develop a consistent catalog of molecular and cellular phenotypes for null alleles for every human gene by using in-vitro multicellular systems. The catalog will be made available for broad use by the biomedical community. MorPhiC has three components: the Data Production Research and Development Centers (DPCs), the Data Analysis and Validation Centers (DAVs) and the Data Resource and Administrative Coordinating Center (DRACC).</p>
@@ -105,7 +105,7 @@ export default function About() {
                       </div>
                       <div className="data-flow-logo-item">
                         <StaticImage
-                          src="../images/external/logos/Northwestern-no-border.png"
+                          src="../images/external/logos/Northwestern.png"
                           alt="Northwestern University Feinberg School of Medicine"
                           className="data-flow-logo"
                         />
@@ -192,7 +192,7 @@ export default function About() {
             <section id="funders" className="about-section">
               <div className="about-section-subtitle-container">
                 <h2>Funders</h2>
-                <a href="#">↑ Back to top</a>
+                <a href="#">↑ Back to top</a>
               </div>
               <div className="about-section-description-container">
                 <p className="bold">NIH Grant #1234567890</p>

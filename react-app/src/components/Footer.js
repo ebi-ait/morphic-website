@@ -1,20 +1,18 @@
 import { Link } from "gatsby"
 import React from "react"
 
-import { StaticImage } from "gatsby-plugin-image"
+import logo from "../images/logos/morphic-symbol.svg";
 
 export default function Footer() {
   return (
     <div className="footer-wrap">
       <footer class="footer">
         <div className="footer-logo-container">
-          <StaticImage
-            src="../images/external/logos/footer-logo.png"
+          <img
+            src={logo}
             alt="MorPhiC logo"
-            width={32.85}
-            height={33}
             className="footer-logo"
-          />
+          ></img>
         </div>
         <div className="footer-content">
           <ul className="footer-menu">

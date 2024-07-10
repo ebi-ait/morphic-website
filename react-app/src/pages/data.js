@@ -20,7 +20,7 @@ export default function Data() {
             <div className="data-card">
                 <div className="data-card-header">
                     <div className="data-card-header-container">
-                        <span aria-hidden className="icon-data-tracker"></span>
+                        <span aria-hidden className="data-card-header-icon icon-data-tracker"></span>
                         <div>
                             <h1>Data Tracker</h1>
                             <p>Currently planned studies as part of the MorPhiC programme</p>

@@ -1,6 +1,7 @@
 import { Link } from 'gatsby'
 import React from 'react'
-import { StaticImage } from "gatsby-plugin-image"
+
+import logo from "../images/logos/morphic-logo-horizontal.svg"
 
 
 export default function Navbar() {
@@ -9,12 +10,10 @@ export default function Navbar() {
         <nav className='navbar'>
             <div className='navbar-left'>
                 <Link to="/" className="nav-link">
-                    <StaticImage 
-                        src="../images/external/vector1571-21gu.svg"
+                    <img
+                        src={logo}
                         alt="MorPhiC logo"
-                        placeholder="none"
-                        quality={100}
-                    />
+                    ></img>
                 </Link>
             </div>
             <div className='navbar-right'>
