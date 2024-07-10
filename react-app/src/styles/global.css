@@ -1171,6 +1171,8 @@ ul {
   line-height: 20.57px;
   letter-spacing: -0.03em;
   text-align: right;
+
+  color: var(--dl-color-brand-blue);
 }
 
 .about-section p {
