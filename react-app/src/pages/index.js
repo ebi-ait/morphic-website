@@ -83,7 +83,7 @@ export default function Home() {
               <StaticImage
                 src="../images/external/ellipse21572-saf-200h.png"
                 alt="Dr. Schürer and members of the MorPhiC DRACC"
-                placeholder="blurred"
+                placeholder="none"
                 className="home-news-card-img-wrap"
               />
               <time dateTime="2023-03-03">3 March 2023</time>
@@ -97,7 +97,7 @@ export default function Home() {
               <StaticImage
                 src="../images/external/ellipse31572-mj5c-200h.png"
                 alt="Luke Gilbert, UCSF"
-                placeholder="blurred"
+                placeholder="none"
                 className="home-news-card-img-wrap"
               />
               <time dateTime="2023-09-27">27 September 2022</time>
@@ -111,7 +111,7 @@ export default function Home() {
               <StaticImage
                 src="../images/external/ellipse41572-5cll-200h.png"
                 alt="Mazhar Adli, PhD"
-                placeholder="blurred"
+                placeholder="none"
                 className="home-news-card-img-wrap"
               />
               <time dateTime="2023-12-05">5 Dec 2022</time>
@@ -125,7 +125,7 @@ export default function Home() {
               <StaticImage
                 src="../images/external/ellipse51572-6fwh-200h.png"
                 alt="Dr. Ka Yee Yeung and Dr. Ling-Hong Hung posing next to their poster"
-                placeholder="blurred"
+                placeholder="none"
                 className="home-news-card-img-wrap"
               />
               <time dateTime="2023-05-02">2 May 2023</time>
