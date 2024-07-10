@@ -113,6 +113,106 @@ ul {
   color: var(--dl-color-default-absolutewhite);
 }
 
+/* ICONS AND LOGOS */
+.icon-caret-right {
+  width:18px;
+  height: 18px;
+
+  background-image: url("../images/icons/caret-right.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.icon-caret-down {
+  width:18px;
+  height: 18px;
+
+  background-image: url("../images/icons/caret-down.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.icon-data-tracker {
+  min-width: 1rem;
+  min-height: 1rem;
+
+  background-image: url("../images/external/vector1572-oa9.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.icon-loupe {
+  min-width: 1rem;
+  min-height: 1rem;
+
+  background-image: url("../images/icons/loupe.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.icon-group {
+  min-width: 1rem;
+  min-height: 1rem;
+
+  background-image: url("../images/icons/group.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.icon-category {
+  min-width: 1rem;
+  min-height: 1rem;
+
+  background-image: url("../images/icons/category.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+.icon-list {
+  min-width: 1rem;
+  min-height: 1rem;
+
+  background-image: url("../images/icons/list-ul.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+.icon-gear {
+  min-width: 1rem;
+  min-height: 1rem;
+
+  background-image: url("../images/icons/gear.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+.icon-download {
+  min-width: 1rem;
+  min-height: 1rem;
+
+  background-image: url("../images/icons/download.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 
 /* --- NAVBAR --- */
 .navbar-container {
@@ -362,61 +462,50 @@ ul {
   color: var(--dl-color-pure-white);
 }
 
-.icon-search {
-  min-width: 1rem;
-  min-height: 1rem;
-
-  background-image: url("../images/external/vector1572-e0qd.svg");
-  background-position-y: center;
-  background-position-x: center;
-  background-repeat: no-repeat;
-  background-size: auto;
-}
-
 .logo-fred-hutch {
-  background-image: url("../images/external/logos/Fred-Hutch.png");
+  background-image: url("../images/other-logos/Fred-Hutch.png");
   background-position-y: center;
   background-position-x: center;
   background-repeat: no-repeat;
   background-size: contain;
 }
 .logo-jackson {
-  background-image: url("../images/external/logos/Jackson.png");
+  background-image: url("../images/other-logos/Jackson.png");
   background-position-y: center;
   background-position-x: center;
   background-repeat: no-repeat;
   background-size: contain;
 }
 .logo-msk {
-  background-image: url("../images/external/logos/MSK.png");
+  background-image: url("../images/other-logos/MSK.png");
   background-position-y: center;
   background-position-x: center;
   background-repeat: no-repeat;
   background-size: contain;
 }
 .logo-northwestern {
-  background-image: url("../images/external/logos/Northwestern-no-border.png");
+  background-image: url("../images/other-logos/Northwestern.png");
   background-position-y: center;
   background-position-x: center;
   background-repeat: no-repeat;
   background-size: contain;
 }
 .logo-stanford {
-  background-image: url("../images/external/logos/Stanford.png");
+  background-image: url("../images/other-logos/Stanford.png");
   background-position-y: center;
   background-position-x: center;
   background-repeat: no-repeat;
   background-size: contain;
 }
 .logo-ucsf {
-  background-image: url("../images/external/logos/UCSF.png");
+  background-image: url("../images/other-logos/UCSF.png");
   background-position-y: center;
   background-position-x: center;
   background-repeat: no-repeat;
   background-size: contain;
 }
 .logo-uw {
-  background-image: url("../images/external/logos/Washington.png");
+  background-image: url("../images/other-logos/Washington.png");
   background-position-y: center;
   background-position-x: center;
   background-repeat: no-repeat;
@@ -623,15 +712,12 @@ ul {
   gap: 2px;
 }
 
-.dropdown-arrow {
-  width: 18px;
-  height: 18px;
-  margin-left: 35px;
+.home-questions-content button {
+  margin: 0 0 1.5rem 2rem;
 }
 
 .home-questions-content h4 {
-  margin: 0 0 24px 16px;
-
+  margin: 0 0 0 1rem;
   color: red;
   font-family: Inter;
   font-size: 17px;
@@ -838,7 +924,7 @@ ul {
 
   width: 1380px;
 
-  background-image: url("../images/external/logos/background-logo.png");
+  background-image: url("../images/logos/logo-120deg.svg");
   background-position-y: top;
   background-position-x: right;
   background-repeat: no-repeat;
@@ -984,7 +1070,7 @@ ul {
   display: flex;
   align-items: flex-end;
 
-  background-image: url("../images/external/logos/background-logo.png");
+  background-image: url("../images/logos/logo-120deg.svg");
   background-position-y: center;
   background-position-x: center;
   background-repeat: no-repeat;
@@ -1129,7 +1215,7 @@ ul {
   min-height: 646px;
   border-radius: 8px;
 
-  background-image: url("../images/external/logos/background-logo-2.png");
+  background-image: url("../images/logos/logo-106deg.svg");
   background-position-y: center;
   background-position-x: right;
   background-repeat: no-repeat;
@@ -1196,50 +1282,6 @@ ul {
 
 .data-flow-item-icon, .data-flow-logo {
   margin-top: 15px;
-}
-
-.icon-group {
-  min-width: 1rem;
-  min-height: 1rem;
-
-  background-image: url("../images/external/logos/vector-e.png");
-  background-position-y: center;
-  background-position-x: center;
-  background-repeat: no-repeat;
-  background-size: auto;
-}
-
-.icon-category {
-  min-width: 1rem;
-  min-height: 1rem;
-
-  background-image: url("../images/external/logos/vector-d.png");
-  background-position-y: center;
-  background-position-x: center;
-  background-repeat: no-repeat;
-  background-size: auto;
-}
-
-.icon-list {
-  min-width: 1rem;
-  min-height: 1rem;
-
-  background-image: url("../images/external/logos/vector-p.png");
-  background-position-y: center;
-  background-position-x: center;
-  background-repeat: no-repeat;
-  background-size: auto;
-}
-
-.icon-gear {
-  min-width: 1rem;
-  min-height: 1rem;
-
-  background-image: url("../images/external/logos/vector-a.png");
-  background-position-y: center;
-  background-position-x: center;
-  background-repeat: no-repeat;
-  background-size: auto;
 }
 
 .data-flow-item p {
@@ -1337,15 +1379,9 @@ ul {
   gap: 30px;
 }
 
-.icon-data-tracker {
+.data-card-header-icon {
   width: 47px;
-  height: 45.62px;
-
-  background-image: url("../images/external/vector1572-oa9.svg");
-  background-position-y: center;
-  background-position-x: center;
-  background-repeat: no-repeat;
-  background-size: auto;
+  height: 46px;
 }
 
 .data-card-body {
