@@ -22,7 +22,7 @@ export default function News() {
               <article className="news-article">
                 <div className="news-article-img-wrap">
                     <StaticImage
-                        src="../../images/external/ellipse21572-saf-200h.png"
+                        src="../../images/news-um.png"
                         alt="Dr. Schürer and members of the MorPhiC DRACC"
                         placeholder="none"
                         className="news-article-image"
@@ -45,7 +45,7 @@ export default function News() {
               <article className="news-article">
                 <div className="news-article-img-wrap">
                     <StaticImage
-                        src="../../images/external/ellipse31572-mj5c-200h.png"
+                        src="../../images/news-ucsf.jpeg"
                         alt="Luke Gilbert, UCSF"
                         placeholder="none"
                         className="news-article-image"
@@ -68,7 +68,7 @@ export default function News() {
               <article className="news-article">
                 <div className="news-article-img-wrap">
                     <StaticImage
-                        src="../../images/external/ellipse41572-5cll-200h.png"
+                        src="../../images/news-northwestern.png"
                         alt="Mazhar Adli, PhD"
                         placeholder="none"
                         className="news-article-image"
@@ -91,7 +91,7 @@ export default function News() {
               <article className="news-article">
                 <div className="news-article-img-wrap">
                     <StaticImage
-                        src="../../images/external/ellipse51572-6fwh-200h.png"
+                        src="../../images/news-uw.jpg"
                         alt="Dr. Ka Yee Yeung and Dr. Ling-Hong Hung posing next to their poster"
                         placeholder="none"
                         className="news-article-image"
