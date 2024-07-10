@@ -318,7 +318,7 @@ ul {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 1.5rem;
 }
 
 .home-card-title {
@@ -373,6 +373,13 @@ ul {
   background-size: auto;
 }
 
+.logo-fred-hutch {
+  background-image: url("../images/external/logos/Fred-Hutch.png");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
 .logo-jackson {
   background-image: url("../images/external/logos/Jackson.png");
   background-position-y: center;
@@ -380,15 +387,78 @@ ul {
   background-repeat: no-repeat;
   background-size: contain;
 }
+.logo-msk {
+  background-image: url("../images/external/logos/MSK.png");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.logo-northwestern {
+  background-image: url("../images/external/logos/Northwestern-no-border.png");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.logo-stanford {
+  background-image: url("../images/external/logos/Stanford.png");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.logo-ucsf {
+  background-image: url("../images/external/logos/UCSF.png");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.logo-uw {
+  background-image: url("../images/external/logos/Washington.png");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
 
 .home-card-icon {
+  min-height: 50px;
   min-width: 50px;
-  height: 50px;
 }
 
 .home-card-logo {
   width: 200px;
   height: 50px;
+  display: block;
+}
+
+/* --- Carousel Component */
+.carousel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+.home-card-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.home-card-dot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--dl-color-default-babyblue);
+  overflow: hidden;
+  transition: .2s ease-in-out;
+  cursor: pointer;
+}
+
+.home-card-dot-active {
+  background-color: var(--dl-color-brand-blue);
 }
 
 /* --- HOME NEWS */
