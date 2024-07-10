@@ -12,7 +12,8 @@ export default function Navbar() {
                     <StaticImage 
                         src="../images/external/vector1571-21gu.svg"
                         alt="MorPhiC logo"
-                        placeholder="blurred"
+                        placeholder="none"
+                        quality={100}
                     />
                 </Link>
             </div>
