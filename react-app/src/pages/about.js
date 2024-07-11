@@ -23,13 +23,9 @@ export default function About() {
                     <div className="about-card">
                       <h2 className="about-card-title">inside this page</h2>
                       <ul>
-                        <li><a href="#about-morphic">↓ The MorPhiC programme</a></li>
-                        <li><a href="#publications">↓ Publications</a></li>
-                        <li><a href="#">↓ What is null allele?</a></li>
-                        <li><a href="#">↓ Experiment design for the studies</a></li>
-                        <li><a href="#data-flow">↓ Data flow and availability</a></li>
-                        <li><a href="#">↓ Collaborators</a></li>
-                        <li><a href="#funders">↓ Funders</a></li>
+                        <li><a href="#program-goals">↓ Program goals</a></li>
+                        <li><a href="#participants">↓ Participants</a></li>
+                        <li><a href="#funding">↓ Funding</a></li>
                       </ul>
                     </div>
                   </div>
@@ -37,47 +33,49 @@ export default function About() {
               </div>
             </div>
 
-            <section id="about-morphic" className="about-section">
+            <section id="program-goals" className="about-section">
               <div className="about-section-subtitle-container">
-                <h2>About the MorPhiC Program</h2>
+                <h2>Program goals</h2>
                 <a href="#">↑ Back to top</a>
               </div>
               <div className="about-section-description-container">
-                <p>The MorPhiC programme aims to develop a consistent catalog of molecular and cellular phenotypes for null alleles for every human gene by using in-vitro multicellular systems. The catalog will be made available for broad use by the biomedical community. MorPhiC has three components: the Data Production Research and Development Centers (DPCs), the Data Analysis and Validation Centers (DAVs) and the Data Resource and Administrative Coordinating Center (DRACC).</p>
+                <p>
+                  MorPhiC aims to develop a consistent catalog of molecular and cellular phenotypes for null alleles for every human gene by using in-vitro multicellular systems. The catalog will be made available for broad use by the biomedical community. The program will start with a Phase 1 to optimize available methods to create null alleles and measure their phenotypic effects in a target subset of 1,000 protein coding genes across the program. Phase 1 will also assess the scale limitations of such methods, develop common data formats and establish use cases for this catalog.
+                </p>
+                <p>
+                  Systematically obtaining information about the molecular and cellular phenotypic effects of gene knockouts for all human genes would provide wide-ranging insights into their biological function. Such data would provide a foothold for understanding the mechanisms through which genes act to produce phenotypes and would help elucidate the roles and relationships of genes and regulatory elements in pathways and networks.
+                </p>
+                <p><b>MorPhiC Phase 1</b> will include three components:</p>
+                <p>
+                  <b>Data Production Research and Development Centers</b> will develop diverse systems and assays and explore and compare approaches to produce MorPhiC data at scale, and to maximize its informativeness.
+                </p>
+                <p>
+                  <b>Data Analysis and Validation Centers</b> will undertake applicant-proposed analyses of the data in order to characterize its quality and utility for multiple purposes.
+                </p>
+                <p>
+                  There will be a <b>Data Resource and Administrative Coordinating Center.</b>
+                </p>
+                <p>All components will work together to ensure that the data are informative, of high quality and useful to the community.</p>
               </div>
             </section>
 
-            <section id="publications" className="about-section">
+            <section id="participants" className="about-section">
               <div className="about-section-subtitle-container">
-                <h2>Publications</h2>
+                <h2>Participants</h2>
                 <a href="#">↑ Back to top</a>
-              </div>
-              <div className="about-section-description-container">
-                <p className="bold">Description statement for the MorPhiC programme</p>
-                <a>Link to paper</a>
-              </div>
-            </section>
-
-            <section id="data-flow" className="about-section">
-              <div className="about-section-subtitle-container">
-                <h2>Data flow and availability</h2>
-                <a href="#">↑ Back to top</a>
-              </div>
-              <div className="about-section-description-container">
-                <p>The MorPhiC programme aims to develop a consistent catalog of molecular and cellular phenotypes for null alleles for every human gene by using in-vitro multicellular systems. The catalog will be made available for broad use by the biomedical community. MorPhiC has three components: the Data Production Research and Development Centers (DPCs), the Data Analysis and Validation Centers (DAVs) and the Data Resource and Administrative Coordinating Center (DRACC).</p>
               </div>
             </section>
 
             <div className="data-flow-card">
               <section className="organisation">
-                <h2>The MorPhic organisation</h2>
+                <h2>The MorPhiC participants</h2>
                 <div className="data-flow-categories">
                   <div className="data-flow-category">
                     <h3 className="data-flow-sub-heading"><span>Working Groups</span></h3>
                     <div className="data-flow-items">
                       <div className="data-flow-item item-bg-1">
                         <span aria-hidden className="data-flow-item-icon icon-group"></span>
-                        <p className="item-label">Expertimental</p>
+                        <p className="item-label">Experimental</p>
                       </div>
                       <div className="data-flow-item item-bg-2">
                         <span aria-hidden className="data-flow-item-icon icon-category"></span>
@@ -189,26 +187,16 @@ export default function About() {
               </section>
             </div>
 
-            <section id="funders" className="about-section">
+            <section id="funding" className="about-section">
               <div className="about-section-subtitle-container">
-                <h2>Funders</h2>
+                <h2>Funding</h2>
                 <a href="#">↑ Back to top</a>
               </div>
               <div className="about-section-description-container">
-                <p className="bold">NIH Grant #1234567890</p>
-                <a>Link to paper</a>
-              </div>
-              <div className="about-section-description-container">
-                <p className="bold">NIH Grant #1234567890</p>
-                <a>Link to paper</a>
-              </div>
-              <div className="about-section-description-container">
-                <p className="bold">NIH Grant #1234567890</p>
-                <a>Link to paper</a>
-              </div>
-              <div className="about-section-description-container">
-                <p className="bold">NIH Grant #1234567890</p>
-                <a>Link to paper</a>
+                <p>
+                  Read the <a className="" href="https://www.genome.gov/research-funding/Funded-Programs-Projects/Molecular-Phenotypes-of-Null-Alleles-in-Cells" target="_blank" rel="noopener noreferrer">
+                  MorPhiC Program outline on the NHGRI website →</a>
+                </p>
               </div>
             </section>
 
