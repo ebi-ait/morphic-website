@@ -69,8 +69,10 @@ export default function Home() {
           </div>
 
           <h2>About the MorPhiC Program</h2>
-          <p className="home-about-text">The MorPhiC programme aims to develop a consistent catalog of molecular and cellular phenotypes for null alleles for every human gene by using in-vitro multicellular systems. The catalog will be made available for broad use by the biomedical community. MorPhiC has three components: the Data Production Research and Development Centers (DPCs), the Data Analysis and Validation Centers (DAVs) and the Data Resource and Administrative Coordinating Center (DRACC).</p>
-          <Link to="/about" className="home-about-link">Learn more about MorPhiC program goals →</Link>
+          <p className="home-about-text">
+            The MorPhiC program aims to develop a consistent catalog of molecular and cellular phenotypes for null alleles for every human gene by using in-vitro multicellular systems. The catalog will be made available for broad use by the biomedical community. The program will start with a Phase 1 to optimize available methods to create null alleles and measure their phenotypic effects in a target subset of 1,000 protein coding genes across the program.
+          </p>
+          <div className="home-about-link">Learn more about MorPhiC program goals →</div>
         </div>
       </section>
 
