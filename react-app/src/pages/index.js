@@ -153,22 +153,22 @@ export default function Home() {
             <p>The following policies were approved by the MorPhiC Steering Committee:</p>
             <ul>
               <li>
-                <Link to="/policies">Code of Conduct</Link>
+                <Link to="/policies/code-of-conduct">Code of Conduct</Link>
               </li>
               <li>
-                <Link to="/policies">Publication Policy</Link>
+                <Link to="/policies/publication-policy">Publication Policy</Link>
               </li>
               <li>
-                <Link to="/policies">Software Sharing Policy</Link>
+                <Link to="/policies/software-sharing-policy">Software Sharing Policy</Link>
               </li>
               <li>
-                <Link to="/policies">Human Genome Assembly Policy</Link>
+                <Link to="/policies/human-genome-assembly-policy">Human Genome Assembly Policy</Link>
               </li>
               <li>
-                <Link to="/policies">Affiliate Membership Policy</Link>
+                <Link to="/policies/affiliate-membership-policy">Affiliate Membership Policy</Link>
               </li>
               <li>
-                <Link to="/policies">Data Release and Use Policy</Link>
+                <Link to="/policies/data-release-and-use-policy">Data Release and Use Policy</Link>
               </li>
             </ul>
           </div>
