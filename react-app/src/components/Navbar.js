@@ -29,11 +29,6 @@ export default function Navbar() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/data" className="nav-link">
-                            <span>Data</span>
-                        </Link>
-                    </li>
-                    <li>
                         <a className="nav-link" href="https://whri-phenogenomics.shinyapps.io/morphic_gene_list/" target="_blank" rel="noopener noreferrer">
                             Genes studied
                         </a>
