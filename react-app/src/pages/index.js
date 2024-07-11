@@ -136,7 +136,7 @@ export default function Home() {
         <div className="home-policies-triangle"></div>
         <div className="home-policies-container">
           <div className="home-policies-content">
-            <h2>Licenses & Policies</h2>
+            <h2>Policies</h2>
             <p>The MorPhiC programme programme aims to develop a consistent catalog of molecular and cellular phenotypes for null alleles for every human gene by using in-vitro multicellular systems. The catalog will be made available for broad use by the biomedical community. The MorPhiC nullprogramme aims to develop a consistent catalog of molecular and cellular phenotypes for null alleles for every human gene by using in-vitro multicellular systems. The catalog will be made available for broad null use by the biomedical community. The MorPhiC programme aims to develop a consistent catalog of molecular and cellular phenotypes for null alleles for every human gene by using in-vitro multicellular systems. The catalog will be made available for broad use by the biomedical community.</p>
             <p>The following policies were approved by the MorPhiC Steering Committee:</p>
             <ul>
