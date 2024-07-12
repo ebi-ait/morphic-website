@@ -9,3 +9,12 @@ export default function IndexPolicies() {
     </Policies>
   )
 }
+
+export function Head() {
+  return (
+    <>
+      <title>Study Tracker</title>
+      <link id="icon" rel="icon" href="favicon.svg" />
+    </>
+  )
+}
