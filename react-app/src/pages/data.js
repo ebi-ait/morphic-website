@@ -23,7 +23,7 @@ export default function Data() {
                         <span aria-hidden className="data-card-header-icon icon-data-tracker"></span>
                         <div>
                             <h1>Data Tracker</h1>
-                            <p>Currently planned studies as part of the MorPhiC programme</p>
+                            <p>Currently planned studies as part of the MorPhiC program</p>
                         </div>
                     </div>
                 </div>
