@@ -307,20 +307,26 @@ ul {
 }
 
 .header-position-center h1 {
+  font-family: Inter;
+  font-size: 62px;
+  font-weight: 600;
+  line-height: 62px;
+  letter-spacing: -0.04em;
   text-align: center;
-  text-shadow: 0px 4px 4px rgba(0,0,0,.25);
-  letter-spacing: -2.48px;
-  font: 600 62px/62px Inter,sans-serif;
+
   margin: 0;
 }
 
 .header-position-center p {
   color: var(--dl-color-default-smartwhite);
+
+  font-family: Inter;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 20.57px;
+  letter-spacing: -0.04em;
   text-align: center;
-  text-shadow: 0px 4px 4px rgba(0,0,0,.25);
-  letter-spacing: -.68px;
-  max-width: 526px;
-  font: 700 17px Inter,sans-serif;
+
   margin: 0;
 }
 

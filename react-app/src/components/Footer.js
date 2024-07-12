@@ -38,7 +38,7 @@ export default function Footer() {
           </ul>
           <div className="footer-photo-credit">Photo by Sangharsh Lohakare on Unsplash</div>
           <div className="footer-copyright-container">
-            <p className="footer-copyright-tile">Molecular Phenotypes of Null Alleles in Cells</p>
+            <p className="footer-copyright-title">Molecular Phenotypes of Null Alleles in Cells</p>
             <p className='footer-copyright'>&copy; 2024 MorPhiC. All rights reserved.</p>
           </div>
         </div>
