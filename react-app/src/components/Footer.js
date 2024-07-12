@@ -22,7 +22,6 @@ export default function Footer() {
             <li>
               <Link to="/about">About</Link>
             </li>
-            <div style={{display: "none"}}><Link to="/data">Data</Link></div>
             <li>
               <a href="https://whri-phenogenomics.shinyapps.io/morphic_gene_list/" target="_blank" rel="noopener noreferrer">Gene list</a>
             </li>
