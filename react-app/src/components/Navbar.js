@@ -1,5 +1,5 @@
-import { Link } from 'gatsby'
-import React from 'react'
+import { Link } from "gatsby"
+import React from "react"
 
 import logo from "../images/logos/morphic-logo-horizontal.svg"
 
@@ -19,12 +19,12 @@ export default function Navbar() {
             <div className='navbar-right'>
                 <ul className='navbar-list'>
                     <li>
-                        <Link to="/" className="nav-link">
+                        <Link to="/" className="nav-link" activeClassName="navbar-active">
                             <span>Home</span>
                         </Link>
                     </li>
                     <li>
-                        <Link to="/about" className="nav-link">
+                        <Link to="/about" className="nav-link" activeClassName="navbar-active">
                             <span>About</span>
                         </Link>
                     </li>
@@ -39,7 +39,7 @@ export default function Navbar() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/contact-us" className="nav-link">
+                        <Link to="/contact-us" className="nav-link" activeClassName="navbar-active">
                             <span>Contact us</span>
                         </Link>
                     </li>
