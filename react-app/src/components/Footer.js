@@ -33,7 +33,7 @@ export default function Footer() {
               <Link to="/policies/code-of-conduct">Policies</Link>
             </li>
             <li>
-              <Link to="/contact">Contact us</Link>
+              <Link to="/contact-us">Contact us</Link>
             </li>
           </ul>
           <div className="footer-photo-credit">Photo by Sangharsh Lohakare on Unsplash</div>
