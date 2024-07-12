@@ -253,9 +253,21 @@ ul {
 }
 
 .navbar-active {
-  background-image: url("../images/external/ellipse61572-5zfc-200h.png");
+  position: relative;
+}
+
+.navbar-active::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background-image: url("../images/icons/selected.svg");
   background-repeat: no-repeat;
-  background-position: 50% 100%;
+
 }
 
 /* --- HEADER HOMEPAGE --- */
