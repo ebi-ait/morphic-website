@@ -177,3 +177,12 @@ export default function Gene() {
     </div>
   )
 }
+
+export function Head() {
+    return (
+      <>
+        <title>Study Tracker</title>
+        <link id="icon" rel="icon" href="favicon.svg" />
+      </>
+    )
+}

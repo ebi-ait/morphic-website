@@ -166,3 +166,12 @@ export default function CodeOfConduct() {
     </Policies>
   );
 }
+
+export function Head() {
+  return (
+    <>
+      <title>Study Tracker</title>
+      <link id="icon" rel="icon" href="favicon.svg" />
+    </>
+  )
+}
