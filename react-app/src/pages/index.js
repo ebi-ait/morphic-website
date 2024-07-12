@@ -24,7 +24,7 @@ export default function Home() {
         <div className="header-position-center">
           <h1>Molecular Phenotypes<br></br>
           of Null Alleles in Cells</h1>
-          <p>A programme to better understand the function of every human gene and generate a catalogue of the molecular and cellular consequences of inactivating genes.</p>
+          <p>A program to better understand the function of every human gene and generate a catalogue of the molecular and cellular consequences of inactivating genes.</p>
         </div>
         <div className="header-position-bottom header-triangle"></div>
       </div>
@@ -60,7 +60,7 @@ export default function Home() {
           <p className="home-about-text">
             The MorPhiC program aims to develop a consistent catalog of molecular and cellular phenotypes for null alleles for every human gene by using in-vitro multicellular systems. The catalog will be made available for broad use by the biomedical community. The program will start with a Phase 1 to optimize available methods to create null alleles and measure their phenotypic effects in a target subset of 1,000 protein coding genes across the program.
           </p>
-          <Link to="/about" className="home-about-link">Learn more about MorPhiC program goals →</Link>
+          <Link to="/about" className="home-about-link">Learn more about the MorPhiC program →</Link>
         </div>
       </section>
 
