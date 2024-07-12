@@ -336,7 +336,7 @@ ul {
 }
 
 .header-triangle {
-	clip-path: polygon(0 100%,100% 110px,100% 0%,0px 100%);
+	clip-path: polygon(-5% 105%, 105% 105%, 105% -5%);
 	background-color: var(--dl-color-default-smartwhite);
 	width: 100%;
 	height: 110px;
@@ -567,7 +567,7 @@ ul {
 }
 
 .home-news-triangle {
-	clip-path: polygon(0 0,100% 100%,100% 0%,0px 0);
+	clip-path: polygon(-5% -5%, 105% 105%, 105% -5%);
 	background-color: var(--dl-color-default-smartwhite);
 	width: 100%;
 	height: 110px;
@@ -662,7 +662,7 @@ ul {
 }
 
 .home-questions-triangle {
-  clip-path: polygon(0 100%,100% 0,100% 0%,0px 0);
+  clip-path: polygon(-5% -5%, -5% 105%, 105% -5%);
 	background-color: var(--dl-color-light-blue);
 	width: 100%;
 	height: 110px;
@@ -758,7 +758,7 @@ ul {
 }
 
 .home-policies-triangle {
-  clip-path: polygon(0 0,100% 100%,100% 0,0 0);
+  clip-path: polygon(-5% -5%, 105% 105%, 105%-5%);
 	background-color: var(--dl-color-default-smartblack);
 	width: 100%;
 	height: 110px;
@@ -916,7 +916,7 @@ ul {
 }
 
 .policies-triangle {
-  clip-path: polygon(0 100%,100% 100%,100% 0,0 100%);
+  clip-path: polygon(-5% 105%, 105% 105%, 105% -5%);
 	background-color: var(--dl-color-default-smartwhite);
 	width: 100%;
 	height: 110px;
