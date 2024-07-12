@@ -768,7 +768,6 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 321px;
 }
 
 .home-policies-content {
@@ -1046,12 +1045,12 @@ ul {
   margin: 1em 0;
 }
 
-.policies ul {
+.policies-info ul {
   list-style-type: disc;
   margin-left: 1.5em;
 }
 
-.policies ul ul {
+.policies-info ul ul {
   list-style-type: circle;
 }
 
