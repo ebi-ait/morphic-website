@@ -211,7 +211,7 @@ export default function About() {
 export function Head() {
   return (
     <>
-      <title>Study Tracker</title>
+      <title>MorPhiC program: Molecular Phenotypes of Null Alleles in Cells</title>
       <link id="icon" rel="icon" href="favicon.svg" />
     </>
   )
