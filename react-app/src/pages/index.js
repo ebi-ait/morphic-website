@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar'
 import Carousel from "../components/carousel"
 import FAQ from "../components/FAQ"
 import Footer from "../components/Footer"
+import { generateHeadElements } from '../utils/SEO';
 
 import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
@@ -166,11 +167,4 @@ export default function Home() {
   )
 }
 
-export function Head() {
-  return (
-    <>
-      <title>MorPhiC program: Molecular Phenotypes of Null Alleles in Cells</title>
-      <link id="icon" rel="icon" href="favicon.svg" />
-    </>
-  )
-}
+export const Head = () => generateHeadElements("MorPhiC program: Molecular Phenotypes of Null Alleles in Cells");
