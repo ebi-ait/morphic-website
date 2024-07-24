@@ -4,17 +4,19 @@ import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import { Link } from "gatsby"
 
+import * as styles from "../styles/policies.module.css"
+
 export default function Policies({ children }) {
   return (
-    <div className="policies">
+    <div className={styles.policies}>
       <Navbar />
-      <div className="policies-triangle"></div>
-      <section className="policies-container">
-        <div className="policies-content-container">
-          <div className="policies-content">
-            <div className="policies-menu-container">
-              <div className="policies-card">
-                <h2 className="policies-card-title">policies</h2>
+      <div className={styles.policiesTriangle}></div>
+      <section className={styles.policiesContainer}>
+        <div className={styles.policiesContentContainer}>
+          <div className={styles.policiesContent}>
+            <div className={styles.policiesMenuContainer}>
+              <div className={styles.policiesCard}>
+                <h2 className={styles.policiesCardTitle}>policies</h2>
                 <ul>
                   <li>
                     <Link to="/policies/code-of-conduct" className="nav-link">Code of Conduct</Link>
@@ -37,7 +39,7 @@ export default function Policies({ children }) {
                 </ul>
               </div>
             </div>
-            <div className="policies-info">
+            <div className={styles.policiesInfo}>
                 { children }
             </div>
           </div>
