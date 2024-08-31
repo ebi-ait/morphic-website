@@ -1,11 +1,17 @@
-import React from "react"
+import React, { useState } from "react"
 
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 
 import cover from "../images/external/sangharshlohakare8olkmpo8ugunsplash11571-51ur-800h.png"
+import JSONData from "../../content/studies.json"
 
 export default function Data() {
+    const [collapse, setCollapse] = useState(false);
+    const handleCollapse = () => {
+        setCollapse(!collapse);
+    }
+    
   return (
     <div>
       <div className="header-inline header-gradient">
@@ -28,9 +34,18 @@ export default function Data() {
                     </div>
                 </div>
                 <div className="data-card-body">
+                    {collapse && (
+                    <div className="data-card-filter data-card-filter-collapsed">
+                        <button className="data-card-filter-button data-card-filter-button-collapse" onClick={() => setCollapse((prev) => !prev)}>
+                            <span className="icon-arrow-right icon"></span>
+                            <span className="text-rotate">Filter</span>
+                        </button>
+                    </div>
+                    )}
+                    {!collapse && (<>
                     <div className="data-card-filter">
                         <div className="data-card-button-group">
-                            <button className="data-card-filter-button"><img></img>Filter</button>
+                            <button className="data-card-filter-button" onClick={() => setCollapse((prev) => !prev)}><span className="icon-arrow-left icon"></span>Filter</button>
                             <button className="data-card-clear-button">Clear all</button>
                         </div>
                         <div className="data-card-form-container">
@@ -60,8 +75,10 @@ export default function Data() {
                             </form> 
                         </div>
                     </div>
+                    </>)}
                     <div className="data-card-table-container">
-                        <h3>15 of 15 studies shown</h3>
+                        <h3>{JSONData._embedded.studies.length} of {JSONData._embedded.studies.length} studies shown</h3>
+
                         <table className="data-card-table">
                             <tr className="data-card-table-heading">
                                 <th></th>
@@ -71,75 +88,29 @@ export default function Data() {
                                 <th>assay</th>
                                 <th>perturbation type</th>
                                 <th>centre</th>
-                                <th>data</th>
                             </tr>
-                            <tr>
-                                <td><button><span className="icon-radio-open"></span></button></td>
-                                <td className="bold">Genome-wide CRISPR/Cas screen in hESCs</td>
-                                <td>PAX-6 + 996 more</td>
-                                <td>KOLF 2.2</td>
-                                <td>Perturb-Seq scRNASeq</td>
-                                <td>Auxin-inducible degron (AID) CRISRP-Cas9 KO</td>
-                                <td>MSKCC</td>
-                                <td>124 FASTQ
-                                3 protocols</td>
-                                <td><div className="bold link-orange">465 GB<span className="icon-download"></span></div></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            {JSONData._embedded.studies.map((data, index) => (data.content.study_title && (
+                                <tr key={`content_item_${index}`}>
+                                    <td><span className="icon-radio-open icon"></span></td>
+                                    <td className="bold"><div>{data.content?.study_title}</div></td>
+                                    <td>
+                                        <div>{data.content?.target_genes}</div>
+                                        <div>+ {data.content?.target_genes?.length} more</div>
+                                    </td>
+                                    <td>
+                                        <div>{data.content?.cell_line_names}</div>
+                                    </td>
+                                    <td>
+                                        <div>{data.content?.readout_assay}</div>
+                                    </td>
+                                    <td>
+                                        <div>{data.content?.perturbation_type}</div>
+                                    </td>
+                                    <td>
+                                        <div>{data.content?.institute}</div>
+                                    </td>
+                                </tr>
+                            )))}
                         </table> 
                     </div>
                 </div>
