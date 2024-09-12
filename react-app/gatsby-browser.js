@@ -6,7 +6,6 @@ export const wrapPageElement = ({ element }) => (
   <>
     <CookieConsent
       location="bottom"
-      debug="true"
       buttonText="I agree, dismiss this message"
       cookieName="gatsby-plugin-google-gtag"
       containerClasses="custom-cookie-banner"
