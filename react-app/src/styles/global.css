@@ -117,7 +117,6 @@ ul {
 .icon-caret-right {
   width:18px;
   height: 18px;
-
   background-image: url("../images/icons/caret-right.svg");
   background-position-y: center;
   background-position-x: center;
@@ -128,7 +127,6 @@ ul {
 .icon-caret-down {
   width:18px;
   height: 18px;
-
   background-image: url("../images/icons/caret-down.svg");
   background-position-y: center;
   background-position-x: center;
@@ -139,7 +137,6 @@ ul {
 .icon-data-tracker {
   min-width: 1rem;
   min-height: 1rem;
-
   background-image: url("../images/external/vector1572-oa9.svg");
   background-position-y: center;
   background-position-x: center;
@@ -150,7 +147,6 @@ ul {
 .icon-loupe {
   min-width: 1rem;
   min-height: 1rem;
-
   background-image: url("../images/icons/loupe.svg");
   background-position-y: center;
   background-position-x: center;
@@ -161,7 +157,6 @@ ul {
 .icon-group {
   min-width: 1rem;
   min-height: 1rem;
-
   background-image: url("../images/icons/group.svg");
   background-position-y: center;
   background-position-x: center;
@@ -172,7 +167,6 @@ ul {
 .icon-category {
   min-width: 1rem;
   min-height: 1rem;
-
   background-image: url("../images/icons/category.svg");
   background-position-y: center;
   background-position-x: center;
@@ -183,7 +177,6 @@ ul {
 .icon-list {
   min-width: 1rem;
   min-height: 1rem;
-
   background-image: url("../images/icons/list-ul.svg");
   background-position-y: center;
   background-position-x: center;
@@ -194,7 +187,6 @@ ul {
 .icon-gear {
   min-width: 1rem;
   min-height: 1rem;
-
   background-image: url("../images/icons/gear.svg");
   background-position-y: center;
   background-position-x: center;
@@ -205,7 +197,6 @@ ul {
 .icon-download {
   min-width: 1rem;
   min-height: 1rem;
-
   background-image: url("../images/icons/download.svg");
   background-position-y: center;
   background-position-x: center;
@@ -216,7 +207,6 @@ ul {
 .icon-radio-open {
   min-width: 1rem;
   min-height: 1rem;
-
   background-image: url("../images/icons/checkbox-circle.svg");
   background-position-y: center;
   background-position-x: center;
@@ -228,7 +218,6 @@ ul {
   display: inline-block;
   min-width: 1rem;
   min-height: 1rem;
-
   background-image: url("../images/icons/arrow-left.svg");
   background-position-y: center;
   background-position-x: center;
@@ -241,7 +230,6 @@ ul {
   display: inline-block;
   min-width: 1rem;
   min-height: 1rem;
-
   background-image: url("../images/icons/arrow-right.svg");
   background-position-y: center;
   background-position-x: center;
@@ -268,7 +256,6 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  
   display: flex;
   align-items: flex-end;
   gap: 27px; /* could add to media query */
@@ -278,7 +265,6 @@ ul {
   color: #ECECEC;
   text-decoration: none;
   text-transform: uppercase;
-
   font-weight: 500;
   font-size: 1rem;
 }
@@ -299,10 +285,8 @@ ul {
   top: 120%;
   left: 50%;
   transform: translateX(-50%);
-
   background-image: url("../images/icons/selected.svg");
   background-repeat: no-repeat;
-
 }
 
 /* --- HEADER HOMEPAGE --- */
@@ -341,11 +325,10 @@ ul {
   position: absolute;
   top: 50%;
   left: 50%;
-    --position-translate-x: -50%; /* TEST */
-    --position-translate-y: -50%; /* TEST */
-    transform: translate(var(--position-translate-x),var(--position-translate-y));
+  --position-translate-x: -50%; /* TEST */
+  --position-translate-y: -50%; /* TEST */
+  transform: translate(var(--position-translate-x),var(--position-translate-y));
   max-width: 624px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -360,20 +343,17 @@ ul {
   line-height: 62px;
   letter-spacing: -0.04em;
   text-align: center;
-
   margin: 0;
 }
 
 .header-position-center p {
   color: var(--dl-color-default-smartwhite);
-
   font-family: Inter;
   font-size: 17px;
   font-weight: 700;
   line-height: 20.57px;
   letter-spacing: -0.04em;
   text-align: center;
-
   margin: 0;
 }
 
@@ -387,6 +367,47 @@ ul {
 	background-color: var(--dl-color-default-smartwhite);
 	width: 100%;
 	height: 110px;
+}
+
+.custom-cookie-banner {
+  /*Todo: check why styles are not overriden
+  bottom: '20px !important';
+  */
+}
+
+.custom-cookie-banner > div:first-child {
+  /* This targets the auto-generated div */
+  flex: 1;
+  margin: 0 !important; /* Remove the extra margin */
+  padding: 0;
+}
+
+.cookie-container {
+  display: flex;
+}
+
+.box1, .box2 {
+  padding: 10px;
+  margin: 5px;
+}
+
+.cookie-logo {
+  background-image: url("../images/icons/cookie.png");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 32px;
+  height: 32px;
+}
+
+.content {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  text-align: left;
+  color: var(--dl-color-default-smartblack);
 }
 
 /* --- HOME ABOUT */
@@ -408,7 +429,6 @@ ul {
 .home-about h2 {
   width: 624px;
   height: 62px;
-
   font-family: Inter;
   font-size: 40px;
   font-weight: 600;
@@ -425,7 +445,6 @@ ul {
 .home-about .home-about-text {
   width: 784px;
   height: 150px;
-
   font-family: Inter;
   font-size: 17px;
   font-weight: 400;
@@ -437,14 +456,12 @@ ul {
 .home-about-link {
   width: 343px;
   height: 21px;
-
   font-family: Inter;
   font-size: 17px;
   font-weight: 600;
   line-height: 20.57px;
   letter-spacing: -0.03em;
   text-align: center;
-
   color: #E84E0F;
 }
 
@@ -452,7 +469,6 @@ ul {
 .home-card-row {
   display: flex;
   gap: 2rem;
-
   position: absolute;
   top: 558px;
   z-index: 3;
@@ -462,12 +478,9 @@ ul {
   width: 327px;
   border: none;
   border-radius: 8px;
-
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
   padding: 20px;
   background-color: var(--dl-color-default-smartwhite);
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -477,14 +490,12 @@ ul {
 .home-card-title {
   margin: 0;
   text-transform: uppercase;
-
   font-family: Inter;
   font-size: 12px;
   font-weight: 500;
   line-height: 14.52px;
   letter-spacing: 0.3em;
   text-align: center;
-
   color: rgba(153, 153, 153, 1);
 }
 
@@ -494,7 +505,6 @@ ul {
   font-weight: 400;
   line-height: 16.94px;
   text-align: center;
-
   color: var(--dl-color-default-smartblack);
 }
 
@@ -502,16 +512,13 @@ ul {
   padding: 7px 20px 7px 20px;
   border: none;
   border-radius: 5px;
-  
   background-color: var(--dl-color-brand-orange);
-
   font-family: Inter;
   font-size: 15px;
   font-weight: 600;
   line-height: 18.15px;
   letter-spacing: -0.02em;
   text-align: center;
-
   color: var(--dl-color-pure-white);
 }
 
@@ -609,7 +616,6 @@ ul {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-
   background-color: #D7E7E9;
 }
 
@@ -624,21 +630,18 @@ ul {
   display: flex;
   flex-direction: column;
   gap: 40px;
-
   margin-bottom: 30px;
 }
 
 .home-news h2 {
   padding: 0;
   margin: 0;
-
   font-family: Inter;
   font-size: 32px;
   font-weight: 600;
   line-height: 62px;
   letter-spacing: -0.04em;
   text-align: left;
-
 }
 
 .home-news-item-container {
@@ -654,7 +657,6 @@ ul {
 
 .home-news-card-img-wrap {
   margin-bottom: 2rem;
-  
   width: 148px;
   height: 148px;
   border: none;
@@ -664,13 +666,11 @@ ul {
 
 .home-news-card time {
   margin-bottom: 10px;
-
   font-family: Inter;
   font-size: 12px;
   font-weight: 500;
   line-height: 14.52px;
   letter-spacing: 0.3em;
-
   color: #999999
 }
 
@@ -681,7 +681,6 @@ ul {
 .home-news p {
   margin: 0;
   padding: 0;
-
   font-family: Inter;
   font-size: 17px;
   font-weight: 600;
@@ -691,14 +690,12 @@ ul {
 
 .home-news-link {
   align-self: center;
-
   font-family: Inter;
   font-size: 14px;
   font-weight: 600;
   line-height: 16.94px;
   letter-spacing: -0.03em;
   text-align: left;
-
   color: #E84E0F;
 }
 
@@ -719,7 +716,6 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
-
   min-height: 635px;
 }
 
@@ -730,14 +726,12 @@ ul {
 .home-questions-content h3 {
   padding: 0;
   margin: 0;
-
   font-family: Inter;
   font-size: 32px;
   font-weight: 600;
   line-height: 62px;
   letter-spacing: -0.04em;
   text-align: center;
-
   color: var(--dl-color-default-smartwhite);
 }
 
@@ -760,7 +754,6 @@ ul {
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
-
   display: flex;
   gap: 2px;
 }
@@ -785,7 +778,6 @@ ul {
 
 .home-questions-content p {
   margin-left: 69px;
-
   font-family: Inter;
   font-size: 14px;
   font-weight: 400;
@@ -833,7 +825,6 @@ ul {
 
 .home-policies-content p {
   padding: 0.5rem 0;
-
   font-family: Inter;
   font-size: 12px;
   font-weight: 400;
@@ -884,7 +875,6 @@ ul {
 .footer-content {
   width: 1379.5px;
   height: 124px;
-
   display: flex;
   flex-direction: column;
 }
@@ -893,7 +883,6 @@ ul {
   list-style: none;
   /*margin: 0 0 105px;*/ /* or 0 0 50px */
   padding: 0;
-
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -906,7 +895,6 @@ ul {
   font-weight: 700;
   line-height: 19.36px;
   text-align: left;
-  
   text-transform: uppercase;
   color: inherit;
 }
@@ -917,7 +905,6 @@ ul {
   font-weight: 400;
   line-height: 20px;
   text-align: right;
-
   opacity: .3;
   margin: auto 0 15px;
 }
@@ -942,7 +929,6 @@ ul {
   font-weight: 400;
   line-height: 20px;
   text-align: right;
-  
 }
 
 /* --- POLICIES PAGE --- */
@@ -956,7 +942,7 @@ ul {
 /* --- ABOUT PAGE */
 .about {
   background-image: linear-gradient(#000000B2, #00000000),
-                    url("../images/external/sangharshlohakare8olkmpo8ugunsplash11571-51ur-800h.png");
+  url("../images/external/sangharshlohakare8olkmpo8ugunsplash11571-51ur-800h.png");
   background-size: 100% auto;
 }
 
@@ -974,7 +960,6 @@ ul {
   flex-direction: column;
   align-items: center;
   gap: 5rem;
-
   background-image: url("../images/logos/logo-120deg.svg");
   background-position-y: top 3%;
   background-position-x: center;
@@ -984,13 +969,11 @@ ul {
 
 .about-info h1 {
   width: 684px;
-
   font-family: Inter;
   font-size: 62px;
   font-weight: 600;
   line-height: 62px;
   letter-spacing: -0.04em;
-
   margin-bottom: 0;
 }
 
@@ -1031,14 +1014,12 @@ ul {
 
 .about-card-title {
   text-transform: uppercase;
-
   font-family: Inter;
   font-size: 10px;
   font-weight: 500;
   line-height: 12.1px;
   letter-spacing: 0.1em;
   text-align: left;
-
   color: rgba(153, 153, 153, 1);
 }
 
@@ -1054,14 +1035,12 @@ ul {
 
 .about-card a {
   text-decoration: none;
-
   font-family: Inter;
   font-size: 17px;
   font-weight: 600;
   line-height: 20.57px;
   letter-spacing: -0.03em;
   text-align: left;
-
   color: var(--dl-color-brand-orange);
 }
 
@@ -1075,11 +1054,8 @@ ul {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-
   border: 0px solid transparent;
   border-radius: 8px 0px 0px 0px;
-
-
   background-color: rgba(224, 230, 230, 1);
 }
 
@@ -1094,7 +1070,6 @@ ul {
   line-height: 20.57px;
   letter-spacing: -0.03em;
   text-align: right;
-
   color: var(--dl-color-brand-blue);
 }
 
@@ -1105,7 +1080,6 @@ ul {
   line-height: 30px;
   letter-spacing: -0.04em;
   text-align: left;
-
   padding: 0.5rem 0;
 }
 
@@ -1123,11 +1097,8 @@ ul {
 
 .data-flow-card {
   border-radius: 8px 0px 0px 0px;
-
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
   padding: 20px;
-  
   margin-top: 40px;
   max-width: 1200px;
   margin: auto;
@@ -1137,7 +1108,6 @@ ul {
   min-width: 1040px;
   min-height: 646px;
   border-radius: 8px;
-
   background-image: url("../images/logos/logo-106deg.svg");
   background-position-y: center;
   background-position-x: right;
@@ -1178,7 +1148,6 @@ ul {
   display: flex;
   flex-wrap: nowrap;
   gap: 15px;
-  
   min-width: 680px;
 }
 
@@ -1194,7 +1163,6 @@ ul {
   text-transform: uppercase;
   font-weight: 700;
   font-size: 10px;
-
   box-shadow: 0 4px 10px #0000001a;
 }
 
@@ -1266,11 +1234,9 @@ ul {
 .data-content {
   /* height: 645px; */
   background-color: var(--dl-color-default-smartwhite);
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
   position: absolute;
   z-index: 1;
   top: 140px;
@@ -1281,12 +1247,9 @@ ul {
 .data-card {
   /* min-height: 290px; */
   width: 1380px;
-
   border: 0 solid transparent;
   border-radius: 8px 0px 0px 0px;
-
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
   padding: 20px;
 }
 
@@ -1365,9 +1328,7 @@ ul {
   line-height: 14.52px;
   letter-spacing: -0.03em;
   text-align: left;
-
   color: var(--dl-color-brand-orange);
-
 }
 
 .data-card-form-container {
@@ -1393,19 +1354,15 @@ ul {
   appearance: none;
   -webkit-appearance: none;
   padding: 0.5rem;
-
   background: white;
-
   border: 1px solid rgba(153, 153, 153, 1);
   border-radius: 5px;
-
   font-family: Inter;
   font-size: 13px;
   font-weight: 400;
   line-height: 15.73px;
   letter-spacing: -0.02em;
   text-align: left;
-
 }
 
 .data-card-form select {
@@ -1455,13 +1412,11 @@ ul {
   line-height: 12.1px;
   letter-spacing: 0.1em;
   text-align: left;
-
   text-transform: uppercase;
 }
 
 .data-card-table td {
   padding: 0.5rem;
-
   font-family: Inter;
   font-size: 13px;
   line-height: 15.73px;
@@ -1534,7 +1489,6 @@ ul {
 
 .gene-container {
   background-color: var(--dl-color-smart-white);
-
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -1544,9 +1498,7 @@ ul {
 .gene-menu-card {
   width: 180px;
   border-radius: 8px;
-
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
   padding: 20px 0;
   background-color: var(--dl-color-pure-white);
 }
@@ -1554,14 +1506,12 @@ ul {
 .gene-menu-title {
   margin: 0;
   text-transform: uppercase;
-
   font-family: Inter;
   font-size: 10px;
   font-weight: 500;
   line-height: 12.1px;
   letter-spacing: 0.1em;
   text-align: left;
-
   color: rgba(153, 153, 153, 1);
 }
 
@@ -1576,7 +1526,6 @@ ul {
   line-height: 18.15px;
   letter-spacing: -0.04em;
   text-align: left;
-  
   color: var(--dl-color-brand-blue);
 }
 
@@ -1588,16 +1537,13 @@ ul {
 .gene-card {
   width: 1145px;
   border-radius: 8px;
-
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
   padding: 20px 0;
   background-color: var(--dl-color-pure-white);
 }
 
 .gene-card-header {
   padding: 1.5rem;
-
   display: flex;
   justify-content: space-between;
 }
@@ -1608,14 +1554,12 @@ ul {
 
 .gene-card-header h1 {
   margin: 0;
-
   font-family: Inter;
   font-size: 62px;
   font-weight: 600;
   line-height: 62px;
   letter-spacing: -0.04em;
   text-align: left;
-  
 }
 
 .gene-card-header-row {
@@ -1631,11 +1575,9 @@ ul {
   line-height: 18.15px;
   letter-spacing: -0.02em;
   text-align: center;
-
   padding: 7px 20px 7px 20px;
   border: none;
   border-radius: 5px;
-
   background-color: var(--dl-color-brand-orange);
   color: var(--dl-color-default-absolutewhite);
 }
@@ -1700,20 +1642,17 @@ h2.gene-card-body-title {
 .gene-card-summary {
   width: 470px;
   flex-grow: 1;
-
   background-color: rgba(207, 230, 233, 1);
 }
 
 .gene-card-summary-title {
   color: var(--dl-color-default-darkblue);
-
   font-family: Inter;
   font-size: 20px;
   font-weight: 700;
   line-height: 24.2px;
   letter-spacing: -0.04em;
   text-align: left;
-
   margin: 0;
 }
 
@@ -1734,14 +1673,12 @@ h2.gene-card-body-title {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-
   padding: 2rem 0;
   color: var(--dl-color-brand-orange);
 }
 
 .gene-section-title {
   margin: 0;
-
   font-family: Inter;
   font-size: 40px;
   font-weight: 600;
@@ -1757,7 +1694,6 @@ h2.gene-card-body-title {
   line-height: 20.57px;
   letter-spacing: -0.03em;
   text-align: right;
-
   color: var(--dl-color-brand-orange);
 }
 
@@ -1810,7 +1746,6 @@ h2.gene-card-body-title {
   line-height: 24.2px;
   letter-spacing: -0.04em;
   text-align: left;
-
   color: var(--dl-color-default-smartblack);
   margin: 0;
 }
@@ -1822,7 +1757,6 @@ h2.gene-card-body-title {
   line-height: 20.57px;
   letter-spacing: -0.03em;
   text-align: left;
-
   color: var(--dl-color-brand-orange);
 }
 
