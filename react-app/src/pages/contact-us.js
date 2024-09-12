@@ -41,7 +41,7 @@ export default function ContactUs() {
                       For any enquiries about the MorPhiC Program Grant, contact
                     </p>
                   </div>
-                  <div class={style.contactCardFooter}>
+                  <div className={style.contactCardFooter}>
                     <a href="mailto:morphicprogram@mail.nih.gov">morphicprogram@mail.nih.gov</a>
                   </div>
                 </div>

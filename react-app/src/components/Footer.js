@@ -6,7 +6,7 @@ import logo from "../images/logos/morphic-symbol.svg";
 export default function Footer() {
   return (
     <div className="footer-wrap">
-      <footer class="footer">
+      <footer className="footer">
         <div className="footer-logo-container">
           <img
             src={logo}
