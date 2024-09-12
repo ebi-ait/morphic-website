@@ -134,8 +134,8 @@ export default function Gene() {
                         <div className="gene-card-header">
                             <h2>Gene expression analysis</h2>
                             <div className="gene-card-header-row">
-                                <div class="gene-card-header-link">Download XLS</div>
-                                <div class="gene-card-header-link">Download TSV</div>
+                                <div className="gene-card-header-link">Download XLS</div>
+                                <div className="gene-card-header-link">Download TSV</div>
                             </div>
                         </div>
                         <div className="gene-card-body">
