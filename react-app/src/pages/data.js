@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
@@ -11,6 +11,23 @@ export default function Data() {
     const handleCollapse = () => {
         setCollapse(!collapse);
     }
+
+    const [filteredData, setFilteredData] = useState(JSONData._embedded.studies);
+    const [searchInput, setSearchInput] = useState('');
+
+    useEffect(() => {
+        let result = filteredData;
+        
+        if (searchInput) {
+            result = JSONData._embedded.studies.filter(
+                (study) => study.content?.target_genes?.filter((gene) => gene.includes(searchInput.toUpperCase())).length > 0
+            );
+        } else {
+            result = JSONData._embedded.studies
+        }
+        
+        setFilteredData(result)
+    }, [searchInput]);
     
   return (
     <div>
@@ -46,12 +63,12 @@ export default function Data() {
                     <div className="data-card-filter">
                         <div className="data-card-button-group">
                             <button className="data-card-filter-button" onClick={() => setCollapse((prev) => !prev)}><span className="icon-arrow-left icon"></span>Filter</button>
-                            <button className="data-card-clear-button">Clear all</button>
+                            <button className="data-card-clear-button" onClick={() => setSearchInput('')}>Clear all</button>
                         </div>
                         <div className="data-card-form-container">
-                            <form className="data-card-form">
+                            <div className="data-card-form">
                                 <label for="gene-id">Search by Gene ID</label>
-                                <input type="text" id="gene-id" name="gene-id" placeholder="Search by Gene ID"></input>
+                                <input type="text" id="gene-id" name="gene-id" placeholder="Search by Gene ID" onChange={e => setSearchInput(e.target.value)}></input>
                                 <label for="cell-line">By cell line</label>
                                 <div className="select-wrapper"><select id="cell-line" name="cell-line">
                                     <option value="">By cell line</option>
@@ -72,12 +89,12 @@ export default function Data() {
                                     <option value="">By model system</option>
                                     <option value=""></option>
                                 </select></div>
-                            </form> 
+                            </div> 
                         </div>
                     </div>
                     </>)}
                     <div className="data-card-table-container">
-                        <h3>{JSONData._embedded.studies.length} of {JSONData._embedded.studies.length} studies shown</h3>
+                        <h3>{filteredData.length} of {filteredData.length} studies shown</h3>
 
                         <table className="data-card-table">
                             <tr className="data-card-table-heading">
@@ -89,13 +106,15 @@ export default function Data() {
                                 <th>perturbation type</th>
                                 <th>centre</th>
                             </tr>
-                            {JSONData._embedded.studies.map((data, index) => (data.content.study_title && (
+                            {filteredData.map((data, index) => (data.content.study_title && (
                                 <tr key={`content_item_${index}`}>
                                     <td><span className="icon-radio-open icon"></span></td>
                                     <td className="bold"><div>{data.content?.study_title}</div></td>
                                     <td>
-                                        <div>{data.content?.target_genes}</div>
-                                        <div>+ {data.content?.target_genes?.length} more</div>
+                                        <div>{data.content?.target_genes[0]}</div>
+                                        {data.content?.target_genes?.length - 1 > 0 ? (
+                                            <div title={data.content?.target_genes?.join(", ")}>+ {data.content?.target_genes?.length - 1} more</div>
+                                        ): null}
                                     </td>
                                     <td>
                                         <div>{data.content?.cell_line_names}</div>
