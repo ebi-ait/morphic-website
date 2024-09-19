@@ -15,6 +15,8 @@ export default function Data() {
     const [filteredData, setFilteredData] = useState(JSONData._embedded.studies);
     const [searchInput, setSearchInput] = useState('');
 
+    const [geneListId, setGeneListId] = useState(-1);
+
     useEffect(() => {
         let result = filteredData;
         
@@ -70,22 +72,26 @@ export default function Data() {
                                 <label for="gene-id">Search by Gene ID</label>
                                 <input type="text" id="gene-id" name="gene-id" placeholder="Search by Gene ID" onChange={e => setSearchInput(e.target.value)}></input>
                                 <label for="cell-line">By cell line</label>
-                                <div className="select-wrapper"><select id="cell-line" name="cell-line">
+                                <div className="select-wrapper">
+                                    <select id="cell-line" name="cell-line">
                                     <option value="">By cell line</option>
                                     <option value=""></option>
                                 </select></div>
                                 <label for="assay">By assay</label>
-                                <div className="select-wrapper"><select id="assay" name="assay">
+                                <div className="select-wrapper">
+                                    <select id="assay" name="assay">
                                     <option value="">By assay</option>
                                     <option value=""></option>
                                 </select></div>
                                 <label for="perturbation">By perturbation type</label>
-                                <div className="select-wrapper"><select id="perturbation" name="perturbation">
+                                <div className="select-wrapper">
+                                    <select id="perturbation" name="perturbation">
                                     <option value="">By perturbation type</option>
                                     <option value=""></option>
                                 </select></div>
                                 <label for="model-system">By model system</label>
-                                <div className="select-wrapper"><select id="model-system" name="model-system">
+                                <div className="select-wrapper">
+                                    <select id="model-system" name="model-system">
                                     <option value="">By model system</option>
                                     <option value=""></option>
                                 </select></div>
@@ -104,16 +110,28 @@ export default function Data() {
                                 <th>cell line</th>
                                 <th>assay</th>
                                 <th>perturbation type</th>
-                                <th>centre</th>
+                                <th>center</th>
                             </tr>
-                            {filteredData.map((data, index) => (data.content.study_title && (
+                            {filteredData.map((data, index) => (data?.content?.study_title && (
                                 <tr key={`content_item_${index}`}>
                                     <td><span className="icon-radio-open icon"></span></td>
                                     <td className="bold"><div>{data.content?.study_title}</div></td>
                                     <td>
                                         <div>{data.content?.target_genes[0]}</div>
                                         {data.content?.target_genes?.length - 1 > 0 ? (
-                                            <div title={data.content?.target_genes?.join(", ")}>+ {data.content?.target_genes?.length - 1} more</div>
+                                            <div className="gene-count" onClick={e => setGeneListId(index)}>
+                                                + {data.content?.target_genes?.length - 1} more
+                                                {geneListId === index ? (
+                                                <figure className="expanded-gene-list">
+                                                    <button className="gene-list-exit" aria-label="Close list" onClick={e => {e.stopPropagation(); setGeneListId(-1);}}><span className="icon-x icon"></span></button>
+                                                    <figcaption>{data.content?.target_genes?.length - 1} genes</figcaption>
+                                                    <ul>
+                                                    {data.content?.target_genes?.map((gene, index) => (
+                                                        <li key={`list_item_${index}`}>{gene}</li>
+                                                    ))}
+                                                    </ul>
+                                                </figure>): null}
+                                            </div>
                                         ): null}
                                     </td>
                                     <td>

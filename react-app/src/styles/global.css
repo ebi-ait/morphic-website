@@ -237,6 +237,17 @@ ul {
   background-size: contain;
 }
 
+.icon-x {
+  display: inline-block;
+  min-width: 1rem;
+  min-height: 1rem;
+  background-image: url("../images/icons/x.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 /* --- NAVBAR --- */
 .navbar-container {
   padding: 35px 30px;
@@ -1350,7 +1361,8 @@ ul {
   width: 1px;
 }
 
-.data-card-form select, .data-card-form input {
+.data-card-form select, .data-card-form input,
+.select-filter {
   appearance: none;
   -webkit-appearance: none;
   padding: 0.5rem;
@@ -1375,13 +1387,55 @@ ul {
 }
 
 .select-wrapper::after {
-  content: "▼";
+  content: "\25B6";
   font-size: 9px;
   top: 12px;
   right: 12px;
   position: absolute;
 }
 
+.options-wrapper {
+  width: 222px;
+  padding: 1rem 1rem 0.5rem;
+  background: white;
+  border: 1px solid rgba(153, 153, 153, 1);
+  border-radius: 5px;
+
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15.73px;
+  text-align: left;
+
+  position: absolute;
+  top: 0;
+  right: -250px;
+}
+
+.options-wrapper li {
+  padding-bottom: 0.5rem;
+}
+
+.options-wrapper .option-button {
+  display: flex;
+  align-items: center;
+}
+
+.options-wrapper .option-button-icon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  /* vertical-align: middle; */
+  width: 8px;
+  height: 8px;
+  border: 0.5rem solid black;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.option-button :last-child {
+  text-align: right;
+  margin-left: auto;
+}
 
 .data-card-table-container {
   flex: 1;
@@ -1475,6 +1529,53 @@ ul {
   background-position-x: center;
   background-repeat: no-repeat;
   background-size: auto; */
+}
+
+.data-card-table .gene-count {
+  position: relative;
+  overflow: visible;
+}
+
+.data-card-table .expanded-gene-list {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  z-index: 1;
+
+  margin: 0;
+  padding: 1rem 1rem 0 1rem;
+  border-radius: 5px;
+
+  width: 222px;
+  max-height: 316px;
+
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15.73px;
+  text-align: left;
+  
+  color: var(--dl-color-default-smartblack);
+  background-color: var(--dl-color-default-absolutewhite);
+}
+
+.data-card-table .expanded-gene-list figcaption {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.data-card-table .expanded-gene-list ul {
+  max-height: 280px;
+  overflow: scroll;
+}
+
+.data-card-table .gene-list-exit {
+  position: absolute;
+  z-index: 2;
+  top: 1rem;
+  right: 1rem;
+  width: 11px;
+  height: 11px;
 }
 
 /* --- GENE PAGE */
