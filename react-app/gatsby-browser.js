@@ -1,6 +1,13 @@
 import "./src/styles/global.css"
 import React from 'react';
 import CookieConsent from 'react-cookie-consent';
+// import { BrowserRouter } from 'react-router-dom';
+
+// export const wrapRootElement = ({ element }) => (
+//   <BrowserRouter>
+//     {element}
+//   </BrowserRouter>
+// );
 
 export const wrapPageElement = ({ element }) => (
   <>
