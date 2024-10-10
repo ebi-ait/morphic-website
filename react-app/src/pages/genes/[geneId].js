@@ -1,29 +1,49 @@
-import React from "react"
+import React, { useEffect, useState } from 'react';
 import Navbar from "../../components/Navbar"
 
-export async function getServerData({ params }) {
-  try {
-    const res = await fetch(`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/api/gene/${params.hgnc_id}`);
-    if (!res.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const geneData = await res.json();
-    console.log("geneData.Phenotype_Evidence.Human.OMIM: ", geneData.Phenotype_Evidence.Human.OMIM);
-    return {
-      props: { geneData },
-    };
-  } catch (error) {
-    return {
-      props: {},
-      status: 500,
-    };
-  }
-}
+const GenePage = ({ params }) => {
+  console.log("params: ", params);
+  const { geneId } = params;
+  console.log("geneId: ", geneId);
+  const [geneData, setGeneData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isClient, setIsClient] = useState(false); // Track if we are on the client side
 
-export default function Gene({ serverData: { geneData } }) {
-  if (!geneData) {
-    return <p>Gene not found</p>;
-  }
+  // useEffect to detect client-side environment
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     // Extract the geneId from the URL dynamically on the client-side
+  //     console.log("window.location.pathname: ", window.location.pathname);
+  //     const urlParams = window.location.pathname.split('/');
+  //     const id = urlParams[urlParams.length - 1];
+  //     setGeneId(id); // Set the geneId on the client-side
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    if (!geneId) return;
+    const fetchGeneData = async () => {
+      try {
+        const response = await fetch(`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/api/gene/${geneId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch gene data');
+        }
+        const data = await response.json();
+        setGeneData(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGeneData();
+  }, [geneId]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!geneData) return <p>No data found for gene {geneId}</p>;
   return (
     <div className="about gene-page">
         <div>
@@ -153,8 +173,8 @@ export default function Gene({ serverData: { geneData } }) {
                         <div className="gene-card-header">
                             <h2>Gene expression analysis</h2>
                             <div className="gene-card-header-row">
-                                <div class="gene-card-header-link">Download XLS</div>
-                                <div class="gene-card-header-link">Download TSV</div>
+                                <div className="gene-card-header-link">Download XLS</div>
+                                <div className="gene-card-header-link">Download TSV</div>
                             </div>
                         </div>
                         <div className="gene-card-body">
@@ -195,7 +215,7 @@ export default function Gene({ serverData: { geneData } }) {
         </div>
     </div>
   )
-}
+};
 
 export function Head() {
     return (
@@ -205,3 +225,5 @@ export function Head() {
       </>
     )
 }
+
+export default GenePage;
