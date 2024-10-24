@@ -41,6 +41,11 @@ export default function Navbar() {
                         </a>
                     </li>
                     <li>
+                        <Link to="/news" className="nav-link" activeClassName="navbar-active">
+                            <span>News</span>
+                        </Link>
+                    </li>
+                    <li>
                         <Link to="/#faq" className="nav-link">
                             <span>FAQ</span>
                         </Link>
@@ -95,6 +100,11 @@ export default function Navbar() {
                             <a className="nav-link" href="https://whri-phenogenomics.shinyapps.io/morphic_gene_list/" target="_blank" rel="noopener noreferrer">
                                 Gene List
                             </a>
+                        </li>
+                        <li>
+                            <Link to="/news" className="nav-link" activeClassName={style.navbarActive}>
+                                <span>News</span>
+                            </Link>
                         </li>
                         <li>
                             <Link to="/#faq" className="nav-link">
