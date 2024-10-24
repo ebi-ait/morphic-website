@@ -62,40 +62,52 @@ export default function Navbar() {
         </nav>
         {isOpen && (
         <div className={style.menuOverlay}>
-            <div className={style.triangle}></div>
             <nav className={style.navbarOverlay}>
-                <ul className={style.navList}>
-                    <li>
-                        <Link to="/" className="nav-link" activeClassName={style.navbarActive}>
-                            <span>Home</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/about" className="nav-link" activeClassName={style.navbarActive}>
-                            <span>About</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/data" className="nav-link" activeClassName={style.navbarActive}>
-                            <span>Data</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <a className="nav-link" href="https://whri-phenogenomics.shinyapps.io/morphic_gene_list/" target="_blank" rel="noopener noreferrer">
-                            Gene List
-                        </a>
-                    </li>
-                    <li>
-                        <Link to="/#faq" className="nav-link">
-                            <span>FAQ</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/contact-us" className="nav-link" activeClassName={style.navbarActive}>
-                            <span>Contact us</span>
-                        </Link>
-                    </li>
-                </ul>
+                <div className={style.navbarTop}>
+                    <Link to="/" className="nav-link">
+                        <img
+                            src={logo}
+                            alt="MorPhiC logo"
+                        ></img>
+                    </Link>
+                    <button className={style.mobileMenuBtn} onClick={() => setIsOpen(false)} aria-label="Close menu">
+                        <span aria-hidden className="icon-x-white"></span>
+                    </button>
+                </div>
+                <div className={style.navbarBottom}>
+                    <ul className={style.navList}>
+                        <li>
+                            <Link to="/" className="nav-link" activeClassName={style.navbarActive}>
+                                <span>Home</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/about" className="nav-link" activeClassName={style.navbarActive}>
+                                <span>About</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/data" className="nav-link" activeClassName={style.navbarActive}>
+                                <span>Data</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <a className="nav-link" href="https://whri-phenogenomics.shinyapps.io/morphic_gene_list/" target="_blank" rel="noopener noreferrer">
+                                Gene List
+                            </a>
+                        </li>
+                        <li>
+                            <Link to="/#faq" className="nav-link">
+                                <span>FAQ</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/contact-us" className="nav-link" activeClassName={style.navbarActive}>
+                                <span>Contact us</span>
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
             </nav>
         </div>
         )}
