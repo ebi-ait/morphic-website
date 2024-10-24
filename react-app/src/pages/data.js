@@ -120,7 +120,7 @@ export default function Data() {
                                         <div>{data.content?.target_genes[0]}</div>
                                         {data.content?.target_genes?.length - 1 > 0 ? (
                                             <div className="gene-count" onClick={e => setGeneListId(index)}>
-                                                + {data.content?.target_genes?.length - 1} more
+                                                <span>+</span> {data.content?.target_genes?.length - 1} more
                                                 {geneListId === index ? (
                                                 <figure className="expanded-gene-list">
                                                     <button className="gene-list-exit" aria-label="Close list" onClick={e => {e.stopPropagation(); setGeneListId(-1);}}><span className="icon-x icon"></span></button>

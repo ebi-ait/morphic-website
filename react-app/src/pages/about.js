@@ -2,6 +2,7 @@ import React from "react"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import { StaticImage } from "gatsby-plugin-image"
+import * as style from "../styles/about.module.css";
 
 export default function About() {
   return (
@@ -13,14 +14,14 @@ export default function About() {
       
       <div className="about-container">
         <div className="about-info-container">
-          <div className="about-info">
+          <div className={style.aboutInfo}>
             <div>
               <h1>About</h1>
               <div className="about-intro-container">
-                <div className="about-intro">
+                <div className={style.aboutIntro}>
                   <p>A program to better understand the function of every human gene and generate a catalogue of the molecular and cellular consequences of inactivating genes.</p>
                   <div className="about-card-container">
-                    <div className="about-card">
+                    <div className={style.aboutCard}>
                       <h2 className="about-card-title">inside this page</h2>
                       <ul>
                         <li><a href="#program-goals">↓ Program goals</a></li>
@@ -33,7 +34,7 @@ export default function About() {
               </div>
             </div>
 
-            <section id="program-goals" className="about-section">
+            <section id="program-goals" className={style.aboutSection}>
               <div className="about-section-subtitle-container">
                 <h2>Program goals</h2>
                 <a href="#">↑ Back to top</a>
@@ -59,14 +60,14 @@ export default function About() {
               </div>
             </section>
 
-            <section id="participants" className="about-section">
+            <section id="participants" className={style.aboutSection}>
               <div className="about-section-subtitle-container">
                 <h2>Participants</h2>
                 <a href="#">↑ Back to top</a>
               </div>
             </section>
 
-            <div className="data-flow-card">
+            <div className={style.dataFlowCard}>
               <section className="organisation">
                 <h2>The MorPhiC participants</h2>
                 <div className="data-flow-categories">
@@ -187,7 +188,7 @@ export default function About() {
               </section>
             </div>
 
-            <section id="funding" className="about-section">
+            <section id="funding" className={style.aboutSection}>
               <div className="about-section-subtitle-container">
                 <h2>Funding</h2>
                 <a href="#">↑ Back to top</a>
