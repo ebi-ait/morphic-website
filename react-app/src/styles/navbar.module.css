@@ -137,9 +137,11 @@
   .nav-list {
     font-family: Inter;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 19.36px;
     text-align: center;
+
+    text-transform: uppercase;
   }
   
   .nav-list li {
