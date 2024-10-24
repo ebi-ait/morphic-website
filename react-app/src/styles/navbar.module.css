@@ -1,0 +1,141 @@
+/* --- NAVBAR --- */
+.navbar-container {
+  padding: 35px 30px;
+}
+
+.navbar {
+  display: flex;
+}
+
+.navbar-right {
+  margin-left: auto;
+  display: flex;
+  align-items: flex-end;
+}
+
+.navbar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 27px; /* could add to media query */
+}
+
+.navbar-list a {
+  color: #ececec;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.navbar-list a:hover {
+  text-decoration: none;
+}
+
+.navbar-active {
+  position: relative;
+}
+
+.navbar-active::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url("../images/icons/selected.svg");
+  background-repeat: no-repeat;
+}
+
+.mobile-menu-btn {
+  display: none;
+}
+
+.menu-overlay {
+  display: none;
+}
+
+@media (max-width: 2037px) {
+}
+
+@media (max-width: 1440px) {
+}
+
+@media (max-width: 1253px) {
+}
+
+@media (max-width: 840px) {
+  .triangle {
+    clip-path: polygon(-5% 105%, 105% 105%, 105% -5%);
+    background-color: var(--dl-color-default-smartblack);
+    width: 100%;
+    height: 110px;
+  }
+
+  .navbar-container {
+    padding: 20px;
+  }
+
+  .navbar-right {
+    align-items: center;
+  }
+
+  .navbar-list {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .mobile-menu-btn span {
+    width: 24px;
+    height: 19.5px;
+  }
+
+  /* Meny overlay */
+  .navbar-active::after {
+    top: 35%;
+    left: -15%;
+    transform: translateX(-50%);
+  }
+
+  .menu-overlay {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 100;
+    left: 0;
+  }
+
+  .navbar-overlay {
+    background-color: var(--dl-color-default-smartblack);
+    color: var(--dl-color-default-smartwhite);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+  }
+
+  .nav-list {
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 19.36px;
+    text-align: center;
+  }
+  
+  .nav-list li {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 428px) {
+}
+
+@media (max-width: 380px) {
+}

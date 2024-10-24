@@ -52,6 +52,7 @@ body {
   --dl-color-default-darkblue: rgba(1, 113, 118, 1);
   --dl-color-default-smartblack: rgba(30, 30, 30, 1); /*#1e1e1e*/
   --dl-color-default-smartwhite: rgba(236, 236, 236, 1); /*#ECECEC*/
+  --dl-colo-default-almostwhite: rgba(245, 245, 245, 1);
   --dl-color-default-absolutewhite: rgba(255, 255, 255, 1);
   --dl-color-default-grey: rgba(153, 153, 153, 1);
   --dl-space-space-oneandhalfunits: 24px;
@@ -242,6 +243,28 @@ ul {
   min-width: 1rem;
   min-height: 1rem;
   background-image: url("../images/icons/x.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.icon-x-white {
+  display: inline-block;
+  min-width: 1rem;
+  min-height: 1rem;
+  background-image: url("../images/icons/x-white.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.icon-list {
+  display: inline-block;
+  min-width: 1rem;
+  min-height: 1rem;
+  background-image: url("../images/icons/list.svg");
   background-position-y: center;
   background-position-x: center;
   background-repeat: no-repeat;
@@ -464,6 +487,29 @@ ul {
   text-align: center;
 }
 
+@media (width <= 480px) {
+   .header-triangle,
+   .home-news-container,
+   .home-news-triangle,
+   .home-questions-triangle,
+   .home-policies-triangle {
+    display: none;
+  }
+  .home-about,
+  .home-about h2,
+  .home-about .home-about-text {
+    width: auto;
+    height: auto;
+  }
+
+  .home-about,
+  .home-news,
+  .home-questions-section,
+  .home-policies {
+    padding: 4rem 0;
+  }
+}
+
 .home-about-link {
   width: 343px;
   height: 21px;
@@ -485,13 +531,24 @@ ul {
   z-index: 3;
 }
 
+@media (width <= 480px) {
+  .home-card-row {
+    flex-wrap: wrap;
+    position: static;
+  }
+
+  .home-card {
+    margin: auto;
+  }
+}
+
 .home-card {
   width: 327px;
   border: none;
   border-radius: 8px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   padding: 20px;
-  background-color: var(--dl-color-default-smartwhite);
+  background-color: var(--dl-colo-default-almostwhite);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -657,6 +714,25 @@ ul {
 
 .home-news-item-container {
   display: flex;
+}
+
+@media (width <= 480px) {
+  .home-news h2,
+  .home-policies .home-policies-content h2 {
+    text-align: center;
+  }
+  .home-news-item-container {
+    flex-wrap: wrap;
+  }
+
+  .home-news-card {
+    margin: 0 auto 2rem;
+  }
+
+  .home-about-content,
+  .home-policies-container {
+    padding: 0 20px;
+  }
 }
 
 .home-news-card {
@@ -1533,7 +1609,21 @@ ul {
 
 .data-card-table .gene-count {
   position: relative;
+  bottom: 0;
   overflow: visible;
+  display: inline-block;
+
+  background-color: var(--dl-color-default-smartblack);
+  color: var(--dl-color-default-absolutewhite);
+  border-radius: 5px;
+  text-align: center;
+  padding: 0.1rem 0.5rem 0.1rem;
+
+  font-family: Inter;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 13.31px;
+  letter-spacing: -0.02em;
 }
 
 .data-card-table .expanded-gene-list {

@@ -136,4 +136,39 @@
   color: var(--dl-color-default-orange);
 }
 
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
+
 /* TODO: Add media queries */
+@media (width <= 500px) {
+  .contact-info-container {
+    padding: 0 20px;
+  }
+  .contact-info h1 {
+    width:auto;
+  }
+  
+  .contact-section {
+    width: auto;
+  }
+
+  .contact-card-row {
+    flex-direction: column;
+  }
+
+  .contact-card {
+    width: auto;
+  }
+
+  .contact-info-bg {
+    background-image: url("../images/logos/logo-120deg.svg");
+    background-position-y: top 3%;
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+}

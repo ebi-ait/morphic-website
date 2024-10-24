@@ -2,11 +2,12 @@ import { Link } from "gatsby"
 import React from "react"
 
 import logo from "../images/logos/morphic-symbol.svg";
+import * as style from "../styles/footer.module.css";
 
 export default function Footer() {
   return (
-    <div className="footer-wrap">
-      <footer className="footer">
+    <div className={style.footerWrap}>
+      <footer className={style.footer}>
         <div className="footer-logo-container">
           <img
             src={logo}
@@ -14,8 +15,8 @@ export default function Footer() {
             className="footer-logo"
           ></img>
         </div>
-        <div className="footer-content">
-          <ul className="footer-menu">
+        <div className={style.footerContent}>
+          <ul className={style.footerMenu}>
             <li>
               <Link to="/">home</Link>
             </li>
@@ -38,8 +39,8 @@ export default function Footer() {
               <Link to="/contact-us">Contact us</Link>
             </li>
           </ul>
-          <div className="footer-photo-credit">Photo by Sangharsh Lohakare on Unsplash</div>
-          <div className="footer-copyright-container">
+          <div className={style.footerPhotoCredit}>Photo by Sangharsh Lohakare on Unsplash</div>
+          <div className={style.footerCopyrightContainer}>
             <p className="footer-copyright-title">Molecular Phenotypes of Null Alleles in Cells</p>
             <p className='footer-copyright'>&copy; 2024 MorPhiC. All rights reserved.</p>
           </div>
