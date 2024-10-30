@@ -133,6 +133,7 @@ export default function About() {
                           src="../images/external/logos/Miami.png"
                           alt="University of Miami"
                           className="data-flow-logo"
+                          placeholder="none"
                         />
                       </div>
                       <div className="data-flow-logo-item">
@@ -140,6 +141,7 @@ export default function About() {
                           src="../images/external/logos/Washington.png"
                           alt="University of Washington"
                           className="data-flow-logo"
+                          placeholder="none"
                         />
                       </div>
                       <div className="data-flow-logo-item">
@@ -147,6 +149,7 @@ export default function About() {
                           src="../images/external/logos/EMBL.png"
                           alt="EMBL"
                           className="data-flow-logo"
+                          placeholder="none"
                         />
                       </div>
                       <div className="data-flow-logo-item">
@@ -154,6 +157,7 @@ export default function About() {
                           src="../images/external/logos/Queen-Mary.png"
                           alt="Queen Mary University of London"
                           className="data-flow-logo"
+                          placeholder="none"
                         />
                       </div>
                     </div>
@@ -166,6 +170,7 @@ export default function About() {
                           src="../images/external/logos/Stanford.png"
                           alt="Stanford University"
                           className="data-flow-logo"
+                          placeholder="none"
                         />
                       </div>
                       <div className="data-flow-logo-item">
@@ -173,6 +178,7 @@ export default function About() {
                           src="../images/external/logos/Fred-Hutch.png"
                           alt="Fred Hutchinson Cancer Center"
                           className="data-flow-logo"
+                          placeholder="none"
                         />
                       </div>
                       <div className="data-flow-logo-item">
@@ -180,6 +186,7 @@ export default function About() {
                           src="../images/external/logos/Jackson.png"
                           alt="Jackson Laboratory"
                           className="data-flow-logo"
+                          placeholder="none"
                         />
                       </div>
                     </div>
