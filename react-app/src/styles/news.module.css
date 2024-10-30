@@ -108,4 +108,37 @@
     display: flex;
     justify-content: center;
   }
+
+  @media (max-width: 840px) {
+    .news-container {
+      padding: 0 20px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .news-heading {
+      width: auto;
+    }
+    
+    .news-section {
+        max-width: auto;
+    }
+
+    .news-article {
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .news-article-img-wrap {
+    }
+
+    .news-article-link::before {
+      content: "";
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+    }
+  }
   

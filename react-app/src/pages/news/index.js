@@ -13,7 +13,7 @@ export default function News() {
         <div className="policies-triangle"></div>
       </div>
       
-      <div className="about-container">
+      <div className={`about-container ${styles.newsContainer}`}>
         <div className="about-info-container">
           <div className={styles.newsInfo}>
             <div>
