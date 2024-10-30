@@ -46,6 +46,7 @@ body {
   --dl-space-space-fiveunits: 80px;
   --dl-space-space-fourunits: 64px;
   --dl-color-default-babyblue: rgba(164, 216, 222, 1);
+  --dl-color-default-verylightblue: rgba(207, 230, 233, 1);
   --dl-color-default-darkblue: rgba(1, 113, 118, 1); /*#017176*/
   --dl-space-space-threeunits: 48px;
   --dl-color-default-brandblue: rgba(4, 152, 158, 1);
@@ -146,7 +147,17 @@ ul {
 .icon-data-tracker {
   min-width: 1rem;
   min-height: 1rem;
-  background-image: url("../images/external/vector1572-oa9.svg");
+  background-image: url("../images/icons/squares-black.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.icon-triple-squares {
+  min-width: 1rem;
+  min-height: 1rem;
+  background-image: url("../images/icons/squares-black.svg");
   background-position-y: center;
   background-position-x: center;
   background-repeat: no-repeat;
@@ -273,6 +284,17 @@ ul {
   min-width: 1rem;
   min-height: 1rem;
   background-image: url("../images/icons/list.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.icon-plus-circle {
+  display: inline-block;
+  min-width: 1rem;
+  min-height: 1rem;
+  background-image: url("../images/icons/plus-circle.svg");
   background-position-y: center;
   background-position-x: center;
   background-repeat: no-repeat;
@@ -1578,6 +1600,23 @@ ul {
   background-color: rgba(235, 242, 243, 1);
 }
 
+.data-card-table tr:nth-child(n+2):hover {
+  background-color: var(--dl-color-default-verylightblue);
+  cursor: pointer;
+}
+
+.data-card-table tr:nth-child(n+2):hover a.data-gene-link {
+  color: var(--dl-color-brand-blue);
+}
+
+.data-card-table tr:nth-child(n+2):hover .gene-count {
+  background-color: var(--dl-color-brand-blue);
+}
+
+.data-card-table tr:nth-child(n+2):hover .icon-triple-squares {
+  background-image: url("../images/icons/squares.svg");
+}
+
 .data-card-table th {
   font-family: Inter;
   font-size: 10px;
@@ -1654,7 +1693,9 @@ ul {
   position: relative;
   bottom: 0;
   overflow: visible;
-  display: inline-block;
+  /* display: inline-block; */
+  display: flex;
+  width: fit-content;
 
   background-color: var(--dl-color-default-smartblack);
   color: var(--dl-color-default-absolutewhite);
@@ -1667,6 +1708,12 @@ ul {
   font-weight: 700;
   line-height: 13.31px;
   letter-spacing: -0.02em;
+}
+
+.data-card-table .gene-count .icon-plus-circle {
+  min-width: 12px;
+  min-height: 12px;
+  margin: auto 0.25rem auto 0;
 }
 
 .data-card-table .expanded-gene-list {
@@ -1709,6 +1756,17 @@ ul {
   right: 1rem;
   width: 11px;
   height: 11px;
+}
+
+.data-gene-link {
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 15.73px;
+  letter-spacing: -0.03em;
+  text-align: center;  
+
+  color: var(--dl-color-default-smartblack);
 }
 
 /* --- GENE PAGE */

@@ -5,6 +5,7 @@ import Footer from "../components/Footer"
 
 import cover from "../images/external/sangharshlohakare8olkmpo8ugunsplash11571-51ur-800h.png"
 import JSONData from "../../content/studies.json"
+import { Link } from "gatsby"
 
 export default function Data() {
     const [collapse, setCollapse] = useState(false);
@@ -114,13 +115,13 @@ export default function Data() {
                             </tr>
                             {filteredData.map((data, index) => (data?.content?.study_title && (
                                 <tr key={`content_item_${index}`}>
-                                    <td><span className="icon-radio-open icon"></span></td>
+                                    <td><span className="icon-triple-squares icon"></span></td>
                                     <td className="bold"><div>{data.content?.study_title}</div></td>
                                     <td>
                                         <div>{data.content?.target_genes[0]}</div>
                                         {data.content?.target_genes?.length - 1 > 0 ? (
                                             <div className="gene-count" onClick={e => setGeneListId(index)}>
-                                                <span>+</span> {data.content?.target_genes?.length - 1} more
+                                                <span aria-hidden className="icon-plus-circle"></span> {data.content?.target_genes?.length - 1} more
                                                 {geneListId === index ? (
                                                 <figure className="expanded-gene-list">
                                                     <button className="gene-list-exit" aria-label="Close list" onClick={e => {e.stopPropagation(); setGeneListId(-1);}}><span className="icon-x icon"></span></button>
@@ -145,6 +146,12 @@ export default function Data() {
                                     </td>
                                     <td>
                                         <div>{data.content?.institute}</div>
+                                    </td>
+                                    <td>
+                                        <div><Link
+                                            to="/gene"
+                                            className="data-gene-link"
+                                        >Explore →</Link></div>
                                     </td>
                                 </tr>
                             )))}
