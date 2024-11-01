@@ -7,82 +7,87 @@ import cover from "../images/external/sangharshlohakare8olkmpo8ugunsplash11571-5
 import JSONData from "../../content/studies.json"
 import { Link } from "gatsby"
 
-export async function getServerData() {
-    try {
-      const response = await fetch(`https://api.ingest.dev.archive.morphic.bio/studies/`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+function Layout({ children }) {
+    return (
+        <div>
+            <div className="header-inline header-gradient">
+                <img className="header-image" src={cover} alt=""></img>
+                <div className="header-position-top">
+                    <Navbar />
+                </div>
+                <div className="header-position-bottom header-triangle"></div>
+            </div>
+            <div className="data-container">
+                <div className="data-content">
+                    <div className="data-card">
+                        {children}
+                    </div>
+                </div>
+                <Footer />
+            </div>
+        </div>
+    )
+}
 
-      const studiesData = await response.json();
-      return {
-        props: studiesData,
-        error: null,
-      };
-    } catch (error) {
-      return {
-        props: {},
-        status: 500,
-        error: { message: 'Error retrieving studies data' },
-      };
-    }
-  }
+export default function Data() {
 
-export default function Data({ serverData }) {
+    const [studiesData, setStudiesData] = useState(null)
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const [collapse, setCollapse] = useState(false);
     const handleCollapse = () => {
         setCollapse(!collapse);
     }
 
-    const [filteredData, setFilteredData] = useState(JSONData._embedded.studies);
+    const [filteredData, setFilteredData] = useState(null);
     const [searchInput, setSearchInput] = useState('');
 
     const [geneListId, setGeneListId] = useState(-1);
 
     useEffect(() => {
-        let result = filteredData;
-        
-        if (searchInput) {
-            result = JSONData._embedded.studies.filter(
-                (study) => study.content?.target_genes?.filter((gene) => gene.includes(searchInput.toUpperCase())).length > 0
-            );
-        } else {
-            result = JSONData._embedded.studies
+        const getStudiesData = async () => {
+            try {
+                const response = await fetch(`https://api.ingest.dev.archive.morphic.bio/studies/`);
+
+                if (!response.ok) {
+                    throw new Error("Nework response was not ok");
+                }
+
+                const resultStudiesData = await response.json();
+                setStudiesData(resultStudiesData);
+                setFilteredData(resultStudiesData._embedded.studies);
+            } catch (error) {
+                setError(error)
+            } finally {
+                setIsLoading(false);
+            }
         }
-        
-        setFilteredData(result)
+
+        if (studiesData) {
+            console.log("Entered filter section")
+            let result = studiesData;
+            
+            if (searchInput) {
+                result = studiesData._embedded.studies.filter(
+                    (study) => study.content?.target_genes?.filter((gene) => gene.includes(searchInput.toUpperCase())).length > 0
+                );
+            } else {
+                result = studiesData._embedded.studies
+            }
+
+            setFilteredData(result)
+        } else {
+            getStudiesData();
+        }
     }, [searchInput]);
-    
-    // if (error) {
-    //     return (
-    //         <div>
-    //             <Navbar />
-    //             <h1>Something went wrong while retrieving the studies data</h1>
-    //         </div>
-    //     )
-    // }
-    // if (!serverData) {
-    //     return (
-    //         <div>
-    //             <Navbar />
-    //             <h1>Loading studies...</h1>
-    //         </div>
-    //     )
-    // }
+
+    if (isLoading) return (<Layout><p>Loading...</p></Layout>);
+    if (error) return (<Layout><p>Error loading studies</p></Layout>)
 
   return (
-    <div>
-      <div className="header-inline header-gradient">
-        <img className="header-image" src={cover} alt=""></img>
-        <div className="header-position-top">
-          <Navbar />
-        </div>
-        <div className="header-position-bottom header-triangle"></div>
-      </div>
-      <div className="data-container">
-        <div className="data-content">
-            <div className="data-card">
+                
+    <Layout>
                 <div className="data-card-header">
                     <div className="data-card-header-container">
                         <span aria-hidden className="data-card-header-icon icon-data-tracker"></span>
@@ -197,11 +202,7 @@ export default function Data({ serverData }) {
                         </table> 
                     </div>
                 </div>
-            </div>
-        </div>
-        <Footer />
-      </div>
-    </div>
+    </Layout>
   );
 }
 
