@@ -1,0 +1,1017 @@
+{
+  "_embedded" : {
+    "studies" : [ {
+      "described_by" : "https://schema.morphic.bio/type/0.0.1/project/study",
+      "schema_version" : "0.0.1",
+      "schema_type" : "study",
+      "content" : {
+        "biological_sample_types" : [ "cell line" ],
+        "cell_line_names" : [ "KOLF2.2J" ],
+        "contact_emails" : [ "bill.flynn@jax.org" ],
+        "contact_first_name" : "Bill",
+        "contact_surname" : "Flynn",
+        "dracc_data_sharing_date" : "2024-05-01",
+        "duo_codes" : [ "NRES" ],
+        "institute" : "JAX",
+        "label" : "JAX_Bulk_Study4",
+        "model_organ_systems" : [ "Primitive Syncytium", "Extra-embryonic mesenchyme", "cortical brain organoids" ],
+        "other_comments" : "",
+        "perturbation_type" : [ "CRISPR-Cas9 KO" ],
+        "readout_assay" : "RNA-seq",
+        "sequencing_platforms" : [ "" ],
+        "study_description" : "",
+        "study_title" : "Bulk RNA-seq study 4: 6 genes knocked out in extra-embryonic & cortical brain organoids",
+        "supplementary_links" : [ "" ],
+        "target_genes" : [ "DMRTA1", "TBR1", "OVOL1", "PITX1", "LMO2", "ZBTB7C" ]
+      },
+      "submissionDate" : "2024-07-08T15:34:37.717Z",
+      "updateDate" : "2024-07-08T15:34:37.796Z",
+      "user" : "alexkoci",
+      "lastModifiedUser" : "alexkoci",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "61ac4251-33a6-4e02-b29b-e3d0acc2942f"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-07-08T15:34:37.716Z",
+      "accession" : null,
+      "validationState" : "Draft",
+      "validationErrors" : null,
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ ],
+      "hasOpenSubmission" : false,
+      "id" : "668c070d6ed2642efc272380",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c070d6ed2642efc272380"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c070d6ed2642efc272380"
+        },
+        "validating" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c070d6ed2642efc272380/validatingEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c070d6ed2642efc272380/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c070d6ed2642efc272380/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    }, {
+      "described_by" : "https://schema.morphic.bio/type/0.0.1/project/study",
+      "schema_version" : "0.0.1",
+      "schema_type" : "study",
+      "content" : {
+        "biological_sample_types" : [ "cell line" ],
+        "cell_line_names" : [ "KOLF2.2J" ],
+        "contact_emails" : [ "bill.flynn@jax.org" ],
+        "contact_first_name" : "Bill",
+        "contact_surname" : "Flynn",
+        "dracc_data_sharing_date" : "2024-04-01",
+        "duo_codes" : [ "NRES" ],
+        "institute" : "JAX",
+        "label" : "JAX_Bulk_Study2_ExtraEmbryonic",
+        "model_organ_systems" : [ "Primitive Syncytium", "Extra-embryonic mesenchyme" ],
+        "other_comments" : "",
+        "perturbation_type" : [ "CRISPR-Cas9 KO" ],
+        "readout_assay" : "RNA-seq",
+        "sequencing_platforms" : [ "" ],
+        "study_description" : "",
+        "study_title" : "Bulk RNA-seq study 2 of extra-embryonic lineage KOs of 7 genes",
+        "supplementary_links" : [ "" ],
+        "target_genes" : [ "MEIS1", "MXD1", "MEIS2", "RUNX1", "MEF2C", "NCOA3", "BHLHE40" ]
+      },
+      "submissionDate" : "2024-07-08T15:39:03.310Z",
+      "updateDate" : "2024-07-08T15:39:03.392Z",
+      "user" : "alexkoci",
+      "lastModifiedUser" : "alexkoci",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "deaed5e6-ae32-415d-9c20-ca194f653507"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-07-08T15:39:03.308Z",
+      "accession" : null,
+      "validationState" : "Draft",
+      "validationErrors" : null,
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ ],
+      "hasOpenSubmission" : false,
+      "id" : "668c08176ed2642efc272382",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c08176ed2642efc272382"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c08176ed2642efc272382"
+        },
+        "validating" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c08176ed2642efc272382/validatingEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c08176ed2642efc272382/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c08176ed2642efc272382/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    }, {
+      "described_by" : "https://schema.morphic.bio/type/0.0.1/project/study",
+      "schema_version" : "0.0.1",
+      "schema_type" : "study",
+      "content" : {
+        "biological_sample_types" : [ "cell line" ],
+        "cell_line_names" : [ "KOLF2.2J" ],
+        "contact_emails" : [ "bill.flynn@jax.org" ],
+        "contact_first_name" : "Bill",
+        "contact_surname" : "Flynn",
+        "dracc_data_sharing_date" : "2024-04-01",
+        "duo_codes" : [ "NRES" ],
+        "institute" : "JAX",
+        "label" : "JAX_Metabolomics_Study1",
+        "model_organ_systems" : [ "Primitive Syncytium" ],
+        "other_comments" : "",
+        "perturbation_type" : [ "CRISPR-Cas9 KO" ],
+        "readout_assay" : "Metabolomics",
+        "sequencing_platforms" : [ "" ],
+        "study_description" : "",
+        "study_title" : "Metabolomics study 1 of extra-embryonic lineage KO of 1 gene",
+        "supplementary_links" : [ "" ],
+        "target_genes" : [ "HMGCS2" ]
+      },
+      "submissionDate" : "2024-07-08T15:42:57.969Z",
+      "updateDate" : "2024-07-08T15:42:58.050Z",
+      "user" : "alexkoci",
+      "lastModifiedUser" : "alexkoci",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "e3dd6b3f-4a77-4c4c-9155-4d2a6c2aef34"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-07-08T15:42:57.968Z",
+      "accession" : null,
+      "validationState" : "Draft",
+      "validationErrors" : null,
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ ],
+      "hasOpenSubmission" : false,
+      "id" : "668c09016ed2642efc272384",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c09016ed2642efc272384"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c09016ed2642efc272384"
+        },
+        "validating" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c09016ed2642efc272384/validatingEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c09016ed2642efc272384/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/668c09016ed2642efc272384/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    }, {
+      "described_by" : "https://schema.morphic.bio/type/0.0.1/project/study",
+      "schema_version" : "0.0.1",
+      "schema_type" : "study",
+      "content" : {
+        "biological_sample_types" : [ "cell line" ],
+        "cell_line_names" : [ "H1", "HUES8" ],
+        "contact_emails" : [ "choh@mskcc.org" ],
+        "contact_first_name" : "Hyein",
+        "contact_surname" : "Cho",
+        "dracc_data_sharing_date" : "2024-04-01",
+        "duo_codes" : [ "NPUNCU" ],
+        "institute" : "MSKCC",
+        "label" : "MSK_Pooled_scRNAseq",
+        "model_organ_systems" : [ "Gastruloid", "Neural differentiation", "Pancreatic differentiation" ],
+        "other_comments" : "",
+        "perturbation_type" : [ "CRISPR-Cas9 KO" ],
+        "readout_assay" : "multiplexed scRNA-seq",
+        "sequencing_platforms" : [ "" ],
+        "study_description" : "",
+        "study_title" : "Pooled KO followed by scRNA-seq",
+        "supplementary_links" : [ "" ],
+        "target_genes" : [ "MSK MorPhiC genes - 33" ]
+      },
+      "submissionDate" : "2024-08-14T15:45:57.835Z",
+      "updateDate" : "2024-08-14T15:45:57.923Z",
+      "user" : "alexkoci",
+      "lastModifiedUser" : "alexkoci",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "19142efe-81a6-4591-9c2e-e4f9f1cd8704"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-08-14T15:45:57.833Z",
+      "accession" : null,
+      "validationState" : "Draft",
+      "validationErrors" : null,
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ ],
+      "hasOpenSubmission" : true,
+      "id" : "66bcd1355801983297325ea6",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd1355801983297325ea6"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd1355801983297325ea6"
+        },
+        "validating" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd1355801983297325ea6/validatingEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd1355801983297325ea6/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd1355801983297325ea6/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    }, {
+      "described_by" : "https://schema.morphic.bio/type/0.0.1/project/study",
+      "schema_version" : "0.0.1",
+      "schema_type" : "study",
+      "content" : {
+        "biological_sample_types" : [ "cell line" ],
+        "cell_line_names" : [ "KOLF2.2J" ],
+        "contact_emails" : [ "bill.flynn@jax.org" ],
+        "contact_first_name" : "Bill",
+        "contact_surname" : "Flynn",
+        "dracc_data_sharing_date" : "2024-04-01",
+        "duo_codes" : [ "NRES" ],
+        "institute" : "JAX",
+        "label" : "JAX_RNAseq_Study3_Neuroectoderm",
+        "model_organ_systems" : [ "Early embryonic neuronal lineage (CBO)" ],
+        "other_comments" : "",
+        "perturbation_type" : [ "CRISPR-Cas9 KO" ],
+        "readout_assay" : "RNA-seq",
+        "sequencing_platforms" : [ "" ],
+        "study_description" : "",
+        "study_title" : "Bulk RNA-seq study 3 of neuroectoderm with 3 strategies for KO of 6 genes",
+        "supplementary_links" : [ "" ],
+        "target_genes" : [ "RFX4", "OTX1", "LHX5", "LHX9", "FEZF2", "PAX6" ]
+      },
+      "submissionDate" : "2024-08-14T15:47:04.213Z",
+      "updateDate" : "2024-08-14T15:47:04.298Z",
+      "user" : "alexkoci",
+      "lastModifiedUser" : "alexkoci",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "2ea7859a-ebbf-409b-b988-495df057d83c"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-08-14T15:47:04.212Z",
+      "accession" : null,
+      "validationState" : "Draft",
+      "validationErrors" : null,
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ ],
+      "hasOpenSubmission" : true,
+      "id" : "66bcd1785801983297325ea8",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd1785801983297325ea8"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd1785801983297325ea8"
+        },
+        "validating" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd1785801983297325ea8/validatingEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd1785801983297325ea8/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd1785801983297325ea8/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    }, {
+      "described_by" : "https://schema.morphic.bio/type/0.0.1/project/study",
+      "schema_version" : "0.0.1",
+      "schema_type" : "study",
+      "content" : {
+        "biological_sample_types" : [ "cell line" ],
+        "cell_line_names" : [ "KOLF2.2J" ],
+        "contact_emails" : [ "bill.flynn@jax.org" ],
+        "contact_first_name" : "Bill",
+        "contact_surname" : "Flynn",
+        "dracc_data_sharing_date" : "2024-04-01",
+        "duo_codes" : [ "NRES" ],
+        "institute" : "JAX",
+        "label" : "JAX_RNAseq_Study1_ExtraEmbryonic",
+        "model_organ_systems" : [ "Primitive Syncytium", "Extra-embryonic mesoderm" ],
+        "other_comments" : "",
+        "perturbation_type" : [ "CRISPR-Cas9 KO" ],
+        "readout_assay" : "RNA-seq",
+        "sequencing_platforms" : [ "" ],
+        "study_description" : "",
+        "study_title" : "Bulk RNA-seq study 1 of extra-embryonic lineage KOs of 7 genes",
+        "supplementary_links" : [ "" ],
+        "target_genes" : [ "GHRL1", "POU2F3", "EPAS1", "FOSB", "GCM1", "PPARG", "ISL1" ]
+      },
+      "submissionDate" : "2024-08-14T15:49:42.611Z",
+      "updateDate" : "2024-08-14T15:49:42.695Z",
+      "user" : "alexkoci",
+      "lastModifiedUser" : "alexkoci",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "3ff3a02a-bddc-4608-83e3-382766675324"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-08-14T15:49:42.610Z",
+      "accession" : null,
+      "validationState" : "Draft",
+      "validationErrors" : null,
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ ],
+      "hasOpenSubmission" : true,
+      "id" : "66bcd2165801983297325eaa",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd2165801983297325eaa"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd2165801983297325eaa"
+        },
+        "validating" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd2165801983297325eaa/validatingEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd2165801983297325eaa/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66bcd2165801983297325eaa/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    }, {
+      "described_by" : null,
+      "schema_version" : null,
+      "schema_type" : null,
+      "content" : null,
+      "submissionDate" : "2024-09-10T09:54:15.521Z",
+      "updateDate" : "2024-09-10T09:54:31.289Z",
+      "user" : "6602c204-50b1-70ce-c84b-1f1442631288",
+      "lastModifiedUser" : "6602c204-50b1-70ce-c84b-1f1442631288",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "227bd77f-2f8e-4715-b4f4-e4312f417a1f"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-09-10T09:54:15.520Z",
+      "accession" : null,
+      "validationState" : "Draft",
+      "validationErrors" : null,
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ {
+        "content" : null,
+        "submissionDate" : "2024-09-10T09:54:29.375Z",
+        "updateDate" : "2024-09-10T09:54:30.613Z",
+        "user" : "6602c204-50b1-70ce-c84b-1f1442631288",
+        "lastModifiedUser" : "6602c204-50b1-70ce-c84b-1f1442631288",
+        "type" : "Dataset",
+        "uuid" : {
+          "uuid" : "ea63945e-2c2e-4d1d-9f9f-5455b43bdc99"
+        },
+        "events" : [ ],
+        "contentLastModified" : "2024-09-10T09:54:29.372Z",
+        "accession" : null,
+        "dataFiles" : [ ],
+        "biomaterials" : [ ],
+        "protocols" : [ ],
+        "processes" : [ ],
+        "comment" : "Upload area created for this dataset with name 66e01755580198329732f939 Please use the morphic-util tool to upload your data files to the dataset upload area",
+        "hasOpenSubmission" : true,
+        "id" : "66e01755580198329732f939",
+        "_links" : {
+          "validating" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/datasets/66e01755580198329732f939/validatingEvent"
+          },
+          "submissionEnvelopes" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/submissionEnvelopes/66e01755580198329732f938",
+            "title" : "Access or create new submission envelopes"
+          },
+          "submissionEnvelope" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/submissionEnvelopes/66e01755580198329732f938",
+            "title" : "A single submission envelope"
+          }
+        }
+      } ],
+      "hasOpenSubmission" : true,
+      "id" : "66e01747580198329732f937",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66e01747580198329732f937"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66e01747580198329732f937"
+        },
+        "validating" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66e01747580198329732f937/validatingEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66e01747580198329732f937/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/66e01747580198329732f937/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    }, {
+      "described_by" : "https://schema.morphic.bio/type/1.0.0/project/study",
+      "schema_version" : "1.0.0",
+      "schema_type" : "study",
+      "content" : {
+        "biological_sample_types" : [ "cell line", "embryoid body" ],
+        "cell_line_names" : [ "KOLF2.2J" ],
+        "contact_emails" : [ "fakemail@123.com" ],
+        "contact_first_name" : "Bob",
+        "contact_surname" : "Lorem Ipsum",
+        "dracc_data_sharing_date" : "2018-11-13",
+        "duo_codes" : [ "DUO:0000046" ],
+        "institute" : "NWU",
+        "label" : "PAX2KOLFStudy",
+        "model_organ_systems" : [ "UBERON:0000006" ],
+        "other_comments" : "This is not a comment",
+        "perturbation_type" : [ "irreversible gene knockout" ],
+        "readout_assay" : "EFO:0008931",
+        "sequencing_platforms" : [ "OBI:0002002" ],
+        "study_description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "study_title" : "PAX2 Knockout impairs eye development in embryoid bodies.",
+        "supplementary_links" : [ "https://medlineplus.gov/genetics/gene/pax2/" ],
+        "target_genes" : [ "PAX2" ]
+      },
+      "submissionDate" : "2024-10-29T16:25:18.306Z",
+      "updateDate" : "2024-10-29T16:25:26.485Z",
+      "user" : "alexkoci@ebi.ac.uk",
+      "lastModifiedUser" : "anonymousUser",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "bf79c3c2-5e1e-4e7d-8c2e-5151867dc15f"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-10-29T16:25:18.276Z",
+      "accession" : null,
+      "validationState" : "Valid",
+      "validationErrors" : [ ],
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ ],
+      "hasOpenSubmission" : true,
+      "id" : "67210c6ecd24985457c83331",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210c6ecd24985457c83331"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210c6ecd24985457c83331"
+        },
+        "processing" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210c6ecd24985457c83331/processingEvent"
+        },
+        "draft" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210c6ecd24985457c83331/draftEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210c6ecd24985457c83331/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210c6ecd24985457c83331/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    }, {
+      "described_by" : "https://schema.morphic.bio/type/1.0.0/project/study",
+      "schema_version" : "1.0.0",
+      "schema_type" : "study",
+      "content" : {
+        "biological_sample_types" : [ "cell line", "embryoid body" ],
+        "cell_line_names" : [ "KOLF2.2J" ],
+        "contact_emails" : [ "fakemail@123.com" ],
+        "contact_first_name" : "Bob",
+        "contact_surname" : "Lorem Ipsum",
+        "dracc_data_sharing_date" : "2018-11-13",
+        "duo_codes" : [ "DUO:0000046" ],
+        "institute" : "NWU",
+        "label" : "PAX2KOLFStudy",
+        "model_organ_systems" : [ "UBERON:0000006" ],
+        "other_comments" : "This is not a comment",
+        "perturbation_type" : [ "irreversible gene knockout" ],
+        "readout_assay" : "EFO:0008931",
+        "sequencing_platforms" : [ "OBI:0002002" ],
+        "study_description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "study_title" : "PAX2 Knockout impairs eye development in embryoid bodies.",
+        "supplementary_links" : [ "https://medlineplus.gov/genetics/gene/pax2/" ],
+        "target_genes" : [ "PAX2" ]
+      },
+      "submissionDate" : "2024-10-29T16:26:38.475Z",
+      "updateDate" : "2024-10-29T16:26:43.833Z",
+      "user" : "alexkoci@ebi.ac.uk",
+      "lastModifiedUser" : "anonymousUser",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "71531b9e-0bb8-43fd-817c-a669aa233971"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-10-29T16:26:38.474Z",
+      "accession" : null,
+      "validationState" : "Valid",
+      "validationErrors" : [ ],
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ ],
+      "hasOpenSubmission" : true,
+      "id" : "67210cbecd24985457c83333",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210cbecd24985457c83333"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210cbecd24985457c83333"
+        },
+        "processing" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210cbecd24985457c83333/processingEvent"
+        },
+        "draft" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210cbecd24985457c83333/draftEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210cbecd24985457c83333/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210cbecd24985457c83333/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    }, {
+      "described_by" : "https://schema.morphic.bio/type/1.0.0/project/study",
+      "schema_version" : "1.0.0",
+      "schema_type" : "study",
+      "content" : {
+        "biological_sample_types" : [ "cell line", "embryoid body" ],
+        "cell_line_names" : [ "KOLF2.2J" ],
+        "contact_emails" : [ "fakemail@123.com" ],
+        "contact_first_name" : "Bob",
+        "contact_surname" : "Lorem Ipsum",
+        "dracc_data_sharing_date" : "2018-11-13",
+        "duo_codes" : [ "DUO:0000046" ],
+        "institute" : "NWU",
+        "label" : "PAX2KOLFStudy",
+        "model_organ_systems" : [ "UBERON:0000006" ],
+        "other_comments" : "This is not a comment",
+        "perturbation_type" : [ "irreversible gene knockout" ],
+        "readout_assay" : "EFO:0008931",
+        "sequencing_platforms" : [ "OBI:0002002" ],
+        "study_description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "study_title" : "PAX2 Knockout impairs eye development in embryoid bodies.",
+        "supplementary_links" : [ "https://medlineplus.gov/genetics/gene/pax2/" ],
+        "target_genes" : [ "PAX2" ]
+      },
+      "submissionDate" : "2024-10-29T16:28:19.693Z",
+      "updateDate" : "2024-10-29T16:28:25.796Z",
+      "user" : "alexkoci@ebi.ac.uk",
+      "lastModifiedUser" : "anonymousUser",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "d030e314-d41e-4fdf-af4e-5d99c3f48711"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-10-29T16:28:19.692Z",
+      "accession" : null,
+      "validationState" : "Valid",
+      "validationErrors" : [ ],
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ ],
+      "hasOpenSubmission" : true,
+      "id" : "67210d23cd24985457c83335",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210d23cd24985457c83335"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210d23cd24985457c83335"
+        },
+        "processing" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210d23cd24985457c83335/processingEvent"
+        },
+        "draft" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210d23cd24985457c83335/draftEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210d23cd24985457c83335/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210d23cd24985457c83335/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    }, {
+      "described_by" : "https://schema.morphic.bio/type/1.0.0/project/study",
+      "schema_version" : "1.0.0",
+      "schema_type" : "study",
+      "content" : {
+        "biological_sample_types" : [ "cell line", "embryoid body" ],
+        "cell_line_names" : [ "KOLF2.2J" ],
+        "contact_emails" : [ "fakemail@123.com" ],
+        "contact_first_name" : "Bob",
+        "contact_surname" : "Lorem Ipsum",
+        "dracc_data_sharing_date" : "2018-11-13",
+        "duo_codes" : [ "DUO:0000046" ],
+        "institute" : "NWU",
+        "label" : "PAX2KOLFStudy",
+        "model_organ_systems" : [ "UBERON:0000006" ],
+        "other_comments" : "This is not a comment",
+        "perturbation_type" : [ "irreversible gene knockout" ],
+        "readout_assay" : "EFO:0008931",
+        "sequencing_platforms" : [ "OBI:0002002" ],
+        "study_description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "study_title" : "PAX2 Knockout impairs eye development in embryoid bodies.",
+        "supplementary_links" : [ "https://medlineplus.gov/genetics/gene/pax2/" ],
+        "target_genes" : [ "PAX2" ]
+      },
+      "submissionDate" : "2024-10-29T16:38:31.143Z",
+      "updateDate" : "2024-10-29T16:38:31.227Z",
+      "user" : "alexkoci@ebi.ac.uk",
+      "lastModifiedUser" : "alexkoci@ebi.ac.uk",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "ce0dff04-d494-455b-a728-bc8b5b9e42cb"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-10-29T16:38:31.142Z",
+      "accession" : null,
+      "validationState" : "Draft",
+      "validationErrors" : null,
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ ],
+      "hasOpenSubmission" : true,
+      "id" : "67210f87cd24985457c83337",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210f87cd24985457c83337"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210f87cd24985457c83337"
+        },
+        "validating" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210f87cd24985457c83337/validatingEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210f87cd24985457c83337/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67210f87cd24985457c83337/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    }, {
+      "described_by" : null,
+      "schema_version" : null,
+      "schema_type" : null,
+      "content" : null,
+      "submissionDate" : "2024-10-30T11:08:53.557Z",
+      "updateDate" : "2024-10-30T11:10:33.834Z",
+      "user" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+      "lastModifiedUser" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "b29b0f61-95e6-4314-883c-63384ab43467"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-10-30T11:08:53.555Z",
+      "accession" : null,
+      "validationState" : "Draft",
+      "validationErrors" : null,
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ {
+        "content" : null,
+        "submissionDate" : "2024-10-30T11:10:32.374Z",
+        "updateDate" : "2024-10-30T11:10:33.186Z",
+        "user" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+        "lastModifiedUser" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+        "type" : "Dataset",
+        "uuid" : {
+          "uuid" : "760cf0e2-4bea-4435-9eda-60a3667fa9a4"
+        },
+        "events" : [ ],
+        "contentLastModified" : "2024-10-30T11:10:32.373Z",
+        "accession" : null,
+        "dataFiles" : [ ],
+        "biomaterials" : [ ],
+        "protocols" : [ ],
+        "processes" : [ ],
+        "comment" : "Upload area created for this dataset with name 67221428cd24985457c8333b Please use the morphic-util tool to upload your data files to the dataset upload area",
+        "hasOpenSubmission" : true,
+        "id" : "67221428cd24985457c8333b",
+        "_links" : {
+          "validating" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/datasets/67221428cd24985457c8333b/validatingEvent"
+          },
+          "submissionEnvelopes" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/submissionEnvelopes/67221428cd24985457c8333a",
+            "title" : "Access or create new submission envelopes"
+          },
+          "submissionEnvelope" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/submissionEnvelopes/67221428cd24985457c8333a",
+            "title" : "A single submission envelope"
+          }
+        }
+      } ],
+      "hasOpenSubmission" : true,
+      "id" : "672213c5cd24985457c83339",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/672213c5cd24985457c83339"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/672213c5cd24985457c83339"
+        },
+        "validating" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/672213c5cd24985457c83339/validatingEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/672213c5cd24985457c83339/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/672213c5cd24985457c83339/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    }, {
+      "described_by" : null,
+      "schema_version" : null,
+      "schema_type" : null,
+      "content" : null,
+      "submissionDate" : "2024-10-30T11:56:14.903Z",
+      "updateDate" : "2024-10-30T11:57:06.685Z",
+      "user" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+      "lastModifiedUser" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "10e88ec3-8049-4562-abbd-fae79ee0bbe5"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-10-30T11:56:14.902Z",
+      "accession" : null,
+      "validationState" : "Draft",
+      "validationErrors" : null,
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ {
+        "content" : null,
+        "submissionDate" : "2024-10-30T11:57:05.221Z",
+        "updateDate" : "2024-10-30T11:57:06.017Z",
+        "user" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+        "lastModifiedUser" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+        "type" : "Dataset",
+        "uuid" : {
+          "uuid" : "3e7ab413-d389-4cb2-8867-a0719ad6e0dc"
+        },
+        "events" : [ ],
+        "contentLastModified" : "2024-10-30T11:57:05.220Z",
+        "accession" : null,
+        "dataFiles" : [ ],
+        "biomaterials" : [ ],
+        "protocols" : [ ],
+        "processes" : [ ],
+        "comment" : "Upload area created for this dataset with name 67221f11cd24985457c83638 Please use the morphic-util tool to upload your data files to the dataset upload area",
+        "hasOpenSubmission" : true,
+        "id" : "67221f11cd24985457c83638",
+        "_links" : {
+          "validating" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/datasets/67221f11cd24985457c83638/validatingEvent"
+          },
+          "submissionEnvelopes" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/submissionEnvelopes/67221f10cd24985457c83637",
+            "title" : "Access or create new submission envelopes"
+          },
+          "submissionEnvelope" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/submissionEnvelopes/67221f10cd24985457c83637",
+            "title" : "A single submission envelope"
+          }
+        }
+      } ],
+      "hasOpenSubmission" : true,
+      "id" : "67221edecd24985457c83636",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67221edecd24985457c83636"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67221edecd24985457c83636"
+        },
+        "validating" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67221edecd24985457c83636/validatingEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67221edecd24985457c83636/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/67221edecd24985457c83636/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    }, {
+      "described_by" : null,
+      "schema_version" : null,
+      "schema_type" : null,
+      "content" : null,
+      "submissionDate" : "2024-10-30T12:07:08.880Z",
+      "updateDate" : "2024-10-30T12:07:20.760Z",
+      "user" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+      "lastModifiedUser" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "187aa10d-23e6-4bcc-a76e-eb30dbfd9c2b"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-10-30T12:07:08.879Z",
+      "accession" : null,
+      "validationState" : "Draft",
+      "validationErrors" : null,
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ {
+        "content" : null,
+        "submissionDate" : "2024-10-30T12:07:19.355Z",
+        "updateDate" : "2024-10-30T12:07:20.114Z",
+        "user" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+        "lastModifiedUser" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+        "type" : "Dataset",
+        "uuid" : {
+          "uuid" : "0fedeb4e-bd11-4043-b215-7500064057b0"
+        },
+        "events" : [ ],
+        "contentLastModified" : "2024-10-30T12:07:19.354Z",
+        "accession" : null,
+        "dataFiles" : [ ],
+        "biomaterials" : [ ],
+        "protocols" : [ ],
+        "processes" : [ ],
+        "comment" : "Upload area created for this dataset with name 67222177cd24985457c83740 Please use the morphic-util tool to upload your data files to the dataset upload area",
+        "hasOpenSubmission" : true,
+        "id" : "67222177cd24985457c83740",
+        "_links" : {
+          "validating" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/datasets/67222177cd24985457c83740/validatingEvent"
+          },
+          "submissionEnvelopes" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/submissionEnvelopes/67222177cd24985457c8373f",
+            "title" : "Access or create new submission envelopes"
+          },
+          "submissionEnvelope" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/submissionEnvelopes/67222177cd24985457c8373f",
+            "title" : "A single submission envelope"
+          }
+        }
+      } ],
+      "hasOpenSubmission" : true,
+      "id" : "6722216ccd24985457c8373e",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/6722216ccd24985457c8373e"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/6722216ccd24985457c8373e"
+        },
+        "validating" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/6722216ccd24985457c8373e/validatingEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/6722216ccd24985457c8373e/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/6722216ccd24985457c8373e/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    }, {
+      "described_by" : null,
+      "schema_version" : null,
+      "schema_type" : null,
+      "content" : null,
+      "submissionDate" : "2024-10-30T12:30:53.327Z",
+      "updateDate" : "2024-10-30T12:31:04.617Z",
+      "user" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+      "lastModifiedUser" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+      "type" : "Study",
+      "uuid" : {
+        "uuid" : "2280e062-0224-4b03-b157-851ac4791be3"
+      },
+      "events" : [ ],
+      "contentLastModified" : "2024-10-30T12:30:53.326Z",
+      "accession" : null,
+      "validationState" : "Draft",
+      "validationErrors" : null,
+      "graphValidationErrors" : null,
+      "isUpdate" : false,
+      "datasets" : [ {
+        "content" : null,
+        "submissionDate" : "2024-10-30T12:31:03.197Z",
+        "updateDate" : "2024-10-30T12:31:03.982Z",
+        "user" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+        "lastModifiedUser" : "d632c264-a081-70e7-dc9d-b1a5fcd62f3a",
+        "type" : "Dataset",
+        "uuid" : {
+          "uuid" : "9da619a7-df4c-4691-8671-e326e8a4819e"
+        },
+        "events" : [ ],
+        "contentLastModified" : "2024-10-30T12:31:03.196Z",
+        "accession" : null,
+        "dataFiles" : [ ],
+        "biomaterials" : [ ],
+        "protocols" : [ ],
+        "processes" : [ ],
+        "comment" : "Upload area created for this dataset with name 67222707cd24985457c83901 Please use the morphic-util tool to upload your data files to the dataset upload area",
+        "hasOpenSubmission" : true,
+        "id" : "67222707cd24985457c83901",
+        "_links" : {
+          "validating" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/datasets/67222707cd24985457c83901/validatingEvent"
+          },
+          "submissionEnvelopes" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/submissionEnvelopes/67222706cd24985457c83900",
+            "title" : "Access or create new submission envelopes"
+          },
+          "submissionEnvelope" : {
+            "href" : "https://api.ingest.dev.archive.morphic.bio/submissionEnvelopes/67222706cd24985457c83900",
+            "title" : "A single submission envelope"
+          }
+        }
+      } ],
+      "hasOpenSubmission" : true,
+      "id" : "672226fdcd24985457c838ff",
+      "_links" : {
+        "self" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/672226fdcd24985457c838ff"
+        },
+        "study" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/672226fdcd24985457c838ff"
+        },
+        "validating" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/672226fdcd24985457c838ff/validatingEvent"
+        },
+        "submissionEnvelopes" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/672226fdcd24985457c838ff/submissionEnvelopes",
+          "title" : "Access or create new submission envelopes"
+        },
+        "submissionEnvelope" : {
+          "href" : "https://api.ingest.dev.archive.morphic.bio/studies/672226fdcd24985457c838ff/submissionEnvelope",
+          "title" : "A single submission envelope"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "https://api.ingest.dev.archive.morphic.bio/studies{?page,size,sort}",
+      "templated" : true
+    },
+    "profile" : {
+      "href" : "https://api.ingest.dev.archive.morphic.bio/profile/studies"
+    },
+    "search" : {
+      "href" : "https://api.ingest.dev.archive.morphic.bio/studies/search"
+    }
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 15,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}
