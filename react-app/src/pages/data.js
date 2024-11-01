@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 
 import cover from "../images/external/sangharshlohakare8olkmpo8ugunsplash11571-51ur-800h.png"
+import JSONData from "../../content/studies.json"
 import { Link } from "gatsby"
 
 export async function getServerData() {
@@ -19,7 +20,6 @@ export async function getServerData() {
         error: null,
       };
     } catch (error) {
-        console.error('Error fetching', error)
       return {
         props: {},
         status: 500,
@@ -28,14 +28,14 @@ export async function getServerData() {
     }
   }
 
-export default function Data({ serverData, error }) {
+export default function Data({ serverData }) {
 
     const [collapse, setCollapse] = useState(false);
     const handleCollapse = () => {
         setCollapse(!collapse);
     }
 
-    const [filteredData, setFilteredData] = useState(serverData._embedded.studies);
+    const [filteredData, setFilteredData] = useState(JSONData._embedded.studies);
     const [searchInput, setSearchInput] = useState('');
 
     const [geneListId, setGeneListId] = useState(-1);
@@ -44,32 +44,32 @@ export default function Data({ serverData, error }) {
         let result = filteredData;
         
         if (searchInput) {
-            result = serverData._embedded.studies.filter(
+            result = JSONData._embedded.studies.filter(
                 (study) => study.content?.target_genes?.filter((gene) => gene.includes(searchInput.toUpperCase())).length > 0
             );
         } else {
-            result = serverData._embedded.studies
+            result = JSONData._embedded.studies
         }
         
         setFilteredData(result)
     }, [searchInput]);
     
-    if (error) {
-        return (
-            <div>
-                <Navbar />
-                <h1>Something went wrong while retrieving the studies data</h1>
-            </div>
-        )
-    }
-    if (!serverData) {
-        return (
-            <div>
-                <Navbar />
-                <h1>Loading studies...</h1>
-            </div>
-        )
-    }
+    // if (error) {
+    //     return (
+    //         <div>
+    //             <Navbar />
+    //             <h1>Something went wrong while retrieving the studies data</h1>
+    //         </div>
+    //     )
+    // }
+    // if (!serverData) {
+    //     return (
+    //         <div>
+    //             <Navbar />
+    //             <h1>Loading studies...</h1>
+    //         </div>
+    //     )
+    // }
 
   return (
     <div>
