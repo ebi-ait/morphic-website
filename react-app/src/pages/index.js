@@ -7,6 +7,7 @@ import Carousel from "../components/carousel"
 import FAQ from "../components/FAQ"
 import Footer from "../components/Footer"
 import { generateHeadElements } from '../utils/SEO';
+import GeneSearch from '../components/GeneSearch';
 
 import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
@@ -28,11 +29,13 @@ export default function Home() {
           <p>A program to better understand the function of every human gene and generate a catalogue of the molecular and cellular consequences of inactivating genes.</p>
         </div>
         <div className="header-position-bottom header-triangle"></div>
+        <div className="search-container">
+          <GeneSearch />
+        </div>
       </div>
 
       <section className="home-about">
         <div className="home-about-content">
-
           <div className="home-card-row">
             <div className="home-card">
               <h3 className="home-card-title">gene list</h3>

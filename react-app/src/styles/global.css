@@ -426,6 +426,52 @@ ul {
   bottom: 0;
 }
 
+.search-container {
+  position: absolute;
+  top: 65%;
+  left: 40%;
+  .gene-search input {
+    padding-left: 10px;
+    width: 525px;
+    height: 42px;
+    border-radius: 5px;
+    border: 1px solid rgba(153, 153, 153, 1);
+    outline: none;
+    font-family: Inter;
+    font-size: 17px;
+    font-weight: 400;
+  }
+}
+
+.gene-search {
+  position: relative;
+  width: 100%;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  background-color: white;
+  z-index: 1000;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.suggestions-list li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestions-list li:hover {
+  background-color: #f0f0f0;
+}
+
 .header-triangle {
 	clip-path: polygon(-5% 105%, 105% 105%, 105% -5%);
 	background-color: var(--dl-color-default-smartwhite);
