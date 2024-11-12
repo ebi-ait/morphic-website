@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: morphic-dev-website
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: morphic-dev-website
+  template:
+    metadata:
+      labels:
+        app: morphic-dev-website
+    spec:
+      containers:
+      - name: morphic-dev-website
+        image: 489384528211.dkr.ecr.eu-west-2.amazonaws.com/morphic-dev-website:latest
+        ports:
+        - containerPort: 80
