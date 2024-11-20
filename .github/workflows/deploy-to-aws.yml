@@ -20,6 +20,17 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+
+      - name: Test AWS credentials
+        run: |
+          aws sts get-caller-identity
+    
+      - name: Print AWS Region
+        run: |
+          echo "AWS_REGION=${AWS_REGION}"
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
 
       - name: Log in to Amazon ECR
         id: ecr-login
