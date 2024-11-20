@@ -11,11 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Log in to Amazon ECR
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
       - name: Log in to Amazon ECR
         id: ecr-login
         uses: aws-actions/amazon-ecr-login@v1
@@ -27,7 +32,6 @@ jobs:
         run: |
           echo "ECR Registry: ${{ steps.ecr-login.outputs.registry }}"  
 
-      # Step 3: Build and push the Docker image to ECR
       - name: Build, tag, and push Docker image
         run: |
           IMAGE_NAME=morphic-dev-website
@@ -45,14 +49,6 @@ jobs:
 
           # Save the image URI for later steps
           echo "image=$ECR_URI:$IMAGE_TAG" >> $GITHUB_ENV
-
-      # Step 4: Update the EKS deployment
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }} #Note the change in region
 
       - name: Update kubeconfig
         run: |
