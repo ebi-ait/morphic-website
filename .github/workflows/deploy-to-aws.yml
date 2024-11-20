@@ -1,0 +1,60 @@
+name: Deploy to AWS EKS
+
+# Trigger the workflow on commits to the 'gene-pages' branch
+on:
+  push:
+    branches:
+      - gene-pages
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Log in to Amazon ECR
+      - name: Log in to Amazon ECR
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Debug ECR Registry Output
+        run: echo "ECR Registry: ${{ steps.ecr-login.outputs.registry }}"  
+
+      # Step 3: Build and push the Docker image to ECR
+      - name: Build, tag, and push Docker image
+        run: |
+          IMAGE_NAME=morphic-dev-website
+          IMAGE_TAG=gatsby-site-$(date +%Y%m%d%H%M%S)
+          ECR_URI=${{ steps.ecr-login.outputs.registry }}/${IMAGE_NAME}
+
+          # Build the Docker image
+          docker build -t $IMAGE_NAME .
+
+          # Tag the Docker image
+          docker tag $IMAGE_NAME:latest $ECR_URI:$IMAGE_TAG
+
+          # Push the Docker image to ECR
+          docker push $ECR_URI:$IMAGE_TAG
+
+          # Save the image URI for later steps
+          echo "image=$ECR_URI:$IMAGE_TAG" >> $GITHUB_ENV
+
+      # Step 4: Update the EKS deployment
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2 #Note the change in region
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --name morphic-dev-cluster-1 --region eu-west-2
+
+      - name: Update Kubernetes deployment
+        run: |
+          kubectl set image deployment/morphic-dev-website morphic-dev-website=$image
+          kubectl rollout status deployment/morphic-dev-website
