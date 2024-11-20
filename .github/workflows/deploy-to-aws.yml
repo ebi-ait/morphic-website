@@ -19,9 +19,13 @@ jobs:
       - name: Log in to Amazon ECR
         id: ecr-login
         uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Debug ECR Registry Output
-        run: echo "ECR Registry: ${{ steps.ecr-login.outputs.registry }}"  
+        run: |
+          echo "ECR Registry: ${{ steps.ecr-login.outputs.registry }}"  
 
       # Step 3: Build and push the Docker image to ECR
       - name: Build, tag, and push Docker image
@@ -48,11 +52,11 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2 #Note the change in region
+          aws-region: ${{ secrets.AWS_REGION }} #Note the change in region
 
       - name: Update kubeconfig
         run: |
-          aws eks update-kubeconfig --name morphic-dev-cluster-1 --region eu-west-2
+          aws eks update-kubeconfig --name morphic-dev-cluster-1 --region ${{ secrets.AWS_REGION }}
 
       - name: Update Kubernetes deployment
         run: |
