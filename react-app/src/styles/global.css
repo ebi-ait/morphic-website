@@ -301,6 +301,28 @@ ul {
   background-size: contain;
 }
 
+.icon-checkbox {
+  display: inline-block;
+  min-width: 1rem;
+  min-height: 1rem;
+  background-image: url("../images/icons/check-box-square.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.icon-checkbox-checked {
+  display: inline-block;
+  min-width: 1rem;
+  min-height: 1rem;
+  background-image: url("../images/icons/checkbox-square-fill.svg");
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 /* --- NAVBAR --- */
 .navbar-container {
   padding: 35px 30px;
