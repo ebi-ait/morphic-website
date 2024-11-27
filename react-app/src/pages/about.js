@@ -138,7 +138,7 @@ export default function About() {
                     <div className="data-flow-items white-box flex-space-evenly">
                       <div className="data-flow-logo-item">
                         <StaticImage
-                          src="../images/external/logos/Miami.png"
+                          src="../images/other-logos/Miami.png"
                           alt="University of Miami"
                           className="data-flow-logo"
                           placeholder="none"
@@ -147,7 +147,7 @@ export default function About() {
                       </div>
                       <div className="data-flow-logo-item">
                         <StaticImage
-                          src="../images/external/logos/Washington.png"
+                          src="../images/other-logos/Washington.png"
                           alt="University of Washington"
                           className="data-flow-logo"
                           placeholder="none"
@@ -156,7 +156,7 @@ export default function About() {
                       </div>
                       <div className="data-flow-logo-item">
                         <StaticImage
-                          src="../images/external/logos/EMBL.png"
+                          src="../images/other-logos/EMBL.png"
                           alt="EMBL"
                           className="data-flow-logo"
                           placeholder="none"
@@ -179,7 +179,7 @@ export default function About() {
                     <div className="data-flow-items white-box flex-space-evenly">
                       <div className="data-flow-logo-item">
                         <StaticImage
-                          src="../images/external/logos/Stanford.png"
+                          src="../images/other-logos/Stanford.png"
                           alt="Stanford University"
                           className="data-flow-logo"
                           placeholder="none"
@@ -188,7 +188,7 @@ export default function About() {
                       </div>
                       <div className="data-flow-logo-item">
                         <StaticImage
-                          src="../images/external/logos/Fred-Hutch.png"
+                          src="../images/other-logos/Fred-Hutch.png"
                           alt="Fred Hutchinson Cancer Center"
                           className="data-flow-logo"
                           placeholder="none"
@@ -197,7 +197,7 @@ export default function About() {
                       </div>
                       <div className="data-flow-logo-item">
                         <StaticImage
-                          src="../images/external/logos/Jackson.png"
+                          src="../images/other-logos/Jackson.png"
                           alt="Jackson Laboratory"
                           className="data-flow-logo"
                           placeholder="none"
