@@ -97,30 +97,38 @@ export default function About() {
                     <div className="data-flow-items white-box flex-space-evenly">
                       <div className="data-flow-logo-item">
                         <StaticImage
-                          src="../images/external/logos/MSK.png"
+                          src="../images/other-logos/MSK.png"
                           alt="Sloan-Kettering Institute for Cancer Research"
                           className="data-flow-logo"
+                          placeholder="none"
+                          loading="eager"
                         />
                       </div>
                       <div className="data-flow-logo-item">
                         <StaticImage
-                          src="../images/external/logos/Northwestern.png"
+                          src="../images/other-logos/Northwestern.png"
                           alt="Northwestern University Feinberg School of Medicine"
                           className="data-flow-logo"
+                          placeholder="none"
+                          loading="eager"
                         />
                       </div>
                       <div className="data-flow-logo-item">
                         <StaticImage
-                          src="../images/external/logos/Jackson.png"
+                          src="../images/other-logos/Jackson.png"
                           alt="Jackson Laboratory"
                           className="data-flow-logo"
+                          placeholder="none"
+                          loading="eager"
                         />
                       </div>
                       <div className="data-flow-logo-item">
                         <StaticImage
-                          src="../images/external/logos/Stanford.png"
-                          alt="Stanford University"
+                          src="../images/other-logos/UCSF.png"
+                          alt="University of California San Francisco"
                           className="data-flow-logo"
+                          placeholder="none"
+                          loading="eager"
                         />
                       </div>
                     </div>
@@ -134,6 +142,7 @@ export default function About() {
                           alt="University of Miami"
                           className="data-flow-logo"
                           placeholder="none"
+                          loading="eager"
                         />
                       </div>
                       <div className="data-flow-logo-item">
@@ -142,6 +151,7 @@ export default function About() {
                           alt="University of Washington"
                           className="data-flow-logo"
                           placeholder="none"
+                          loading="eager"
                         />
                       </div>
                       <div className="data-flow-logo-item">
@@ -150,14 +160,16 @@ export default function About() {
                           alt="EMBL"
                           className="data-flow-logo"
                           placeholder="none"
+                          loading="eager"
                         />
                       </div>
                       <div className="data-flow-logo-item">
                         <StaticImage
-                          src="../images/external/logos/Queen-Mary.png"
+                          src="../images/other-logos/Queen-Mary.png"
                           alt="Queen Mary University of London"
                           className="data-flow-logo"
                           placeholder="none"
+                          loading="eager"
                         />
                       </div>
                     </div>
@@ -171,6 +183,7 @@ export default function About() {
                           alt="Stanford University"
                           className="data-flow-logo"
                           placeholder="none"
+                          loading="eager"
                         />
                       </div>
                       <div className="data-flow-logo-item">
@@ -179,6 +192,7 @@ export default function About() {
                           alt="Fred Hutchinson Cancer Center"
                           className="data-flow-logo"
                           placeholder="none"
+                          loading="eager"
                         />
                       </div>
                       <div className="data-flow-logo-item">
@@ -187,6 +201,7 @@ export default function About() {
                           alt="Jackson Laboratory"
                           className="data-flow-logo"
                           placeholder="none"
+                          loading="eager"
                         />
                       </div>
                     </div>
