@@ -10,30 +10,9 @@ export default function Searchbar() {
 
   const handleInput = (e) => {
     const userInput = e.target.value;
-    console.log("User input:");
-    console.log(userInput);
 
     if (userInput) {
       setInput(true)
-    //   const filteredStudies = studies._embedded.studies.filter(
-    //     (study) =>
-    //       study.content?.target_genes?.filter((gene) =>
-    //         gene.includes(userInput.toUpperCase())
-    //       ).length > 0
-    //   );
-    //   console.log("filteredStudies:");
-    //   console.log(filteredStudies);
-
-      //   const geneSet = new Set(filteredStudies?.map(study => study.content?.target_genes));
-      //   console.log("geneSet");
-      //   console.log([...geneSet]);
-
-      //   const geneSet = new Set();
-      //   filteredStudies.forEach((study) => {
-      //     study.content?.target_genes?.forEach((gene) => {
-      //       geneSet.add(gene);
-      //     });
-      //   });
 
       const geneSet = new Set();
       studies._embedded.studies.forEach((study) => {
@@ -44,9 +23,6 @@ export default function Searchbar() {
         });
       });
 
-      console.log("genSet")
-      console.log([...geneSet]);
-
       setGenes(geneSet.size > 0 ? [...geneSet] : []);
     }
   };
@@ -54,7 +30,6 @@ export default function Searchbar() {
   const handleClickAway = (e) => {
     e.target.value = "";
     setInput(false);
-    // setGenes([])
   }
 
   useEffect(() => {
@@ -69,11 +44,9 @@ export default function Searchbar() {
         }
 
         const resultStudiesData = await response.json();
-        console.log(resultStudiesData);
         setStudies(resultStudiesData);
       } catch (error) {
         // setError(error);
-        console.log(error);
       } finally {
         // setIsLoading(false);
       }
