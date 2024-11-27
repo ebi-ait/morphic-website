@@ -4,7 +4,6 @@ import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 
 import cover from "../images/external/sangharshlohakare8olkmpo8ugunsplash11571-51ur-800h.png"
-import JSONData from "../../content/studies.json"
 import { Link } from "gatsby"
 
 function Layout({ children }) {
