@@ -10,6 +10,7 @@ import { generateHeadElements } from '../utils/SEO';
 
 import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
+import Searchbar from "../components/Searchbar"
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <StaticImage
           src="../images/external/sangharshlohakare8olkmpo8ugunsplash11571-51ur-800h.png"
           className="header-image"
+          alt=""
         />
         <div className="header-position-top">
           <Navbar />
@@ -26,6 +28,7 @@ export default function Home() {
           <h1>Molecular Phenotypes<br></br>
           of Null Alleles in Cells</h1>
           <p>A program to better understand the function of every human gene and generate a catalogue of the molecular and cellular consequences of inactivating genes.</p>
+          <Searchbar />
         </div>
         <div className="header-position-bottom header-triangle"></div>
       </div>

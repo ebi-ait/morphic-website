@@ -387,10 +387,10 @@ ul {
 
 .header-position-center {
   position: absolute;
-  top: 50%;
+  top: calc(742px / 2);
   left: 50%;
   --position-translate-x: -50%; /* TEST */
-  --position-translate-y: -50%; /* TEST */
+  --position-translate-y: -185px; /* TEST */
   transform: translate(var(--position-translate-x),var(--position-translate-y));
   max-width: 624px;
   display: flex;
@@ -398,6 +398,8 @@ ul {
   align-items: center;
   gap: 29px;
   color: #ECECEC;
+
+  z-index: 5;
 }
 
 .header-position-center h1 {
@@ -419,6 +421,8 @@ ul {
   letter-spacing: -0.04em;
   text-align: center;
   margin: 0;
+
+  max-width: 526px;
 }
 
 .header-position-bottom {

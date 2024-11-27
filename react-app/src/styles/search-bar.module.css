@@ -1,0 +1,125 @@
+.search {
+    margin-top: 1rem;
+}
+
+/* Search input */
+.search-form {
+  display: flex;
+  gap: 10px;
+}
+
+.search-box {
+  width: 525px;
+  min-height: 42px;
+  /* padding: 10px 20px 10px 20px; */
+
+  /* Abosolute white */
+  background: rgba(255, 255, 255, 1);
+
+  border-radius: 5px 5px 0 0;
+  border: 1px solid rgba(153, 153, 153, 1);
+
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-box > * {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.search-box > *:first-child {
+  padding-left: 20px;
+}
+
+.search-box > *:last-child {
+  padding-right: 20px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.search-box span {
+  line-height: 5px;
+}
+
+.search-input {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+
+  border: 0;
+  /* Absolute white */
+  background-color: rgba(255, 255, 255, 1);
+
+  /* Smart black */
+  color: rgba(30, 30, 30, 1);
+
+  width: 100%;
+}
+
+.search-button {
+  width: 149px;
+  /* height: Fixed (42px) px; */
+  padding: 7px 20px 7px 20px;
+
+  border-radius: 5px;
+
+  /* Brand blue */
+  background: rgba(4, 152, 158, 1);
+  /* Absolute white */
+  color: rgba(255, 255, 255, 1);
+}
+
+/* Search results */
+.search-results {
+  width: 525px;
+  max-height: 197px;
+  border-radius: 0px 0px 5px 5px;
+
+  /* Absolute white */
+  background: rgba(255, 255, 255, 1);
+
+  /* Grey */
+  border: 1px solid rgba(153, 153, 153, 1);
+
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+
+  overflow: auto;
+}
+
+.search-list > * {
+  padding: 10px 20px;
+}
+
+.search-list > *:hover {
+  /* Very light blue */
+  background-color: rgba(207, 230, 233, 1);
+}
+
+.search-list li {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+
+  color: rgba(30, 30, 30, 1);
+  
+  cursor: pointer;
+}
+
+@media (width < calc(525px + 20px)) {
+    .search-box, .search-results {
+        width: auto;
+    }
+}
