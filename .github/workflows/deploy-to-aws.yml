@@ -67,5 +67,5 @@ jobs:
 
       - name: Update Kubernetes deployment
         run: |
-          kubectl set image deployment/morphic-dev-website morphic-dev-website=$image
-          kubectl rollout status deployment/morphic-dev-website
+          kubectl set image deployment/morphic-dev-website morphic-dev-website=$image --namespace=morphic-dev
+          kubectl rollout status deployment/morphic-dev-website --namespace=morphic-dev
