@@ -35,7 +35,7 @@ export default function Data() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const [collapse, setCollapse] = useState(false);
+    const [collapse, setCollapse] = useState(true);
     const handleCollapse = () => {
         setCollapse(!collapse);
     }
@@ -48,7 +48,7 @@ export default function Data() {
     useEffect(() => {
         const getStudiesData = async () => {
             try {
-                const response = await fetch(`https://api.ingest.dev.archive.morphic.bio/studies/`);
+                const response = await fetch(`https://api.ingest.archive.morphic.bio/studies/`);
 
                 if (!response.ok) {
                     throw new Error("Nework response was not ok");
@@ -192,10 +192,11 @@ export default function Data() {
                                         <div>{data.content?.institute}</div>
                                     </td>
                                     <td>
-                                        <div><Link
-                                            to="/gene"
-                                            className="data-gene-link"
-                                        >Explore →</Link></div>
+                                        <div>
+                                            <a href={`https://www.ebi.ac.uk/ena/browser/view/${data.accessions[0]}`} target="_blank" rel="noopener noreferrer" className="data-gene-link">
+                                              Explore →
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             )))}
