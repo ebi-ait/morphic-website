@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: morphic-dev-website
-        image: 489384528211.dkr.ecr.eu-west-2.amazonaws.com/morphic-dev-website:latest
+        image: 489384528211.dkr.ecr.eu-west-2.amazonaws.com/morphic-dev-website:gatsby-site-202411261336
         ports:
         - containerPort: 80
