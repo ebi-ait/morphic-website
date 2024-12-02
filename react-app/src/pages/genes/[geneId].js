@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from "../../components/Navbar"
+import Footer from "../../components/Footer"
 
 const GenePage = ({ params }) => {
   console.log("params: ", params);
@@ -58,10 +59,12 @@ const GenePage = ({ params }) => {
                         <li>
                             <a href="#" className="gene-menu-link gene-active">Overview</a>
                         </li>
-                        <li>
-                            <a href="#" className="gene-menu-link">Gene Expression Analysis</a>
-                        </li>
-                        <li>
+                        {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') && (
+                            <li>
+                                <a href="#" className="gene-menu-link">Analysis Results</a>
+                            </li>
+                        )}
+                        {/*<li>
                             <a href="#" className="gene-menu-link">Cell Types</a>
                         </li>
                         <li>
@@ -72,7 +75,7 @@ const GenePage = ({ params }) => {
                         </li>
                         <li>
                             <a href="#" className="gene-menu-link">Order Alleles</a>
-                        </li>
+                        </li>*/}
                     </ul>
                 </div>
             </div>
@@ -114,22 +117,29 @@ const GenePage = ({ params }) => {
                             </div>
                             <div className="gene-card-body gene-card-summary">
                                 <h2 className="gene-card-summary-title">MorPhiC summary</h2>
-                                <dl className="gene-card-body-dl-grid">
-                                    <dt>Studied by MorPhic</dt>
-                                    <dd></dd>
+                                {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') && (
+                                    <dl className="gene-card-body-dl-grid">
+                                        <dt>Studied by MorPhic</dt>
+                                        <dd></dd>
 
-                                    <dt>Profiled by</dt>
-                                    <dd></dd>
+                                        <dt>Profiled by</dt>
+                                        <dd></dd>
 
-                                    <dt>Assay types</dt>
-                                    <dd></dd>
+                                        <dt>Assay types</dt>
+                                        <dd></dd>
 
-                                    <dt>Analysis</dt>
-                                    <dd></dd>
+                                        <dt>Analysis</dt>
+                                        <dd></dd>
 
-                                    <dt>Status</dt>
-                                    <dd></dd>
-                                </dl>
+                                        <dt>Status</dt>
+                                        <dd></dd>
+                                    </dl>
+                                )}
+                                {geneData.tags && Array.isArray(geneData.tags) && !geneData.tags.includes('release-1') && (
+                                    <dl className="gene-card-body-dl-grid no-data">
+                                        <dt className="no-data">Currently there is no data available for this Gene</dt>
+                                    </dl>
+                                )}
                             </div>
                         </div>
                         <div className="gene-card-body">
@@ -164,53 +174,56 @@ const GenePage = ({ params }) => {
                         </div>
                     </div>
                 </section>
-                <section>
-                    <div className="gene-section-header">
-                        <h1 className="gene-section-title">MorPhiC Analysis Results</h1>
-                        <a href="#" className="gene-section-link">↑ Back to top</a>
-                    </div>
-                    <div className="gene-card">
-                        <div className="gene-card-header">
-                            <h2>Gene expression analysis</h2>
-                            <div className="gene-card-header-row">
-                                <div className="gene-card-header-link">Download XLS</div>
-                                <div className="gene-card-header-link">Download TSV</div>
-                            </div>
+                {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') && (
+                    <section>
+                        <div className="gene-section-header">
+                            <h1 className="gene-section-title">MorPhiC Analysis Results</h1>
+                            <a href="#" className="gene-section-link">↑ Back to top</a>
                         </div>
-                        <div className="gene-card-body">
-                            <div className="gene-card-img-placeholder"></div>
-                        </div>
-                        <div className="gene-card-body">
-                            <h3>Data resources</h3>
-                            <div className="gene-card-row">
-                                <div className="gene-card-group">
-                                    <div className="gene-card-icon-placeholder"></div>
-                                    <div>
-                                        <h4>Perturbseq Dataset1</h4>
-                                        <p>knockout of PAX6</p>
-                                        <div className="gene-card-group-link">View dataset</div>
-                                    </div>
-                                </div>
-                                <div className="gene-card-group">
-                                    <div className="gene-card-icon-placeholder"></div>
-                                    <div>
-                                        <h4>Perturbseq Dataset1</h4>
-                                        <p>knockout of PAX6</p>
-                                        <div className="gene-card-group-link">View dataset</div>
-                                    </div>
-                                </div>
-                                <div className="gene-card-group">
-                                    <div className="gene-card-icon-placeholder"></div>
-                                    <div>
-                                        <h4>Perturbseq Dataset1</h4>
-                                        <p>knockout of PAX6</p>
-                                        <div className="gene-card-group-link">View dataset</div>
-                                    </div>
+                        <div className="gene-card">
+                            <div className="gene-card-header">
+                                <h2>Gene expression analysis</h2>
+                                <div className="gene-card-header-row">
+                                    <div className="gene-card-header-link">Download XLS</div>
+                                    <div className="gene-card-header-link">Download TSV</div>
                                 </div>
                             </div>
+                            <div className="gene-card-body">
+                                <div className="gene-card-img-placeholder"></div>
+                            </div>
+                            <div className="gene-card-body">
+                                <h3>Data resources</h3>
+                                <div className="gene-card-row">
+                                    <div className="gene-card-group">
+                                        <div className="gene-card-icon-placeholder"></div>
+                                        <div>
+                                            <h4>Perturbseq Dataset1</h4>
+                                            <p>knockout of PAX6</p>
+                                            <div className="gene-card-group-link">View dataset</div>
+                                        </div>
+                                    </div>
+                                    <div className="gene-card-group">
+                                        <div className="gene-card-icon-placeholder"></div>
+                                        <div>
+                                            <h4>Perturbseq Dataset1</h4>
+                                            <p>knockout of PAX6</p>
+                                            <div className="gene-card-group-link">View dataset</div>
+                                        </div>
+                                    </div>
+                                    <div className="gene-card-group">
+                                        <div className="gene-card-icon-placeholder"></div>
+                                        <div>
+                                            <h4>Perturbseq Dataset1</h4>
+                                            <p>knockout of PAX6</p>
+                                            <div className="gene-card-group-link">View dataset</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                )}
+                <Footer />
             </div>
         </div>
     </div>

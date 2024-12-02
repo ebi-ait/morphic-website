@@ -1905,6 +1905,8 @@ ul {
   letter-spacing: 0.1em;
   text-align: left;
   color: rgba(153, 153, 153, 1);
+  padding-left: 15px !important;
+  padding-bottom: 10px !important;
 }
 
 .gene-menu-title, .gene-menu-link {
@@ -2013,6 +2015,10 @@ h2.gene-card-body-title {
   /* grid-row-gap: 1rem; */
 }
 
+.gene-card-body-dl-grid.no-data {
+
+}
+
 .gene-card-body dt {
   font-family: Inter;
   font-size: 15px;
@@ -2020,6 +2026,12 @@ h2.gene-card-body-title {
   line-height: 30px;
   letter-spacing: -0.04em;
   text-align: left;  
+}
+
+.gene-card-body dt.no-data {
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
 }
 
 .gene-card-body dd {
