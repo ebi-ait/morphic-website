@@ -120,16 +120,16 @@ const GenePage = ({ params }) => {
                                 {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') && (
                                     <dl className="gene-card-body-dl-grid">
                                         <dt>Studied by MorPhic</dt>
-                                        <dd></dd>
+                                        <dd>YES</dd>
 
                                         <dt>Profiled by</dt>
-                                        <dd></dd>
+                                        <dd>JAX</dd>
 
                                         <dt>Assay types</dt>
-                                        <dd></dd>
+                                        <dd>scRNAseq, perturbSEQ, bulkRNAseq</dd>
 
                                         <dt>Analysis</dt>
-                                        <dd></dd>
+                                        <dd>Fred Hutch, JAX</dd>
 
                                         <dt>Status</dt>
                                         <dd></dd>
@@ -137,7 +137,7 @@ const GenePage = ({ params }) => {
                                 )}
                                 {geneData.tags && Array.isArray(geneData.tags) && !geneData.tags.includes('release-1') && (
                                     <dl className="gene-card-body-dl-grid no-data">
-                                        <dt className="no-data">Currently there is no data available for this Gene</dt>
+                                        <dt className="no-data">Currently no MorPhiC results are available for this Gene</dt>
                                     </dl>
                                 )}
                             </div>
