@@ -3,7 +3,7 @@ name: Gatsby Build and Deploy
 on:
   push:
     branches:
-      - react-app  # Trigger on push to the react-app branch
+      - main  # Trigger on push to the react-app branch
 
 jobs:
   build:

@@ -3,7 +3,7 @@ name: Deploy to Production
 on:
   workflow_dispatch: # This allows the workflow to be triggered manually
     branches:
-      - react-app
+      - main
 
 jobs:
   copy-and-invalidate:
