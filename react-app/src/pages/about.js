@@ -103,7 +103,7 @@ export default function About() {
                       </div>
                       <div className="data-flow-logo-item">
                         <StaticImage
-                          src="../images/external/logos/Northwestern.png"
+                          src="../images/external/logos/Northwestern-no-border.png"
                           alt="Northwestern University Feinberg School of Medicine"
                           className="data-flow-logo"
                         />
@@ -117,8 +117,8 @@ export default function About() {
                       </div>
                       <div className="data-flow-logo-item">
                         <StaticImage
-                          src="../images/external/logos/Stanford.png"
-                          alt="Stanford University"
+                          src="../images/external/logos/UCSF.png"
+                          alt="Stanford of California San Francisco"
                           className="data-flow-logo"
                         />
                       </div>
