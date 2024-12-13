@@ -61,7 +61,7 @@ const GenePage = ({ params }) => {
                         </li>
                         {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') && (
                             <li>
-                                <a href="#" className="gene-menu-link">Analysis Results</a>
+                                <a href="#results" className="gene-menu-link">Analysis Results</a>
                             </li>
                         )}
                         {/*<li>
@@ -175,7 +175,7 @@ const GenePage = ({ params }) => {
                     </div>
                 </section>
                 {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') && (
-                    <section>
+                    <section id="results">
                         <div className="gene-section-header">
                             <h1 className="gene-section-title">MorPhiC Analysis Results</h1>
                             <a href="#" className="gene-section-link">↑ Back to top</a>
@@ -189,7 +189,10 @@ const GenePage = ({ params }) => {
                                 </div>
                             </div>
                             <div className="gene-card-body">
-                                <div className="gene-card-img-placeholder"></div>
+                                <div className="gene-card-img-placeholder">
+                                    <div className="svg-title">{geneData.svg_title}</div>
+                                    <img src={`data:image/svg+xml;utf8,${encodeURIComponent(geneData.svgs)}`} className="img-plot"/>
+                                </div>
                             </div>
                             <div className="gene-card-body">
                                 <h3>Data resources</h3>
@@ -198,7 +201,7 @@ const GenePage = ({ params }) => {
                                         <div className="gene-card-icon-placeholder"></div>
                                         <div>
                                             <h4>Perturbseq Dataset1</h4>
-                                            <p>knockout of PAX6</p>
+                                            <p>knockout of {geneData.Name}</p>
                                             <div className="gene-card-group-link">View dataset</div>
                                         </div>
                                     </div>
@@ -206,7 +209,7 @@ const GenePage = ({ params }) => {
                                         <div className="gene-card-icon-placeholder"></div>
                                         <div>
                                             <h4>Perturbseq Dataset1</h4>
-                                            <p>knockout of PAX6</p>
+                                            <p>knockout of {geneData.Name}</p>
                                             <div className="gene-card-group-link">View dataset</div>
                                         </div>
                                     </div>
@@ -214,7 +217,7 @@ const GenePage = ({ params }) => {
                                         <div className="gene-card-icon-placeholder"></div>
                                         <div>
                                             <h4>Perturbseq Dataset1</h4>
-                                            <p>knockout of PAX6</p>
+                                            <p>knockout of {geneData.Name}</p>
                                             <div className="gene-card-group-link">View dataset</div>
                                         </div>
                                     </div>

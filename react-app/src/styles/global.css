@@ -53,7 +53,7 @@ body {
   --dl-color-default-darkblue: rgba(1, 113, 118, 1);
   --dl-color-default-smartblack: rgba(30, 30, 30, 1); /*#1e1e1e*/
   --dl-color-default-smartwhite: rgba(236, 236, 236, 1); /*#ECECEC*/
-  --dl-colo-default-almostwhite: rgba(245, 245, 245, 1);
+  --dl-colo-default-almostwhite: rgba(245, 245, 245, 1); /*#f5f5f5*/
   --dl-color-default-absolutewhite: rgba(255, 255, 255, 1);
   --dl-color-default-grey: rgba(153, 153, 153, 1);
   --dl-space-space-oneandhalfunits: 24px;
@@ -147,7 +147,7 @@ ul {
 .icon-data-tracker {
   min-width: 1rem;
   min-height: 1rem;
-  background-image: url("../images/icons/squares-black.svg");
+  background-image: url("../images/icons/squares.svg");
   background-position-y: center;
   background-position-x: center;
   background-repeat: no-repeat;
@@ -473,7 +473,7 @@ ul {
   align-items: center;
   gap: 5px;
   .checkbox-label {
-    color: white;
+    color: var(--dl-color-pure-white);
     font-size: 13px;
     width: 125px;
     cursor: pointer;
@@ -485,7 +485,7 @@ ul {
   width: 20px;
   height: 20px;
   border-radius: 3px;
-  background-color: white;
+  background-color: var(--dl-color-pure-white);
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -502,7 +502,7 @@ ul {
   content: "";
   width: 10px;
   height: 10px;
-  background-color: white;
+  background-color: var(--dl-color-pure-white);
   border-radius: 2px;
   transition: background-color 0.2s;
 }
@@ -515,7 +515,7 @@ ul {
   max-height: 200px;
   overflow-y: auto;
   border: 1px solid #ddd;
-  background-color: white;
+  background-color: var(--dl-color-pure-white);
   z-index: 1000;
   list-style-type: none;
   padding: 0;
@@ -1643,7 +1643,7 @@ ul {
 .options-wrapper {
   width: 222px;
   padding: 1rem 1rem 0.5rem;
-  background: white;
+  background: var(--dl-color-pure-white);
   border: 1px solid rgba(153, 153, 153, 1);
   border-radius: 5px;
 
@@ -1675,7 +1675,7 @@ ul {
   height: 8px;
   border: 0.5rem solid black;
   border-radius: 5px;
-  background-color: white;
+  background-color: var(--dl-color-pure-white);
 }
 
 .option-button :last-child {
@@ -2108,12 +2108,19 @@ h2.gene-card-body-title {
   letter-spacing: -0.03em;
   text-align: right;
   color: var(--dl-color-brand-orange);
+  margin-right: 15rem;
 }
 
 .gene-card-img-placeholder {
-  width: 1082.87px;
-  height: 342.78px; 
+  width: 1000px;
+  height: 375px;
   background-color: rgba(211, 211, 211, 0.25);
+  .img-plot {
+    background-color: var(--dl-color-pure-white);
+    border-radius: 8px;
+    margin-left: 15px;
+    margin-top: 15px;
+  }
 }
 
 .gene-card h3 {
