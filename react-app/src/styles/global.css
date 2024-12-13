@@ -301,14 +301,6 @@ ul {
   background-size: contain;
 }
 
-/*.icon-search {
-  display: inline-block;
-  background-image: url("../images/icons/search-icon.svg");
-  background-position-y: center;
-  background-position-x: left;
-  background-repeat: no-repeat;
-}*/
-
 /* --- NAVBAR --- */
 .navbar-container {
   padding: 35px 30px;
@@ -450,12 +442,12 @@ ul {
   .search-icon {
     position: absolute;
     top: 33%;
-    left: 6px;
+    left: 10px;
   }
 }
 
 .gene-search input.search-box {
-  padding-left: 25px;
+  padding-left: 30px;
   width: 100%;
   height: 42px;
   border-radius: 5px;
