@@ -1930,7 +1930,8 @@ ul {
   border-radius: 8px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   padding: 20px 0;
-  background-color: var(--dl-color-pure-white);
+  background-color: var(--dl-colo-default-almostwhite);
+  margin-bottom: 50px;
 }
 
 .gene-card-header {
@@ -1975,6 +1976,12 @@ ul {
 
 .gene-card-body {
   padding: 2rem;
+}
+
+.gene-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+  gap: 1rem;
 }
 
 .gene-card-body-row {
@@ -2104,14 +2111,19 @@ h2.gene-card-body-title {
 }
 
 .gene-card-img-placeholder {
-  width: 1000px;
-  height: 375px;
-  background-color: rgba(211, 211, 211, 0.25);
+  width: 528px;
+  height: 405px;
+  background-color: var(--dl-color-pure-white);
+  border-radius: 8px;
+  .svg-title{
+    padding-top: 20px;
+    padding-left: 20px;
+  }
   .img-plot {
     background-color: var(--dl-color-pure-white);
     border-radius: 8px;
-    margin-left: 15px;
     margin-top: 15px;
+    max-width: 100%;
   }
   .download-tsv {
     position: absolute;
