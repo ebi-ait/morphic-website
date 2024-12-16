@@ -1431,7 +1431,7 @@ ul {
 
 .item-bg-1 {
   background-color: #e0e6e6;
-  color: #04989e;
+  color: var(--dl-color-brand-blue);
 }
 
 .item-bg-2 {
@@ -2112,6 +2112,12 @@ h2.gene-card-body-title {
     border-radius: 8px;
     margin-left: 15px;
     margin-top: 15px;
+  }
+  .download-tsv {
+    position: absolute;
+    margin-left: 13%;
+    margin-top: 25px;
+    background-color: var(--dl-color-brand-blue);
   }
 }
 

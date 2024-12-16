@@ -174,7 +174,7 @@ const GenePage = ({ params }) => {
                         </div>
                     </div>
                 </section>
-                {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') && (
+                {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') && geneData.Analysis_Results[0] && (
                     <section id="results">
                         <div className="gene-section-header">
                             <h1 className="gene-section-title">MorPhiC Analysis Results</h1>
@@ -185,13 +185,13 @@ const GenePage = ({ params }) => {
                                 <h2>Gene expression analysis</h2>
                                 <div className="gene-card-header-row">
                                     <div className="gene-card-header-link">Download XLS</div>
-                                    <div className="gene-card-header-link">Download TSV</div>
                                 </div>
                             </div>
                             <div className="gene-card-body">
                                 <div className="gene-card-img-placeholder">
-                                    <div className="svg-title">{geneData.svg_title}</div>
-                                    <img src={`data:image/svg+xml;utf8,${encodeURIComponent(geneData.svgs)}`} className="img-plot"/>
+                                    <div className="svg-title">{geneData.Analysis_Results[0].title}</div>
+                                    <div className="gene-card-header-link download-tsv"> <a href={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download?tsv_file_id=${geneData.Analysis_Results[0].tsv_file_id}`}>Download TSV </a></div>
+                                    <img src={`data:image/svg+xml;utf8,${encodeURIComponent(geneData.Analysis_Results[0].svg)}`} className="img-plot"/>
                                 </div>
                             </div>
                             <div className="gene-card-body">
