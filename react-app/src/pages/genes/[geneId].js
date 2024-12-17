@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from "../../components/Navbar"
 import Footer from "../../components/Footer"
+import GenePhenotypeEvidence from "../../components/GenePhenotypeEvidence";
 
 const GenePage = ({ params }) => {
   console.log("params: ", params);
@@ -148,17 +149,18 @@ const GenePage = ({ params }) => {
                                 <div className="gene-card-row-gap">
                                     <div className="gene-card-phenotype-data">
                                         <h3 className="gene-card-body-subtitle">Human</h3>
-                                        <p className="bold">Phenotypes:</p>
-                                        <p>{geneData?.Phenotype_Evidence?.Human?.Phenotypes?.[0]?.description || "N/A"}</p>
-                                        <p className="bold">OMIM:</p>
-                                        <p>{geneData?.Phenotype_Evidence?.Human?.OMIM || "N/A"}</p>
-                                        {/*<p className="bold">Human Phenotype Ontology: 5080</p>*/}
+                                        <p className="bold">OMIM Phenotypes:</p>
+                                        {/*<p>{geneData?.Phenotype_Evidence?.Human?.Phenotypes?.[0]?.description || "N/A"}</p>
+                                        <p className="bold">OMIM:</p>*/}
+                                        <GenePhenotypeEvidence geneData={geneData} />
+                                        {/*<p>{geneData?.Phenotype_Evidence?.Human?.OMIM || "N/A"}</p>
+                                        <p className="bold">Human Phenotype Ontology: 5080</p>*/}
                                     </div>
                                     <div className="gene-card-phenotype-data">
                                         <h3>Mouse</h3>
                                         <div className="gene-card-body-row bold">
-                                            <p>MGI:{geneData?.Phenotype_Evidence?.Mouse?.MGI_ID || "N/A"}</p>
-                                            <p>Ortholog relation:{geneData?.Phenotype_Evidence?.Mouse?.Ortholog_relation || "N/A"}</p>
+                                            {/*<p>MGI:{geneData?.Phenotype_Evidence?.Mouse?.MGI_ID || "N/A"}</p>*/}
+                                            <p>Ortholog relation: {geneData?.Phenotype_Evidence?.Mouse?.MGI_ID || "N/A"}</p>
                                         </div>
                                         {/*<p><b>MGI Phenotypes:</b></p>
                                         <p>188 phenotypes from 42 alleles in 45 genetic backgrounds<br></br>
