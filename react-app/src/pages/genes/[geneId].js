@@ -188,11 +188,19 @@ const GenePage = ({ params }) => {
                                 </div>*/}
                             </div>
                             <div className="gene-card-body">
-                                <div className="gene-card-img-placeholder">
-                                    <div className="svg-title">{geneData.Analysis_Results[0].title}</div>
-                                    <div className="gene-card-header-link download-tsv"> <a href={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download?tsv_file_id=${geneData.Analysis_Results[0].tsv_file_id}`}>Download TSV </a></div>
-                                    <img src={`data:image/svg+xml;utf8,${encodeURIComponent(geneData.Analysis_Results[0].svg)}`} className="img-plot"/>
-                                </div>
+                              <div className="gene-grid">
+                                {geneData.Analysis_Results.map((analysis, index) => (
+                                  <div className="gene-card-img-placeholder" key={index}>
+                                    <div className="svg-title">{analysis.title}</div>
+                                    <div className="gene-card-header-link download-tsv"> <a href={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download?tsv_file_id=${analysis.tsv_file_id}`}>Download TSV </a></div>
+                                    <img
+                                      src={`data:image/svg+xml;utf8,${encodeURIComponent(analysis.svg)}`}
+                                      className="img-plot"
+                                      alt={analysis.title}
+                                    />
+                                  </div>
+                                ))}
+                              </div>
                             </div>
                             <div className="gene-card-body">
                                 <h3>Data resources</h3>
