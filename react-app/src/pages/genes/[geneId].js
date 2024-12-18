@@ -109,12 +109,12 @@ const GenePage = ({ params }) => {
                                     <dt>Protein class</dt>
                                     <dd>{geneData.Protein_Class}</dd>
                                 </dl>
-                                <div className="gene-card-body-row">
+                                {/*<div className="gene-card-body-row">
                                     <div className="gene-card-body-link uppercase text-orange">GO MF</div>
                                     <div className="gene-card-body-link uppercase text-orange">GO BO</div>
                                     <div className="gene-card-body-link uppercase text-orange">GO CC</div>
                                     <div className="gene-card-body-link uppercase text-orange">REACTOME PATHWAYS</div>
-                                </div>
+                                </div>*/}
                             </div>
                             <div className="gene-card-body gene-card-summary">
                                 <h2 className="gene-card-summary-title">MorPhiC summary</h2>
