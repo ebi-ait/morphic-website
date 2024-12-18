@@ -60,7 +60,7 @@ const GenePage = ({ params }) => {
                         <li>
                             <a href="#" className="gene-menu-link gene-active">Overview</a>
                         </li>
-                        {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') && (
+                        {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') && geneData.Analysis_Results[0] && (
                             <li>
                                 <a href="#results" className="gene-menu-link">Analysis Results</a>
                             </li>
@@ -222,10 +222,10 @@ const GenePage = ({ params }) => {
                                         <div>
                                             <h4>Perturbseq Dataset1</h4>
                                             <p>knockout of {geneData.Name}</p>
-                                            <div className="gene-card-group-link">View dataset</div>
+                                            <div className="gene-card-group-link"><a href="/data">View dataset</a></div>
                                         </div>
                                     </div>
-                                    <div className="gene-card-group">
+                                    {/*<div className="gene-card-group">
                                         <div className="gene-card-icon-placeholder"></div>
                                         <div>
                                             <h4>Perturbseq Dataset1</h4>
@@ -240,7 +240,7 @@ const GenePage = ({ params }) => {
                                             <p>knockout of {geneData.Name}</p>
                                             <div className="gene-card-group-link">View dataset</div>
                                         </div>
-                                    </div>
+                                    </div>*/}
                                 </div>
                             </div>
                         </div>
@@ -290,10 +290,10 @@ const GenePage = ({ params }) => {
                                         <div>
                                             <h4>Perturbseq Dataset1</h4>
                                             <p>knockout of {geneData.Name}</p>
-                                            <div className="gene-card-group-link">View dataset</div>
+                                            <div className="gene-card-group-link"><a href="/data">View dataset</a></div>
                                         </div>
                                     </div>
-                                    <div className="gene-card-group">
+                                    {/*<div className="gene-card-group">
                                         <div className="gene-card-icon-placeholder"></div>
                                         <div>
                                             <h4>Perturbseq Dataset1</h4>
@@ -308,7 +308,7 @@ const GenePage = ({ params }) => {
                                             <p>knockout of {geneData.Name}</p>
                                             <div className="gene-card-group-link">View dataset</div>
                                         </div>
-                                    </div>
+                                    </div>*/}
                                 </div>
                             </div>
                         </div>
