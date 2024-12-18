@@ -123,17 +123,14 @@ const GenePage = ({ params }) => {
                                         <dt>Studied by MorPhic</dt>
                                         <dd>YES</dd>
 
-                                        <dt>Profiled by</dt>
-                                        <dd>JAX</dd>
+                                        <dt>DPC</dt>
+                                        <dd>The Jackson Laboratory (JAX)</dd>
 
-                                        <dt>Assay types</dt>
-                                        <dd>scRNAseq, perturbSEQ, bulkRNAseq</dd>
+                                        <dt>Readout assay type</dt>
+                                        <dd>RNA-seq</dd>
 
                                         <dt>Analysis</dt>
-                                        <dd>Fred Hutch, JAX</dd>
-
-                                        <dt>Status</dt>
-                                        <dd></dd>
+                                        <dd>Fred Hutch Cancer Center</dd>
                                     </dl>
                                 )}
                                 {geneData.tags && Array.isArray(geneData.tags) && !geneData.tags.includes('release-1') && (
