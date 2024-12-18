@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from "../../components/Navbar"
 import Footer from "../../components/Footer"
 import GenePhenotypeEvidence from "../../components/GenePhenotypeEvidence";
+import MousePhenotype from "../../components/MousePhenotype";
 
 const GenePage = ({ params }) => {
   console.log("params: ", params);
@@ -155,18 +156,19 @@ const GenePage = ({ params }) => {
                                     </div>
                                     <div className="gene-card-phenotype-data">
                                         <h3>Mouse</h3>
-                                        <div className="gene-card-body-row bold">
+                                        <div className="gene-card-body-row">
                                             {/*<p>MGI:{geneData?.Phenotype_Evidence?.Mouse?.MGI_ID || "N/A"}</p>*/}
                                             <p>Ortholog relation: {geneData?.Phenotype_Evidence?.Mouse?.MGI_ID || "N/A"}</p>
                                         </div>
+                                        <MousePhenotype mouseData={geneData} />
                                         {/*<p><b>MGI Phenotypes:</b></p>
                                         <p>188 phenotypes from 42 alleles in 45 genetic backgrounds<br></br>
                                             46 phenotypes from multigenic genotypes<br></br>
                                             367 phenotype references MGI
-                                        </p>*/}
+                                        </p>
                                         <p><b>Homozygote Phenotypes:</b> {geneData?.Phenotype_Evidence?.Mouse?.Homozygote_Phenotypes || "N/A"}</p>
                                         <p><b>Heterozygote Phenotypes:</b> {geneData?.Phenotype_Evidence?.Mouse?.Heterozygote_Phenotypes || "N/A"}</p>
-                                        <p><b>IMPC Viability:</b> {geneData?.Phenotype_Evidence?.Mouse?.IMPC_Viability || "N/A"}</p>
+                                        <p><b>IMPC Viability:</b> {geneData?.Phenotype_Evidence?.Mouse?.IMPC_Viability || "N/A"}</p>*/}
                                     </div>
                                 </div>
                             </div>
