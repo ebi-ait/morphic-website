@@ -195,11 +195,24 @@ const GenePage = ({ params }) => {
                                   <div className="gene-card-img-placeholder" key={index}>
                                     <div className="svg-title">{analysis.title}</div>
                                     <div className="gene-card-header-link download-tsv"> <a href={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download?tsv_file_id=${analysis.tsv_file_id}`}>Download TSV </a></div>
-                                    <img
-                                      src={`data:image/svg+xml;utf8,${encodeURIComponent(analysis.svg)}`}
-                                      className="img-plot"
-                                      alt={analysis.title}
-                                    />
+                                    {analysis.svg ? (
+                                      // Render SVG if available
+                                      <img
+                                        src={`data:image/svg+xml;utf8,${encodeURIComponent(analysis.svg)}`}
+                                        className="img-plot"
+                                        alt={analysis.title}
+                                      />
+                                    ) : analysis.png_file_id ? (
+                                      // Render PNG if SVG is not available
+                                      <img
+                                        src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${analysis.png_file_id}`}
+                                        className="img-plot"
+                                        alt={analysis.title}
+                                      />
+                                    ) : (
+                                      // Fallback if neither SVG nor PNG is available
+                                      <p>No image available</p>
+                                    )}
                                   </div>
                                 ))}
                               </div>
@@ -250,11 +263,24 @@ const GenePage = ({ params }) => {
                                 {geneData.Enrichment_Analysis.map((analysis, index) => (
                                   <div className="gene-card-img-placeholder" key={index}>
                                     <div className="svg-title">{analysis.title}</div>
-                                    <img
-                                      src={`data:image/svg+xml;utf8,${encodeURIComponent(analysis.svg)}`}
-                                      className="img-plot"
-                                      alt={analysis.title}
-                                    />
+                                    {analysis.svg ? (
+                                      // Render SVG if available
+                                      <img
+                                        src={`data:image/svg+xml;utf8,${encodeURIComponent(analysis.svg)}`}
+                                        className="img-plot"
+                                        alt={analysis.title}
+                                      />
+                                    ) : analysis.png_file_id ? (
+                                      // Render PNG if SVG is not available
+                                      <img
+                                        src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${analysis.png_file_id}`}
+                                        className="img-plot"
+                                        alt={analysis.title}
+                                      />
+                                    ) : (
+                                      // Fallback if neither SVG nor PNG is available
+                                      <p>No image available</p>
+                                    )}
                                   </div>
                                 ))}
                               </div>
