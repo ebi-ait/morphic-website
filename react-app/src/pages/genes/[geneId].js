@@ -226,7 +226,6 @@ const GenePage = ({ params }) => {
                                         {geneData.Analysis_Results[0] && geneData.Analysis_Results[0].title && geneData.Analysis_Results[0].title.includes(':') && (
                                             <div>
                                                 <h4>{geneData.Analysis_Results[0].title.split(':')[0]}</h4>
-                                                <p>knockout of {geneData.Name}</p>
                                                 <div className="gene-card-group-link"><a href="/data">View dataset</a></div>
                                             </div>
                                         )}
@@ -296,7 +295,6 @@ const GenePage = ({ params }) => {
                                         {geneData.Enrichment_Analysis[0] && geneData.Enrichment_Analysis[0].title && geneData.Enrichment_Analysis[0].title.includes(':') && (
                                             <div>
                                                 <h4>{geneData.Enrichment_Analysis[0].title.split(':')[0]}</h4>
-                                                <p>knockout of {geneData.Name}</p>
                                                 <div className="gene-card-group-link"><a href="/data">View dataset</a></div>
                                             </div>
                                         )}
