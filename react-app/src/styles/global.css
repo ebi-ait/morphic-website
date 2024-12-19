@@ -2127,8 +2127,8 @@ h2.gene-card-body-title {
   }
   .download-tsv {
     position: absolute;
-    margin-left: 13%;
-    margin-top: 25px;
+    margin-left: 15%;
+    margin-top: 10px;
     background-color: var(--dl-color-brand-blue);
   }
 }
