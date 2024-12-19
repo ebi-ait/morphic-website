@@ -1876,6 +1876,41 @@ ul {
   padding: 0;
 }
 
+@media (max-width: 1500px) and (min-width: 1301px) {
+  .gene-container {
+    background-color: var(--dl-color-smart-white);
+    display: flex;
+    align-items: flex-start;
+    gap: 2.5rem;
+  }
+
+  .gene-menu {
+    flex-shrink: 0;
+    width: 180px;
+    margin-left: 20px;
+  }
+
+  .gene-content {
+    flex-shrink: 0;
+    width: 1145px;
+  }
+}
+
+@media (max-width: 1300px) {
+  .gene-menu {
+    flex-shrink: 0;
+    width: 180px;
+    margin-left: 20px;
+  }
+  .gene-content {
+    flex-shrink: 0;
+    width: 900px;
+  }
+  .gene-card-img-placeholder{
+    width: 400px !important;
+  }
+}
+
 .gene-container {
   background-color: var(--dl-color-smart-white);
   display: flex;
@@ -1885,7 +1920,6 @@ ul {
 }
 
 .gene-menu-card {
-  width: 180px;
   border-radius: 8px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   padding: 20px 0;
@@ -2115,9 +2149,19 @@ h2.gene-card-body-title {
   height: 405px;
   background-color: var(--dl-color-pure-white);
   border-radius: 8px;
-  .svg-title{
-    padding-top: 20px;
-    padding-left: 20px;
+  .title-button-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    .svg-title{
+      width: 60%;
+      margin-left: 4%;
+    }
+    .gene-card-header-link,.svg-title{
+      flex: 0 0 auto;
+      margin-top: 10px;
+      margin-right: 2%;
+    }
   }
   .img-plot {
     background-color: var(--dl-color-pure-white);
@@ -2126,9 +2170,6 @@ h2.gene-card-body-title {
     max-width: 100%;
   }
   .download-tsv {
-    position: absolute;
-    margin-left: 15%;
-    margin-top: 10px;
     background-color: var(--dl-color-brand-blue);
   }
 }
