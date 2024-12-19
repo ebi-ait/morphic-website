@@ -223,11 +223,13 @@ const GenePage = ({ params }) => {
                                 <div className="gene-card-row">
                                     <div className="gene-card-group">
                                         <div className="gene-card-icon-placeholder"></div>
-                                        <div>
-                                            <h4>Perturbseq Dataset1</h4>
-                                            <p>knockout of {geneData.Name}</p>
-                                            <div className="gene-card-group-link"><a href="/data">View dataset</a></div>
-                                        </div>
+                                        {geneData.Analysis_Results[0] && geneData.Analysis_Results[0].title && geneData.Analysis_Results[0].title.includes(':') && (
+                                            <div>
+                                                <h4>{geneData.Analysis_Results[0].title.split(':')[0]}</h4>
+                                                <p>knockout of {geneData.Name}</p>
+                                                <div className="gene-card-group-link"><a href="/data">View dataset</a></div>
+                                            </div>
+                                        )}
                                     </div>
                                     {/*<div className="gene-card-group">
                                         <div className="gene-card-icon-placeholder"></div>
@@ -291,11 +293,13 @@ const GenePage = ({ params }) => {
                                 <div className="gene-card-row">
                                     <div className="gene-card-group">
                                         <div className="gene-card-icon-placeholder"></div>
-                                        <div>
-                                            <h4>Perturbseq Dataset1</h4>
-                                            <p>knockout of {geneData.Name}</p>
-                                            <div className="gene-card-group-link"><a href="/data">View dataset</a></div>
-                                        </div>
+                                        {geneData.Enrichment_Analysis[0] && geneData.Enrichment_Analysis[0].title && geneData.Enrichment_Analysis[0].title.includes(':') && (
+                                            <div>
+                                                <h4>{geneData.Enrichment_Analysis[0].title.split(':')[0]}</h4>
+                                                <p>knockout of {geneData.Name}</p>
+                                                <div className="gene-card-group-link"><a href="/data">View dataset</a></div>
+                                            </div>
+                                        )}
                                     </div>
                                     {/*<div className="gene-card-group">
                                         <div className="gene-card-icon-placeholder"></div>
