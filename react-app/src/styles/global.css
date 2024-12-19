@@ -1909,6 +1909,9 @@ ul {
   .gene-card-img-placeholder{
     width: 400px !important;
   }
+  .gene-card {
+    width: 900px !important;
+  }
 }
 
 .gene-container {
