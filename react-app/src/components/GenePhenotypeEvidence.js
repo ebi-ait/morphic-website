@@ -32,7 +32,7 @@ const GenePhenotypeEvidence = ({ geneData }) => {
                     href={`https://omim.org/entry/${entry.omimId}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ color: "#007bff", textDecoration: "underline" }}
+                    style={{ textDecoration: "underline" }}
                   >
                     ({entry.omimId})
                   </a>
