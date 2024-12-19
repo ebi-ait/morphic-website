@@ -2163,6 +2163,11 @@ h2.gene-card-body-title {
       margin-right: 2%;
     }
   }
+  .svg-title {
+    width: 60%;
+    margin-left: 4%;
+    margin-top: 2%;
+  }
   .img-plot {
     background-color: var(--dl-color-pure-white);
     border-radius: 8px;
