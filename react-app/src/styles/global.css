@@ -1732,10 +1732,14 @@ ul {
   text-align: left;
 }
 
-.data-card-table td div {
+.data-card-table td .data-text {
   max-height: 32px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.data-card-table td .data-download-text {
+  display: inline-block;
 }
 
 .data-card-table td .icon {
@@ -1761,7 +1765,7 @@ ul {
   max-width: 76px;
 }
 .data-card-table td:nth-child(6) {
-  max-width: 202px;
+  max-width: 102px;
 }
 .data-card-table td:nth-child(7) {
   max-width: 47px;
@@ -1864,6 +1868,10 @@ ul {
   text-align: center;  
 
   color: var(--dl-color-default-smartblack);
+}
+
+.active-data-button {
+  color: var(--dl-color-brand-blue);
 }
 
 /* --- GENE PAGE */

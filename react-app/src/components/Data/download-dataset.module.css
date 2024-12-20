@@ -1,0 +1,101 @@
+.download-dataset {
+    position: relative;
+}
+
+.card {
+    /* Absolute white */
+    background-color: #FFFFFF;
+    width: 329px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.5rem);
+    z-index: 2;
+}
+
+.card-header,
+.card-body {
+    padding: 1rem;
+}
+
+.card-header h1,
+.card-header h2,
+.card-header h3 {
+    margin: 0;
+}
+
+.card-header {
+    /* Grey */
+    border-bottom: 1px solid rgba(153, 153, 155, 0.3);
+}
+
+.header-flex {
+    display: flex;
+    align-items: center;
+}
+
+.header-flex>*:last-child {
+    margin-left: auto;
+}
+
+/* Card body */
+.resource {
+    display: flex;
+    gap: 1rem;
+}
+
+.resource-image {}
+
+.resource-info {
+    margin-bottom: 0.5rem;
+
+    dl,
+    dt,
+    dd {
+        margin: 0;
+    }
+
+    dt,
+    dd {
+        padding-bottom: 0.5rem;
+    }
+
+    dt {
+        /* styleName: Body S Bold; */
+        font-family: Inter;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 20px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+    }
+
+    dd {
+        /* styleName: Body S; */
+        font-family: Inter;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+
+    }
+}
+
+.link {
+    /* styleName: Body S Bold; */
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+
+    /* Brand blue */
+    color: #04989E;
+}
