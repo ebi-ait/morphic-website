@@ -6,6 +6,7 @@ import Footer from "../components/Footer"
 import cover from "../images/external/sangharshlohakare8olkmpo8ugunsplash11571-51ur-800h.png"
 import JSONData from "../../content/studies.json"
 import { Link } from "gatsby"
+import Download from "../components/Data/DownloadDataset"
 
 function Layout({ children }) {
     return (
@@ -55,6 +56,7 @@ export default function Data() {
                 }
 
                 const resultStudiesData = await response.json();
+                console.log(resultStudiesData);
                 setStudiesData(resultStudiesData);
                 setFilteredData(resultStudiesData._embedded.studies);
             } catch (error) {
@@ -160,9 +162,11 @@ export default function Data() {
                             {filteredData.map((data, index) => (data?.content?.study_title && (
                                 <tr key={`content_item_${index}`}>
                                     <td><span className="icon-triple-squares icon"></span></td>
-                                    <td className="bold"><div>{data.content?.study_title}</div></td>
+                                    <td className="bold">
+                                        <div className="data-text">{data.content?.study_title}</div>
+                                    </td>
                                     <td>
-                                        <div>{data.content?.target_genes[0]}</div>
+                                        <div className="data-text">{data.content?.target_genes[0]}</div>
                                         {data.content?.target_genes?.length - 1 > 0 ? (
                                             <div className="gene-count" onClick={e => setGeneListId(index)}>
                                                 <span aria-hidden className="icon-plus-circle"></span> {data.content?.target_genes?.length - 1} more
@@ -180,22 +184,23 @@ export default function Data() {
                                         ): null}
                                     </td>
                                     <td>
-                                        <div>{data.content?.cell_line_names}</div>
+                                        <div className="data-text">{data.content?.cell_line_names}</div>
                                     </td>
                                     <td>
-                                        <div>{data.content?.readout_assay}</div>
+                                        <div className="data-text">{data.content?.readout_assay}</div>
                                     </td>
                                     <td>
-                                        <div>{data.content?.perturbation_type}</div>
+                                        <div className="data-text">{data.content?.perturbation_type}</div>
                                     </td>
                                     <td>
-                                        <div>{data.content?.institute}</div>
+                                        <div className="data-text">{data.content?.institute}</div>
                                     </td>
                                     <td>
-                                        <div>
-                                            <a href={`https://www.ebi.ac.uk/ena/browser/view/${data.accessions[0]}`} target="_blank" rel="noopener noreferrer" className="data-gene-link">
-                                              Explore →
-                                            </a>
+                                        <div className="data-download-text">
+                                            <button className={`data-gene-link ${geneListId === "download" + index ? "active-data-button": ""}`} onClick={e => setGeneListId("download" + index)}>Download ↓</button>
+                                            {geneListId === "download" + index && (
+                                                <Download key={`download_dataset_${index}`} setGeneListId={setGeneListId} />
+                                            )}
                                         </div>
                                     </td>
                                 </tr>
