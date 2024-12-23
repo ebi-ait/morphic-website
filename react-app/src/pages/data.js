@@ -56,7 +56,6 @@ export default function Data() {
                 }
 
                 const resultStudiesData = await response.json();
-                console.log(resultStudiesData);
                 setStudiesData(resultStudiesData);
                 setFilteredData(resultStudiesData._embedded.studies);
             } catch (error) {
@@ -199,7 +198,7 @@ export default function Data() {
                                         <div className="data-download-text">
                                             <button className={`data-gene-link ${geneListId === "download" + index ? "active-data-button": ""}`} onClick={e => setGeneListId("download" + index)}>Download ↓</button>
                                             {geneListId === "download" + index && (
-                                                <Download key={`download_dataset_${index}`} setGeneListId={setGeneListId} />
+                                                <Download key={`download_dataset_${index}`} setGeneListId={setGeneListId} data={data} />
                                             )}
                                         </div>
                                     </td>
