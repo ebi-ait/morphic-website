@@ -45,6 +45,16 @@ export default function Data() {
     const [searchInput, setSearchInput] = useState('');
 
     const [geneListId, setGeneListId] = useState(-1);
+    const [targetGenesMap, setTargetGenesMap] = useState({});
+
+    const fetchGenesInBulk = async (genes) => {
+        const response = await fetch('https://46ucfedadd.execute-api.us-east-1.amazonaws.com/api/bulk-gene-search', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ genes }),
+        });
+        return response.json();
+    };
 
     useEffect(() => {
         const getStudiesData = async () => {
@@ -58,6 +68,21 @@ export default function Data() {
                 const resultStudiesData = await response.json();
                 setStudiesData(resultStudiesData);
                 setFilteredData(resultStudiesData._embedded.studies);
+
+                // Extract all target genes across studies
+                const allTargetGenes = resultStudiesData._embedded.studies.flatMap(
+                    (study) => study.content?.target_genes || []
+                );
+                // Fetch HGNC_IDs for these genes
+                const uniqueGenes = [...new Set(allTargetGenes)]; // Remove duplicates
+                const genesWithIDs = await fetchGenesInBulk(uniqueGenes);
+
+                // Map genes to their HGNC_IDs
+                const geneMap = genesWithIDs.reduce((map, gene) => {
+                    map[gene.Name] = gene.HGNC_ID;
+                    return map;
+                }, {});
+                setTargetGenesMap(geneMap);
             } catch (error) {
                 setError(error)
             } finally {
@@ -175,7 +200,16 @@ export default function Data() {
                                                     <figcaption>{data.content?.target_genes?.length - 1} genes</figcaption>
                                                     <ul>
                                                     {data.content?.target_genes?.map((gene, index) => (
-                                                        <li key={`list_item_${index}`}>{gene}</li>
+                                                        <li key={`list_item_${index}`}>
+                                                        <a
+                                                                href={`/genes/${targetGenesMap[gene] || ''}`}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="gene-link"
+                                                            >
+                                                            {gene}
+                                                        </a>
+                                                        </li>
                                                     ))}
                                                     </ul>
                                                 </figure>): null}
