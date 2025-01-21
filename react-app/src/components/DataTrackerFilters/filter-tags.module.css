@@ -1,0 +1,46 @@
+.tagsWrap {
+    padding-left: 0.5rem;
+}
+
+.tagsWrap > * {
+    margin-bottom: 0.25rem;
+}
+
+.filter-tag {
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+
+    height: auto;
+    border-radius: 5px;
+
+    /* Brand Blue */
+    background-color: #04989E;
+    /* Absolute White */
+    color: #FFFFFF;
+
+    font-family: Inter;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 13.31px;
+    letter-spacing: -0.02em;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+
+}
+
+.filter-tag span {
+    order: 1;
+}
+
+.filter-tag-icon {
+    order: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}

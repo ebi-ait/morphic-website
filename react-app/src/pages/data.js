@@ -7,6 +7,8 @@ import cover from "../images/external/sangharshlohakare8olkmpo8ugunsplash11571-5
 import JSONData from "../../content/studies.json"
 import { Link } from "gatsby"
 import Download from "../components/Data/DownloadDataset"
+import FilterDropdown from "../components/DataTrackerFilters/FilterDropdown"
+import FilterTags from "../components/DataTrackerFilters/FilterTags"
 
 function Layout({ children }) {
     return (
@@ -47,6 +49,47 @@ export default function Data() {
     const [geneListId, setGeneListId] = useState(-1);
     const [targetGenesMap, setTargetGenesMap] = useState({});
 
+    const [selectedCenters, setSelectedCenters] = useState(new Set());
+    const [selectedAssay, setSelectedAssay] = useState(new Set());
+    const [selectedCellLines, setSelectedCellLine] = useState(new Set());
+    const [selectedPerturbationType, setSelectedPerturbationType] = useState(new Set());
+
+    const handleClearAll = () => {
+        setSearchInput('')
+        setSelectedCellLine(new Set());
+        setSelectedAssay(new Set());
+        setSelectedPerturbationType(new Set());
+        setSelectedCenters(new Set());
+    }
+
+    const updateSet = (set, item) => {
+        const newSet = new Set(set);
+        if (newSet.has(item)) {
+            newSet.delete(item);
+        } else {
+            newSet.add(item);
+        }
+        return newSet;
+    }
+
+    const handleSelectedCellLine = (cellLine) => {
+        const updatedSet = updateSet(selectedCellLines, cellLine);
+        setSelectedCellLine(updatedSet);
+    }
+    const handleSelectedCenterInput = (centerName) => {
+        const updatedSet = updateSet(selectedCenters, centerName);
+        setSelectedCenters(updatedSet);
+    }
+    const handleSelectedAssayInput = (assay) => {
+        const updatedSet = updateSet(selectedAssay, assay);
+        setSelectedAssay(updatedSet);
+    }
+    const handleSelectedPerturbationType = (type) => {
+        const updatedSet = updateSet(selectedPerturbationType, type);
+        setSelectedPerturbationType(updatedSet);
+    }
+
+
     const fetchGenesInBulk = async (genes) => {
         const response = await fetch('https://46ucfedadd.execute-api.us-east-1.amazonaws.com/api/bulk-gene-search', {
             method: 'POST',
@@ -56,6 +99,7 @@ export default function Data() {
         return response.json();
     };
 
+    // Fetch data once when component mounts
     useEffect(() => {
         const getStudiesData = async () => {
             try {
@@ -90,10 +134,14 @@ export default function Data() {
             }
         }
 
+        getStudiesData();
+    }, []);
+
+    useEffect(() => {
         if (studiesData) {
-            console.log("Entered filter section")
             let result = studiesData;
             
+            // Filter by search input
             if (searchInput) {
                 result = studiesData._embedded.studies.filter(
                     (study) => study.content?.target_genes?.filter((gene) => gene.includes(searchInput.toUpperCase())).length > 0
@@ -101,12 +149,54 @@ export default function Data() {
             } else {
                 result = studiesData._embedded.studies
             }
+            // Filter by cell line
+            if (selectedCellLines.size > 0) {
+                result = result.filter(
+                    (study) => {
+                        const cellLineNames = study.content?.cell_line_names
+                        
+                        if (!cellLineNames) return false
+                        
+                        const listOfCellLineNames = Array.isArray(cellLineNames)
+                          ? cellLineNames
+                          : [cellLineNames]
+                        
+                        return listOfCellLineNames.some(name => selectedCellLines.has(name))
+                    }
+                );
+            }
+            // Filter by assay
+            if (selectedAssay.size > 0) {
+                result = result.filter(
+                    (study) => [...selectedAssay].some(name => study.content?.readout_assay?.includes(name))
+                );
+            }
+            // Filter by perturbation type
+            if (selectedPerturbationType.size > 0) {
+                result = result.filter(
+                    (study) => {
+                        const perturbationType = study.content?.perturbation_type
+                        
+                        if (!perturbationType) return false
+                        
+                        const listOfPertubationType = Array.isArray(perturbationType)
+                          ? perturbationType
+                          : [perturbationType]
+                        
+                        return listOfPertubationType.some(name => selectedPerturbationType.has(name))
+                    }
+                );
+            }
+            // Filter by center
+            if (selectedCenters.size > 0) {
+                result = result.filter(
+                    (study) => [...selectedCenters].some(name => study.content?.institute?.includes(name))
+                );
+            }
 
             setFilteredData(result)
-        } else {
-            getStudiesData();
         }
-    }, [searchInput]);
+    }, [searchInput, selectedCenters, selectedAssay, selectedCellLines, selectedPerturbationType]);
 
     if (isLoading) return (<Layout><p>Loading...</p></Layout>);
     if (error) return (<Layout><p>Error loading studies</p></Layout>)
@@ -136,36 +226,24 @@ export default function Data() {
                     <div className="data-card-filter">
                         <div className="data-card-button-group">
                             <button className="data-card-filter-button" onClick={() => setCollapse((prev) => !prev)}><span className="icon-arrow-left icon"></span>Filter</button>
-                            <button className="data-card-clear-button" onClick={() => setSearchInput('')}>Clear all</button>
+                            <button className="data-card-clear-button" onClick={handleClearAll}>Clear all</button>
                         </div>
                         <div className="data-card-form-container">
                             <div className="data-card-form">
                                 <label for="gene-id">Search by Gene ID</label>
-                                <input type="text" id="gene-id" name="gene-id" placeholder="Search by Gene ID" onChange={e => setSearchInput(e.target.value)}></input>
-                                <label for="cell-line">By cell line</label>
-                                <div className="select-wrapper">
-                                    <select id="cell-line" name="cell-line">
-                                    <option value="">By cell line</option>
-                                    <option value=""></option>
-                                </select></div>
-                                <label for="assay">By assay</label>
-                                <div className="select-wrapper">
-                                    <select id="assay" name="assay">
-                                    <option value="">By assay</option>
-                                    <option value=""></option>
-                                </select></div>
-                                <label for="perturbation">By perturbation type</label>
-                                <div className="select-wrapper">
-                                    <select id="perturbation" name="perturbation">
-                                    <option value="">By perturbation type</option>
-                                    <option value=""></option>
-                                </select></div>
-                                <label for="model-system">By model system</label>
-                                <div className="select-wrapper">
-                                    <select id="model-system" name="model-system">
-                                    <option value="">By model system</option>
-                                    <option value=""></option>
-                                </select></div>
+                                <input type="text" id="gene-id" name="gene-id" value={searchInput} placeholder="Search by Gene ID" onChange={e => setSearchInput(e.target.value)}></input>
+
+                                <FilterDropdown label="By cell line" studiesData={filteredData} contentType={"cell_line_names"} inputList={selectedCellLines} updateInputList={handleSelectedCellLine} />
+                                <FilterDropdown label="By assay" studiesData={filteredData} contentType={"readout_assay"} inputList={selectedAssay} updateInputList={handleSelectedAssayInput} />
+                                <FilterDropdown label="By perturbation type" studiesData={filteredData} contentType={"perturbation_type"} inputList={selectedPerturbationType} updateInputList={handleSelectedPerturbationType} />
+                                <FilterDropdown label="By center" studiesData={filteredData} contentType={"institute"} inputList={selectedCenters} updateInputList={handleSelectedCenterInput} />
+
+                                <div>
+                                    <FilterTags tags={selectedCellLines} updateTags={handleSelectedCellLine}/>
+                                    <FilterTags tags={selectedAssay} updateTags={handleSelectedAssayInput}/>
+                                    <FilterTags tags={selectedPerturbationType} updateTags={handleSelectedPerturbationType}/>
+                                    <FilterTags tags={selectedCenters} updateTags={handleSelectedCenterInput}/>
+                                </div>
                             </div> 
                         </div>
                     </div>
