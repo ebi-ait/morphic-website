@@ -225,13 +225,10 @@ ul {
 }
 
 .icon-radio-open {
-  min-width: 1rem;
-  min-height: 1rem;
-  background-image: url("../images/icons/checkbox-circle.svg");
-  background-position-y: center;
-  background-position-x: center;
-  background-repeat: no-repeat;
-  background-size: contain;
+  width: 47px;
+  height: 47px;
+  background-image: url("../images/icons/gene-box.svg");
+  margin: auto 0;
 }
 
 .icon-arrow-left {
@@ -2218,7 +2215,7 @@ h2.gene-card-body-title {
 }
 
 .gene-card-group-link {
-  color: rgba(4, 152, 158, 1);
+  color: var(--dl-color-default-brandblue);
 }
 
 /* --- NEWS PAGE --- */
