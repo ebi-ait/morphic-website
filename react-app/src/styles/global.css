@@ -395,6 +395,7 @@ ul {
   align-items: center;
   gap: 29px;
   color: #ECECEC;
+  z-index: 4; /* Make sure this is higher than .home-card-row*/
 }
 
 .header-position-center h1 {
@@ -502,10 +503,10 @@ ul {
   overflow-y: auto;
   border: 1px solid #ddd;
   background-color: var(--dl-color-pure-white);
-  z-index: 1000;
   list-style-type: none;
   padding: 0;
   margin: 0;
+  color: var(--dl-color-default-smartblack);
 }
 
 .suggestions-list li {
