@@ -34,7 +34,7 @@ const GenePhenotypeEvidence = ({ geneData }) => {
                     rel="noopener noreferrer"
                     style={{ textDecoration: "underline" }}
                   >
-                    ({entry.omimId})
+                    (OMIM:{entry.omimId})
                   </a>
                 </>
               ) : (
