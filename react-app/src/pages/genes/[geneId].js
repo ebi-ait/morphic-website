@@ -194,7 +194,7 @@ const GenePage = ({ params }) => {
                                   <div className="gene-card-img-placeholder" key={index}>
                                     <div className="title-button-container">
                                         <div className="svg-title">{analysis.title}</div>
-                                        <div className="gene-card-header-link download-tsv"> <a href={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download?tsv_file_id=${analysis.tsv_file_id}`}>Download TSV </a></div>
+                                        <div className="gene-card-header-link download-tsv"> <a href={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download?tsv_file_id=${analysis.tsv_file_id}&file_name=${analysis.title}`}>Download TSV </a></div>
                                     </div>
                                     {analysis.svg ? (
                                       // Render SVG if available
