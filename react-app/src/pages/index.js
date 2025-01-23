@@ -27,11 +27,11 @@ export default function Home() {
           <h1>Molecular Phenotypes<br></br>
           of Null Alleles in Cells</h1>
           <p>A program to better understand the function of every human gene and generate a catalogue of the molecular and cellular consequences of inactivating genes.</p>
+          <div className="search-container">
+            <GeneSearch />
+          </div>
         </div>
         <div className="header-position-bottom header-triangle"></div>
-        <div className="search-container">
-          <GeneSearch />
-        </div>
       </div>
 
       <section className="home-about">
