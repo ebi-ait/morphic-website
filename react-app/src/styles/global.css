@@ -1471,28 +1471,33 @@ ul {
 /* --- DATA PAGE --- */
 .data-container {
   background-color: var(--dl-color-default-smartwhite);
+}
 
-  padding-top: 300px; /* test */
+.data-container > :last-child {
+  background-color: var(--dl-color-default-smartwhite);
 }
 
 .data-content {
-  /* height: 645px; */
-  background-color: var(--dl-color-default-smartwhite);
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
+
+  position: relative;
   z-index: 1;
-  top: 140px;
-  left: 50%;
-  transform: translateX(-50%);
+
+  /* space from top of image - gradient cover image */
+  --space-from-top: calc(140px - 742px);
+  top: var(--space-from-top);
+  margin-bottom: var(--space-from-top);
+  min-height: calc(742px - 140px);
 }
 
 .data-card {
-  /* min-height: 290px; */
+  background-color: var(--dl-color-default-smartwhite);
+  
   width: 1380px;
   border: 0 solid transparent;
-  border-radius: 8px 0px 0px 0px;
+  border-radius: 8px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   padding: 20px;
 }
@@ -1516,7 +1521,6 @@ ul {
 
 .data-card-body {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .data-card-filter {
@@ -1872,6 +1876,60 @@ ul {
 
 .active-data-button {
   color: var(--dl-color-brand-blue);
+}
+
+@media (width < 1440px) {
+  .data-card {
+    width: calc((1380 / 1440) * (100vw - 2rem));
+  }
+}
+
+@media (width <= 1253px) {
+  .data-card-body {
+    flex-wrap: nowrap;
+  }
+
+  .data-card-table-container {
+    overflow-x: scroll;
+  }
+
+  .data-card-table {
+    width: 1083px;
+  }
+}
+
+@media (width <= 576px) {
+  .data-card-body {
+    flex-wrap: wrap;
+  }
+
+  .data-card-filter {
+    width: calc(100%);
+    border-right: none;
+    border-bottom: solid 1px rgb(153,153,153,.3);
+
+  }
+
+  .data-card-filter-button,
+  .data-card-filter-button-collapse {
+    display: flex;
+  }
+
+  .data-card-filter-button .icon {
+    transform: rotate(90deg);
+    margin: 0;
+    margin-right: 1rem;
+  }
+
+  .data-card-filter-button .text-rotate {
+    transform: rotate(0);
+    position: static;
+    margin: 0;
+  }
+
+  .data-card-form-container {
+    width: calc(100%);
+  }
 }
 
 /* --- GENE PAGE */
