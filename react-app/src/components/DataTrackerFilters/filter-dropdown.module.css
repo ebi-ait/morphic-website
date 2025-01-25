@@ -212,3 +212,13 @@ input.search-input {
 	letter-spacing: -0.02em;
 	text-align: left;
 }
+
+@media (width <= 576px) {
+  /* Filter card and options */
+  .card {
+    margin-left: 0;
+    left: 0;
+    right: 0;
+    top: 100%;
+  }
+}
