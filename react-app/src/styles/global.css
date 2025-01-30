@@ -1685,11 +1685,15 @@ ul {
 .data-card-table {
   width: 100%;
   border-collapse: collapse;
+  overflow: hidden;
 }
 
 .data-card-table tr {
   height: 72px;
-  border-bottom: solid 1px rgb(153,153,153,.3);
+}
+
+.data-card-table > tr:first-child {
+  border-bottom: solid 1px rgb(153, 153, 153, .3);
 }
 
 .data-card-table tr:nth-child(2n + 2) {
