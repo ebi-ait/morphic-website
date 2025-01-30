@@ -259,6 +259,7 @@ export default function Data() {
                                 <th>assay</th>
                                 <th>perturbation type</th>
                                 <th>center</th>
+                                <th></th>
                             </tr>
                             {filteredData.map((data, index) => (data?.content?.study_title && (
                                 <tr key={`content_item_${index}`}>
