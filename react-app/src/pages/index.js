@@ -50,14 +50,14 @@ export default function Home() {
               </div>
             </div>
             <div className="home-card">
-              <h3 className="home-card-title">data tracker</h3>
+              <h3 className="home-card-title">data Catalogue</h3>
               <span aria-hidden className="home-card-icon icon-data-tracker"></span>
               <p className="home-card-text">
                 The Data Production Centres have planned studies on some of the essential genes, and they are coming <span className="bold">in 2024</span>.
               </p>
               <div>
                 <Link to="/data" className="home-card-link">
-                  Open the data tracker
+                  Open the data catalogue
                 </Link>
               </div>
             </div>
