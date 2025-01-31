@@ -37,7 +37,7 @@ export default function Data() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const [collapse, setCollapse] = useState(true);
+    const [collapse, setCollapse] = useState(false);
     const handleCollapse = () => {
         setCollapse(!collapse);
     }
