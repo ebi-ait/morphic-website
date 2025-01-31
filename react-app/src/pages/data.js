@@ -207,8 +207,9 @@ export default function Data() {
                     <div className="data-card-header-container">
                         <span aria-hidden className="data-card-header-icon icon-data-tracker"></span>
                         <div>
-                            <h1>Data Catalogue</h1>
-                            <p>Currently planned studies as part of the MorPhiC program</p>
+                            <h1 className="dc-heading">Data Catalogue</h1>
+                            <p>All data generated as part of the MorPhiC program is made available in scheduled data releases and in public data repositories for wider use by the scientific community.</p>
+                            <p>Current data release: 1.0, February 2025.</p>
                         </div>
                     </div>
                 </div>
