@@ -44,7 +44,8 @@ jobs:
       - name: Build, tag, and push Docker image
         run: |
           cd ./react-app
-          IMAGE_NAME=morphic-prod-website
+          #This needs to match with the ECR repository name
+          IMAGE_NAME=morphic-website
           IMAGE_TAG=gatsby-site-$(date +%Y%m%d%H%M%S)
           ECR_URI=${{ steps.ecr-login.outputs.registry }}/${IMAGE_NAME}
 
