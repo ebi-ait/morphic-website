@@ -281,7 +281,6 @@ export default function Data() {
                                                         <li key={`list_item_${index}`}>
                                                         <a
                                                                 href={`/genes/${targetGenesMap[gene] || ''}`}
-                                                                target="_blank"
                                                                 rel="noopener noreferrer"
                                                                 className="gene-link"
                                                             >
