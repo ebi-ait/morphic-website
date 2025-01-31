@@ -1509,9 +1509,10 @@ ul {
 
 .data-card-header-container {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   gap: 30px;
+  .dc-heading {
+    margin-top: 0px;
+  }
 }
 
 .data-card-header-icon {
