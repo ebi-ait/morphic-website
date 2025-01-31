@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: morphic-prod-ingress
+  namespace: morphic-prod
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: "morphic-prod-alb"
+    
+    #Enable HTTPS
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+
+    #Replace with your AWS ACM Certificate ARN for HTTPS
+    #alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:489384528211:certificate/be8588a7-3942-4863-aa75-9ef37b2635ef" morphic.bio
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:eu-west-2:596988661787:certificate/087a8455-9f1a-4e44-9f1a-a472f45965a1"
+
+spec:
+  ingressClassName: alb
+  rules:
+    - host: release.morphic.bio
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: morphic-prod-service
+                port:
+                  number: 80
