@@ -30,6 +30,9 @@ export default function Footer() {
               <a href="https://whri-phenogenomics.shinyapps.io/morphic_gene_list/" target="_blank" rel="noopener noreferrer">Gene list</a>
             </li>
             <li>
+              <Link to="/news">News</Link>
+            </li>
+            <li>
               <Link to="/#faq">FAQ</Link>
             </li>
             <li>

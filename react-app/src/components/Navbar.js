@@ -41,13 +41,8 @@ export default function Navbar() {
                         </a>
                     </li>
                     <li>
-                        <Link to="/news" className="nav-link" activeClassName="navbar-active">
-                            <span>News</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/#faq" className="nav-link">
-                            <span>FAQ</span>
+                        <Link to="/methods" className="nav-link" activeClassName="navbar-active">
+                            <span>Methods</span>
                         </Link>
                     </li>
                     <li>
