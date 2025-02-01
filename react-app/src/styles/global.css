@@ -194,7 +194,7 @@ ul {
   background-size: auto;
 }
 
-.icon-list {
+.icon-list-ul {
   min-width: 1rem;
   min-height: 1rem;
   background-image: url("../images/icons/list-ul.svg");
