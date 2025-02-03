@@ -102,7 +102,7 @@ export default function Data() {
     useEffect(() => {
         const getStudiesData = async () => {
             try {
-                const response = await fetch(`https://api.ingest.dev.archive.morphic.bio/studies/`);
+                const response = await fetch(`https://api.ingest.archive.morphic.bio/studies/`);
 
                 if (!response.ok) {
                     throw new Error("Nework response was not ok");
