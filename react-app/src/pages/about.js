@@ -27,6 +27,7 @@ export default function About() {
                       <ul>
                         <li><a href="#program-goals">↓ Program goals</a></li>
                         <li><a href="#participants">↓ Participants</a></li>
+                        <li><a href="#experimental" className="single-line">↓ Experimental strategies</a></li>
                         <li><a href="#funding">↓ Funding</a></li>
                       </ul>
                     </div>
@@ -211,6 +212,22 @@ export default function About() {
                 </div>
               </section>
             </div>
+
+            <section id="experimental" className={style.aboutSection}>
+              <div className="about-section-subtitle-container">
+                <h2>Experimental strategies</h2>
+                <a href="#">↑ Back to top</a>
+              </div>
+              <div className="about-section-description-container">
+                <p>
+                  The goal of Phase 1 of the MorPhiC Consortium is to explore the utility of various null-allele generation strategies and identify the most informative phenotypic assays, for a subset of 1,000 protein-coding genes, and their scalability to reveal functions of all protein-coding genes in the future.
+                  To learn more about the null allele generation strategies employed by the MorPhiC Consortium, explore our <a href="/methods">Methods</a> section. 
+                </p>
+                <p>
+                  For the list of protocols used by the MorPhiC Consortium, visit the <a href="https://www.protocols.io/workspaces/morphic/publications" tagget="_blank">MorPhiC protocols.io workspace.</a>
+                </p>
+              </div>
+            </section>
 
             <section id="funding" className={style.aboutSection}>
               <div className="about-section-subtitle-container">
