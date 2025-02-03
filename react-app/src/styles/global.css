@@ -1277,6 +1277,10 @@ ul {
   margin: 1rem 0;
 }
 
+.about-card li a.single-line {
+  white-space: nowrap !important;
+}
+
 .about-card a {
   text-decoration: none;
   font-family: Inter;
