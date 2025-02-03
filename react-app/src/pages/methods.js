@@ -29,7 +29,7 @@ export default function Methods() {
                 
                 <p>Strategy used by: Memorial Sloan Kettering Cancer Center </p>
                 <p>Frameshift indel mutations introduced by CRISPR-Cas9 typically result in the creation of a premature stop codon within the coding region, producing a truncated, nonfunctional protein and effectively "knocking out" the gene’s normal function. At MSK, they have generated knockout hPSC lines, and a small number of enhancer deletion lines. Then they individually barcoded these lines, and pooled them for differentiation experiments. Cells were collected at consecutive differentiation stages for scRNA-seq, followed by computational demultiplexing to analyze the transcriptomic phenotypes associated with each individual knockout condition. </p>
-                <StaticImage src="../images/msk-morphic-ko-strategy-ptc.png" alt="" loading="eager" placeholder="none"/>
+                <StaticImage src="../images/msk-morphic-ko-strategy-ptc-1.png" alt="" loading="eager" placeholder="none"/>
 
                 <h3 className={styles.titleS}>KO - Critical exon deletion</h3>
 
@@ -48,12 +48,11 @@ export default function Methods() {
 
                 <p>A cassette is knocked into the target gene coding region. This insertion is expected to disrupt transcription due to the large insertion size, introduce frameshift mutations, and create a premature termination codon, thus effectively  "knocking out" the normal function of the gene.</p>
                 <StaticImage
-                    src="../images/msk-morphic-ko-strategy-ki-ko.png"
+                    src="../images/msk-morphic-ko-strategy-ki-ko-1.png"
                     alt=""
                     loading="eager"
                     placeholder="none"
                 />
-                <blockquote className={styles.textBody}>Strategy used by: Memorial Sloan Kettering Cancer Center</blockquote>
 
 
                 <h2 className={styles.titleM}>2. Protein degradation</h2>
@@ -67,7 +66,7 @@ export default function Methods() {
                 <p>At NWU, cells are engineered to express the TIR1 auxin receptor and Crispr-Cas9 technology is used to add the AID protein degron tag to specific endogenous gene loci. Cells express the tagged protein normally until treated with Auxin, which induces rapid, reversible protein degradation.</p>
 
                 <StaticImage
-                    src="../images/nwu-auxin-inducible-degron.png"
+                    src="../images/nwu-auxin-inducible-degron-1.png"
                     alt=""
                     loading="eager"
                     placeholder="none"
