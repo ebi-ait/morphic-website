@@ -1690,7 +1690,6 @@ ul {
 .data-card-table {
   width: 100%;
   border-collapse: collapse;
-  overflow: hidden;
 }
 
 .data-card-table tr {
@@ -1751,14 +1750,15 @@ ul {
 }
 
 .data-card-table td .icon {
-  display: block;
+  display: inline-block;
   width: 1rem;
   height: 1rem;
 }
 
 .data-card-table td:nth-child(1) {
-  max-width: 0.5rem;
-  border-left: 2rem solid transparent;
+  max-width: 1rem;
+  text-align: center;
+  padding-left: 16px;
 }
 .data-card-table td:nth-child(2) {
   max-width: 183px;
