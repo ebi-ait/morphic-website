@@ -12,9 +12,13 @@ metadata:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     alb.ingress.kubernetes.io/ssl-redirect: "443"
 
-    #Replace with your AWS ACM Certificate ARN for HTTPS
-    #alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:489384528211:certificate/be8588a7-3942-4863-aa75-9ef37b2635ef" morphic.bio
     alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:eu-west-2:596988661787:certificate/087a8455-9f1a-4e44-9f1a-a472f45965a1"
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: "443"  # Redirect HTTP to HTTPS
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/security-policy: ELBSecurityPolicy-2016-08
+    alb.ingress.kubernetes.io/actions.forward-to-tg: >
+      {"type":"forward","targetGroupArn":"arn:aws:elasticloadbalancing:eu-west-2:596988661787:targetgroup/k8s-morphicp-morphicp-e76681deb4/a50cb975484dc7cb"}
 
 spec:
   ingressClassName: alb
