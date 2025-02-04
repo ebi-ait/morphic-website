@@ -69,3 +69,8 @@ jobs:
         run: |
           kubectl set image deployment/morphic-prod-website morphic-website=$image --namespace=morphic-prod
           kubectl rollout status deployment/morphic-prod-website --namespace=morphic-prod
+
+      - name: Apply Ingress Configuration
+        run: |
+          kubectl apply -f k8s/prod-ingress.yaml --namespace=morphic-prod
+          kubectl describe ingress morphic-prod-ingress --namespace=morphic-prod
