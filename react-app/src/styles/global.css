@@ -1732,7 +1732,7 @@ ul {
 }
 
 .data-card-table td {
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
   font-family: Inter;
   font-size: 13px;
   line-height: 15.73px;
@@ -1740,7 +1740,6 @@ ul {
 }
 
 .data-card-table td .data-text {
-  max-height: 32px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -1761,7 +1760,7 @@ ul {
   padding-left: 16px;
 }
 .data-card-table td:nth-child(2) {
-  max-width: 183px;
+  max-width: 224px;
 }
 .data-card-table td:nth-child(3) {
   max-width: 72px;

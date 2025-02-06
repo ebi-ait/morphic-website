@@ -266,7 +266,9 @@ export default function Data() {
                                 <tr key={`content_item_${index}`}>
                                     <td><span className="icon-triple-squares icon"></span></td>
                                     <td className="bold">
-                                        <div className="data-text">{data.content?.study_title}</div>
+                                        <div title={data.content?.study_title} className="data-text">
+                                            {data.content?.study_title}
+                                        </div>
                                     </td>
                                     <td>
                                         <div className="data-text">{data.content?.target_genes[0]}</div>
