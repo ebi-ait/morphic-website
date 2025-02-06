@@ -2265,11 +2265,32 @@ h2.gene-card-body-title {
   margin-right: 1rem;
 }
 
-.gene-card-icon-placeholder {
+.title-group {
+  display: flex;
+  margin-right: 25px;
+}
+
+.gene-card-icon {
+  background-image: url("../images/icons/filter-left-circle-color-1.svg");
   width: 48px;
   height: 48px;
-  background-color: var(--dl-color-default-babyblue);
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   margin-right: 1rem;
+}
+
+.gene-card-icon-placeholder {
+   width: 48px;
+   height: 48px;
+   background-color: var(--dl-color-default-babyblue);
+   margin-right: 1rem;
+}
+
+.column-layout {
+  display: flex;
+  flex-direction: column;
 }
 
 .gene-card-group p,
