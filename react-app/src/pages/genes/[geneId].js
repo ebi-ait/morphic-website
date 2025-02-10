@@ -13,17 +13,6 @@ const GenePage = ({ params }) => {
   const [error, setError] = useState(null);
   const [isClient, setIsClient] = useState(false); // Track if we are on the client side
 
-  // useEffect to detect client-side environment
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     // Extract the geneId from the URL dynamically on the client-side
-  //     console.log("window.location.pathname: ", window.location.pathname);
-  //     const urlParams = window.location.pathname.split('/');
-  //     const id = urlParams[urlParams.length - 1];
-  //     setGeneId(id); // Set the geneId on the client-side
-  //   }
-  // }, []);
-
   useEffect(() => {
     if (!geneId) return;
     const fetchGeneData = async () => {
@@ -47,6 +36,14 @@ const GenePage = ({ params }) => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   if (!geneData) return <p>No data found for gene {geneId}</p>;
+  // Extract unique title prefixes from Analysis_Results
+    const uniqueTitles = Array.from(
+      new Set(
+        geneData.Analysis_Results
+          .filter(result => result.title && result.title.includes(':'))
+          .map(result => result.title.split(':')[0])
+      )
+    );
   return (
     <div className="about gene-page">
         <div>
@@ -89,10 +86,6 @@ const GenePage = ({ params }) => {
                                 <span className="icon-radio-open"></span>
                                 <h1>Gene: {geneData.Name}</h1>
                             </div>
-                            {/*<div className="gene-card-header-row">
-                                <div className="gene-card-header-link">Study the gene list</div>
-                                <div className="gene-card-header-link">Order Alleles</div>
-                            </div>*/}
                         </div>
                         <div className="gene-card-row gene-card-border-bottom">
                             <div className="gene-card-body">
@@ -103,10 +96,6 @@ const GenePage = ({ params }) => {
                                 <dl className="gene-card-body-dl-grid">
                                     <dt>{geneData.Name}</dt>
                                     <dd>{geneData.Full_Name}</dd>
-
-                                    {/*<dt>Synonyms</dt>
-                                    <dd>{geneData.Synonyms.join(', ')}</dd>*/}
-
                                     <dt>Protein class</dt>
                                     <dd>{geneData.Protein_Class}</dd>
                                 </dl>
@@ -161,14 +150,6 @@ const GenePage = ({ params }) => {
                                             <p>Ortholog relation: {geneData?.Phenotype_Evidence?.Mouse?.MGI_ID || "N/A"}</p>
                                         </div>
                                         <MousePhenotype mouseData={geneData} />
-                                        {/*<p><b>MGI Phenotypes:</b></p>
-                                        <p>188 phenotypes from 42 alleles in 45 genetic backgrounds<br></br>
-                                            46 phenotypes from multigenic genotypes<br></br>
-                                            367 phenotype references MGI
-                                        </p>
-                                        <p><b>Homozygote Phenotypes:</b> {geneData?.Phenotype_Evidence?.Mouse?.Homozygote_Phenotypes || "N/A"}</p>
-                                        <p><b>Heterozygote Phenotypes:</b> {geneData?.Phenotype_Evidence?.Mouse?.Heterozygote_Phenotypes || "N/A"}</p>
-                                        <p><b>IMPC Viability:</b> {geneData?.Phenotype_Evidence?.Mouse?.IMPC_Viability || "N/A"}</p>*/}
                                     </div>
                                 </div>
                             </div>
@@ -222,20 +203,17 @@ const GenePage = ({ params }) => {
                                 <h3>Data resources</h3>
                                 <div className="gene-card-row">
                                     <div className="gene-card-group">
-                                        {geneData.Analysis_Results &&
-                                          geneData.Analysis_Results.map((result, index) => (
-                                            result.title && result.title.includes(':') && (
-                                              <div key={index} className="title-group">
-                                                <div className="gene-card-icon"></div>
-                                                <div className="column-layout">
-                                                    <h4>{result.title.split(':')[0]}</h4>
-                                                    <div className="gene-card-group-link">
-                                                      <a href="/data">View dataset</a>
-                                                    </div>
-                                                </div>
+                                        {uniqueTitles.map((title, index) => (
+                                          <div key={index} className="title-group">
+                                            <div className="gene-card-icon"></div>
+                                            <div className="column-layout">
+                                              <h4>{title}</h4>
+                                              <div className="gene-card-group-link">
+                                                <a href="/data">View dataset</a>
                                               </div>
-                                            )
-                                          ))}
+                                            </div>
+                                          </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -282,37 +260,18 @@ const GenePage = ({ params }) => {
                                 <h3>Data resources</h3>
                                 <div className="gene-card-row">
                                     <div className="gene-card-group">
-                                        {geneData.Enrichment_Analysis &&
-                                          geneData.Enrichment_Analysis.map((result, index) => (
-                                            result.title && result.title.includes(':') && (
-                                              <div key={index} className="title-group">
-                                                <div className="gene-card-icon"></div>
-                                                <div className="column-layout">
-                                                    <h4>{result.title.split(':')[0]}</h4>
-                                                    <div className="gene-card-group-link">
-                                                      <a href="/data">View dataset</a>
-                                                    </div>
-                                                </div>
+                                        {uniqueTitles.map((title, index) => (
+                                          <div key={index} className="title-group">
+                                            <div className="gene-card-icon"></div>
+                                            <div className="column-layout">
+                                              <h4>{title}</h4>
+                                              <div className="gene-card-group-link">
+                                                <a href="/data">View dataset</a>
                                               </div>
-                                            )
-                                          ))}
+                                            </div>
+                                          </div>
+                                        ))}
                                     </div>
-                                    {/*<div className="gene-card-group">
-                                        <div className="gene-card-icon-placeholder"></div>
-                                        <div>
-                                            <h4>Perturbseq Dataset1</h4>
-                                            <p>knockout of {geneData.Name}</p>
-                                            <div className="gene-card-group-link">View dataset</div>
-                                        </div>
-                                    </div>
-                                    <div className="gene-card-group">
-                                        <div className="gene-card-icon-placeholder"></div>
-                                        <div>
-                                            <h4>Perturbseq Dataset1</h4>
-                                            <p>knockout of {geneData.Name}</p>
-                                            <div className="gene-card-group-link">View dataset</div>
-                                        </div>
-                                    </div>*/}
                                 </div>
                             </div>
                         </div>
