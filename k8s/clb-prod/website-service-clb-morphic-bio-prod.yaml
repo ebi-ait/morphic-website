@@ -6,6 +6,11 @@ metadata:
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: "classic"
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-listener-ports: |
+      [
+        {"Protocol":"https","Port":"443","InstanceProtocol":"http"}, # HTTPS listener, terminate SSL at LB, forward as HTTP to pods
+        {"Protocol":"http","Port":"80","InstanceProtocol":"http"}   # HTTP listener (optional, for redirects or HTTP access)
+      ]
     service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:eu-west-2:596988661787:certificate/d45ef30e-bf3e-4213-8ca2-1218fe050fc0  # morphic.bio cert
 spec:
   type: LoadBalancer
