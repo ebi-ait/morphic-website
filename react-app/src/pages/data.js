@@ -297,6 +297,9 @@ export default function Data() {
                                         ): null}
                                     </td>
                                     <td>
+                                        {data.content?.cell_line_names && data.content?.cell_line_names.length == 1 &&
+                                            <div className="data-text">{data.content?.cell_line_names}</div>
+                                        }
                                         {data.content?.cell_line_names && data.content?.cell_line_names.length > 1 &&
                                           data.content.cell_line_names.map((result, i) => (
                                               <div key={i} className="data-text">{result}</div>
