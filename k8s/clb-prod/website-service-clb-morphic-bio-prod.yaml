@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: morphic-prod-service-clb-morphic
+  namespace: morphic-prod
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "classic"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:eu-west-2:596988661787:certificate/d45ef30e-bf3e-4213-8ca2-1218fe050fc0  # morphic.bio cert
+spec:
+  type: LoadBalancer
+  selector:
+    app: morphic-website
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 80

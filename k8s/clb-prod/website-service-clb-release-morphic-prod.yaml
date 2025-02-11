@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: morphic-prod-service-clb
+  namespace: morphic-prod
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "classic"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http # Backend communication protocol
+    service.beta.kubernetes.io/aws-load-balancer-listener-ports: |
+      [
+        {"Protocol":"https","Port":"443","InstanceProtocol":"http"}, # HTTPS listener, terminate SSL at LB, forward as HTTP to pods
+        {"Protocol":"http","Port":"80","InstanceProtocol":"http"}   # HTTP listener (optional, for redirects or HTTP access)
+      ]
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:eu-west-2:596988661787:certificate/087a8455-9f1a-4e44-9f1a-a472f45965a1  # release.morphic.bio
+spec:
+  type: LoadBalancer
+  selector:
+    app: morphic-website
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80  # HTTP port (Service port, exposed externally)
+      targetPort: 80  # Should match the containerPort in the Deployment YAML (container port)
+    - name: https
+      protocol: TCP
+      port: 443  # HTTPS port (Service port, exposed externally)
+      targetPort: 80
