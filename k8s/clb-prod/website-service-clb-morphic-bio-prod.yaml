@@ -12,6 +12,7 @@ metadata:
         {"Protocol":"http","Port":"80","InstanceProtocol":"http"}   # HTTP listener (optional, for redirects or HTTP access)
       ]
     service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:eu-west-2:596988661787:certificate/d45ef30e-bf3e-4213-8ca2-1218fe050fc0  # morphic.bio cert
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"  # SSL ONLY on port 443
 spec:
   type: LoadBalancer
   selector:
