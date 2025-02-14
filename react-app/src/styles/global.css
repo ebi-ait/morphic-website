@@ -1333,6 +1333,9 @@ ul {
 
 .about-section-description-container {
   padding: 25px;
+  .italic {
+    font-style: italic;
+  }
 }
 
 .about-section-description-container a {

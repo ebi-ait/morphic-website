@@ -26,6 +26,7 @@ export default function About() {
                       <h2 className="about-card-title">inside this page</h2>
                       <ul>
                         <li><a href="#program-goals">↓ Program goals</a></li>
+                        <li><a href="#marker-paper">↓ Marker Paper</a></li>
                         <li><a href="#participants">↓ Participants</a></li>
                         <li><a href="#experimental" className="single-line">↓ Experimental strategies</a></li>
                         <li><a href="#funding">↓ Funding</a></li>
@@ -59,6 +60,21 @@ export default function About() {
                   There will be a <b>Data Resource and Administrative Coordinating Center.</b>
                 </p>
                 <p>All components will work together to ensure that the data are informative, of high quality and useful to the community.</p>
+              </div>
+            </section>
+
+            <section id="marker-paper" className={style.aboutSection}>
+              <div className="about-section-subtitle-container">
+                <h2>Marker Paper</h2>
+                <a href="#">↑ Back to top</a>
+              </div>
+              <div className="about-section-description-container">
+                <p>
+                  The paper describing the MorPhiC Consortium and aims is:
+                </p>
+                <p>
+                  <a href="https://www.nature.com/articles/s41586-024-08243-w" target="_blank">Adli, M. <span className="italic">et al.</span> MorPhiC Consortium: towards functional characterization of all human genes. <span className="italic">(Nature 2025)</span></a>
+                </p>
               </div>
             </section>
 
