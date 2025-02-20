@@ -11,6 +11,8 @@ import GeneSearch from '../components/GeneSearch';
 
 import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
+import NewsItems from "../components/NewsItems"
+
 
 export default function Home() {
   return (
@@ -83,64 +85,9 @@ export default function Home() {
       <section className="home-news">
         <div className="home-news-triangle"></div>
         <div className="home-news-container">
-          <h2>Latest news</h2>
+          <h2 className="latest-header">Latest news</h2>
           <div className="home-news-item-container">
-            <div className="home-news-card">
-              <StaticImage
-                src="../images/news-um.png"
-                alt="Dr. Schürer and members of the MorPhiC DRACC"
-                placeholder="none"
-                className="home-news-card-img-wrap"
-              />
-              <time dateTime="2023-03-03">3 March 2023</time>
-              <p>
-                <a href="https://news.med.miami.edu/dr-stephan-schurer-enlisted-for-important-genome-research-project/" target="_blank" rel="noopener noreferrer">
-                  The Molecular Phenotypes of Null Alleles in Cells program seeks to identify the purpose behind every gene.
-                </a>
-              </p>
-            </div>
-            <div className="home-news-card">
-              <StaticImage
-                src="../images/news-ucsf.jpeg"
-                alt="Luke Gilbert, UCSF"
-                placeholder="none"
-                className="home-news-card-img-wrap"
-              />
-              <time dateTime="2023-09-27">27 September 2022</time>
-              <p>
-                <a href="https://cancer.ucsf.edu/news/2022/09/27/nih-initiative-to-systematically-investigate-and-establish-function-of-every-human" target="_blank" rel="noopener noreferrer">
-                  NIH initiative to systematically investigate and establish function of every human gene
-                </a>
-              </p>
-            </div>
-            <div className="home-news-card">
-              <StaticImage
-                src="../images/news-northwestern.png"
-                alt="Mazhar Adli, PhD"
-                placeholder="none"
-                className="home-news-card-img-wrap"
-              />
-              <time dateTime="2023-12-05">5 Dec 2022</time>
-              <p>
-                <a href="https://www.feinberg.northwestern.edu/research/podcast/2022/gene-function-to-understand-cancer-adli.html" target="_blank" rel="noopener noreferrer">
-                  Identifying How Genes Function to Better Understand Cancer with Mazhar Adli, PhD
-                </a>
-              </p>
-            </div>
-            <div className="home-news-card">
-              <StaticImage
-                src="../images/news-uw.jpg"
-                alt="Dr. Ka Yee Yeung and Dr. Ling-Hong Hung posing next to their poster"
-                placeholder="none"
-                className="home-news-card-img-wrap"
-              />
-              <time dateTime="2023-05-02">2 May 2023</time>
-              <p>
-                <a href="https://www.tacoma.uw.edu/news/bioinformatics-team-powers-international-effort-map-gene-function-0" target="_blank" rel="noopener noreferrer">
-                  Bioinformatics Team Powers International Effort to Map Gene Function
-                </a>
-              </p>
-            </div>
+            <NewsItems />
           </div>
           <Link to="/news" className="home-news-link">News archive →</Link>
         </div>
