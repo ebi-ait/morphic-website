@@ -854,9 +854,32 @@ ul {
   flex-direction: column;
   gap: 40px;
   margin-bottom: 30px;
+  article {
+    display: flex;
+    flex-direction: column;
+    max-width: 238px;
+    margin-right: 10px;
+  }
+  h2 {
+    font-size: 17px;
+    line-height: 20.57px;
+    margin: 0;
+    padding: 0;
+    font-family: Inter;
+    font-weight: 600;
+    text-align: left;
+  }
+  .new-article-info {
+    h2 {
+      font-size: 17px;
+      line-height: 20.57px;
+      margin: 0;
+      padding: 0;
+    }
+  }
 }
 
-.home-news h2 {
+.home-news .latest-header {
   padding: 0;
   margin: 0;
   font-family: Inter;
@@ -872,64 +895,20 @@ ul {
 }
 
 @media (width <= 840px) {
-  .home-news h2,
-  .home-policies .home-policies-content h2 {
-    text-align: center;
+  .latest-header {
+    text-align: center !important;
   }
+  .home-news-container {
+    article {
+      text-align: left;
+      margin-bottom: 25px;
+    }
+  }
+
   .home-news-item-container {
     flex-wrap: wrap;
     justify-content: space-evenly;
   }
-
-  .home-news-card {
-    margin: 0 2rem 2.5rem;
-  }
-
-  .home-about-content,
-  .home-news-container,
-  .home-policies-container {
-    padding: 0 20px;
-  }
-}
-
-.home-news-card {
-  display: flex;
-  flex-direction: column;
-
-  max-width: 238px;
-}
-
-.home-news-card-img-wrap {
-  margin-bottom: 2rem;
-  width: 148px;
-  height: 148px;
-  border: none;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.home-news-card time {
-  margin-bottom: 10px;
-  font-family: Inter;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 14.52px;
-  letter-spacing: 0.3em;
-  color: #999999
-}
-
-.home-news-card a {
-  color: inherit;
-}
-
-.home-news p {
-  margin: 0;
-  padding: 0;
-  font-family: Inter;
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 20.57px;
-  text-align: left;
 }
 
 .home-news-link {
@@ -940,9 +919,8 @@ ul {
   line-height: 16.94px;
   letter-spacing: -0.03em;
   text-align: left;
-  color: #E84E0F;
+  color: var(--dl-color-brand-orange);
 }
-
 
 /* --- HOME QUESTIONS --- */
 .home-questions-section {
@@ -1438,7 +1416,7 @@ ul {
 
 .item-bg-2 {
   background-color: #f4e4de;
-  color: #e84e0f;
+  color: var(--dl-color-brand-orange);
 }
 
 .item-bg-3 {
