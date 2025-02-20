@@ -26,7 +26,9 @@ export default function Methods() {
                 <p>Strategy used by: The Jackson Laboratory, view on <a href="https://www.protocols.io/view/jax-dpc-protocol-for-generating-ptc-1-knockout-all-5qpvo92dxv4o/v1" target="_blank" >protocols.io </a></p>
 
                 <p>The PTC+1 strategy involves precise CRISPR-Cas9 engineering of a premature stop codon and the insertion of a degenerate base in an early common exon, thereby truncating all isoforms of the protein and introducing a frame-shift mutation to ensure the production of a non-functional protein, essentially "knocking out" the normal function of the gene. Depending on the position of the PTC+1 mutation with respect to the genomic structure of the gene, the mutant mRNA may or may not be subject to nonsense mediated decay (NMD). </p>
-                
+                <StaticImage src="../images/jax-ptc-1.png" alt="" loading="eager" placeholder="none"/>
+                <p></p>
+
                 <p>Strategy used by: Memorial Sloan Kettering Cancer Center </p>
                 <p>Frameshift indel mutations introduced by CRISPR-Cas9 typically result in the creation of a premature stop codon within the coding region, producing a truncated, nonfunctional protein and effectively "knocking out" the gene’s normal function. At MSK, they have generated knockout hPSC lines, and a small number of enhancer deletion lines. Then they individually barcoded these lines, and pooled them for differentiation experiments. Cells were collected at consecutive differentiation stages for scRNA-seq, followed by computational demultiplexing to analyze the transcriptomic phenotypes associated with each individual knockout condition. </p>
                 <StaticImage src="../images/msk-morphic-ko-strategy-ptc-1.png" alt="" loading="eager" placeholder="none"/>
@@ -36,11 +38,13 @@ export default function Methods() {
                 <p>Strategy used by: The Jackson Laboratory, view on <a href="https://www.protocols.io/view/jax-dpc-protocol-to-generate-whole-gene-knockout-k-dyhw7t7e" target="_blank" >protocols.io </a></p>
                 
                 <p>A critical exon deletion refers to a genetic knockout (KO) where an early common, frame-shifting exon within a gene has been deleted, leading to a truncated, nonfunctional protein being produced; essentially "knocking out" the normal function of the gene. Depending on the position of the premature termination codon with respect to the genomic structure of the gene, the mutant mRNA may or may not be subject to nonsense mediated decay (NMD).</p>
-                <h3 className={styles.titleS}>KO - Gene deletion</h3>
+                <StaticImage src="../images/critical-exon.png" alt="" loading="eager" placeholder="none"/>
 
+                <h3 className={styles.titleS}>KO - Gene deletion</h3>
                 <p>Strategy used by: The Jackson Laboratory, view on <a href="https://www.protocols.io/view/jax-dpc-protocol-to-generate-whole-gene-knockout-k-dyhw7t7e" target="_blank" >protocols.io </a> </p>
 
                 <p>Gene deletion means the complete removal of most or all protein coding exons of the gene, eliminating the possibility of the protein production entirely. The non-coding RNA transcript that remains is not subject to nonsense mediated decay and can potentially be identified by RNA-seq.</p>
+                <StaticImage src="../images/whole-gene.png" alt="" loading="eager" placeholder="none"/>
 
                 <h3 className={styles.titleS}>KO - Insertion of a cassette (a KI-KO approach)</h3>
 
