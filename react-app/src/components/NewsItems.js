@@ -3,8 +3,11 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { graphql, useStaticQuery } from "gatsby"
 import * as styles from "../styles/news.module.css"
 import { articles } from "../utils/constants/NewsArticles.js"
+import { useLocation } from "@reach/router"
 
 export default function NewsItems() {
+  const location = useLocation(); //Get current page path
+  const currentPath = location.pathname;
   const data = useStaticQuery(graphql`
     query {
       allFile(filter: { sourceInstanceName: { eq: "images" } }) {
@@ -47,15 +50,19 @@ export default function NewsItems() {
             <div className={styles.newsArticleInfo}>
               <time dateTime={item.date}>{item.date}</time>
               <h2 className={styles.newsArticleTitle}>{item.title}</h2>
-              <p className={styles.newsArticleText}>{item.subTitle}</p>
-              <a
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.newsArticleLink}
-              >
-                Read more →
-              </a>
+              {currentPath === "/news/" && (
+                <>
+                  <p className={styles.newsArticleText}>{item.subTitle}</p>
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.newsArticleLink}
+                  >
+                    Read more →
+                  </a>
+                </>
+              )}
             </div>
           </article>
         )
