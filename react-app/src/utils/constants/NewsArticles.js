@@ -33,5 +33,5 @@ export const articles = [
   "subTitle": "NIH initiative to systematically investigate and establish function of every human gene",
   "link": "https://cancer.ucsf.edu/news/2022/09/27/nih-initiative-to-systematically-investigate-and-establish-function-of-every-human",
   "imageSrc": "news-ucsf.jpeg"
-},
+}
 ];

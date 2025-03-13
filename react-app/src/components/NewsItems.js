@@ -31,42 +31,63 @@ export default function NewsItems() {
 
   return (
     <>
-      {articles.map((item) => {
-        const imageData = imageMap[item.imageSrc] //Use mapped images
-
-        return (
-          <article key={item.id} className={styles.newsArticle}>
-            <div className={styles.newsArticleImgWrap}>
-              {imageData ? (
-                <GatsbyImage
-                  image={getImage(imageData)}
-                  alt={item.title}
-                  className={styles.newsArticleImage}
-                />
-              ) : (
-                <p>Image not available</p>
-              )}
-            </div>
-            <div className={styles.newsArticleInfo}>
-              <time dateTime={item.date}>{item.date}</time>
-              <h2 className={styles.newsArticleTitle}>{item.title}</h2>
-              {currentPath === "/news/" && (
-                <>
-                  <p className={styles.newsArticleText}>{item.subTitle}</p>
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.newsArticleLink}
-                  >
-                    Read more →
-                  </a>
-                </>
-              )}
-            </div>
-          </article>
-        )
-      })}
+      {/* Render only 4 items on the homepage */}
+      {currentPath === "/" && (
+        articles.slice(0,4).map((item) => {
+          const imageData = imageMap[item.imageSrc]
+          return (
+            <article key={item.id} className={styles.newsArticle}>
+              <a href={item.link} target="_blank">
+                <div className={styles.newsArticleImgWrap}>
+                  {imageData ? (
+                    <GatsbyImage
+                      image={getImage(imageData)}
+                      alt={item.title}
+                      className={styles.newsArticleImage}
+                    />
+                  ) : (
+                    <p>Image not available</p>
+                  )}
+                </div>
+              </a>
+              <div className={styles.newsArticleInfo}>
+                <time dateTime={item.date}>{item.date}</time>
+                <a href={item.link} target="_blank">
+                  <h2 className={styles.newsArticleTitle}>{item.title}</h2>
+                </a>
+              </div>
+            </article>
+          )
+        })
+      )}
+      {currentPath === "/news/" && (
+        articles.map((item) => {
+          const imageData = imageMap[item.imageSrc]
+          return (
+            <article key={item.id} className={styles.newsArticle}>
+              <a href={item.link} target="_blank">
+                <div className={styles.newsArticleImgWrap}>
+                  {imageData ? (
+                    <GatsbyImage
+                      image={getImage(imageData)}
+                      alt={item.title}
+                      className={styles.newsArticleImage}
+                    />
+                  ) : (
+                    <p>Image not available</p>
+                  )}
+                </div>
+              </a>
+              <div className={styles.newsArticleInfo}>
+                <time dateTime={item.date}>{item.date}</time>
+                <a href={item.link} target="_blank">
+                  <h2 className={styles.newsArticleTitle}>{item.title}</h2>
+                </a>
+              </div>
+            </article>
+          )
+        })
+      )}
     </>
   )
 }
