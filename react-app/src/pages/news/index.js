@@ -24,9 +24,9 @@ export default function News() {
             <section className={`${styles.newsSection} ${styles.newsArticles}`}>
               <NewsItems />
 
-              <div className={styles.newsArticleBtnWrap}>
+              {/*<div className={styles.newsArticleBtnWrap}>
                 <button className="button button-orange">Load more</button>
-              </div>
+              </div>*/}
             </section>
 
             <Footer />
