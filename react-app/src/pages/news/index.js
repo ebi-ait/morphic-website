@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar"
 import Footer from "../../components/Footer"
 import NewsItems from "../../components/NewsItems"
 import { StaticImage } from "gatsby-plugin-image"
+import { Seo } from "../../utils/Seo";
 
 import * as styles from "../../styles/news.module.css"
 
@@ -38,10 +39,5 @@ export default function News() {
 }
 
 export function Head() {
-  return (
-    <>
-      <title>MorPhiC program: Molecular Phenotypes of Null Alleles in Cells</title>
-      <link id="icon" rel="icon" href="../../favicon.svg" />
-    </>
-  )
+  return <Seo title="MorPhiC program: Molecular Phenotypes of Null Alleles in Cells" />;
 }

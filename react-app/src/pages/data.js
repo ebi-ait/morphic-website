@@ -8,6 +8,7 @@ import { Link } from "gatsby"
 import Download from "../components/Data/DownloadDataset"
 import FilterDropdown from "../components/DataTrackerFilters/FilterDropdown"
 import FilterTags from "../components/DataTrackerFilters/FilterTags"
+import { Seo } from "../utils/Seo";
 
 function Layout({ children }) {
     return (
@@ -332,10 +333,5 @@ export default function Data() {
 }
 
 export function Head() {
-    return (
-      <>
-        <title>MorPhiC program: Molecular Phenotypes of Null Alleles in Cells</title>
-        <link id="icon" rel="icon" href="favicon.svg" />
-      </>
-    )
-  }
+  return <Seo title="MorPhiC program: Molecular Phenotypes of Null Alleles in Cells" />;
+}
