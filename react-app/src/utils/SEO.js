@@ -1,10 +1,10 @@
 import React from 'react';
 
-export const generateHeadElements = (title) => {
+export function Seo({ title }) {
   return (
     <>
       <title>{title}</title>
-      <link id="icon" rel="icon" href="favicon.svg" />
+      <link id="icon" rel="icon" href="/favicon.svg" type="image/svg+xml" />
     </>
   );
-};
+}

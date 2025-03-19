@@ -1,5 +1,6 @@
 import { Link } from "gatsby"
 import React from "react"
+import { Seo } from "../utils/Seo";
 
 export default function PageNotFound() {
   return (
@@ -12,10 +13,5 @@ export default function PageNotFound() {
 }
 
 export function Head() {
-  return (
-    <>
-      <title>MorPhiC program: Molecular Phenotypes of Null Alleles in Cells</title>
-      <link id="icon" rel="icon" href="favicon.svg" />
-    </>
-  )
+  return <Seo title="MorPhiC program: Molecular Phenotypes of Null Alleles in Cells" />;
 }

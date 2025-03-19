@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { Seo } from "../utils/Seo";
 
 import * as style from "../styles/contact-us.module.css";
 
@@ -57,10 +58,5 @@ export default function ContactUs() {
 }
 
 export function Head() {
-  return (
-    <>
-      <title>MorPhiC program: Molecular Phenotypes of Null Alleles in Cells</title>
-      <link id="icon" rel="icon" href="favicon.svg" />
-    </>
-  )
+  return <Seo title="MorPhiC program: Molecular Phenotypes of Null Alleles in Cells" />;
 }
