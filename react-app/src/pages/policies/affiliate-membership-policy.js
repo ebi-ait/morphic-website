@@ -1,5 +1,6 @@
 import React from "react";
 import Policies from "../../components/policies";
+import { Seo } from "../../utils/Seo";
 
 export default function AffiliateMembershipPolicy() {
   return (
@@ -181,10 +182,5 @@ export default function AffiliateMembershipPolicy() {
 }
 
 export function Head() {
-  return (
-    <>
-      <title>MorPhiC program: Molecular Phenotypes of Null Alleles in Cells</title>
-      <link id="icon" rel="icon" href="favicon.svg" />
-    </>
-  )
+  return <Seo title="MorPhiC program: Molecular Phenotypes of Null Alleles in Cells" />;
 }

@@ -1,10 +1,9 @@
 import React from "react"
-
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import { StaticImage } from "gatsby-plugin-image"
-
 import * as styles from "../styles/policies.module.css";
+import { Seo } from "../utils/Seo";
 
 export default function Methods() {
   return (
@@ -95,10 +94,5 @@ export default function Methods() {
 }
 
 export function Head() {
-    return (
-      <>
-        <title>MorPhiC program: Molecular Phenotypes of Null Alleles in Cells</title>
-        <link id="icon" rel="icon" href="favicon.svg" />
-      </>
-    )
-  }
+  return <Seo title="MorPhiC program: Molecular Phenotypes of Null Alleles in Cells" />;
+}
