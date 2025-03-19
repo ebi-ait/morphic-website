@@ -288,7 +288,7 @@ export function Head() {
     return (
       <>
         <title>MorPhiC program: Molecular Phenotypes of Null Alleles in Cells</title>
-        <link id="icon" rel="icon" href="favicon.svg" />
+        <link id="icon" rel="icon" href="/favicon.svg" />
       </>
     )
 }
