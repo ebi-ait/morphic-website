@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import { StaticImage } from "gatsby-plugin-image"
 import * as styles from "../styles/policies.module.css";
-import { Seo } from "../utils/Seo";
+import { Seo } from "../utils/SEO";
 
 export default function Methods() {
   return (
