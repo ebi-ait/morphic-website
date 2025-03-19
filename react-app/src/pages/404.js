@@ -1,6 +1,6 @@
 import { Link } from "gatsby"
 import React from "react"
-import { Seo } from "../utils/Seo";
+import { Seo } from "../utils/SEO";
 
 export default function PageNotFound() {
   return (
