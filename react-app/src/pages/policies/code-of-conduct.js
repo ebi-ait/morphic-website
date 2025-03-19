@@ -1,6 +1,6 @@
 import React from "react";
 import Policies from "../../components/policies";
-import { Seo } from "../../utils/Seo";
+import { Seo } from "../../utils/SEO";
 
 export default function CodeOfConduct() {
   return (

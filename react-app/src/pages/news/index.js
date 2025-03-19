@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar"
 import Footer from "../../components/Footer"
 import NewsItems from "../../components/NewsItems"
 import { StaticImage } from "gatsby-plugin-image"
-import { Seo } from "../../utils/Seo";
+import { Seo } from "../../utils/SEO";
 
 import * as styles from "../../styles/news.module.css"
 
