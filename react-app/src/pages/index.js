@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar'
 import Carousel from "../components/carousel"
 import FAQ from "../components/FAQ"
 import Footer from "../components/Footer"
-import { generateHeadElements } from '../utils/SEO';
+import { Seo } from '../utils/SEO';
 import GeneSearch from '../components/GeneSearch';
 
 import { Link } from "gatsby"
@@ -129,4 +129,6 @@ export default function Home() {
   )
 }
 
-export const Head = () => generateHeadElements("MorPhiC program: Molecular Phenotypes of Null Alleles in Cells");
+export function Head() {
+  return <Seo title="MorPhiC program: Molecular Phenotypes of Null Alleles in Cells" />;
+}
