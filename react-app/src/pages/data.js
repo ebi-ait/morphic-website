@@ -8,7 +8,7 @@ import { Link } from "gatsby"
 import Download from "../components/Data/DownloadDataset"
 import FilterDropdown from "../components/DataTrackerFilters/FilterDropdown"
 import FilterTags from "../components/DataTrackerFilters/FilterTags"
-import { Seo } from "../utils/Seo";
+import { Seo } from "../utils/SEO";
 
 function Layout({ children }) {
     return (

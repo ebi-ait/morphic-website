@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Seo } from "../utils/Seo";
+import { Seo } from '../utils/SEO';
 
 import * as style from "../styles/contact-us.module.css";
 
