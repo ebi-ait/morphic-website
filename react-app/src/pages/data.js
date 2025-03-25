@@ -53,6 +53,7 @@ export default function Data() {
     const [selectedAssay, setSelectedAssay] = useState(new Set());
     const [selectedCellLines, setSelectedCellLine] = useState(new Set());
     const [selectedPerturbationType, setSelectedPerturbationType] = useState(new Set());
+    const [selectedModelSystem, setSelectedModelSystem] = useState(new Set());
 
     const handleClearAll = () => {
         setSearchInput('')
@@ -60,6 +61,7 @@ export default function Data() {
         setSelectedAssay(new Set());
         setSelectedPerturbationType(new Set());
         setSelectedCenters(new Set());
+        setSelectedModelSystem(new Set());
     }
 
     const updateSet = (set, item) => {
@@ -87,6 +89,10 @@ export default function Data() {
     const handleSelectedPerturbationType = (type) => {
         const updatedSet = updateSet(selectedPerturbationType, type);
         setSelectedPerturbationType(updatedSet);
+    }
+    const handleSelectedModelSystem = (type) => {
+        const updatedSet = updateSet(selectedModelSystem, type);
+        setSelectedModelSystem(updatedSet);
     }
 
 
@@ -149,6 +155,20 @@ export default function Data() {
             } else {
                 result = studiesData._embedded.studies
             }
+            //Filter by Model System
+            if (selectedModelSystem.size > 0) {
+                result = result.filter(
+                    (study) => {
+                        const modelSystems = study.content?.model_organ_systems
+                        if (!modelSystems) return false
+                        const listOfModelSystems = Array.isArray(modelSystems)
+                          ? modelSystems
+                          : [modelSystems]
+                        console.log("listOfModelSystems: ", listOfModelSystems);
+                        return listOfModelSystems.some(name => selectedModelSystem.has(name))
+                    }
+                );
+            }
             // Filter by cell line
             if (selectedCellLines.size > 0) {
                 result = result.filter(
@@ -196,7 +216,7 @@ export default function Data() {
 
             setFilteredData(result)
         }
-    }, [searchInput, selectedCenters, selectedAssay, selectedCellLines, selectedPerturbationType]);
+    }, [searchInput, selectedCenters, selectedAssay, selectedCellLines, selectedModelSystem, selectedPerturbationType]);
 
     if (isLoading) return (<Layout><p>Loading...</p></Layout>);
     if (error) return (<Layout><p>Error loading studies</p></Layout>)
@@ -233,13 +253,14 @@ export default function Data() {
                             <div className="data-card-form">
                                 <label for="gene-id">Search by Gene ID</label>
                                 <input type="text" id="gene-id" name="gene-id" value={searchInput} placeholder="Search by Gene ID" onChange={e => setSearchInput(e.target.value)}></input>
-
+                                <FilterDropdown label="By model system" studiesData={filteredData} contentType={"model_organ_systems"} inputList={selectedModelSystem} updateInputList={handleSelectedModelSystem} />
                                 <FilterDropdown label="By cell line" studiesData={filteredData} contentType={"cell_line_names"} inputList={selectedCellLines} updateInputList={handleSelectedCellLine} />
                                 <FilterDropdown label="By assay" studiesData={filteredData} contentType={"readout_assay"} inputList={selectedAssay} updateInputList={handleSelectedAssayInput} />
                                 <FilterDropdown label="By perturbation type" studiesData={filteredData} contentType={"perturbation_type"} inputList={selectedPerturbationType} updateInputList={handleSelectedPerturbationType} />
                                 <FilterDropdown label="By center" studiesData={filteredData} contentType={"institute"} inputList={selectedCenters} updateInputList={handleSelectedCenterInput} />
 
                                 <div>
+                                    <FilterTags tags={selectedModelSystem} updateTags={handleSelectedModelSystem}/>
                                     <FilterTags tags={selectedCellLines} updateTags={handleSelectedCellLine}/>
                                     <FilterTags tags={selectedAssay} updateTags={handleSelectedAssayInput}/>
                                     <FilterTags tags={selectedPerturbationType} updateTags={handleSelectedPerturbationType}/>
@@ -257,6 +278,7 @@ export default function Data() {
                                 <th></th>
                                 <th className="bold">study title</th>
                                 <th>target genes</th>
+                                <th>model systems</th>
                                 <th>cell line</th>
                                 <th>assay</th>
                                 <th>perturbation type</th>
@@ -296,6 +318,16 @@ export default function Data() {
                                                 </figure>): null}
                                             </div>
                                         ): null}
+                                    </td>
+                                    <td>
+                                        {data.content?.model_organ_systems && data.content?.model_organ_systems.length == 1 &&
+                                            <div className="data-text">{data.content?.model_organ_systems}</div>
+                                        }
+                                        {data.content?.model_organ_systems && data.content?.model_organ_systems.length > 1 &&
+                                            data.content.model_organ_systems.map((result, i) => (
+                                              <div key={i} className="data-text">{result}</div>
+                                          ))
+                                        }
                                     </td>
                                     <td>
                                         {data.content?.cell_line_names && data.content?.cell_line_names.length == 1 &&
