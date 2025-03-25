@@ -278,11 +278,10 @@ export default function Data() {
                                 <th></th>
                                 <th className="bold">study title</th>
                                 <th>target genes</th>
-                                <th>model systems</th>
+                                <th>model system</th>
                                 <th>cell line</th>
                                 <th>assay</th>
                                 <th>perturbation type</th>
-                                <th>center</th>
                                 <th></th>
                             </tr>
                             {filteredData.map((data, index) => (data?.content?.study_title && (
@@ -343,9 +342,6 @@ export default function Data() {
                                     </td>
                                     <td>
                                         <div className="data-text">{data.content?.perturbation_type}</div>
-                                    </td>
-                                    <td>
-                                        <div className="data-text">{data.content?.institute}</div>
                                     </td>
                                     <td>
                                         <div className="data-download-text">
