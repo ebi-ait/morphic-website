@@ -289,7 +289,9 @@ export default function Data() {
                                     <td><span className="icon-triple-squares icon"></span></td>
                                     <td className="bold">
                                         <div title={data.content?.study_title} className="data-text">
-                                            {data.content?.study_title}
+                                            <Link to={`/dataset/${data.id ?? ''}`}>
+                                                {data.content?.study_title}
+                                            </Link>
                                         </div>
                                     </td>
                                     <td>
@@ -304,13 +306,9 @@ export default function Data() {
                                                     <ul>
                                                     {data.content?.target_genes?.map((gene, index) => (
                                                         <li key={`list_item_${index}`}>
-                                                        <a
-                                                                href={`/genes/${targetGenesMap[gene] || ''}`}
-                                                                rel="noopener noreferrer"
-                                                                className="gene-link"
-                                                            >
+                                                        <Link to={`/genes/${targetGenesMap[gene] ?? ''}`} className="gene-link">
                                                             {gene}
-                                                        </a>
+                                                        </Link>
                                                         </li>
                                                     ))}
                                                     </ul>
