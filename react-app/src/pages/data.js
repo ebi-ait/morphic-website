@@ -284,7 +284,11 @@ export default function Data() {
                                 <th>perturbation type</th>
                                 <th></th>
                             </tr>
-                            {filteredData.map((data, index) => (data?.content?.study_title && (
+                            {filteredData.map((data, index) => {
+                                const targetGenes = data.content?.target_genes ?? [];
+                                const hasExtra    = targetGenes.length > 1;
+
+                                return data.content?.study_title && (
                                 <tr key={`content_item_${index}`}>
                                     <td><span className="icon-triple-squares icon"></span></td>
                                     <td className="bold">
@@ -295,8 +299,8 @@ export default function Data() {
                                         </div>
                                     </td>
                                     <td>
-                                        <div className="data-text">{data.content?.target_genes[0]}</div>
-                                        {data.content?.target_genes?.length - 1 > 0 ? (
+                                        <div className="data-text">{targetGenes[0] ?? '—'}</div>
+                                        {hasExtra && (
                                             <div className="gene-count" onClick={e => setGeneListId(index)}>
                                                 <span aria-hidden className="icon-plus-circle"></span> {data.content?.target_genes?.length - 1} more
                                                 {geneListId === index ? (
@@ -314,7 +318,7 @@ export default function Data() {
                                                     </ul>
                                                 </figure>): null}
                                             </div>
-                                        ): null}
+                                        )}
                                     </td>
                                     <td>
                                         {data.content?.model_organ_systems && data.content?.model_organ_systems.length == 1 &&
@@ -350,7 +354,7 @@ export default function Data() {
                                         </div>
                                     </td>
                                 </tr>
-                            )))}
+                            )})}
                         </table> 
                     </div>
                 </div>
