@@ -60,7 +60,7 @@ export default function Dataset({params}) {
     if (!datasetId) return;
     const fetchPageData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/studies/${datasetId}`);
+        const response = await fetch(`https://api.ingest.dev.archive.morphic.bio/studies/${datasetId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch gene data');
         }
