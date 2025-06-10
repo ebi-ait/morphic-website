@@ -105,35 +105,35 @@ export default function Dataset({params}) {
             <div>
               <ul>
                 <li>
-                  <a href="#" className="gene-menu-link gene-active">
+                  <a href="#overview" className="gene-menu-link gene-active">
                     Overview
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="gene-menu-link">
+                  <a href="#data-availability" className="gene-menu-link">
                     Data availability
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="gene-menu-link">
+                  <a href="#diff-exp" className="gene-menu-link">
                     Differential expression
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="gene-menu-link">
+                  <a href="#enrichment" className="gene-menu-link">
                     Enrichment analysis
                   </a>
                 </li>
               </ul>
             </div>
           </div>
-          <Link to="/" className={style.buttonLink}>
+          <Link to="/data" className={style.buttonLink}>
             Back to results
           </Link>
         </div>
 
         <div className="content">
-          <section className={style.section}>
+          <section className={style.section} id="overview">
             <div className={style.card}>
               <div className={`${style.cardHeader} ${style.borderBottom}`}>
                 <div className={style.cardHeaderRow}>
@@ -218,7 +218,7 @@ export default function Dataset({params}) {
             </div>
           </section>
 
-          <section className={style.section}>
+          <section className={style.section} id="data-availability">
             <div className={style.card}>
               <div className={style.cardHeader}>
                 <h2>Data availability</h2>
@@ -282,7 +282,7 @@ export default function Dataset({params}) {
             </div>
           </section>
 
-          <section className={style.section}>
+          <section className={style.section} id="diff-exp">
             <div className={style.card}>
               <div className={style.cardHeader}>
                 <h2>Differential expression</h2>
@@ -296,7 +296,7 @@ export default function Dataset({params}) {
             </div>
           </section>
 
-          <section className={style.section}>
+          <section className={style.section} id="enrichment">
             <div className={style.card}>
               <div className={style.cardHeader}>
                 <h2>Enrichment analysis</h2>
