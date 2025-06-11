@@ -349,7 +349,7 @@ export default function Data() {
                                         <div className="data-download-text">
                                             <button className={`data-gene-link ${geneListId === "download" + index ? "active-data-button": ""}`} onClick={e => setGeneListId("download" + index)}>Download ↓</button>
                                             {geneListId === "download" + index && (
-                                                <Download key={`download_dataset_${index}`} setGeneListId={setGeneListId} data={data} />
+                                                <Download key={`download_dataset_${index}`} setGeneListId={setGeneListId} data={data.accessions} />
                                             )}
                                         </div>
                                     </td>
