@@ -6,6 +6,7 @@ import Footer from "../../components/Footer";
 import * as style from "../../styles/dataset.module.css";
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
+import Download from "../../components/Data/DownloadDataset"
 
 function GeneList({ genes }) {
   // example gene list
@@ -13,7 +14,6 @@ function GeneList({ genes }) {
   console.log("genes: ", genes);
   const shortList = genes.slice(0, 4);
   const expandedList = genes.slice(4);
-
   const [expand, setExpand] = useState(false);
 
 
@@ -55,12 +55,14 @@ export default function Dataset({params}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isClient, setIsClient] = useState(false); // Track if we are on the client side
+  const [geneListId, setGeneListId] = useState('');
 
   useEffect(() => {
     if (!datasetId) return;
     const fetchPageData = async () => {
       try {
-        const response = await fetch(`https://api.ingest.dev.archive.morphic.bio/studies/${datasetId}`);
+        //const response = await fetch(`https://api.ingest.dev.archive.morphic.bio/studies/${datasetId}`);
+        const response = await fetch(`http://localhost:8080/studies/${datasetId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch gene data');
         }
@@ -172,7 +174,7 @@ export default function Dataset({params}) {
                       </dl>
                       <dl className={style.desc}>
                         <dt className={style.descTitle}>readout assay</dt>
-                        <dd className={style.descDesc}>RNAseq</dd>
+                        <dd className={style.descDesc}>{pageData.content.readout_assay}</dd>
                       </dl>
                       <dl className={style.desc}>
                         <dt className={style.descTitle}>target genes</dt>
@@ -185,7 +187,7 @@ export default function Dataset({params}) {
                     <div className={style.flexColumn}>
                       <dl className={style.desc}>
                         <dt className={style.descTitle}>perturbation method</dt>
-                        <dd className={style.descDesc}>CRISPRi, arrayed</dd>
+                        <dd className={style.descDesc}>{pageData.content.perturbation_type}</dd>
                       </dl>
                       <dl className={style.desc}>
                         <dt className={style.descTitle}>data center</dt>
@@ -226,7 +228,7 @@ export default function Dataset({params}) {
 
               <div className={style.cardBody}>
                 <div className={style.gridWrap}>
-                  <div className={style.resource}>
+                  {/*<div className={style.resource}>
                     <div className="resource-image">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.50875 17.4675H15.495C15.9262 17.4675 16.275 17.1187 16.275 16.6875C16.275 16.2563 15.9262 15.9075 15.495 15.9075H8.50875C8.0775 15.9075 7.72875 16.2563 7.72875 16.6875C7.72875 17.1187 8.0775 17.4675 8.50875 17.4675ZM8.50875 14.3512H15.495C15.9262 14.3512 16.275 14.0025 16.275 13.5712C16.275 13.14 15.9262 12.7913 15.495 12.7913H8.50875C8.0775 12.7913 7.72875 13.14 7.72875 13.5712C7.72875 14.0025 8.0775 14.3512 8.50875 14.3512ZM8.50875 11.19H15.495C15.9262 11.19 16.275 10.8413 16.275 10.41C16.275 9.97875 15.9262 9.63 15.495 9.63H8.50875C8.0775 9.63 7.72875 9.97875 7.72875 10.41C7.72875 10.8413 8.0775 11.19 8.50875 11.19ZM8.50875 8.14125H12.2438C12.675 8.14125 13.0238 7.7925 13.0238 7.36125C13.0238 6.93 12.675 6.58125 12.2438 6.58125H8.50875C8.0775 6.58125 7.72875 6.93 7.72875 7.36125C7.72875 7.7925 8.0775 8.14125 8.50875 8.14125ZM12 0C5.37375 0 0 5.37375 0 12C0 18.6262 5.37375 24 12 24C18.6262 24 24 18.6262 24 12C24 5.37375 18.6262 0 12 0ZM18 19.125H6V5.02125H18V19.125ZM14.8762 8.145H18L14.8762 5.02125V8.145Z" fill="#04989E" />
@@ -241,7 +243,7 @@ export default function Dataset({params}) {
                         </dd>
                       </dl>
                     </div>
-                  </div>
+                  </div>*/}
 
                   <div className={style.resource}>
                     <div className="resource-image">
@@ -253,14 +255,26 @@ export default function Dataset({params}) {
                       <dl>
                         <dt>Raw reads fastq</dt>
                         <dd>
-                          <p>ENSG00000007372, 102 MB</p>
-                          <a className={style.link}>Download</a>
+                          <div className="data-download-text">
+                            <button
+                              className={`data-gene-link ${geneListId === "download" ? "active-data-button" : ""} ${style.link}` }
+                              onClick={() => setGeneListId("download")}
+                            >
+                              Download
+                            </button>
+                            {geneListId === "download" && (
+                              <Download
+                                setGeneListId={setGeneListId}
+                                data={pageData.accessions}
+                              />
+                            )}
+                          </div>
                         </dd>
                       </dl>
                     </div>
                   </div>
 
-                  <div className={style.resource}>
+                  {/*<div className={style.resource}>
                     <div className="resource-image">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.50875 17.4675H15.495C15.9262 17.4675 16.275 17.1187 16.275 16.6875C16.275 16.2563 15.9262 15.9075 15.495 15.9075H8.50875C8.0775 15.9075 7.72875 16.2563 7.72875 16.6875C7.72875 17.1187 8.0775 17.4675 8.50875 17.4675ZM8.50875 14.3512H15.495C15.9262 14.3512 16.275 14.0025 16.275 13.5712C16.275 13.14 15.9262 12.7913 15.495 12.7913H8.50875C8.0775 12.7913 7.72875 13.14 7.72875 13.5712C7.72875 14.0025 8.0775 14.3512 8.50875 14.3512ZM8.50875 11.19H15.495C15.9262 11.19 16.275 10.8413 16.275 10.41C16.275 9.97875 15.9262 9.63 15.495 9.63H8.50875C8.0775 9.63 7.72875 9.97875 7.72875 10.41C7.72875 10.8413 8.0775 11.19 8.50875 11.19ZM8.50875 8.14125H12.2438C12.675 8.14125 13.0238 7.7925 13.0238 7.36125C13.0238 6.93 12.675 6.58125 12.2438 6.58125H8.50875C8.0775 6.58125 7.72875 6.93 7.72875 7.36125C7.72875 7.7925 8.0775 8.14125 8.50875 8.14125ZM12 0C5.37375 0 0 5.37375 0 12C0 18.6262 5.37375 24 12 24C18.6262 24 24 18.6262 24 12C24 5.37375 18.6262 0 12 0ZM18 19.125H6V5.02125H18V19.125ZM14.8762 8.145H18L14.8762 5.02125V8.145Z" fill="#04989E" />
@@ -275,7 +289,7 @@ export default function Dataset({params}) {
                         </dd>
                       </dl>
                     </div>
-                  </div>
+                  </div>*/}
                 </div>
 
               </div>
