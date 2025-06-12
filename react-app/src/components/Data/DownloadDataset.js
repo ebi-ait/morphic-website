@@ -23,7 +23,7 @@ export default function DownloadDataSet({ setGeneListId, data }) {
                     </div>
                 </div>
                 <div className={style.cardBody}>
-                    {data[0] && (
+                    {data && data[0] && (
                         <section className={style.resource}>
                             <div className="resource-image">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +40,7 @@ export default function DownloadDataSet({ setGeneListId, data }) {
                             </div>
                         </section>
                     )}
-                    {data[1] && (
+                    {data && data[1] && (
                         <section className={style.resource}>
                             <div className="resource-image">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
