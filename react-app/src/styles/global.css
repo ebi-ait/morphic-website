@@ -111,15 +111,24 @@ ul {
 }
 
 .button {
-  width: 115pxpx;
-  height: 32pxpx;
+  width: 115px;
+  height: 32px;
   padding: 7px 20px 7px 20px;
   border: none;
   border-radius: 5px;
 }
 
+.wide-button {
+  width: 125px;
+}
+
 .button-orange {
   background-color: var(--dl-color-default-orange);
+  color: var(--dl-color-default-absolutewhite);
+}
+
+.button-blue {
+  background-color: var(--dl-color-brand-blue);
   color: var(--dl-color-default-absolutewhite);
 }
 
