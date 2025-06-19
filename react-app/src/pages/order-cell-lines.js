@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
+import { withPrefix } from "gatsby"; // ensures correct path when site has a pathPrefix
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import cover from "../images/external/sangharshlohakare8olkmpo8ugunsplash11571-51ur-800h.png";
@@ -56,7 +57,7 @@ export default function OrderCellLines() {
   };
 
   useEffect(() => {
-    fetch("/cell_lines.tsv") // served from static/
+    fetch(withPrefix("/cell_lines.tsv"))
       .then((r) => {
         if (!r.ok) throw new Error(`Fetch failed: ${r.status}`);
         return r.text();
@@ -85,16 +86,15 @@ export default function OrderCellLines() {
           <div>
             <h1 className="dc-heading">Order clonal cell lines</h1>
             <p>
-              MorPhiC Data production have the first gene perturbation cell
-              lines available for ordering and research. Search through the list
-              below and send your enquiry for a gene you’re interested in.
+              MorPhiC Data production have the first gene perturbation cell lines
+              available for ordering and research. Search through the list below
+              and send your enquiry for a gene you’re interested in.
             </p>
           </div>
         </div>
       </div>
-
       <div className="data-card-body">
-        {/* Collapsible filter drawer – placeholder */}
+        {/* Placeholder for filter drawer */}
         <aside className="data-card-filter data-card-filter-collapsed" />
 
         <div className="data-card-table-container">
@@ -175,16 +175,6 @@ export default function OrderCellLines() {
                 ))}
             </tbody>
           </table>
-
-          {/* Pagination placeholder
-          <div className="data-card-pagination">
-            <span>Showing 1–15 of 30</span>
-            <nav>
-              <button disabled>Previous</button>
-              <button disabled>Next</button>
-            </nav>
-          </div>
-          */}
         </div>
       </div>
     </Layout>
