@@ -46,8 +46,13 @@ export default function Navbar() {
                         </Link>
                     </li>
                     <li>
+                        <Link to="/order-cell-lines" className="nav-link" activeClassName="navbar-active">
+                            <span>Cell Lines</span>
+                        </Link>
+                    </li>
+                    <li>
                         <Link to="/contact-us" className="nav-link" activeClassName="navbar-active">
-                            <span>Contact us</span>
+                            <span>Contact</span>
                         </Link>
                     </li>
                 </ul>
