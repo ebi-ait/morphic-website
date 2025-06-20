@@ -50,7 +50,7 @@ jobs:
           ECR_URI=${{ steps.ecr-login.outputs.registry }}/${IMAGE_NAME}
 
           # Build the Docker image
-          docker build -t $IMAGE_NAME .
+          docker build --progress=plain --no-cache -t $IMAGE_NAME .
 
           # Tag the Docker image
           docker tag $IMAGE_NAME:latest $ECR_URI:$IMAGE_TAG
