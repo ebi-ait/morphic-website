@@ -2325,3 +2325,33 @@ h2.gene-card-body-title {
 }
 
 /* --- CONTACT US PAGE --- */
+
+/*---- ORDER CELL LINES PAGE --- */
+.order-cell-lines.grey {
+  color: var(--dl-color-default-grey);
+}
+
+.order-cell-lines.filter-icon {
+  background-image: url("../images/icons/filter-left.svg");
+  width: 18px;
+  height: 16px;
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.order-cell-lines.bold {
+  font-weight: 700;
+}
+
+.order-cell-lines.black {
+  color: var(--dl-color-default-smartblack);
+}
+
+.order-cell-lines.checkbox-circle {
+  background-image: url("../images/icons/checkbox-circle.svg");
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  margin-right: 5px;
+}

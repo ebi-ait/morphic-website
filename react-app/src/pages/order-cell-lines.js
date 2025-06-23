@@ -11,7 +11,7 @@ const COLUMN_MAP = {
   "Gene": "targetGene",
   "Parental Cell Line": "cellLine",
   "Variant": "strategy",
-  "Clone #": "centre",
+  "Center": "center",
 };
 
 function remapRow(sheetRow) {
@@ -107,7 +107,7 @@ export default function OrderCellLines() {
           </h3>
 
           <table className="data-card-table">
-            <thead className="data-card-table-heading">
+            <thead className="data-card-table-heading order-cell-lines grey">
               <tr>
                 <th style={{ width: "2rem" }}>
                   {/*<input
@@ -124,11 +124,11 @@ export default function OrderCellLines() {
                     }
                   />*/}
                 </th>
-                <th>Clone ID</th>
+                <th className="order-cell-lines black"><span className="order-cell-lines filter-icon bold"></span>Clone ID</th>
                 <th>Target Gene</th>
                 <th>Cell Line</th>
                 <th>Perturbation Strategy</th>
-                <th>Centre</th>
+                <th>Center</th>
                 <th></th>
               </tr>
             </thead>
@@ -156,11 +156,11 @@ export default function OrderCellLines() {
                         onChange={() => toggleRow(row.cloneId)}
                       />*/}
                     </td>
-                    <td>{row.cloneId}</td>
+                    <td className="order-cell-lines bold"><span className="order-cell-lines checkbox-circle"></span>{row.cloneId}</td>
                     <td>{row.targetGene}</td>
                     <td>{row.cellLine}</td>
                     <td>{row.strategy}</td>
-                    <td>{row.centre}</td>
+                    <td>{row.center}</td>
                     <td>
                       <a
                         href={`mailto:helpdesk@morphic.bio?subject=Clonal%20cell%20line%20enquiry:%20${encodeURIComponent(
