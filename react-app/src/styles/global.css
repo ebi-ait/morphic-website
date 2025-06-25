@@ -2327,6 +2327,30 @@ h2.gene-card-body-title {
 /* --- CONTACT US PAGE --- */
 
 /*---- ORDER CELL LINES PAGE --- */
+.order-cell-lines.dc-heading {
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 62px;
+  letter-spacing: -4%;
+  margin-bottom: 15px;
+}
+
+.order-cell-lines.para {
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: -4%;
+  margin-bottom: 15px;
+}
+
+.order-cell-lines.sub-heading {
+  margin: 20px 45px;
+  margin-bottom: 10px;
+  margin-top: 30px;
+  font-weight: 400;
+  font-size: 25px;
+  letter-spacing: -4%;
+}
+
 .order-cell-lines.grey {
   color: var(--dl-color-default-grey);
 }
@@ -2346,6 +2370,11 @@ h2.gene-card-body-title {
 
 .order-cell-lines.black {
   color: var(--dl-color-default-smartblack);
+  font-weight: 700;
+}
+
+.order-cell-lines.less-wide {
+  width: 250px;
 }
 
 .order-cell-lines.checkbox-circle {
@@ -2353,5 +2382,24 @@ h2.gene-card-body-title {
   width: 16px;
   height: 16px;
   display: inline-block;
-  margin-right: 5px;
+}
+
+.data-card-table td.order-cell-lines.bold {
+  position: relative;
+  padding-left: 30px;
+}
+
+.data-card-table td.order-cell-lines.bold > .order-cell-lines.checkbox-circle {
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  transform: translateY(-50%);
+  margin: 0;
+  display: block;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.data-card-table tr.order-cell-lines.border {
+  border-bottom: solid 1px rgb(153, 153, 153, .3);
 }

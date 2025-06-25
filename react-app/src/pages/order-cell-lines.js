@@ -84,8 +84,8 @@ export default function OrderCellLines() {
         <div className="data-card-header-container">
           <span aria-hidden className="data-card-header-icon icon-data-tracker" />
           <div>
-            <h1 className="dc-heading">Order clonal cell lines</h1>
-            <p>
+            <h1 className="order-cell-lines dc-heading">Order clonal cell lines</h1>
+            <p className="order-cell-lines para">
               MorPhiC Data production have the first gene perturbation cell lines
               available for ordering and research. Search through the list below
               and send your enquiry for a gene you’re interested in.
@@ -98,7 +98,7 @@ export default function OrderCellLines() {
         <aside className="data-card-filter data-card-filter-collapsed" />
 
         <div className="data-card-table-container">
-          <h3>
+          <h3 className="order-cell-lines sub-heading">
             {loading
               ? "Loading…"
               : error
@@ -107,9 +107,9 @@ export default function OrderCellLines() {
           </h3>
 
           <table className="data-card-table">
-            <thead className="data-card-table-heading order-cell-lines grey">
-              <tr>
-                <th style={{ width: "2rem" }}>
+            <thead className="order-cell-lines grey">
+              <tr className="order-cell-lines border">
+                <th style={{ width: "4rem" }}>
                   {/*<input
                     type="checkbox"
                     aria-label="Select all rows"
@@ -124,7 +124,7 @@ export default function OrderCellLines() {
                     }
                   />*/}
                 </th>
-                <th className="order-cell-lines black"><span className="order-cell-lines filter-icon bold"></span>Clone ID</th>
+                <th className="order-cell-lines black less-wide"><span className="order-cell-lines filter-icon bold"></span>Clone ID</th>
                 <th>Target Gene</th>
                 <th>Cell Line</th>
                 <th>Perturbation Strategy</th>
