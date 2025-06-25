@@ -161,7 +161,7 @@ export default function OrderCellLines() {
                     <td>{row.cellLine}</td>
                     <td>{row.strategy}</td>
                     <td>{row.center}</td>
-                    <td>
+                    <td className="order-cell-lines button-wide">
                       <a
                         href={`mailto:helpdesk@morphic.bio?subject=Clonal%20cell%20line%20enquiry:%20${encodeURIComponent(
                           row.cloneId
