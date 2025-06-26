@@ -1,31 +1,46 @@
-# Gatsby Static Website Deployment to AWS S3 with CloudFront
+# Morphic Website
 
-This repository contains the source code and deployment scripts for a static website built with [Gatsby](https://www.gatsbyjs.com/) and deployed to AWS S3 using CloudFront for content delivery.
+This repository hosts the **Morphic** public website built with [Gatsby](https://www.gatsbyjs.com/) a React‑based front‑end that is containerised with Docker and deployed to AWS EKS via GitHub Actions.
 
 ## Table of Contents
 
-- [Project Overview](#project-overview)
+- [Branch strategy](#branch-strategy)
+- [Repository layout](#repository-layout)
 - [Technologies Used](#technologies-used)
 - [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Building the Project](#building-the-project)
-- [Deployment](#deployment)
-- [Accessing the Website](#accessing-the-website)
-- [Contributing](#contributing)
-- [License](#license)
+- [Local development](#local-development)
+- [Docker & Kubernetes deployment](#docker--kubernetes-deployment)
 
-## Project Overview
+## Branch strategy
+| Branch | Purpose |
+|--------|---------|
+| **main** | Source of truth. Has a manual trigger when triggered, builds and deploys the `main` branch. |
+| **dev** | Development beanch and environment that points to [dev.morphic.bio](https://dev.morphic.bio). Every push triggers a CI job that builds and deploys the latest Docker image to the live EKS cluster. |
 
-This project is a static website built using Gatsby, a React-based framework for creating fast and modern websites. The website is hosted on AWS S3, with AWS CloudFront used as a CDN (Content Delivery Network) to deliver the content quickly and securely to users around the globe.
+> **Note:** Feature work is done in short‑lived branches and merged into `dev` through pull requests.
+Once tested and when stakeholders are happy, changes are cherry-picked onto `main` and deployed.
 
 The website is accessible at [morphic.bio](https://morphic.bio).
 
+## Repository layout
+```
+morphic-website/
+├─ react-app/          # Main React codebase
+├─ k8s/                # Kubernetes manifests (Deployment, Service, Ingress, etc.)
+├─ .github/workflows/  # CI/CD definitions (build & deploy)
+├─ Dockerfile          # Builds the production image for the website
+└─ README.md           # You are here 😊
+```
+
 ## Technologies Used
 
-- **Gatsby**: React-based open-source framework for creating websites and apps.
-- **AWS S3**: Simple Storage Service used to host the static files of the website.
-- **AWS CloudFront**: Content Delivery Network to distribute content globally with low latency.
-- **GitHub Actions** (optional): For Continuous Deployment (CD) of the website.
+| Layer            | Technology      |
+|------------------|-----------------|
+| Front‑end        | React (Create‑React‑App) |
+| Runtime          | Docker |
+| Orchestration    | Kubernetes on AWS EKS |
+| CI/CD            | GitHub Actions |
+| Data source      | Ingest API (`https://api.ingest.archive.morphic.bio`) |
 
 ## Prerequisites
 
@@ -45,58 +60,32 @@ Ensure that you have the following AWS resources set up:
 - A CloudFront distribution configured with the S3 bucket as the origin.
 - An IAM user with sufficient permissions to upload files to S3 and manage CloudFront.
 
-## Installation
-
-1. **Clone the repository**:
-
-    ```bash
-    git clone https://github.com/ebi-ait/morphic-website.git
-    cd morphic-website
-    ```
-
-2. **Install dependencies**:
-
-    ```bash
-    npm install
-    ```
-
-## Building the Project
-
-To build the Gatsby site for production:
-
+## Local development
 ```bash
-gatsby build
-```
-This command will generate the static files in the public directory.
-Deployment
+# 1. Clone
+git clone https://github.com/ebi-ait/morphic-website.git
+cd morphic-website
 
-To deploy the site to AWS S3 and invalidate the CloudFront cache:
+# 2. Install dependencies
+cd react-app
+npm install    # or yarn install
 
-    Deploy to S3:
-
-    You can use the AWS CLI or any S3 deployment tool. Here’s an example using the AWS CLI:
-
-```bash
-aws s3 sync ./public s3://your-s3-bucket-name --delete
+# 3. Run the dev server
+npm start      # http://localhost:3000
 ```
 
-Invalidate CloudFront Cache:
+## Docker & Kubernetes deployment
 
-After deploying the changes to S3, invalidate the CloudFront cache to ensure the changes are reflected immediately:
+1. **Image build**
+   The root `Dockerfile` builds the production bundle from `react-app/`.
 
-```bash
+2. **CI/CD (GitHub Actions)**
+   - On every push to `dev` the workflow:
+     1. Builds and tags a Docker image.
+     2. Pushes the image to the container registry.
+     3. Applies manifests under `k8s/` to the EKS cluster (via `kubectl apply`).
 
-    aws cloudfront create-invalidation --distribution-id your-distribution-id --paths "/*"
-```
-Accessing the Website
-
-Once the deployment is complete, your website will be available at https://morphic.bio
-Contributing
-
-If you would like to contribute to this project, please follow these steps:
-
-    1. Fork the repository.
-    2. Create a new branch (git checkout -b feature-branch-name).
-    3. Make your changes and commit them (git commit -m 'Add some feature').
-    4. Push to the branch (git push origin feature-branch-name).
-    5. Open a Pull Request.
+3. **Kubernetes manifests**
+   - `k8s/deployment.yaml` – Deployment & rolling updates.
+   - `k8s/service.yaml` – ClusterIP / LoadBalancer.
+   - `k8s/ingress.yaml` – External URL and TLS (if configured).
