@@ -31,21 +31,22 @@ export default function FilterDropdown({ label, studiesData, contentType, inputL
     };
 
     // For a studies category, accumulate a count
-    const aggregateStudiesByCategory = (studies, category) => {
-        return studies.reduce((acc, study) => {
-            if (study.content == null) {
-                return acc;
-            }
-            const contentValue = category in study.content ? study.content[category] : "";
-
-            const contentList = Array.isArray(contentValue) ? contentValue : [contentValue];
-
-            contentList.forEach((contentItem) => {
-                acc[contentItem] = (acc[contentItem] || 0) + 1;
-            });
-            return acc;
-        }, {});
-    };
+    const aggregateStudiesByCategory = (studies, category) =>
+        studies.reduce((acc, study) => {
+        const raw =
+          //legacy nested shape
+          study?.content?.[category] ??
+          //flat shape coming from the TSV import
+          study?.[category] ??
+          "";
+        (Array.isArray(raw) ? raw : [raw])
+          .filter(Boolean) // skip empty strings / null / undefined
+          .forEach((value) => {
+            acc[value] = (acc[value] || 0) + 1;
+          });
+        return acc;
+      },
+    {});
     const categoryCounts = aggregateStudiesByCategory(studiesData, contentType);
 
 
