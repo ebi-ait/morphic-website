@@ -2408,3 +2408,7 @@ h2.gene-card-body-title {
 .data-card-table td.order-cell-lines.button-wide {
   max-width: fit-content;
 }
+
+.order-cell-lines.underline {
+  text-decoration: underline;
+}
