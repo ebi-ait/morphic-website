@@ -293,9 +293,9 @@ export default function Data() {
                                     <td><span className="icon-triple-squares icon"></span></td>
                                     <td className="bold">
                                         <div title={data.content?.study_title} className="data-text">
-                                            <Link to={`/dataset/${data.id ?? ''}`}>
+                                            {/*  <Link to={`/dataset/${data.id ?? ''}`}> */}
                                                 {data.content?.study_title}
-                                            </Link>
+                                            {/*</Link> */}
                                         </div>
                                     </td>
                                     <td>
