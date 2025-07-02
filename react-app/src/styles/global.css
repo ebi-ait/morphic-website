@@ -161,6 +161,7 @@ ul {
   background-position-x: center;
   background-repeat: no-repeat;
   background-size: contain;
+  flex-shrink: 0;
 }
 
 .icon-triple-squares {
@@ -2328,9 +2329,9 @@ h2.gene-card-body-title {
 
 /*---- ORDER CELL LINES PAGE --- */
 .order-cell-lines.dc-heading {
-  font-weight: 600;
-  font-size: 40px;
-  line-height: 62px;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 45px;
   letter-spacing: -4%;
   margin-bottom: 15px;
 }
@@ -2405,5 +2406,5 @@ h2.gene-card-body-title {
 }
 
 .data-card-table td.order-cell-lines.button-wide {
-  max-width: 85px;
+  max-width: fit-content;
 }
