@@ -135,6 +135,9 @@ export default function OrderCellLines() {
             <p>
               Search through the knockout cell lines below and send an enquiry for the gene you’re interested in.
             </p>
+            <p>
+              For our <a href="/MorPhiC_JAX_listClones_upcoming.xlsx" className="order-cell-lines underline">upcoming knockout cell lines</a>, <a className="order-cell-lines underline" href={`mailto:bill.skarnes@jax.org?subject=Register interest in MorPhiC cell lines`}>email us </a> to register your interest in advance.
+            </p>
           </div>
         </div>
       </div>
