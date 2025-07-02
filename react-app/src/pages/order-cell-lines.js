@@ -129,10 +129,11 @@ export default function OrderCellLines() {
           <span aria-hidden className="data-card-header-icon icon-data-tracker" />
           <div>
             <h1 className="order-cell-lines dc-heading">Order clonal cell lines</h1>
-            <p className="order-cell-lines para">
-              MorPhiC Data production have the first gene perturbation cell lines
-              available for ordering and research. Search through the list below
-              and send your enquiry for a gene you’re interested in.
+            <p className="">
+              Gene perturbation cell lines from the MorPhiC Data Production Centers are available for ordering and research by the wider scientific community.
+            </p>
+            <p>
+              Search through the knockout cell lines below and send an enquiry for the gene you’re interested in.
             </p>
           </div>
         </div>
@@ -258,7 +259,7 @@ export default function OrderCellLines() {
                   <td>{row.center}</td>
                   <td className="order-cell-lines button-wide">
                     <a
-                      href={`mailto:helpdesk@morphic.bio?subject=Clonal%20cell%20line%20enquiry:%20${encodeURIComponent(
+                      href={`mailto:bill.skarnes@jax.org?subject=Clonal%20cell%20line%20enquiry:%20${encodeURIComponent(
                         row.cloneId
                       )}`}
                       className="send-enquiry-btn button button-blue wide-button"
