@@ -2412,3 +2412,7 @@ h2.gene-card-body-title {
 .order-cell-lines.underline {
   text-decoration: underline;
 }
+
+.order-cell-lines.clone-id-width {
+  max-width: fit-content;
+}

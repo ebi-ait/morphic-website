@@ -11,10 +11,10 @@ import FilterTags from "../components/DataTrackerFilters/FilterTags";
 /* ---------- column map & row remapper ---------- */
 const COLUMN_MAP = {
   "Clone ID": "cloneId",
-  Gene: "targetGene",
+  "Gene": "targetGene",
   "Parental Cell Line": "cellLine",
-  Variant: "strategy",
-  Center: "center",
+  "Variant": "strategy",
+  "Center": "center",
 };
 const remapRow = (row) =>
   Object.fromEntries(
@@ -239,9 +239,9 @@ export default function OrderCellLines() {
                 <th style={{ width: "4rem" }} />
                 <th className="order-cell-lines black less-wide">
                   <span className="order-cell-lines filter-icon bold" />
-                  Clone ID
+                  Target Gene
                 </th>
-                <th>Target Gene</th>
+                <th>Clone ID</th>
                 <th>Cell Line</th>
                 <th>Perturbation Strategy</th>
                 <th>Center</th>
@@ -252,11 +252,11 @@ export default function OrderCellLines() {
               {filteredLines.map((row) => (
                 <tr key={row.cloneId} className="data-card-table-row">
                   <td />
-                  <td className="order-cell-lines bold">
+                  <td className="order-cell-lines bold button-wide">
                     <span className="order-cell-lines checkbox-circle" />
-                    {row.cloneId}
+                    {row.targetGene}
                   </td>
-                  <td>{row.targetGene}</td>
+                  <td className="order-cell-lines button-wide">{row.cloneId}</td>
                   <td>{row.cellLine}</td>
                   <td>{row.strategy}</td>
                   <td>{row.center}</td>
@@ -264,7 +264,7 @@ export default function OrderCellLines() {
                     <a
                       href={`mailto:bill.skarnes@jax.org?subject=Clonal%20cell%20line%20enquiry:%20${encodeURIComponent(
                         row.cloneId
-                      )}`}
+                      )}%20with%20target%20gene:%20${encodeURIComponent(row.targetGene)}`}
                       className="send-enquiry-btn button button-blue wide-button"
                     >
                       Send enquiry
