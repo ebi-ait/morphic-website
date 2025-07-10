@@ -98,6 +98,22 @@ export default function OrderCellLines() {
     return res;
   }, [cellLines, geneQuery, selectedStrategies, selectedCellLines, selectedCenters]);
 
+  const ROWS_PER_PAGE = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(filteredLines.length / ROWS_PER_PAGE);
+
+  const paginatedLines = useMemo(() => {
+    const start = (currentPage - 1) * ROWS_PER_PAGE;
+    const end = start + ROWS_PER_PAGE;
+    return filteredLines.slice(start, end);
+  }, [filteredLines, currentPage]);
+
+  // Reset page when filters change (so you don't get stuck on a dead page)
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [geneQuery, selectedStrategies, selectedCellLines, selectedCenters]);
+
   /* -------------------------------- helpers -------------------------------- */
   const toggleInSet = (value, setState) =>
     setState((prev) => {
@@ -249,7 +265,7 @@ export default function OrderCellLines() {
               </tr>
             </thead>
             <tbody>
-              {filteredLines.map((row) => (
+              {paginatedLines.map((row) => (
                 <tr key={row.cloneId} className="data-card-table-row">
                   <td />
                   <td className="order-cell-lines bold button-wide">
@@ -274,6 +290,59 @@ export default function OrderCellLines() {
               ))}
             </tbody>
           </table>
+          <div className="order-cell-lines pagination-row">
+            {/* Summary */}
+            <div className="order-cell-lines pagination-summary">
+              {filteredLines.length === 0
+                ? "No cell lines"
+                : `Showing ${
+                    (currentPage - 1) * ROWS_PER_PAGE + 1
+                  }–${
+                    Math.min(currentPage * ROWS_PER_PAGE, filteredLines.length)
+                  } of total ${filteredLines.length} cell lines`}
+            </div>
+
+            {/* Pagination controls */}
+            <div className="order-cell-lines pagination-controls">
+              <button
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="order-cell-lines pagination-btn"
+              >
+                Prev
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1)
+                .filter(
+                  (page) =>
+                    page === 1 ||
+                    page === totalPages ||
+                    (page >= currentPage - 1 && page <= currentPage + 1)
+                )
+                .map((page, idx, arr) => (
+                  <React.Fragment key={page}>
+                    {idx > 0 && page - arr[idx - 1] > 1 && (
+                      <span className="order-cell-lines pagination-ellipsis">…</span>
+                    )}
+                    <button
+                      onClick={() => setCurrentPage(page)}
+                      className={`order-cell-lines pagination-btn${
+                        currentPage === page ? " pagination-btn-active" : ""
+                      }`}
+                      aria-current={currentPage === page ? "page" : undefined}
+                    >
+                      {page}
+                    </button>
+                  </React.Fragment>
+                ))}
+              <button
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                className="order-cell-lines pagination-btn"
+              >
+                Next
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </Layout>
