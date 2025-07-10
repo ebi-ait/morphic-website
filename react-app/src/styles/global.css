@@ -2416,3 +2416,54 @@ h2.gene-card-body-title {
 .order-cell-lines.clone-id-width {
   max-width: fit-content;
 }
+
+
+.order-cell-lines.pagination-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 24px 0;
+}
+
+.order-cell-lines.pagination-summary {
+  color: var(--dl-color-default-grey);
+  font-size: 15px;
+  padding-left: 12px;
+  min-width: 180px;
+}
+
+.order-cell-lines.pagination-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.order-cell-lines.pagination-btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid #099;
+  background: #fff;
+  color: #222;
+  font-weight: normal;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.order-cell-lines.pagination-btn:disabled {
+  background: #eee;
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+.order-cell-lines.pagination-btn-active,
+.order-cell-lines.pagination-btn[aria-current="page"] {
+  background: #17bebb;
+  color: #fff;
+  font-weight: bold;
+}
+
+.order-cell-lines.pagination-ellipsis {
+  padding: 0 6px;
+  color: var(--dl-color-default-grey);
+  font-size: 18px;
+}
