@@ -98,7 +98,7 @@ export default function OrderCellLines() {
     return res;
   }, [cellLines, geneQuery, selectedStrategies, selectedCellLines, selectedCenters]);
 
-  const ROWS_PER_PAGE = 10;
+  const ROWS_PER_PAGE = 60;
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(filteredLines.length / ROWS_PER_PAGE);
@@ -150,9 +150,6 @@ export default function OrderCellLines() {
             </p>
             <p>
               Search through the knockout cell lines below and send an enquiry for the gene you’re interested in.
-            </p>
-            <p>
-              For our <a href="/MorPhiC_JAX_listClones_upcoming.xlsx" className="order-cell-lines underline">upcoming knockout cell lines</a>, <a className="order-cell-lines underline" href={`mailto:bill.skarnes@jax.org?subject=Register interest in MorPhiC cell lines`}>email us </a> to register your interest in advance.
             </p>
           </div>
         </div>
@@ -278,7 +275,7 @@ export default function OrderCellLines() {
                   <td>{row.center}</td>
                   <td className="order-cell-lines button-wide">
                     <a
-                      href={`mailto:bill.skarnes@jax.org?subject=Clonal%20cell%20line%20enquiry:%20${encodeURIComponent(
+                      href={`mailto:${row.center === 'JAX' ? 'bill.skarnes@jax.org' : 'zhout@mskcc.org'}?subject=Clonal%20cell%20line%20enquiry:%20${encodeURIComponent(
                         row.cloneId
                       )}%20with%20target%20gene:%20${encodeURIComponent(row.targetGene)}`}
                       className="send-enquiry-btn button button-blue wide-button"
