@@ -2375,7 +2375,7 @@ h2.gene-card-body-title {
 }
 
 .order-cell-lines.less-wide {
-  width: 250px;
+  width: 175px;
 }
 
 .order-cell-lines.checkbox-circle {
@@ -2407,10 +2407,6 @@ h2.gene-card-body-title {
 
 .data-card-table td.order-cell-lines.button-wide {
   max-width: fit-content;
-}
-
-.order-cell-lines.underline {
-  text-decoration: underline;
 }
 
 .order-cell-lines.clone-id-width {

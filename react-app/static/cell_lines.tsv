@@ -1,69 +1,322 @@
-SET	Parental Cell Line	Project ID	Clone #	Clone ID	Gene	Variant	Center
-MorPhiC Yr 1	KOLF2.2J	MOK20009W	E02	MOK20009W_E02	HMGCS2	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20009C	A03	MOK20009C_A03	HMGCS2	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20009P	A09	MOK20009P_A09	HMGCS2	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20008W	C03	MOK20008W_C03	PAX6	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20008C	C07	MOK20008C_C07	PAX6	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20008P	A11	MOK20008P_A11	PAX6	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20002W	A04	MOK20002W_A04	RFX4	KO - Gene deletion 	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20002C	C08	MOK20002C_C08	RFX4	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20002P	B12	MOK20002P_B12	RFX4	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20003W	D04.2	MOK20003W_D04.2	OTX1	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20003C	A08	MOK20003C_A08	OTX1	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20003P	A11	MOK20003P_A11	OTX1	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20007W	D04.2	MOK20007W_D04.2	FEZF2	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20007C	A11.2	MOK20007C_A11.2	FEZF2	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20007P	A12	MOK20007P_A12	FEZF2	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20004W	E4	MOK20004W_E4	LHX5	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20004C	E3	MOK20004C_E3	LHX5	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20004P	B10	MOK20004P_B10	LHX5	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20006W	A4	MOK20006W_A4	LHX9	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20006C	B6	MOK20006C_B6	LHX9	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20006P	A9	MOK20006P_A9	LHX9	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20010W	B04	MOK20010W_B04	POU2F3	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20010C	B06	MOK20010C_B06	POU2F3	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20010P	A10	MOK20010P_A10	POU2F3	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20028W	A01	MOK20028W_A01	STS	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20028C	A06	MOK20028C_A06	STS	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20028P	C12	MOK20028P_C12	STS	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20030W	A06	MOK20030W_A06	NKX2-1	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20030P	A09	MOK20030P_A09	NKX2-1	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20027W	A05	MOK20027W_A05	RLBP1	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20027C	A08	MOK20027C_A08	RLBP1	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20027P	A01	MOK20027P_A01	RLBP1	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20014W	F04	MOK20014W_F04	MEIS1	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20014C	E06	MOK20014C_E06	MEIS1	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20014P	F12	MOK20014P_F12	MEIS1	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20011W	B07	MOK20011W_B07	RUNX1	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20011C	A11	MOK20011C_A11	RUNX1	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20011P	C12	MOK20011P_C12	RUNX1	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20024W	D03	MOK20024W_D03	MEF2C	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20024C	A05	MOK20024C_A05	MEF2C	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20024P	B03	MOK20024P_B03	MEF2C	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20044W	D11	MOK20044W_D11	NCOA3	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20044C	F08	MOK20044C_F08	NCOA3	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20044P	F10	MOK20044P_F10	NCOA3	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20045W	D01	MOK20045W_D01	BHLHE40	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20045C	A06	MOK20045C_A06	BHLHE40	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20045P	B12	MOK20045P_B12	BHLHE40	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20013W	DO2	MOK20013W_DO2	GRHL1	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20013C	A05	MOK20013C_A05	GRHL1	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20013P	A10	MOK20013P_A10	GRHL1	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20017W	B04	MOK20017W_B04	FOSB	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20017C	C08	MOK20017C_C08	FOSB	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20017P	B09	MOK20017P_B09	FOSB	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20016W	C04	MOK20016W_C04	MXD1	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20016C	F07	MOK20016C_F07	MXD1	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20016P	C11	MOK20016P_C11	MXD1	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20015W	D04	MOK20015W_D04	ISL1	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20015C	D01	MOK20015C_D01	ISL1	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20015P	D10	MOK20015P_D10	ISL1	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20025W	C02	MOK20025W_C02	MEIS2	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20025C	A06	MOK20025C_A06	MEIS2	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20025P	E11	MOK20025P_E11	MEIS2	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20026W	E02	MOK20026W_E02	PPARG	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20026C	G05	MOK20026C_G05	PPARG	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20026P	D10	MOK20026P_D10	PPARG	Premature termination codon (PTC+1)	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20021W	A01	MOK20021W_A01	ADGRG6	KO - Gene deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20021C	C07.1	MOK20021C_C07.1	ADGRG6	Critical exon deletion	JAX
-MorPhiC Yr 1	KOLF2.2J	MOK20021P	A07	MOK20021P_A07	ADGRG6	Premature termination codon (PTC+1)	JAX
+SET	Parental Cell Line	Project ID	Clone #	Clone ID	Gene	Variant	Center	Email
+-	KOLF2.2J	MOK20032P		MOK20032P	ABCG2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20147P		MOK20147P	ADA	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20021W		MOK20021W	ADGRG6	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20021C		MOK20021C	ADGRG6	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20021P		MOK20021P	ADGRG6	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20097P		MOK20097P	ANO1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20098P		MOK20098P	ASCL2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20064P		MOK20064P	ATP10D	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20045W		MOK20045W	BHLHE40	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20045C		MOK20045C	BHLHE40	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20045P		MOK20045P	BHLHE40	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20065P		MOK20065P	C2orf72	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20066P		MOK20066P	C4orf19	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20148P		MOK20148P	CASP4	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20053P		MOK20053P	CCKBR	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20054P		MOK20054P	CCR7	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20099P		MOK20099P	CDH5	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20127P		MOK20127P	CDKN1A	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20082P		MOK20082P	CDKN1C	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20128C		MOK20128C	CDKN2A	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20129P		MOK20129P	CDKN2B	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20130P		MOK20130P	CDX1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20131P		MOK20131P	CITED1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20149P		MOK20149P	CLEC7A	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20083P		MOK20083P	CLIC3	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20150P		MOK20150P	COMT	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20100P		MOK20100P	CRIP2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20151P		MOK20151P	CSF2RB	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20055P		MOK20055P	CSF3R	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20035P		MOK20035P	CYP11A1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20037P		MOK20037P	CYP19A1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20067P		MOK20067P	CYP2C18	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20084P		MOK20084P	CYP2J2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20046P		MOK20046P	DLX3	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20047P		MOK20047P	DLX4	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20048P		MOK20048P	DLX5	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20049P		MOK20049P	DLX6	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20001P		MOK20001P	DMRTA1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20101P		MOK20101P	ELF5	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20068P		MOK20068P	ELK3	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20069P		MOK20069P	EMX2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20102P		MOK20102P	ENDOU	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20152P		MOK20152P	ENG	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20031W		MOK20031W	EOMES	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20012W		MOK20012W	EPAS1	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20085P		MOK20085P	ESRRG	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20007W		MOK20007W	FEZF2	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20007C		MOK20007C	FEZF2	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20007P		MOK20007P	FEZF2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20153P		MOK20153P	FLT1	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20103P		MOK20103P	FOLR1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20017W		MOK20017W	FOSB	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20017C		MOK20017C	FOSB	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20017P		MOK20017P	FOSB	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20070P		MOK20070P	FOXG1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20104P		MOK20104P	GADD45B	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20019W		MOK20019W	GALT	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20132P		MOK20132P	GATA6	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20022W		MOK20022W	GCM1	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20056P		MOK20056P	GPR157	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20057P		MOK20057P	GPR32	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20058P		MOK20058P	GPR78	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20059P		MOK20059P	GPR87	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20013W		MOK20013W	GRHL1	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20013C		MOK20013C	GRHL1	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20013P		MOK20013P	GRHL1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20133P		MOK20133P	GSC	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20086P		MOK20086P	HES5	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20134W		MOK20134W	HES6	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20043P		MOK20043P	HEY1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20105P		MOK20105P	HIF1A	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20009W		MOK20009W	HMGCS2	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20009C		MOK20009C	HMGCS2	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20009P		MOK20009P	HMGCS2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20050P		MOK20050P	HOPX	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20154P		MOK20154P	HOXA10	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20155P		MOK20155P	HOXA11	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20156P		MOK20156P	HOXA13	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20157P		MOK20157P	HOXA9	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20135P		MOK20135P	HOXB8	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20038P		MOK20038P	HSD17B1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20071P		MOK20071P	HSD3B1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20106P		MOK20106P	IL7R	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20015W		MOK20015W	ISL1	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20015C		MOK20015C	ISL1	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20015P		MOK20015P	ISL1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20136P		MOK20136P	LHX1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20004W		MOK20004W	LHX5	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20004C		MOK20004C	LHX5	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20004P		MOK20004P	LHX5	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20006W		MOK20006W	LHX9	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20006C		MOK20006C	LHX9	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20006P		MOK20006P	LHX9	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20158P		MOK20158P	LIMS2	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20041P		MOK20041P	LMO2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20107P		MOK20107P	LYPD5	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20108P		MOK20108P	MAFB	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20051P		MOK20051P	MAFF	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20023P		MOK20023P	MBNL2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20060P		MOK20060P	MBNL3	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20024W		MOK20024W	MEF2C	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20024C		MOK20024C	MEF2C	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20024P		MOK20024P	MEF2C	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20014W		MOK20014W	MEIS1	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20014C		MOK20014C	MEIS1	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20014P		MOK20014P	MEIS1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20025W		MOK20025W	MEIS2	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20025C		MOK20025C	MEIS2	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20025P		MOK20025P	MEIS2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20137C		MOK20137C	MEIS3	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20109P		MOK20109P	MICALL2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20159W		MOK20159W	MLLT1	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20110P		MOK20110P	MOCOS	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20061P		MOK20061P	MRGPRX1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20138W		MOK20138W	MSX1	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20072P		MOK20072P	MSX2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20111P		MOK20111P	MX1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20016W		MOK20016W	MXD1	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20016C		MOK20016C	MXD1	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20016P		MOK20016P	MXD1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20160W		MOK20160W	MYCN	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20044W		MOK20044W	NCOA3	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20044C		MOK20044C	NCOA3	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20044P		MOK20044P	NCOA3	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20073P		MOK20073P	NEURL1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20030W		MOK20030W	NKX2-1	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20030P		MOK20030P	NKX2-1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20040P		MOK20040P	NLRP7	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20112P		MOK20112P	NOS2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20074P		MOK20074P	NR2F1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20062P		MOK20062P	NR2F2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20003W		MOK20003W	OTX1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20003C		MOK20003C	OTX1	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20003P		MOK20003P	OTX1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20139P		MOK20139P	OTX2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20020P		MOK20020P	OVOL1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20140P		MOK20140P	PAGE4	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20113P		MOK20113P	PAQR8	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20008W		MOK20008W	PAX6	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20008C		MOK20008C	PAX6	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20008P		MOK20008P	PAX6	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20114P		MOK20114P	PDK4	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20087P		MOK20087P	PHOSPHO1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20036P		MOK20036P	PITX1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20161W		MOK20161W	PLAC8	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20115P		MOK20115P	PLPP3	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20010W		MOK20010W	POU2F3	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20010C		MOK20010C	POU2F3	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20010P		MOK20010P	POU2F3	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20088P		MOK20088P	POU3F1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20075P		MOK20075P	POU3F2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20026W		MOK20026W	PPARG	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20026C		MOK20026C	PPARG	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20026P		MOK20026P	PPARG	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20116W		MOK20116W	PPMIN	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20117P		MOK20117P	PRR9	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20018W		MOK20018W	PSPH	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20002W		MOK20002W	RFX4	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20002C		MOK20002C	RFX4	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20002P		MOK20002P	RFX4	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20089P		MOK20089P	RGS16	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20118P		MOK20118P	RGS4	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20027W		MOK20027W	RLBP1	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20027C		MOK20027C	RLBP1	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20027P		MOK20027P	RLBP1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20011W		MOK20011W	RUNX1	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20011C		MOK20011C	RUNX1	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20011P		MOK20011P	RUNX1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20076P		MOK20076P	S100P	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20119P		MOK20119P	SDC1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20120P		MOK20120P	SH3TC2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20077P		MOK20077P	SIX3	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20162P		MOK20162P	SLC19A1	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20034P		MOK20034P	SLC22A11	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20121P		MOK20121P	SLC38A3	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20122P		MOK20122P	SLC52A3	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20063P		MOK20063P	SNAI2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20078P		MOK20078P	SOX1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20141P		MOK20141P	SOX17	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20090P		MOK20090P	SOX21	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20167W		MOK20167W	SOX4	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20091P		MOK20091P	SOX7	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20142P		MOK20142P	SP5	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20092P		MOK20092P	SP8	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20163P		MOK20163P	STARD3	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20028W		MOK20028W	STS	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20028C		MOK20028C	STS	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20028P		MOK20028P	STS	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20143P		MOK20143P	SULT2A1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20144P		MOK20144P	SUMF1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20123P		MOK20123P	SUSD2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20005P		MOK20005P	TBR1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20145P		MOK20145P	TBXT	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20146P		MOK20146P	TFEB	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20124P		MOK20124P	THEM5	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20079P		MOK20079P	TNFRSF1B	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20168C		MOK20168C	TP53	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20125P		MOK20125P	TP63	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20093P		MOK20093P	TREML2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20164P		MOK20164P	TRPV2	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20165W		MOK20165W	TSPO	KO - Gene deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20052P		MOK20052P	TWIST2	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20080P		MOK20080P	VGLL1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20094P		MOK20094P	VSIR	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20095P		MOK20095P	VTCN1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20042P		MOK20042P	ZBTB7C	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20166P		MOK20166P	ZFHX4	Premature termination codon (PTC+2)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20126P		MOK20126P	ZNF175	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20096P		MOK20096P	ZNF488	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20081P		MOK20081P	ZNF703	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	1	EOMES	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	2	GATA6	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	3	ARID1A	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	4	PAX6	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	5	MEIS1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	6	SIX3	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	7	GLIS3	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	8	HES1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	9	HMGA1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	10	HNF1A	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	11	HNF1B	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	13	NEUROG3	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	14	ONECUT1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	15	PAX4	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	16	INSM1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	17	MAFB	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	18	ISL1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	19	FEV	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	20	PTF1A	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	21	SIM1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	22	KLF11	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	23	PBX1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	24	PBX2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	25	CDX2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	26	HNF4A	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	27	RFX6	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	28	PRR12	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	29	NOTCH2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	30	MEN1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	31	GCM1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	32	NKX2-1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	33	SLC2A2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	34	ARID1B	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	35	ARID3A	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	36	ASH2L	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	37	BEND3	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	38	CARM1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	39	CBX1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	40	CBX4	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	41	DPY30	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	42	FRS2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	43	FYN	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	44	JMJD6	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	45	L3MBTL3	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	46	LMX1A	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	47	LMX1B	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	48	MAFA	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	49	MBD6	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	50	MEIS2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	51	MNX1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	52	MORC3	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	53	NCOA5	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	55	NKX2-2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	56	NKX6-1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	57	NOTCH1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	58	PDX1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	59	RFX3	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	60	RFX7	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	61	RREB1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	62	SIX2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	63	SMARCA2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	64	SMARCC2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	65	SMARCD3	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	66	SOX17	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	67	SYT4	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	68	TCF4	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	69	TCF7L2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	70	ZNF428	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	71	ZNF496	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	72	ZNF536	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	73	ZNF771	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	74	ZNF800	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	76	ZZZ3	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	77	FOXA2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	78	CTNNBIP1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	79	CDKN1C	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	80	PPARG	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	81	DLX5	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	82	ESRRG	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	83	HEY1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	84	LMO2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	85	MEF2C	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	86	NR2F1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	87	NR2F2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	88	POU3F2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	89	RUNX1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	90	SNAI2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	91	SOX1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	92	PRDM1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	93	EPC2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	94	FOXP1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	95	VEZF1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	96	ZNF608	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	97	ZNF296	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	98	EP300	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	99	COP1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	100	TET1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	101	SETD1B	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	103	Rb1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	104	FOXP2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	105	TULP4	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	106	ZBTB4	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	108	CNOT1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	109	RCOR2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	110	SOX11	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	111	TXNIP	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	112	TSC2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	113	TRIM60	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	114	BRD1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	116	UHRF1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	117	ZNF655	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
