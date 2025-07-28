@@ -61,6 +61,8 @@ MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	41	DPY30	KO - Insertion of a cassette (a 
 -	KOLF2.2J	MOK20031W		MOK20031W	EOMES	KO - Gene deletion	JAX	bill.skarnes@jax.org
 MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	1	EOMES	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
 MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	98	EP300	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+-	KOLF2.2J	MOK20012C		MOK20012C	EPAS	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20012P		MOK20012P	EPAS	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
 -	KOLF2.2J	MOK20012W		MOK20012W	EPAS1	KO - Gene deletion	JAX	bill.skarnes@jax.org
 MorPhiC Yr 3	H1	MSK_MorPhic	Polyclonal	93	EPC2	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
 -	KOLF2.2J	MOK20085P		MOK20085P	ESRRG	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
@@ -86,6 +88,8 @@ MorPhiC Yr 2	H1	MSK_MorPhic	Polyclonal	43	FYN	KO - Insertion of a cassette (a KI
 MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	2	GATA6	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
 -	KOLF2.2J	MOK20022W		MOK20022W	GCM1	KO - Gene deletion	JAX	bill.skarnes@jax.org
 MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	31	GCM1	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
+-	KOLF2.2J	MOK20022C		MOK20022C	GCM1	Critical exon deletion	JAX	bill.skarnes@jax.org
+-	KOLF2.2J	MOK20022P		MOK20022P	GCM1	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
 MorPhiC Yr 1	H1	MSK_MorPhic	Polyclonal	7	GLIS3	KO - Insertion of a cassette (a KI-KO approach)	MSK	zhout@mskcc.org
 -	KOLF2.2J	MOK20056P		MOK20056P	GPR157	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
 -	KOLF2.2J	MOK20057P		MOK20057P	GPR32	Premature termination codon (PTC+1)	JAX	bill.skarnes@jax.org
