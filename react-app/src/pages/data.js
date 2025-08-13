@@ -306,7 +306,7 @@ export default function Data() {
                                                 {geneListId === index ? (
                                                 <figure className="expanded-gene-list">
                                                     <button className="gene-list-exit" aria-label="Close list" onClick={e => {e.stopPropagation(); setGeneListId(-1);}}><span className="icon-x icon"></span></button>
-                                                    <figcaption>{data.content?.target_genes?.length - 1} genes</figcaption>
+                                                    <figcaption>{data.content?.target_genes?.length} genes</figcaption>
                                                     <ul>
                                                     {data.content?.target_genes?.map((gene, index) => (
                                                         <li key={`list_item_${index}`}>
