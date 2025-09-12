@@ -146,7 +146,7 @@ export default function Data() {
     useEffect(() => {
         if (studiesData) {
             let result = studiesData;
-            
+
             // Filter by search input
             if (searchInput) {
                 result = studiesData._embedded.studies.filter(
@@ -174,13 +174,13 @@ export default function Data() {
                 result = result.filter(
                     (study) => {
                         const cellLineNames = study.content?.cell_line_names
-                        
+
                         if (!cellLineNames) return false
-                        
+
                         const listOfCellLineNames = Array.isArray(cellLineNames)
                           ? cellLineNames
                           : [cellLineNames]
-                        
+
                         return listOfCellLineNames.some(name => selectedCellLines.has(name))
                     }
                 );
@@ -196,13 +196,13 @@ export default function Data() {
                 result = result.filter(
                     (study) => {
                         const perturbationType = study.content?.perturbation_type
-                        
+
                         if (!perturbationType) return false
-                        
+
                         const listOfPertubationType = Array.isArray(perturbationType)
                           ? perturbationType
                           : [perturbationType]
-                        
+
                         return listOfPertubationType.some(name => selectedPerturbationType.has(name))
                     }
                 );
@@ -222,7 +222,7 @@ export default function Data() {
     if (error) return (<Layout><p>Error loading studies</p></Layout>)
 
   return (
-                
+
     <Layout>
                 <div className="data-card-header">
                     <div className="data-card-header-container">
@@ -230,7 +230,7 @@ export default function Data() {
                         <div>
                             <h1 className="dc-heading">Data Catalogue</h1>
                             <p>All data generated as part of the MorPhiC program is made available in scheduled data releases and in public data repositories for wider use by the scientific community.</p>
-                            <p>Current data release: 1.0, February 2025.</p>
+                            <p>Current data release: 2.0, September 2025.</p>
                         </div>
                     </div>
                 </div>
@@ -266,7 +266,7 @@ export default function Data() {
                                     <FilterTags tags={selectedPerturbationType} updateTags={handleSelectedPerturbationType}/>
                                     <FilterTags tags={selectedCenters} updateTags={handleSelectedCenterInput}/>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     </>)}
@@ -355,7 +355,7 @@ export default function Data() {
                                     </td>
                                 </tr>
                             )})}
-                        </table> 
+                        </table>
                     </div>
                 </div>
     </Layout>
