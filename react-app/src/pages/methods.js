@@ -16,10 +16,10 @@ export default function Methods() {
           <div className={styles.policiesContent}>
 
             {/* Side Menu */}
-            <div className="{style.aboutCardContainer}"  style={{position: 'relative'}}>
+            <div style={{position: 'relative'}}>
               <div className={styles.policiesCard} style={{position: 'sticky', top: '1rem', marginTop: '40px', display: 'inline-block'}}>
                 <h2 className="about-card-title">inside this page</h2>
-                <ul>
+                <ul style={{maxHeight: `max(calc(100vh - 7.5rem), 544px)`, overflowY: `auto`}}>
                   <li>
                     <a href="#dpc-experimental-strategies">DPCs Experimental Strategies</a>
                     <ul style={{paddingLeft: '1em'}}>
@@ -27,17 +27,17 @@ export default function Methods() {
                       <li><a href="#protein-degradation">Protein degradation</a></li>
                       <li><a href="#gene-knockdown">Gene knockdown</a></li>
                     </ul>
-                    </li>
+                  </li>
                   <li>
                     <a href="#dav-analysis-methods">DAVs Analysis Methods</a>
                     <ul style={{paddingLeft: '1em'}}>
-                      <li><a href="#chrombpnet">ChromBPNet</a></li>
-                      <li><a href="#gene-progam-evaluation">Gene program evaluation</a></li>
                       <li><a href="#bulk-rnaseq-differential-expression-analysis">Bulk RNAseq Differential Expression Analysis</a></li>
                       <li><a href="#scrna-seq-cell-type-composition">scRNA-seq Cell Type Composition</a></li>
                       <li><a href="#scrna-seq-variance-decomposition">scRNA-seq Variance Decomposition</a></li>
                       <li><a href="#scrna-seq-differential-expression-analysis-pseudobulk-based">scRNA-seq Differential Expression Analysis - Pseudobulk-based approach</a></li>
                       <li><a href="#scrna-seq-differential-expression-analysis-cell-level">scRNA-seq Differential Expression Analysis - Cell-level approach</a></li>
+                      <li><a href="#gene-progam-evaluation">Gene program evaluation</a></li>
+                      <li><a href="#chrombpnet">ChromBPNet</a></li>
                     </ul>
                   </li>
                   <li>
@@ -124,34 +124,10 @@ export default function Methods() {
 
                 <h1 id="dav-analysis-methods" className={styles.titleL}>DAVs Analysis Methods</h1>
 
-                <h2 id="chrombpnet" className={styles.titleM}>ChromBPNet</h2>
-
-
-                <p>Strategy used by: Stanford, view on <a href="https://github.com/kundajelab/chrombpnet" target="_blank" >GitHub</a></p>
-
-                <p>ChromBPNet is a machine learning model that helps scientists read the “regulatory code” written in our DNA. It learns how DNA sequence shapes the way our genome is packaged and accessed inside cells, while carefully separating out technical artifacts from true biological signals. By doing so, ChromBPNet can pinpoint the short DNA patterns that control when and where genes turn on, and show how these patterns change across cell types and conditions. The model can also predict how small changes in DNA—such as genetic variants—might disrupt gene regulation, offering clues to the biological differences between individuals and insights into the genetic basis of health and disease.</p>
-                <p>ChromBPNet is a base-resolution convolutional neural network built to decode the cis-regulatory code and predict how DNA sequence controls chromatin accessibility. Its bias-factorized architecture explicitly separates enzyme-specific cleavage bias from true regulatory signal: a “bias model” first learns the sequence preferences of DNase-I or Tn5, and a “TF model” then trains on bias-corrected profiles to capture sequence features that truly drive accessibility. This separation yields highly interpretable results, enabling recovery of transcription factor motif lexicons, cooperative motif syntax, and single-base footprints. ChromBPNet’s compact design matches or exceeds the performance of much larger models in predicting the impact of genetic variants on accessibility, pioneer factor binding, and reporter activity. By providing fine-grained, cell-type–specific insights, ChromBPNet offers a powerful framework for understanding how genomic regulation is encoded in DNA, how it varies across cell types, assays, sequencing depths, and populations, and how genetic variation may contribute to complex traits and disease.</p>
-
-                <h2 id="gene-progam-evaluation" className={styles.titleM}>Gene program evaluation</h2>
-
-
-                <p>Strategy used by: Stanford, view on <a href="https://github.com/EngreitzLab/gene_network_evaluation" target="_blank" >GitHub</a></p>
-
-                <p>cNMF is a computational method that uncovers groups of genes called “gene programs” that work together inside cells. By repeating the analysis many times and focusing on the most consistent results, it filters out noise and highlights the most meaningful patterns. These gene programs are then tested against biological knowledge to see if they reflect known pathways, cell types, or cellular activities. This combination of discovery and evaluation helps researchers understand what makes cells unique, what activities they are carrying out, and how these processes vary across conditions, development, or disease.</p>
-                <p>cNMF is a consensus-based matrix factorization approach that decomposes single-cell RNA-seq data into interpretable gene programs. It applies NMF repeatedly with different random initializations, clusters the resulting factors, and aggregates them into consensus programs. This reduces stochastic variability and increases reproducibility compared to single NMF runs. The output consists of a program usage matrix (cells × programs), which describes the activity of each program in each cell, and a gene loading matrix (programs × genes), which identifies the genes that define each program.</p>
-                <p>To ensure both robustness and biological interpretability, cNMF results are systematically evaluated using multiple criteria:</p>
-                <ul>
-                  <li>Reconstruction error and stability, measuring how well the decomposition explains the data and how reproducible the programs are.</li>
-                  <li>Co-regulation and coherence, testing whether program genes are functionally linked.</li>
-                  <li>Biological enrichment, assessing whether programs correspond to known pathways, processes, or cell identities.</li>
-                  <li>Cross-dataset reproducibility, ensuring that programs are consistent across experimental replicates and biological contexts.</li>
-                  <li>Through this strategy, cNMF reliably identifies both identity programs (cell-type signatures) and activity programs (dynamic patterns such as cell cycle, stress responses, or signaling).</li>
-                </ul>
-
                 <h2 id="bulk-rnaseq-differential-expression-analysis" className={styles.titleM}>Bulk RNAseq Differential Expression Analysis</h2>
 
 
-                <p>Strategy used by: Fred Hutch Cancer Center</p>
+                <p>Strategy used by: Fred Hutch Cancer Center, view on <a href="https://github.com/morphic-bio/MorPhiC_bulk_RNAseq" target="_blank" >GitHub</a></p>
 
                 <p>To quantify KO effect using Bulk RNA-seq data, we mainly focus on Differential Expression (DE) analysis comparing knock out (KO) versus wild type (WT) samples, using method DESeq2, followed by gene set enrichment analysis.</p>
 
@@ -184,7 +160,7 @@ export default function Methods() {
 
                 <p>Strategy used by: Fred Hutch Cancer Center, view on <a href="https://github.com/morphic-bio/MSK_KO_village_analysis" target="_blank" >GitHub </a></p>
 
-                <p>The proportion of variance explained by read depth, data source, cell background, cell type, and genotype was quantified using a sequence of linear models. At each time point, these models were fitted to pseudobulk samples generated for each clone–cell type combination, with log-normalized expression of the top time point–specific highly variable genes as the outcome. Since KO genotype identity influences cell type composition, the variance attributed to genotype in this analysis should be interpreted as the within–cell type heterogeneity in gene expression associated with genotype identities.</p>
+                <p>We quantified the proportion of variance explained by read depth, cell background (cell line), and genotype using a series of linear models fitted separately at each time point. For each time point, the models were applied to pseudobulk samples, with log-normalized expression of highly variable genes as the outcome. The genotype effect captures both its influence on cell type composition and on cell type-specific gene expression.</p>
                 <StaticImage src="../images/msk-ko-village-analysis-strategy.png" alt="" loading="eager" placeholder="none"/>
 
                 <h2 id="scrna-seq-differential-expression-analysis-pseudobulk-based" className={styles.titleM}>scRNA-seq Differential Expression Analysis - Pseudobulk-based approach</h2>
@@ -201,6 +177,31 @@ export default function Methods() {
 
                 <p>Alternatively, for each time point and cell type, cell-level differential expression analysis was performed using FindMarkers from the Seurat R package with default parameters.</p>
 
+                <h2 id="gene-progam-evaluation" className={styles.titleM}>Gene program evaluation</h2>
+
+
+                <p>Strategy used by: Stanford, view on <a href="https://github.com/EngreitzLab/gene_network_evaluation" target="_blank" >GitHub</a></p>
+
+                <p>cNMF is a computational method that uncovers groups of genes called “gene programs” that work together inside cells. By repeating the analysis many times and focusing on the most consistent results, it filters out noise and highlights the most meaningful patterns. These gene programs are then tested against biological knowledge to see if they reflect known pathways, cell types, or cellular activities. This combination of discovery and evaluation helps researchers understand what makes cells unique, what activities they are carrying out, and how these processes vary across conditions, development, or disease.</p>
+                <p>cNMF is a consensus-based matrix factorization approach that decomposes single-cell RNA-seq data into interpretable gene programs. It applies NMF repeatedly with different random initializations, clusters the resulting factors, and aggregates them into consensus programs. This reduces stochastic variability and increases reproducibility compared to single NMF runs. The output consists of a program usage matrix (cells × programs), which describes the activity of each program in each cell, and a gene loading matrix (programs × genes), which identifies the genes that define each program.</p>
+                <p>To ensure both robustness and biological interpretability, cNMF results are systematically evaluated using multiple criteria:</p>
+                <ul>
+                  <li>Reconstruction error and stability, measuring how well the decomposition explains the data and how reproducible the programs are.</li>
+                  <li>Co-regulation and coherence, testing whether program genes are functionally linked.</li>
+                  <li>Biological enrichment, assessing whether programs correspond to known pathways, processes, or cell identities.</li>
+                  <li>Cross-dataset reproducibility, ensuring that programs are consistent across experimental replicates and biological contexts.</li>
+                  <li>Through this strategy, cNMF reliably identifies both identity programs (cell-type signatures) and activity programs (dynamic patterns such as cell cycle, stress responses, or signaling).</li>
+                </ul>
+
+                <h2 id="chrombpnet" className={styles.titleM}>ChromBPNet</h2>
+
+
+                <p>Strategy used by: Stanford, view on <a href="https://github.com/kundajelab/chrombpnet" target="_blank" >GitHub</a></p>
+
+                <p>ChromBPNet is a machine learning model that helps scientists read the “regulatory code” written in our DNA. It learns how DNA sequence shapes the way our genome is packaged and accessed inside cells, while carefully separating out technical artifacts from true biological signals. By doing so, ChromBPNet can pinpoint the short DNA patterns that control when and where genes turn on, and show how these patterns change across cell types and conditions. The model can also predict how small changes in DNA—such as genetic variants—might disrupt gene regulation, offering clues to the biological differences between individuals and insights into the genetic basis of health and disease.</p>
+                <p>ChromBPNet is a base-resolution convolutional neural network built to decode the cis-regulatory code and predict how DNA sequence controls chromatin accessibility. Its bias-factorized architecture explicitly separates enzyme-specific cleavage bias from true regulatory signal: a “bias model” first learns the sequence preferences of DNase-I or Tn5, and a “TF model” then trains on bias-corrected profiles to capture sequence features that truly drive accessibility. This separation yields highly interpretable results, enabling recovery of transcription factor motif lexicons, cooperative motif syntax, and single-base footprints. ChromBPNet’s compact design matches or exceeds the performance of much larger models in predicting the impact of genetic variants on accessibility, pioneer factor binding, and reporter activity. By providing fine-grained, cell-type–specific insights, ChromBPNet offers a powerful framework for understanding how genomic regulation is encoded in DNA, how it varies across cell types, assays, sequencing depths, and populations, and how genetic variation may contribute to complex traits and disease.</p>
+
+
                 <h1 id="dracc-uniform-and-scalable-data-processing-methods" className={styles.titleL}>Uniform and Scalable Data Processing Methods by the DRACC</h1>
                 
                 <h2 id="analytical-pipelines" className={styles.titleM}>Analytical pipelines</h2>
@@ -211,8 +212,10 @@ export default function Methods() {
                   <li>Bulk RNA-seq. GitHub <a href="https://github.com/morphic-bio/Bulk-RNA-seq" target="_blank" >https://github.com/morphic-bio/Bulk-RNA-seq</a></li>
                   <li>gRNA enrichment. GitHub <a href="https://github.com/morphic-bio/gRNA-Enrichment" target="_blank" >https://github.com/morphic-bio/gRNA-Enrichment</a>. A pre-configured instance is available at <a href="https://gitpod.io/#https://github.com/morphic-bio/gRNA-Enrichment" target="_blank" >https://gitpod.io/#https://github.com/morphic-bio/gRNA-Enrichment</a></li>
                   <li>Single cell/perturb-seq (GitHub <a href="https://github.com/morphic-bio/scRNA-seq" target="_blank" >https://github.com/morphic-bio/scRNA-seq</a>) with a novel open-source utility called <b>assignBarcodes</b>, designed for targeted sequencing analysis in single-cell experiments (GitHub <a href="https://github.com/morphic-bio/process_features" target="_blank" >https://github.com/morphic-bio/process_features</a>). <b>assignBarcodes</b> efficiently assigns feature barcodes from FASTQ files to a known set of sequence barcodes, serving as a powerful, open-source alternative to proprietary tools.</li>
-                  <li>Due to consent restrictions for the KOLF2 cell line and derivatives that require data mapping to the Y chromosome to be removed, a filtering step has been added to our analytical pipelines for all data generated using these cell lines. Specifically, all reads in the BAM and FASTQ files that align to the Y-chromosome are removed, but the counts tables include the Y chromosome data.</li>
                 </ul>
+                <p></p>
+
+                <p>Due to consent restrictions for the KOLF2 cell line and derivatives that require data mapping to the Y chromosome to be removed, a filtering step has been added to our analytical pipelines for all data generated using these cell lines. Specifically, all reads in the BAM and FASTQ files that align to the Y-chromosome are removed, but the counts tables include the Y chromosome data.</p>
 
                 <h2 id="scalable-data-processing" className={styles.titleM}>Scalable data processing</h2>
 
