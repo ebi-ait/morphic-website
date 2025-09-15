@@ -1,4 +1,11 @@
 export const articles = [
+  {
+  "date":"28 August 2025",
+  "title": '"MorPhiC: Cellular modeling at scale" - JAX speak about their role in the MorPhiC Consortium',
+  "subTitle": '"MorPhiC: Cellular modeling at scale" - JAX speak about their role in the MorPhiC Consortium',
+  "link": "https://www.jax.org/news-and-insights/2025/august/morphic-cellular-modeling-at-scale",
+  "imageSrc": "cellular-modelling-1.jpg"
+},
 {
   "date":"13 February 2025",
   "title": 'A new publication in Nature: "MorPhiC Consortium: towards functional characterization of all human genes"',
