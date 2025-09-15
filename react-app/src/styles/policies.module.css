@@ -255,6 +255,10 @@
     padding-bottom: 0;
   }
 
+  .policies h1[id], .policies h2[id] {
+    scroll-margin-top: 1rem;
+  }
+
   @media (width < 1440px) {
     .policies-content-container {
       width: calc((1380 / 1440) * 100vw);
