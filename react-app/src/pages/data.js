@@ -109,6 +109,7 @@ export default function Data() {
     useEffect(() => {
         const getStudiesData = async () => {
             try {
+                // const response = await fetch(`https://api.ingest.dev.archive.morphic.bio/studies/search/findByReleaseStatus?releaseStatus=PUBLIC&page=0&size=20`);
                 const response = await fetch(`https://api.ingest.archive.morphic.bio/studies/search/findByReleaseStatus?releaseStatus=PUBLIC&page=0&size=20`);
 
                 if (!response.ok) {
@@ -293,9 +294,9 @@ export default function Data() {
                                     <td><span className="icon-triple-squares icon"></span></td>
                                     <td className="bold">
                                         <div title={data.content?.study_title} className="data-text">
-                                            {/*  <Link to={`/dataset/${data.id ?? ''}`}> */}
+                                            {/*<Link to={`/dataset/${data.id ?? ''}`}>*/}
                                                 {data.content?.study_title}
-                                            {/*</Link> */}
+                                            {/*</Link>*/}
                                         </div>
                                     </td>
                                     <td>
@@ -306,7 +307,7 @@ export default function Data() {
                                                 {geneListId === index ? (
                                                 <figure className="expanded-gene-list">
                                                     <button className="gene-list-exit" aria-label="Close list" onClick={e => {e.stopPropagation(); setGeneListId(-1);}}><span className="icon-x icon"></span></button>
-                                                    <figcaption>{data.content?.target_genes?.length - 1} genes</figcaption>
+                                                    <figcaption>{data.content?.target_genes?.length} genes</figcaption>
                                                     <ul>
                                                     {data.content?.target_genes?.map((gene, index) => (
                                                         <li key={`list_item_${index}`}>

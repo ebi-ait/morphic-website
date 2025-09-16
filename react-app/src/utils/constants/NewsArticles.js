@@ -7,6 +7,20 @@ export const articles = [
   "imageSrc": "cellular-modelling-1.jpg"
 },
 {
+  "date":"10 April 2025",
+  "title": 'Figuring Out What Genes Do',
+  "subTitle": 'Figuring Out What Genes Do',
+  "link": "https://news.med.miami.edu/figuring-out-what-genes-do/",
+  "imageSrc": "news-um-04102025.webp"
+},
+{
+  "date":"28 March 2025",
+  "title": 'Towards the Functional Characterization of All Human Genes',
+  "subTitle": 'Towards the Functional Characterization of All Human Genes',
+  "link": "https://www.tacoma.uw.edu/news/towards-functional-characterization-all-human-genes",
+  "imageSrc": "news-uw-02282025.jpg"
+},
+{
   "date":"13 February 2025",
   "title": 'A new publication in Nature: "MorPhiC Consortium: towards functional characterization of all human genes"',
   "subTitle": 'A new publication in Nature: "MorPhiC Consortium: towards functional characterization of all human genes"',
