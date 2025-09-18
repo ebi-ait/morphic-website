@@ -181,7 +181,7 @@ const GenePage = ({ params }) => {
                                       {analysis?.tsv_file_id ? (
                                         <div className="gene-card-header-link download-tsv">
                                           <a
-                                            href={`http://127.0.0.1:3000//download?tsv_file_id=${encodeURIComponent(
+                                            href={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download?tsv_file_id=${encodeURIComponent(
                                               analysis.tsv_file_id
                                             )}&file_name=${encodeURIComponent(analysis.title || geneData.Name || 'download')}`}
                                           >
