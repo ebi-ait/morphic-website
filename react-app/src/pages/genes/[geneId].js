@@ -173,12 +173,10 @@ const GenePage = ({ params }) => {
                               <div className="gene-grid">
                                 {geneData.Analysis_Results.map((analysis, index) => (
                                   <div className="gene-card-img-placeholder" key={index}>
-                                    <div className="title-button-container">
-                                        <div className="svg-title">{analysis.title}</div>
-                                        {/*<div className="gene-card-header-link download-tsv"> <a href={`http://127.0.0.1:3000//download?tsv_file_id=${analysis.tsv_file_id}&file_name=${analysis.title}`}>Download TSV </a></div>*/}
 
-                                      {/* SHOW the Download button ONLY if tsv_file_id exists */}
-                                      {analysis?.tsv_file_id ? (
+                                    <div className="title-button-container">
+                                      <div className="svg-title">{analysis.title}</div>
+                                      {analysis?.tsv_file_id && (
                                         <div className="gene-card-header-link download-tsv">
                                           <a
                                             href={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download?tsv_file_id=${encodeURIComponent(
@@ -188,26 +186,31 @@ const GenePage = ({ params }) => {
                                             Download TSV
                                           </a>
                                         </div>
-                                      ) : null}
+                                      )}
                                     </div>
-                                    {analysis.svg ? (
-                                      // Render SVG if available
-                                      <img
-                                        src={`data:image/svg+xml;utf8,${encodeURIComponent(analysis.svg)}`}
-                                        className="img-plot"
-                                        alt={analysis.title}
-                                      />
-                                    ) : analysis.png_file_id ? (
-                                      // Render PNG if SVG is not available
-                                      <img
-                                        src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${analysis.png_file_id}`}
-                                        className="img-plot"
-                                        alt={analysis.title}
-                                      />
-                                    ) : (
-                                      // Fallback if neither SVG nor PNG is available
-                                      <p>No image available</p>
-                                    )}
+
+                                    {/* NEW: frame reserves space & caps height */}
+                                    <div className="plot-frame">
+                                      {analysis.svg ? (
+                                        <img
+                                          src={`data:image/svg+xml;utf8,${encodeURIComponent(analysis.svg)}`}
+                                          className="img-plot"
+                                          alt={analysis.title}
+                                          loading="lazy"
+                                          decoding="async"
+                                        />
+                                      ) : analysis.png_file_id ? (
+                                        <img
+                                          src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${encodeURIComponent(analysis.png_file_id)}`}
+                                          className="img-plot"
+                                          alt={analysis.title}
+                                          loading="lazy"
+                                          decoding="async"
+                                        />
+                                      ) : (
+                                        <p>No image available</p>
+                                      )}
+                                    </div>
                                   </div>
                                 ))}
                               </div>
