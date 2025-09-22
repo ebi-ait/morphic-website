@@ -1152,7 +1152,7 @@ ul {
   font-size: 14px;
   font-weight: 700;
   line-height: 20px;
-  text-align: left;  
+  text-align: left;
 }
 
 .footer-copyright {
@@ -1489,7 +1489,7 @@ ul {
 
 .data-card {
   background-color: var(--dl-color-default-smartwhite);
-  
+
   width: 1380px;
   border: 0 solid transparent;
   border-radius: 8px;
@@ -1586,7 +1586,7 @@ ul {
 }
 
 .data-card-form label {
-  clip: rect(0 0 0 0); 
+  clip: rect(0 0 0 0);
   height: 1px;
   overflow: hidden;
   padding: 0;
@@ -1833,7 +1833,7 @@ ul {
   font-weight: 400;
   line-height: 15.73px;
   text-align: left;
-  
+
   color: var(--dl-color-default-smartblack);
   background-color: var(--dl-color-default-absolutewhite);
 }
@@ -1868,7 +1868,7 @@ ul {
   font-weight: 700;
   line-height: 15.73px;
   letter-spacing: -0.03em;
-  text-align: center;  
+  text-align: center;
 
   color: var(--dl-color-default-smartblack);
 }
@@ -2080,10 +2080,17 @@ ul {
   padding: 2rem;
 }
 
+/*.gene-grid {*/
+/*  display: grid;*/
+/*  grid-template-columns: repeat(2, 1fr); !* 2 items per row *!*/
+/*  gap: 1rem;*/
+/*}*/
+
 .gene-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 items per row */
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+  gap: 16px;
+  align-items: start; /* don’t stretch rows vertically */
 }
 
 .gene-card-body-row {
@@ -2131,7 +2138,7 @@ h2.gene-card-body-title {
   font-weight: 700;
   line-height: 30px;
   letter-spacing: -0.04em;
-  text-align: left;  
+  text-align: left;
 }
 
 .gene-card-body dt.no-data {
@@ -2146,7 +2153,7 @@ h2.gene-card-body-title {
   font-weight: 400;
   line-height: 30px;
   letter-spacing: -0.04em;
-  text-align: left;  
+  text-align: left;
 }
 
 .gene-card-summary {
@@ -2212,39 +2219,69 @@ h2.gene-card-body-title {
   margin-right: 15rem;
 }
 
+.gene-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); /* or 520 if you prefer wider cards */
+  gap: 1.5rem;
+  align-items: start; /* ensure rows don’t stretch vertically */
+}
+
 .gene-card-img-placeholder {
-  width: 528px;
-  height: 405px;
+  width: 100%;
+  max-width: 528px;         /* keep your visual width cap */
   background-color: var(--dl-color-pure-white);
   border-radius: 8px;
-  .title-button-container{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    .svg-title{
-      width: 60%;
-      margin-left: 4%;
-    }
-    .gene-card-header-link,.svg-title{
-      flex: 0 0 auto;
-      margin-top: 10px;
-      margin-right: 2%;
-    }
-  }
-  .svg-title {
-    width: 60%;
-    margin-left: 4%;
-    margin-top: 2%;
-  }
-  .img-plot {
-    background-color: var(--dl-color-pure-white);
-    border-radius: 8px;
-    margin-top: 15px;
-    max-width: 100%;
-  }
-  .download-tsv {
-    background-color: var(--dl-color-brand-blue);
-  }
+  box-sizing: border-box;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header row: title + button share baseline */
+.gene-card-img-placeholder .title-button-container {
+  display: flex;
+  align-items: center;       /* baseline alignment */
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;          /* consistent header height */
+  padding: 4px 4px 0 4px;
+}
+
+.gene-card-img-placeholder .svg-title {
+  margin: 0;
+  width: 60%;
+  margin-left: 4%;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  line-height: 1.3;
+}
+
+.gene-card-img-placeholder .gene-card-header-link,
+.gene-card-img-placeholder .svg-title {
+  flex: 0 0 auto;
+  margin-right: 2%;
+}
+
+.gene-card-img-placeholder .img-plot {
+  margin-top: 10px;
+  width: 100%;
+  height: auto;              /* preserve aspect ratio for PNGs */
+  max-height: 1440px;        /* hard cap per requirement */
+  object-fit: contain;       /* prevents stretching; letterboxes if needed */
+  display: block;
+  border-radius: 8px;
+  background-color: var(--dl-color-pure-white);
+}
+
+.gene-card-img-placeholder .download-tsv {
+  background-color: var(--dl-color-brand-blue);
+}
+
+.gene-card-img-placeholder .img-plot {
+  aspect-ratio: 4 / 3;       /* 1920 × 1440 */
+  height: auto;
+  object-fit: contain;
 }
 
 .gene-card h3 {
