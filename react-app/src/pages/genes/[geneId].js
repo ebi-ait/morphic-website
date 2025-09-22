@@ -211,46 +211,6 @@ const GenePage = ({ params }) => {
                                         <p>No image available</p>
                                       )}
                                     </div>
-
-
-                                    {/*<div className="title-button-container">*/}
-                                    {/*    <div className="svg-title">{analysis.title}</div>*/}
-                                    {/*    /!*<div className="gene-card-header-link download-tsv"> <a href={`http://127.0.0.1:3000//download?tsv_file_id=${analysis.tsv_file_id}&file_name=${analysis.title}`}>Download TSV </a></div>*!/*/}
-
-                                    {/*  /!* SHOW the Download button ONLY if tsv_file_id exists *!/*/}
-                                    {/*  {analysis?.tsv_file_id ? (*/}
-                                    {/*    <div className="gene-card-header-link download-tsv">*/}
-                                    {/*      <a*/}
-                                    {/*        href={`http://127.0.0.1:3000/download?tsv_file_id=${encodeURIComponent(*/}
-                                    {/*          analysis.tsv_file_id*/}
-                                    {/*        )}&file_name=${encodeURIComponent(analysis.title || geneData.Name || 'download')}`}*/}
-                                    {/*      >*/}
-                                    {/*        Download TSV*/}
-                                    {/*      </a>*/}
-                                    {/*    </div>*/}
-                                    {/*  ) : null}*/}
-                                    {/*</div>*/}
-                                    {/*{analysis.svg ? (*/}
-                                    {/*  // Render SVG if available*/}
-                                    {/*  <img*/}
-                                    {/*    src={`data:image/svg+xml;utf8,${encodeURIComponent(analysis.svg)}`}*/}
-                                    {/*    className="img-plot"*/}
-                                    {/*    alt={analysis.title}*/}
-                                    {/*  />*/}
-                                    {/*) : analysis.png_file_id ? (*/}
-                                    {/*  // Render PNG if SVG is not available*/}
-                                    {/*  <img*/}
-                                    {/*    src={`http://127.0.0.1:3000/download/png?file_id=${analysis.png_file_id}`}*/}
-                                    {/*    className="img-plot"*/}
-                                    {/*    alt={analysis.title}*/}
-                                    {/*  />*/}
-                                    {/*) : (*/}
-                                    {/*  // Fallback if neither SVG nor PNG is available*/}
-                                    {/*  <p>No image available</p>*/}
-                                    {/*)}*/}
-
-
-
                                   </div>
                                 ))}
                               </div>
