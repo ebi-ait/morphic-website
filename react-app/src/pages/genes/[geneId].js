@@ -175,20 +175,7 @@ const GenePage = ({ params }) => {
                                   <div className="gene-card-img-placeholder" key={index}>
                                     <div className="title-button-container">
                                         <div className="svg-title">{analysis.title}</div>
-                                        {/*<div className="gene-card-header-link download-tsv"> <a href={`http://127.0.0.1:3000//download?tsv_file_id=${analysis.tsv_file_id}&file_name=${analysis.title}`}>Download TSV </a></div>*/}
-
-                                      {/* SHOW the Download button ONLY if tsv_file_id exists */}
-                                      {analysis?.tsv_file_id ? (
-                                        <div className="gene-card-header-link download-tsv">
-                                          <a
-                                            href={`http://127.0.0.1:3000//download?tsv_file_id=${encodeURIComponent(
-                                              analysis.tsv_file_id
-                                            )}&file_name=${encodeURIComponent(analysis.title || geneData.Name || 'download')}`}
-                                          >
-                                            Download TSV
-                                          </a>
-                                        </div>
-                                      ) : null}
+                                        <div className="gene-card-header-link download-tsv"> <a href={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download?tsv_file_id=${analysis.tsv_file_id}&file_name=${analysis.title}`}>Download TSV </a></div>
                                     </div>
                                     {analysis.svg ? (
                                       // Render SVG if available
