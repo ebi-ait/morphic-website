@@ -58,7 +58,7 @@ const GenePage = ({ params }) => {
                         <li>
                             <a href="#" className="gene-menu-link gene-active">Overview</a>
                         </li>
-                        {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') && geneData.Analysis_Results[0] && (
+                        {geneData.tags && Array.isArray(geneData.tags) && geneData.Analysis_Results[0] && (
                             <li>
                                 <a href="#results" className="gene-menu-link">Analysis Results</a>
                             </li>
@@ -108,7 +108,7 @@ const GenePage = ({ params }) => {
                             </div>
                             <div className="gene-card-body gene-card-summary">
                                 <h2 className="gene-card-summary-title">MorPhiC summary</h2>
-                                {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') && (
+                                {geneData.tags && Array.isArray(geneData.tags) && (
                                     <dl className="gene-card-body-dl-grid">
                                         <dt>Studied by MorPhic</dt>
                                         <dd>YES</dd>
@@ -123,7 +123,7 @@ const GenePage = ({ params }) => {
                                         <dd>Fred Hutch Cancer Center</dd>
                                     </dl>
                                 )}
-                                {geneData.tags && Array.isArray(geneData.tags) && !geneData.tags.includes('release-1') && (
+                                {geneData.tags && Array.isArray(geneData.tags) && (
                                     <dl className="gene-card-body-dl-grid no-data">
                                         <dt className="no-data">Currently no MorPhiC results are available for this Gene</dt>
                                     </dl>
@@ -156,7 +156,7 @@ const GenePage = ({ params }) => {
                         </div>
                     </div>
                 </section>
-                {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') && geneData.Analysis_Results[0] && (
+                {geneData.tags && Array.isArray(geneData.tags) && geneData.Analysis_Results[0] && (
                     <section id="results">
                         <div className="gene-section-header">
                             <h1 className="gene-section-title">Analysis Results</h1>
@@ -236,7 +236,7 @@ const GenePage = ({ params }) => {
                         </div>
                     </section>
                     )}
-                    {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') && geneData.Enrichment_Analysis[0] && (
+                    {geneData.tags && Array.isArray(geneData.tags) && geneData.Enrichment_Analysis[0] && (
                     <section id="results">
                         <div className="gene-card">
                             <div className="gene-card-header">
