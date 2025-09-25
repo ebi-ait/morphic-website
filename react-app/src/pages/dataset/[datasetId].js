@@ -65,7 +65,7 @@ function resolveInstituteLogo(raw) {
 
 const fetchGenesInBulk = async (genes) => {
   const res = await fetch(
-    "http://127.0.0.1:3000/api/bulk-gene-search",
+    "https://46ucfedadd.execute-api.us-east-1.amazonaws.com/api/bulk-gene-search",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
