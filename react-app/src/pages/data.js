@@ -318,17 +318,29 @@ export default function Data() {
           <h3>{filteredData.length} of {totalCount} studies shown</h3>
 
           <table className="data-card-table">
+            <colgroup>
+              <col style={{ width: "36px" }} />   {/* icon */}
+              <col style={{ width: "27%" }} />    {/* study title */}
+              <col style={{ width: "16%" }} />    {/* study label */}
+              <col style={{ width: "10%" }} />    {/* target genes */}
+              <col style={{ width: "10%" }} />    {/* model system */}
+              <col style={{ width: "7%" }} />    {/* cell line */}
+              <col style={{ width: "7%" }} />    {/* assay */}
+              <col style={{ width: "10%" }} />    {/* perturbation */}
+              <col style={{ width: "100px" }} />  {/* downloads */}
+            </colgroup>
+
             <thead className="data-card-table-heading">
             <tr>
               <th scope="col" aria-label="icon"></th>
               <th scope="col" className="bold">study title</th>
-              <th scope="col">Label</th>
+              <th scope="col">study label</th>
               <th scope="col">target genes</th>
               <th scope="col">model system</th>
               <th scope="col">cell line</th>
               <th scope="col">assay</th>
               <th scope="col">perturbation type</th>
-              <th scope="col" aria-label="downloads"></th>
+              {/*<th scope="col" aria-label="downloads"></th>*/}
             </tr>
             </thead>
 
