@@ -35,7 +35,7 @@ export default function Data() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [collapse, setCollapse] = useState(false);
+  const [collapse, setCollapse] = useState(true);
   const handleCollapse = () => setCollapse(!collapse);
 
   const [searchInput, setSearchInput] = useState("");
