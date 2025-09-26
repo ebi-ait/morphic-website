@@ -2290,7 +2290,9 @@ h2.gene-card-body-title {
 
 .gene-card-group {
   display: flex;
-  margin-right: 1rem;
+  flex-wrap: wrap;   /* ← allow wrapping */
+  gap: 12px;         /* space between items */
+  margin-right: 0;   /* was 1rem; not needed with gap */
 }
 
 .title-group {
