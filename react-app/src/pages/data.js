@@ -49,6 +49,9 @@ export default function Data() {
   const [selectedPerturbationType, setSelectedPerturbationType] = useState(new Set());
   const [selectedModelSystem, setSelectedModelSystem] = useState(new Set());
 
+  const [requestedLabel, setRequestedLabel] = useState(null);
+  const [didScrollToLabel, setDidScrollToLabel] = useState(false);
+
   const API_BASE = process.env.GATSBY_INGEST_API ?? "https://api.ingest.archive.morphic.bio";
 
   const handleClearAll = () => {
@@ -119,6 +122,15 @@ export default function Data() {
     getStudiesData();
   }, [API_BASE]);
 
+  useEffect(() => {
+    // read ?label=... from the URL (only in browser)
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const qLabel = params.get("label");
+      if (qLabel) setRequestedLabel(qLabel);
+    }
+  }, []);
+
   const filteredData = useMemo(() => {
     const all = studiesData?._embedded?.studies || [];
     let result = all;
@@ -180,6 +192,19 @@ export default function Data() {
     selectedModelSystem,
     selectedPerturbationType,
   ]);
+
+  // After data loads, scroll to and briefly highlight the matching row
+  useEffect(() => {
+    if (!requestedLabel || !filteredData?.length || didScrollToLabel) return;
+    const el = document.getElementById(`study-row-${requestedLabel}`);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      // Add a temporary flash highlight
+      el.classList.add("row-flash-highlight");
+      setTimeout(() => el.classList.remove("row-flash-highlight"), 2500);
+      setDidScrollToLabel(true);
+    }
+  }, [requestedLabel, filteredData, didScrollToLabel]);
 
   if (isLoading) return (<Layout><p>Loading...</p></Layout>);
   if (error) return (<Layout><p>Error loading studies</p></Layout>);
@@ -297,6 +322,7 @@ export default function Data() {
             <tr>
               <th scope="col" aria-label="icon"></th>
               <th scope="col" className="bold">study title</th>
+              <th scope="col">Label</th>
               <th scope="col">target genes</th>
               <th scope="col">model system</th>
               <th scope="col">cell line</th>
@@ -315,14 +341,26 @@ export default function Data() {
 
               const datasetId = encodeURIComponent(data.id ?? "");
 
+              const shortLabel = data.content?.label?.trim() || "—";
+              const isRequested = requestedLabel && shortLabel === requestedLabel;
+
               return (
-                <tr key={`content_item_${data.id || index}`}>
+                <tr
+                  key={`content_item_${data.id || index}`}
+                  id={`study-row-${shortLabel}`}
+                  className={isRequested ? "row-flash-highlight" : ""}
+                  style={isRequested ? { outline: "2px solid #f5c518", background: "#fffbe6" } : undefined}
+                >
                   <td><span className="icon-triple-squares icon"></span></td>
 
                   <td className="bold">
                     <div title={title} className="data-text">
                       <Link to={`/dataset/${datasetId}`}>{title}</Link>
                     </div>
+                  </td>
+
+                  <td className="label">
+                    <div className="data-text">{shortLabel}</div>
                   </td>
 
                   <td>
