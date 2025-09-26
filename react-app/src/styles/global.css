@@ -2446,6 +2446,16 @@ h2.gene-card-body-title {
   max-width: fit-content;
 }
 
+.data-card-table td.label .data-text {
+  display: block;
+  white-space: normal;       /* allow wrapping */
+  overflow: visible;         /* no clipping */
+  text-overflow: clip;       /* no ellipsis */
+  word-break: break-word;    /* break long tokens if needed */
+  overflow-wrap: anywhere;   /* force wrap at any point */
+  min-width: 0;              /* if a parent is flex, allow shrink/wrap */
+}
+
 .order-cell-lines.clone-id-width {
   max-width: fit-content;
 }
