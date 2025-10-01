@@ -351,7 +351,7 @@ export default function Data() {
               const title = data.content?.study_title;
               if (!title) return null;
 
-              const datasetId = encodeURIComponent(data.id ?? "");
+              // const datasetId = encodeURIComponent(data.id ?? "");
 
               // use helper to make it user-friendly
               const formatLabel = (label) => label?.replaceAll("_", " ") ?? label;
@@ -368,10 +368,14 @@ export default function Data() {
                 >
                   <td><span className="icon-triple-squares icon"></span></td>
 
+                  {/*<td className="bold">*/}
+                  {/*  <div title={title} className="data-text">*/}
+                  {/*    <Link to={`/dataset/${datasetId}`}>{title}</Link>*/}
+                  {/*  </div>*/}
+                  {/*</td>*/}
+
                   <td className="bold">
-                    <div title={title} className="data-text">
-                      <Link to={`/dataset/${datasetId}`}>{title}</Link>
-                    </div>
+                    <div title={title} className="data-text">{title}</div>
                   </td>
 
                   <td className="label">
