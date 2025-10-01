@@ -111,6 +111,11 @@ p {
   overflow: hidden;
 }
 
+.card-body {
+  overflow: visible;
+}
+
+
 .border-bottom {
   /* grey */
   border-bottom: 1px solid rgba(153, 153, 153, 1);
@@ -390,7 +395,7 @@ dl {
 
   .data-img-placeholder {
     overflow: hidden;
-  
+
     min-width: auto;
     min-height: 391px;
   }
@@ -445,8 +450,48 @@ dl {
   .card-header-row svg {
     display: none;
   }
-  
+
   .flex-wrap > * {
     flex: 1 1 auto;
   }
+}
+
+.expanded-gene-list {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1000;
+
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 8px;
+
+  width: min(420px, 90vw);
+  max-height: 60vh;
+  overflow: auto;
+
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: left;
+
+  color: var(--dl-color-default-smartblack);
+  background-color: var(--dl-color-default-absolutewhite);
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+.expanded-gene-list figcaption {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.expanded-gene-list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.expanded-gene-list li {
+  margin: 4px 0;
 }

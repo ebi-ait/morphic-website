@@ -2290,7 +2290,9 @@ h2.gene-card-body-title {
 
 .gene-card-group {
   display: flex;
-  margin-right: 1rem;
+  flex-wrap: wrap;   /* ← allow wrapping */
+  gap: 12px;         /* space between items */
+  margin-right: 0;   /* was 1rem; not needed with gap */
 }
 
 .title-group {
@@ -2444,6 +2446,16 @@ h2.gene-card-body-title {
 
 .data-card-table td.order-cell-lines.button-wide {
   max-width: fit-content;
+}
+
+.data-card-table td.label .data-text {
+  display: block;
+  white-space: normal;       /* allow wrapping */
+  overflow: visible;         /* no clipping */
+  text-overflow: clip;       /* no ellipsis */
+  word-break: break-word;    /* break long tokens if needed */
+  overflow-wrap: anywhere;   /* force wrap at any point */
+  min-width: 0;              /* if a parent is flex, allow shrink/wrap */
 }
 
 .order-cell-lines.clone-id-width {
