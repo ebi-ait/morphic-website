@@ -52,7 +52,7 @@ export default function Data() {
   const [requestedLabel, setRequestedLabel] = useState(null);
   const [didScrollToLabel, setDidScrollToLabel] = useState(false);
 
-  const API_BASE = process.env.GATSBY_INGEST_API ?? "https://api.ingest.archive.morphic.bio";
+  const API_BASE = process.env.GATSBY_INGEST_API ?? "https://api.ingest.dev.archive.morphic.bio";
 
   const handleClearAll = () => {
     setSearchInput("");
