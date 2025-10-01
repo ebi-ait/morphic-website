@@ -353,7 +353,10 @@ export default function Data() {
 
               const datasetId = encodeURIComponent(data.id ?? "");
 
-              const shortLabel = data.content?.label?.trim() || "—";
+              // use helper to make it user-friendly
+              const formatLabel = (label) => label?.replaceAll("_", " ") ?? label;
+
+              const shortLabel = formatLabel(data.content?.label?.trim()) || "—";
               const isRequested = requestedLabel && shortLabel === requestedLabel;
 
               return (

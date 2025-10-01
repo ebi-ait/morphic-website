@@ -6,11 +6,14 @@ import MousePhenotype from "../../components/MousePhenotype";
 
 const API_BASE = process.env.GATSBY_INGEST_API ?? "https://api.ingest.archive.morphic.bio";
 
+// helper to make labels more user-friendly
+const formatLabel = (label) => label?.replaceAll("_", " ") ?? label;
+
 // --- helpers: collect studies from both arrays and de-dupe by id (or label) ---
 const collectStudies = (arr = []) =>
   (arr || [])
     .map(a => ({
-      label: a?.study_label?.trim() || null,
+      label: formatLabel(a?.study_label?.trim()) || null,
       id: a?.study_id || null,
     }))
     .filter(s => s.label);
