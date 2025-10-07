@@ -63,6 +63,12 @@ export default function Data() {
     setSelectedModelSystem(new Set());
   };
 
+  const GeneIcon = () => (
+    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10.0275 0H1.9725C0.885 0 0 0.885 0 1.9725V10.0275C0 11.115 0.885 12 1.9725 12H10.0275C11.115 12 12 11.115 12 10.0275V1.9725C12 0.885 11.115 0 10.0275 0ZM8.1225 8.1225C6.9525 9.2925 5.055 9.2925 3.8775 8.1225C2.7075 6.9525 2.7075 5.0475 3.8775 3.8775C5.0475 2.7075 6.945 2.7075 8.1225 3.8775C9.2925 5.0475 9.2925 6.945 8.1225 8.1225Z" fill="#999999"/>
+    </svg>
+  );
+
   const updateSet = (set, item) => {
     const newSet = new Set(set);
     if (newSet.has(item)) newSet.delete(item);
@@ -383,31 +389,101 @@ export default function Data() {
                     {hasExtra && (
                       <div className="gene-count" onClick={() => setGeneListId(index)}>
                         <span aria-hidden className="icon-plus-circle"></span> {targetGenes.length - 1} more
-                        {geneListId === index ? (
-                          <figure className="expanded-gene-list">
-                            <button
-                              className="gene-list-exit"
-                              aria-label="Close list"
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setGeneListId(-1);
+                        {geneListId === index ? (() => {
+                          const COL_THRESHOLD = 7;
+                          const desiredCols = Math.min(3, Math.ceil((targetGenes?.length || 0) / COL_THRESHOLD)) || 1;
+
+                          const vw = typeof window !== "undefined" ? window.innerWidth : 1200;
+                          const maxColsByViewport = vw >= 700 ? 3 : vw >= 480 ? 2 : 1;
+                          const colCount = Math.min(desiredCols, maxColsByViewport);
+
+                          // Figma geometry
+                          const COLUMN_START_GAP = 20;
+                          const COLUMN_STRIDE    = 150;
+                          const COLUMN_WIDTH     = COLUMN_STRIDE - COLUMN_START_GAP;
+
+                          const PANEL_MAX_PX = 620; // safety
+
+                          return (
+                            <figure
+                              className="expanded-gene-list expanded-gene-grid"
+                              onClick={(e) => e.stopPropagation()}
+                              style={{
+                                padding: "12px 12px 8px 20px",
+                                width: "max-content",
+                                maxWidth: `min(${PANEL_MAX_PX}px, calc(100vw - 32px))`,
+                                maxHeight: "min(360px, 60vh)",
+                                overflowY: "auto",
+                                overflowX: "hidden",
+                                left: "50%",
+                                transform: "translateX(-50%)",
+                                border: "none",
+                                boxShadow: "none",
                               }}
                             >
-                              <span className="icon-x icon"></span>
-                            </button>
-                            <figcaption>{targetGenes.length} genes</figcaption>
-                            <ul>
-                              {targetGenes.map((gene, i) => (
-                                <li key={`list_item_${i}`}>
-                                  <Link to={`/genes/${targetGenesMap[gene] ?? ""}`} className="gene-link">
-                                    {gene}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          </figure>
-                        ) : null}
+                              <button
+                                className="gene-list-exit"
+                                aria-label="Close list"
+                                type="button"
+                                onClick={(e) => { e.stopPropagation(); setGeneListId(-1); }}
+                                style={{ background: "transparent", border: "none", padding: 0 }}
+                              >
+                                <span className="icon-x icon"></span>
+                              </button>
+
+                              <div className="gene-grid-header">
+                                <span className="gene-grid-count">{targetGenes.length} genes</span>
+                              </div>
+                              <div className="gene-grid-divider" aria-hidden="true"></div>
+
+                              <div
+                                className="gene-grid"
+                                role="list"
+                                aria-label="All target genes"
+                                style={{
+                                  display: "grid",
+                                  gridTemplateColumns: `repeat(${colCount}, ${COLUMN_WIDTH}px)`,
+                                  columnGap: COLUMN_START_GAP,
+                                  rowGap: 0,
+                                  gridAutoRows: "30px",
+                                  marginTop: 0,
+                                  paddingRight: 6,
+                                }}
+                              >
+                                {targetGenes.map((gene, i) => {
+                                  const hgnc = targetGenesMap[gene] ?? "";
+                                  return (
+                                    <Link
+                                      key={`list_item_${i}`}
+                                      to={`/genes/${hgnc}`}
+                                      className="gene-grid-item gene-link"
+                                      role="listitem"
+                                      title={gene}
+                                      style={{
+                                        display: "grid",
+                                        gridTemplateColumns: "22px 1fr", // icon + text (text starts at +22px)
+                                        alignItems: "center",
+                                        padding: 0,
+                                        border: "none",
+                                        background: "transparent",
+                                        color: "#111827",
+                                        fontSize: 13,
+                                        lineHeight: 1.2,
+                                        width: "100%",
+                                      }}
+                                    >
+              <span className="gene-grid-icon" style={{ lineHeight: 0 }}>
+                <GeneIcon />
+              </span>
+                                      <span className="gene-grid-text">{gene}</span>
+                                    </Link>
+                                  );
+                                })}
+                              </div>
+                            </figure>
+                          );
+                        })() : null}
+
                       </div>
                     )}
                   </td>
