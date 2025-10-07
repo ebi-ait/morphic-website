@@ -389,31 +389,101 @@ export default function Data() {
                     {hasExtra && (
                       <div className="gene-count" onClick={() => setGeneListId(index)}>
                         <span aria-hidden className="icon-plus-circle"></span> {targetGenes.length - 1} more
-                        {geneListId === index ? (
-                          <figure className="expanded-gene-list">
-                            <button
-                              className="gene-list-exit"
-                              aria-label="Close list"
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setGeneListId(-1);
+                        {geneListId === index ? (() => {
+                          const COL_THRESHOLD = 7;
+                          const desiredCols = Math.min(3, Math.ceil((targetGenes?.length || 0) / COL_THRESHOLD)) || 1;
+
+                          const vw = typeof window !== "undefined" ? window.innerWidth : 1200;
+                          const maxColsByViewport = vw >= 700 ? 3 : vw >= 480 ? 2 : 1;
+                          const colCount = Math.min(desiredCols, maxColsByViewport);
+
+                          // Figma geometry
+                          const COLUMN_START_GAP = 20;
+                          const COLUMN_STRIDE    = 150;
+                          const COLUMN_WIDTH     = COLUMN_STRIDE - COLUMN_START_GAP;
+
+                          const PANEL_MAX_PX = 620; // safety
+
+                          return (
+                            <figure
+                              className="expanded-gene-list expanded-gene-grid"
+                              onClick={(e) => e.stopPropagation()}
+                              style={{
+                                padding: "12px 12px 8px 20px",
+                                width: "max-content",
+                                maxWidth: `min(${PANEL_MAX_PX}px, calc(100vw - 32px))`,
+                                maxHeight: "min(360px, 60vh)",
+                                overflowY: "auto",
+                                overflowX: "hidden",
+                                left: "50%",
+                                transform: "translateX(-50%)",
+                                border: "none",
+                                boxShadow: "none",
                               }}
                             >
-                              <span className="icon-x icon"></span>
-                            </button>
-                            <figcaption>{targetGenes.length} genes</figcaption>
-                            <ul>
-                              {targetGenes.map((gene, i) => (
-                                <li key={`list_item_${i}`}>
-                                  <Link to={`/genes/${targetGenesMap[gene] ?? ""}`} className="gene-link">
-                                    {gene}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          </figure>
-                        ) : null}
+                              <button
+                                className="gene-list-exit"
+                                aria-label="Close list"
+                                type="button"
+                                onClick={(e) => { e.stopPropagation(); setGeneListId(-1); }}
+                                style={{ background: "transparent", border: "none", padding: 0 }}
+                              >
+                                <span className="icon-x icon"></span>
+                              </button>
+
+                              <div className="gene-grid-header">
+                                <span className="gene-grid-count">{targetGenes.length} genes</span>
+                              </div>
+                              <div className="gene-grid-divider" aria-hidden="true"></div>
+
+                              <div
+                                className="gene-grid"
+                                role="list"
+                                aria-label="All target genes"
+                                style={{
+                                  display: "grid",
+                                  gridTemplateColumns: `repeat(${colCount}, ${COLUMN_WIDTH}px)`,
+                                  columnGap: COLUMN_START_GAP,
+                                  rowGap: 0,
+                                  gridAutoRows: "30px",
+                                  marginTop: 0,
+                                  paddingRight: 6,
+                                }}
+                              >
+                                {targetGenes.map((gene, i) => {
+                                  const hgnc = targetGenesMap[gene] ?? "";
+                                  return (
+                                    <Link
+                                      key={`list_item_${i}`}
+                                      to={`/genes/${hgnc}`}
+                                      className="gene-grid-item gene-link"
+                                      role="listitem"
+                                      title={gene}
+                                      style={{
+                                        display: "grid",
+                                        gridTemplateColumns: "22px 1fr", // icon + text (text starts at +22px)
+                                        alignItems: "center",
+                                        padding: 0,
+                                        border: "none",
+                                        background: "transparent",
+                                        color: "#111827",
+                                        fontSize: 13,
+                                        lineHeight: 1.2,
+                                        width: "100%",
+                                      }}
+                                    >
+              <span className="gene-grid-icon" style={{ lineHeight: 0 }}>
+                <GeneIcon />
+              </span>
+                                      <span className="gene-grid-text">{gene}</span>
+                                    </Link>
+                                  );
+                                })}
+                              </div>
+                            </figure>
+                          );
+                        })() : null}
+
                       </div>
                     )}
                   </td>
