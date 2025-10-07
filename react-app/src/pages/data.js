@@ -63,6 +63,12 @@ export default function Data() {
     setSelectedModelSystem(new Set());
   };
 
+  const GeneIcon = () => (
+    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10.0275 0H1.9725C0.885 0 0 0.885 0 1.9725V10.0275C0 11.115 0.885 12 1.9725 12H10.0275C11.115 12 12 11.115 12 10.0275V1.9725C12 0.885 11.115 0 10.0275 0ZM8.1225 8.1225C6.9525 9.2925 5.055 9.2925 3.8775 8.1225C2.7075 6.9525 2.7075 5.0475 3.8775 3.8775C5.0475 2.7075 6.945 2.7075 8.1225 3.8775C9.2925 5.0475 9.2925 6.945 8.1225 8.1225Z" fill="#999999"/>
+    </svg>
+  );
+
   const updateSet = (set, item) => {
     const newSet = new Set(set);
     if (newSet.has(item)) newSet.delete(item);
