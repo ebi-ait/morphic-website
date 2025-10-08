@@ -7,6 +7,13 @@ export const articles = [
   "imageSrc": "cellular-modelling-1.jpg"
 },
 {
+  "date":"21 August 2025",
+  "title": 'Looking beyond suspect genes in cancer',
+  "subTitle": 'Looking beyond suspect genes in cancer',
+  "link": "https://www.fredhutch.org/en/news/center-news/2025/08/wei-sun-nih-morphic-crispr-uw.html",
+  "imageSrc": "news-fred-hutch.jpeg"
+},
+{
   "date":"10 April 2025",
   "title": 'Figuring Out What Genes Do',
   "subTitle": 'Figuring Out What Genes Do',
