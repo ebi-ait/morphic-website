@@ -206,11 +206,11 @@ const GenePage = ({ params }) => {
                         <div className="title-button-container">
                           <div className="svg-title">{analysis.title}</div>
 
-                          {analysis?.tsv_file_id && (
+                          {analysis?.s3_tsv_key && (
                             <div className="gene-card-header-link download-tsv">
                               <a
                                 href={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download?tsv_file_id=${encodeURIComponent(
-                                  analysis.tsv_file_id
+                                  analysis.s3_tsv_key
                                 )}&file_name=${encodeURIComponent(analysis.title || geneData.Name || 'download')}`}
                               >
                                 Download TSV
@@ -228,9 +228,9 @@ const GenePage = ({ params }) => {
                               loading="lazy"
                               decoding="async"
                             />
-                          ) : analysis.png_file_id ? (
+                          ) : analysis.s3_png_key ? (
                             <img
-                              src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${encodeURIComponent(analysis.png_file_id)}`}
+                              src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${encodeURIComponent(analysis.s3_png_key)}`}
                               className="img-plot"
                               alt={analysis.title}
                               loading="lazy"
@@ -287,9 +287,9 @@ const GenePage = ({ params }) => {
                             className="img-plot"
                             alt={analysis.title}
                           />
-                        ) : analysis.png_file_id ? (
+                        ) : analysis.s3_png_key ? (
                           <img
-                            src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${encodeURIComponent(analysis.png_file_id)}`}
+                            src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${encodeURIComponent(analysis.s3_png_key)}`}
                             className="img-plot"
                             alt={analysis.title}
                           />
