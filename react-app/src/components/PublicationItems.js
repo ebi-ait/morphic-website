@@ -9,7 +9,8 @@ export default function PublicationItems() {
       <ul className={styles.publicationList}>
         {
           publications.map((item) => {
-            const pmid = item.pmid || "N/A"
+            const pmid = item.pmid || "N/A";
+            const journalReferenceInfo = item.journalReferenceInfo? `;${item.journalReferenceInfo}.`: "";
 
             return (
               <li key={item.id}>
@@ -17,7 +18,7 @@ export default function PublicationItems() {
                   <h2>
                     <a className="link" href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
                   </h2>
-                  <p><i>{item.journal}</i>, {item.date}</p>
+                  <p><i>{item.journal}</i>, {item.date}{journalReferenceInfo}</p>
                   <p><b>{item.authors}</b></p>
                   <p>
                     {item.centers.split(" ").map((center) => (
