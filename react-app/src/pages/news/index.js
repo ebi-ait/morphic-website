@@ -28,6 +28,7 @@ export default function News() {
                   <ul className={styles.cardList}>
                     <li><a href="#news">News</a></li>
                     <li><a href="#publications">Publications</a></li>
+                    <li><a href="https://connect.biorxiv.org/relate/content/220" target="_blank" rel="noopener noreferrer">NHGRI MorPhiC bioRxiv</a></li>
                   </ul>
                 </nav>
               </div>
