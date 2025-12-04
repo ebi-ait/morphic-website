@@ -2,13 +2,22 @@ import React from 'react'
 import * as styles from "../styles/news.module.css"
 import { publications } from "../utils/constants/PublicationArticles.js"
 
+// Utility function, convert date string (YYYY MM DD) to Date object
+const parseDate = (dateStr) => {
+  const [year,  month, day] = dateStr.split();
+  return new Date(`${month} ${day}, ${year}`);
+};
+
+// Sort publications by date (newest to oldest)
+const sortedPublications = [...publications].sort((a, b) => parseDate(b.date) - parseDate(a.date));
+
 
 export default function PublicationItems() {
   return (
     <>
       <ul className={styles.publicationList}>
         {
-          publications.map((item) => {
+          sortedPublications.map((item) => {
             const pmid = item.pmid || "N/A";
             const journalReferenceInfo = item.journalReferenceInfo? `;${item.journalReferenceInfo}.`: "";
 
