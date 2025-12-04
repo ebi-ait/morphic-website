@@ -2139,6 +2139,7 @@ ul {
   padding: 2rem;
 }
 
+
 /*.gene-grid {*/
 /*  display: grid;*/
 /*  grid-template-columns: repeat(2, 1fr); !* 2 items per row *!*/
@@ -2422,6 +2423,360 @@ h2.gene-card-body-title {
   text-align: left;
   color: var(--dl-color-brand-orange);
 }
+
+/* --- Differential expression badge --- */
+
+.de-wrapper {
+  margin-top: 0.4rem;
+}
+
+.de-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: 6px;
+  background: #f9fafb;           /* very light grey */
+  border: 1px solid #e5e7eb;     /* light divider */
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.de-badge-line {
+  color: #4b5563;                /* gray-700-ish */
+}
+
+.de-badge-counts {
+  margin-left: auto;
+  display: flex;
+  gap: 0.6rem;
+  font-weight: 600;
+}
+
+.mini-up {
+  color: #DC143C;                /* unified green */
+}
+
+.mini-down {
+  color: #1E90FF;                /* unified red */
+}
+
+.de-badge-arrow {
+  font-size: 0.75rem;
+  color: #9ca3af;                /* muted grey */
+}
+
+/* --- Differential expression summary panel --- */
+
+.de-summary-panel {
+  margin: 0.4rem 0 0.6rem;
+  padding: 0.55rem 0.75rem 0.6rem;
+  border-radius: 6px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  font-size: 0.85rem;
+}
+
+/* top metrics row */
+
+.de-summary-metrics {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.de-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.de-metric-label {
+  font-size: 0.75rem;
+  color: #9ca3af;                /* light grey label */
+}
+
+.de-metric-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111827;                /* near-black */
+}
+
+.de-summary-separator {
+  border-bottom: 1px solid #e5e7eb;
+  margin: 0.5rem 0 0.55rem;
+}
+
+/* Top ↑ / Top ↓ columns */
+
+.de-summary-top-lists {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.4rem;
+}
+
+.de-summary-column {
+  min-width: 0;
+}
+
+.de-summary-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.de-summary-title.up {
+  color: #DC143C;                /* same green as badge */
+}
+
+.de-summary-title.down {
+  color: #1E90FF;                /* same red as badge */
+}
+
+.de-summary-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* each gene row */
+
+.de-summary-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem;
+  line-height: 1.3;
+}
+
+.de-summary-main {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.gene-symbol {
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: #4b5563 !important;
+}
+
+.de-summary-lfc {
+  font-size: 0.82rem;
+  color: #4b5563;        /* neutral grey (no green/red) */
+}
+
+/* Up/down arrows keep the colour */
+.de-summary-arrow.up {
+  color: #DC143C;        /* unified green */
+  font-weight: 600;
+}
+
+.de-summary-arrow.down {
+  color: #1E90FF;        /* unified red */
+  font-weight: 600;
+}
+
+/* padj info (lighter grey) */
+.de-summary-meta,
+.de-summary-p {
+  font-size: 0.75rem;
+  color: #9ca3af;        /* grey-400/500 */
+  white-space: nowrap;
+}
+
+/* padj text */
+
+.de-summary-p {
+  font-size: 0.75rem;
+  color: #9ca3af;                /* light grey like screenshot */
+  white-space: nowrap;
+}
+
+/* small screens */
+
+@media (max-width: 600px) {
+  .de-summary-metrics {
+    gap: 1.5rem;
+  }
+  .de-badge {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+}
+
+/* --- Experiment context chips -------------------------------------- */
+
+.experiment-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.35rem 0 0.5rem;
+}
+
+.experiment-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  color: #4b5563;          /* grey-600 */
+  background: #f9fafb;     /* very light */
+}
+
+.experiment-chip-study {
+  background: #e0e7ff;      /* soft indigo */
+  border-color: #c7d2fe;
+  color: #3730a3;           /* indigo-700 */
+}
+
+.experiment-chip-assay {
+  background: #ecfdf3;      /* soft green tint */
+  border-color: #bbf7d0;
+}
+
+.experiment-chip-dpc {
+  background: #eff6ff;      /* soft blue tint */
+  border-color: #bfdbfe;
+}
+
+.experiment-chip-perturbation {
+  background: #fef3c7;      /* soft amber tint */
+  border-color: #fde68a;
+}
+
+.experiment-chip-time {
+  background: #f1f5f9;      /* neutral grey tint */
+  border-color: #e5e7eb;
+}
+
+.experiment-chip-model {
+  background: #fef2f2;      /* soft red tint */
+  border-color: #fecaca;
+}
+
+.experiment-chip-gene {
+  background: #f3e8ff;      /* soft purple tint */
+  border-color: #e9d5ff;
+}
+
+/* --- DE filters / thresholds row ---------------------------------- */
+
+.de-controls {
+  margin-bottom: 0.5rem;
+}
+
+.de-controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.de-filters-row {
+  margin-top: 0.25rem;
+}
+
+/* Generic control group wrapper */
+.de-control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+}
+
+/* Label text, reuse light grey from metrics */
+.de-control-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #9ca3af; /* grey-400/500 */
+}
+
+/* --- Significance thresholds "pill" ------------------------------- */
+
+.de-thresholds-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.de-thresholds-label {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* pill container */
+.de-thresholds-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;     /* same border as summary panel */
+  background: #f9fafb;           /* very light grey */
+}
+
+/* each field inside the pill */
+.de-threshold-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+  color: #4b5563;                /* grey-600 */
+}
+
+.de-threshold-caption {
+  white-space: nowrap;
+}
+
+/* small separator dot */
+.de-threshold-separator {
+  font-size: 0.85rem;
+  color: #d1d5db;                /* grey-300 */
+}
+
+/* numeric inputs */
+.de-threshold-input {
+  width: 4.2rem;
+  padding: 0.15rem 0.35rem;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  font-size: 0.78rem;
+  color: #111827;                /* near-black */
+  text-align: right;
+  -moz-appearance: textfield;
+}
+
+/* hide spinners in number input (Chrome, Edge, Safari) */
+.de-threshold-input::-webkit-outer-spin-button,
+.de-threshold-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* focus state */
+.de-threshold-input:focus {
+  outline: none;
+  border-color: #60a5fa;         /* blue-400 */
+  box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.35);
+}
+
+/* --- Responsive tweaks -------------------------------------------- */
+
+@media (max-width: 700px) {
+  .de-controls-row {
+    align-items: flex-start;
+  }
+
+  .de-thresholds-group {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+}
+
+
 
 /* --- CONTACT US PAGE --- */
 
