@@ -22,7 +22,7 @@ export default function PublicationItems() {
             const journalReferenceInfo = item.journalReferenceInfo? `;${item.journalReferenceInfo}.`: "";
 
             return (
-              <li key={item.id}>
+              <li key={item.pmid || item.link}>
                 <article className={styles.publicationArticle}>
                   <h2>
                     <a className="link" href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
