@@ -1099,6 +1099,8 @@ const DynamicVolcanoPlot = ({
       );
     }
 
+    const heatmapHeight = 240; // try 220–260 until it feels right
+
     return (
       <Plot
         ref={plotRef}
@@ -1120,7 +1122,7 @@ const DynamicVolcanoPlot = ({
             range: yRange || defaultRanges.y,
           },
           showlegend: false,
-          height,
+          height: heatmapHeight,     // 👈 fixed height
           hovermode: "closest",
           uirevision: "volcano-axes",
           transition: { duration: 0 },
@@ -1130,11 +1132,12 @@ const DynamicVolcanoPlot = ({
           displayModeBar: "hover",
           scrollZoom: true,
         }}
-        style={{ width: "100%", height }}
+        style={{ width: "100%", height: heatmapHeight }} // 👈 match style
         onRelayout={handleRelayout}
       />
     );
   };
+
 
   const RDBU_JSON_SCALE = [
     [0.0,  "#4575B4"],
@@ -1188,7 +1191,7 @@ const DynamicVolcanoPlot = ({
       `<br>log2FC: ${p.log2fc.toFixed(2)}`
     );
 
-    const dotplotHeight = Math.max(600, yCats.length * 18);
+    const dotplotHeight = Math.max(200, yCats.length * 18);
 
     // -------------------------------
     // ADD SIZE LEGEND (manual circles)
@@ -1249,7 +1252,7 @@ const DynamicVolcanoPlot = ({
         ]}
         layout={{
           height: dotplotHeight,
-          margin: { t: 60, r: 90, b: 90, l: 120 },
+          margin: { t: 0, r: 20, b: 40, l: 70 },
           hovermode: "closest",
           xaxis: {
             tickmode: "array",

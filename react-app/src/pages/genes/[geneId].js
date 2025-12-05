@@ -59,6 +59,9 @@ const buildExperimentChips = (analysis, geneName, labelToStudyMeta) => {
 
   const studyLabel = analysis?.study_label?.trim();
   const meta = studyLabel ? labelToStudyMeta[studyLabel] : undefined;
+  const studyHref = studyLabel
+    ? `/data?label=${encodeURIComponent(studyLabel)}`
+    : "/data";
 
   // 1. assay type (from study metadata)
   if (meta?.assay) {
@@ -504,31 +507,36 @@ const GenePage = ({ params }) => {
                             {/* context chips row */}
                             {(studyLabel || chips.length > 0) && (
                               <div className="experiment-chips">
-                                {/* Study chip first, clickable */}
+                                {/* Study chip first, clickable & consistent with Data table highlight */}
                                 {studyLabel && (
-                                  <a
-                                    className="experiment-chip experiment-chip-study"
-                                    href="/data"
-                                    title={studyMeta?.assay || "View study dataset"}
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      style={{ marginRight: "4px" }}
-                                    >
-                                      <path d="M3 7v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7" />
-                                      <path d="M3 7l9-4 9 4" />
-                                      <path d="M12 3v18" />
-                                    </svg>
-                                    {studyLabel}
-                                  </a>
+                                  (() => {
+                                    const displayLabel = formatLabel(studyLabel); // same formatting as Data page
+                                    return (
+                                      <a
+                                        className="experiment-chip experiment-chip-study"
+                                        href={`/data?label=${encodeURIComponent(displayLabel)}`}
+                                        title={studyMeta?.assay || "View study dataset"}
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="12"
+                                          height="12"
+                                          viewBox="0 0 24 24"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          strokeWidth="2"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          style={{ marginRight: "4px" }}
+                                        >
+                                          <path d="M3 7v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7" />
+                                          <path d="M3 7l9-4 9 4" />
+                                          <path d="M12 3v18" />
+                                        </svg>
+                                        {displayLabel}
+                                      </a>
+                                    );
+                                  })()
                                 )}
 
                                 {/* remaining context chips */}
