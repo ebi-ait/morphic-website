@@ -86,3 +86,92 @@ Pages
 └ src/pages/data.js
   └   /data/
 ```
+
+# MorPhiC Gene & DE Data – DB Architecture & API
+
+This document describes:
+
+- How submissions DB and GeneDB are organised
+- What we precompute offline
+- How the public Gene API exposes this data to the UI
+
+---
+
+## High-Level Architecture
+```mermaid
+flowchart LR
+    subgraph UI
+        UI_MAIN[Gene UI page]
+    end
+
+    subgraph SubmissionsDB
+        ST[studies study metadata]
+        DS[datasets registered files]
+    end
+
+    subgraph GeneDB
+        G[genes core gene info]
+        DE_SUM[de summary per condition]
+        TOP[top up and down genes 50]
+        VIEW[gene study view aggregated]
+    end
+
+    subgraph Storage
+        DE_TSV[DE TSV files full data]
+        PLOTS[plot images]
+    end
+
+    ETL[precomputation job]
+    GeneAPI[gene api raw table]
+
+    UI_MAIN -->|load study metadata| ST
+    UI_MAIN -->|load gene record| G
+    UI_MAIN -->|load per condition summary| DE_SUM
+    UI_MAIN -->|load cached top genes| TOP
+    UI_MAIN -->|load gene plus study view| VIEW
+    UI_MAIN -->|load truncated tsv rows| GeneAPI
+    UI_MAIN -->|render static plots| PLOTS
+
+    ST --> DS
+    DS -->|keys for tsv and plots| DE_TSV
+    DS --> PLOTS
+
+    DS -->|new de dataset| ETL
+    DE_TSV -->|read de tsv| ETL
+
+    ETL -->|compute de summary and counts| DE_SUM
+    ETL -->|select top up and down genes 50| TOP
+    ETL -->|build aggregated gene study view| VIEW
+    ETL -->|update gene analysis references| G
+
+    DE_TSV -->|served by api with row limit| GeneAPI
+```
+
+## Differential Expression Precomputation Pipeline
+```mermaid
+flowchart TD
+  A[New DE TSV registered in datasets] --> B[ETL load TSV from S3]
+
+  B --> C[Detect conditions log2fc_col and padj_col]
+  C --> D[Apply default thresholds: padj <= 0.05 and abs log2FC >= 0.5]
+
+  D --> E[Compute per-condition stats: n_total, n_significant, n_up, n_down, median abs log2FC]
+  D --> F[Select top_up and top_down, sort by log2FC, keep top 20-50]
+
+  D --> G[Optional: count by celltype]
+  D --> H[Optional: build volcano_hist2d]
+
+  E --> I[Upsert DE_ANALYSIS_SUMMARY document]
+  F --> I
+  G --> I
+  H --> I
+
+  I --> J[Update GENES.analysis_refs]
+  D --> K[If dotplot required, filter rows and build points]
+  K --> L[Upsert DOTPLOT_CACHE document]
+
+  A --> M[Update dataset stats: file size and dimensions]
+
+
+```
+
