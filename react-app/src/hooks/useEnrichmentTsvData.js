@@ -1,4 +1,3 @@
-// src/hooks/useEnrichmentTsvData.js
 import { useEffect, useState } from "react";
 import { parseTsv, normaliseEnrichmentRows } from "../utils/tsv";
 
@@ -21,7 +20,7 @@ export function useEnrichmentTsvData(tsvKey, titleForFilename = "enrichment") {
       try {
         setState((prev) => ({ ...prev, loading: true, error: null }));
 
-        const url = `http://localhost:3000/download?tsv_file_id=${encodeURIComponent(
+        const url = `https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download?tsv_file_id=${encodeURIComponent(
           tsvKey
         )}&file_name=${encodeURIComponent(titleForFilename)}`;
 

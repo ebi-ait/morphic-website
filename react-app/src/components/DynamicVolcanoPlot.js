@@ -1,4 +1,3 @@
-// src/components/DynamicVolcanoPlot.js
 import React, { useMemo, useState, useRef, useEffect } from "react";
 import Plot from "react-plotly.js";
 import useDeTsvData from "../hooks/useDeTsvData";
@@ -26,12 +25,7 @@ function classifyDeColumns(cols, analysisTitle) {
     return null;
   };
 
-  // 1) Generic case (MSK-style tables, etc.) – match Python script
-  const genericLog2fc = findExact([
-    "log2foldchange",
-    "log2fc",
-    "logfc",
-  ]);
+  const genericLog2fc = findExact(["log2foldchange", "log2fc", "logfc"]);
   const genericPadj = findExact([
     "padj",
     "padjust",
@@ -45,7 +39,6 @@ function classifyDeColumns(cols, analysisTitle) {
     return { log2fcCol: genericLog2fc, pvalCol: genericPadj };
   }
 
-  // 2) Condition-specific case: *_log2FoldChange
   const suffix = "_log2foldchange";
   const condCols = cols.filter((c) => c.toLowerCase().endsWith(suffix));
   if (!condCols.length) {
@@ -54,21 +47,19 @@ function classifyDeColumns(cols, analysisTitle) {
 
   const prefixToLog2 = {};
   condCols.forEach((col) => {
-    const prefix = col.slice(0, -suffix.length); // e.g. 'PAX6_KO'
+    const prefix = col.slice(0, -suffix.length);
     prefixToLog2[prefix] = col;
   });
 
   const hasAnyPadj = cols.some((c) => c.toLowerCase().endsWith("_padj"));
 
   const findPadjForPrefixStrict = (prefix) => {
-    // Strict: only *_padj – this mirrors the Python script
     const cand = (prefix + "_padj").toLowerCase();
     const idx = lower.indexOf(cand);
     return idx !== -1 ? cols[idx] : null;
   };
 
   const findPadjOrPvalForPrefixLoose = (prefix) => {
-    // Loose: used only if there is no *_padj anywhere in the table
     const candidates = [
       prefix + "_padj",
       prefix + "_fdr",
@@ -88,8 +79,8 @@ function classifyDeColumns(cols, analysisTitle) {
       for (const [prefix, log2col] of Object.entries(prefixToLog2)) {
         if (prefix.toLowerCase().includes(kw) && titleL.includes(kw)) {
           const padjCol = strict
-            ? findPadjForPrefixStrict(prefix)
-            : findPadjOrPvalForPrefixLoose(prefix);
+              ? findPadjForPrefixStrict(prefix)
+              : findPadjOrPvalForPrefixLoose(prefix);
           if (padjCol) return { log2fcCol: log2col, pvalCol: padjCol };
         }
       }
@@ -97,14 +88,12 @@ function classifyDeColumns(cols, analysisTitle) {
     return null;
   };
 
-  // ---- Primary: mirror Python (strict *_padj) ----
   let choice =
-    pickByKeyword(["revert"], true) ||
-    pickByKeyword(["ko"], true) ||
-    pickByKeyword(["ptc"], true) ||
-    pickByKeyword(["ce"], true);
+      pickByKeyword(["revert"], true) ||
+      pickByKeyword(["ko"], true) ||
+      pickByKeyword(["ptc"], true) ||
+      pickByKeyword(["ce"], true);
 
-  // Fallback: first prefix that has *_padj
   if (!choice) {
     for (const [prefix, log2col] of Object.entries(prefixToLog2)) {
       const padjCol = findPadjForPrefixStrict(prefix);
@@ -115,16 +104,14 @@ function classifyDeColumns(cols, analysisTitle) {
     }
   }
 
-  // Final fallback: only if there is NO *_padj anywhere, allow pvalue/fdr/qvalue
   if (!choice && !hasAnyPadj) {
     choice =
-      pickByKeyword(["revert"], false) ||
-      pickByKeyword(["ko"], false) ||
-      pickByKeyword(["ptc"], false) ||
-      pickByKeyword(["ce"], false);
+        pickByKeyword(["revert"], false) ||
+        pickByKeyword(["ko"], false) ||
+        pickByKeyword(["ptc"], false) ||
+        pickByKeyword(["ce"], false);
 
     if (!choice) {
-      // very last resort: first prefix with any p-like column
       for (const [prefix, log2col] of Object.entries(prefixToLog2)) {
         const padjCol = findPadjOrPvalForPrefixLoose(prefix);
         if (padjCol) {
@@ -148,11 +135,11 @@ const DynamicVolcanoPlot = ({
                               title,
                               height = 320,
                               preferDegSummaryBar = false,
-                              // 🔹 NEW: precomputed blobs from API
                               dotplotDataFromApi = null,
                               deSummaryFromApi = null,
+                              deConditions = [],
+                              defaultConditionId = null,
                             }) => {
-  // Normalise possible shapes: { points: [...] } or [...] or { data: [...] }
   const rawDotplotPoints = (() => {
     if (!dotplotDataFromApi) return [];
 
@@ -161,12 +148,10 @@ const DynamicVolcanoPlot = ({
     }
 
     if (Array.isArray(dotplotDataFromApi)) {
-      // In case backend sends just an array
       return dotplotDataFromApi;
     }
 
     if (Array.isArray(dotplotDataFromApi.data)) {
-      // Alternate key name
       return dotplotDataFromApi.data;
     }
 
@@ -188,12 +173,11 @@ const DynamicVolcanoPlot = ({
     return /topdeg[-_ ]?dotplot/.test(t) || /topdeg[-_ ]?dotplot/.test(key);
   }, [title, tsvKey]);
 
-  // 🔹 Only load TSV when we actually need it
   const shouldLoadTsv = !(isTopDegDotplot && hasDotplotBlob);
 
   const { rows, loading, error } = useDeTsvData(
-    shouldLoadTsv ? tsvKey || null : null,
-    { enabled: true, title }   // 👈 pass the analysis title
+      shouldLoadTsv ? tsvKey || null : null,
+      { enabled: true, title }
   );
 
   console.log("[DynamicVolcanoPlot] flags", {
@@ -205,12 +189,14 @@ const DynamicVolcanoPlot = ({
   });
 
   const [viewMode, setViewMode] = useState(
-    isTopDegDotplot
-      ? "dotplot"
-      : isNumberDegsTitle || preferDegSummaryBar
-        ? "bar"
-        : "volcano"
+      isTopDegDotplot
+          ? "dotplot"
+          : isNumberDegsTitle || preferDegSummaryBar
+              ? "bar"
+              : "volcano"
   );
+
+  const [tableSide, setTableSide] = useState("up");
 
   useEffect(() => {
     if (isTopDegDotplot) {
@@ -222,7 +208,48 @@ const DynamicVolcanoPlot = ({
     }
   }, [isTopDegDotplot, isNumberDegsTitle, preferDegSummaryBar, tsvKey]);
 
-  // Thresholds
+  const [selectedConditionId, setSelectedConditionId] = useState(() => {
+    if (defaultConditionId) return defaultConditionId;
+    if (deConditions && deConditions.length > 0) {
+      return deConditions[0].condition_id;
+    }
+    return null;
+  });
+
+  useEffect(() => {
+    if (!deConditions || deConditions.length === 0) return;
+
+    if (
+        defaultConditionId &&
+        deConditions.some((c) => c.condition_id === defaultConditionId)
+    ) {
+      setSelectedConditionId(defaultConditionId);
+    } else if (
+        selectedConditionId &&
+        deConditions.some((c) => c.condition_id === selectedConditionId)
+    ) {
+      return;
+    } else {
+      setSelectedConditionId(deConditions[0].condition_id);
+    }
+  }, [deConditions, defaultConditionId]);
+
+  const currentCondition = useMemo(() => {
+    if (!deConditions || deConditions.length === 0) return null;
+    const found = deConditions.find(
+        (c) => c.condition_id === selectedConditionId
+    );
+    return found || deConditions[0];
+  }, [deConditions, selectedConditionId]);
+
+  const prettyConditionLabel = (conditionId) => {
+    if (!conditionId) return "";
+    let label = conditionId;
+    label = label.replace(/^PAX6_/, "PAX6 ");
+    label = label.replace(/_/g, " ");
+    return label;
+  };
+
   const [pCutoff, setPCutoff] = useState(0.05);
   const [pCutoffInput, setPCutoffInput] = useState(0.05);
 
@@ -265,63 +292,106 @@ const DynamicVolcanoPlot = ({
     return [];
   }, [rows]);
 
-  const { log2fcCol, pvalCol } = useMemo(
-    () => classifyDeColumns(cols, title),
-    [cols, title]
-  );
+  const { log2fcCol, pvalCol } = useMemo(() => {
+    if (currentCondition && cols && cols.length > 0) {
+      const cond = currentCondition;
+
+      const condLog2Name =
+          cond.log2fc_col ||
+          cond.log2fcCol ||
+          cond.log2fc ||
+          cond.log2FC;
+
+      const condPadjName =
+          cond.padj_col ||
+          cond.padjCol ||
+          cond.padj ||
+          cond.pval_col ||
+          cond.pvalCol;
+
+      const hasLog2 = condLog2Name && cols.includes(condLog2Name);
+      const hasPadj = condPadjName && cols.includes(condPadjName);
+
+      if (hasLog2 && hasPadj) {
+        return {
+          log2fcCol: condLog2Name,
+          pvalCol: condPadjName,
+        };
+      }
+
+      console.warn("[DynamicVolcanoPlot--] Condition columns not found in TSV header", {
+        currentCondition: cond,
+        cols,
+        condLog2Name,
+        condPadjName,
+        hasLog2,
+        hasPadj,
+      });
+    }
+
+    return classifyDeColumns(cols, title);
+  }, [cols, title, currentCondition]);
+
+
   const conditionCol = useMemo(
-    () => findColumn(cols, /condition|contrast|group|comparison/i),
-    [cols]
+      () => findColumn(cols, /condition|contrast|group|comparison/i),
+      [cols]
   );
   const pathwayCol = useMemo(
-    () => findColumn(cols, /pathway|term|gs_name|ont|category/i),
-    [cols]
+      () => findColumn(cols, /pathway|term|gs_name|ont|category/i),
+      [cols]
   );
   const diffexpressedCol = useMemo(
-    () => findColumn(cols, /diffexpressed|de_flag|is_de|de_label|delabel/i),
-    [cols]
+      () => findColumn(cols, /diffexpressed|de_flag|is_de|de_label|delabel/i),
+      [cols]
   );
   const cellTypeCol = useMemo(
-    () => findColumn(cols, /celltype|cell_type|stage|condition|cluster|group/i),
-    [cols]
+      () => findColumn(cols, /celltype|cell_type|stage|condition|cluster|group/i),
+      [cols]
   );
 
   const supportsDegSummaryBar = useMemo(
-    () => !!log2fcCol && !!cellTypeCol && !!rows && rows.length > 0,
-    [log2fcCol, cellTypeCol, rows]
+      () => !!log2fcCol && !!cellTypeCol && !!rows && rows.length > 0,
+      [log2fcCol, cellTypeCol, rows]
   );
 
   const { summary, loading: summaryLoading, error: summaryError } =
-    useDeSummary(isNumberDegsTitle ? tsvKey : null);
+      useDeSummary(isNumberDegsTitle ? tsvKey : null);
 
   useEffect(() => {
     if (supportsDegSummaryBar && isNumberDegsTitle && !dotplotDataFromApi) {
       console.log(
-        '[DynamicVolcanoPlot] switching viewMode to "bar" for',
-        tsvKey,
-        "title:",
-        title
+          '[DynamicVolcanoPlot] switching viewMode to "bar" for',
+          tsvKey,
+          "title:",
+          title
       );
       setViewMode("bar");
     }
-  }, [supportsDegSummaryBar, isNumberDegsTitle, tsvKey, title, dotplotDataFromApi]);
+  }, [
+    supportsDegSummaryBar,
+    isNumberDegsTitle,
+    tsvKey,
+    title,
+    dotplotDataFromApi,
+  ]);
 
-  // ---- DEBUG LOGGING ----
   useEffect(() => {
     if (!rows || !rows.length) return;
 
     console.groupCollapsed(
-      `[DynamicVolcanoPlot] debug for TSV`,
-      tsvKey,
-      "title:",
-      title
+        `[DynamicVolcanoPlot] debug for TSV`,
+        tsvKey,
+        "title:",
+        title
     );
     console.log("columns:", cols);
+    console.log("currentCondition:", currentCondition);
     console.log("log2fcCol:", log2fcCol);
     console.log("pvalCol:", pvalCol);
     console.log("diffexpressedCol:", diffexpressedCol);
     console.log("cellTypeCol:", cellTypeCol);
-    console.log("conditionCol:", conditionCol);
+    console.log("conditionCol (group filter):", conditionCol);
     console.log("pathwayCol:", pathwayCol);
     console.log("supportsDegSummaryBar:", supportsDegSummaryBar);
     console.log("isNumberDegsTitle:", isNumberDegsTitle);
@@ -331,6 +401,7 @@ const DynamicVolcanoPlot = ({
   }, [
     rows,
     cols,
+    currentCondition,
     log2fcCol,
     pvalCol,
     diffexpressedCol,
@@ -353,15 +424,14 @@ const DynamicVolcanoPlot = ({
       return idx >= 0 ? cols[idx] : null;
     };
     return (
-      pick(/(^|_)symbol$/i) ||
-      pick(/gene_symbol/i) ||
-      pick(/hgnc_symbol/i) ||
-      pick(/external_gene_name/i) ||
-      pick(/(^|_)gene$/i)
+        pick(/(^|_)symbol$/i) ||
+        pick(/gene_symbol/i) ||
+        pick(/hgnc_symbol/i) ||
+        pick(/external_gene_name/i) ||
+        pick(/(^|_)gene$/i)
     );
   }, [cols]);
 
-  // Unique values for condition & pathway filters
   const { conditions, pathways } = useMemo(() => {
     const condSet = new Set();
     const pathSet = new Set();
@@ -378,7 +448,6 @@ const DynamicVolcanoPlot = ({
     };
   }, [rows, conditionCol, pathwayCol]);
 
-  // Only filter by condition and pathway — NOT by significance thresholds
   const filteredRows = useMemo(() => {
     if (!rows || !rows.length) return [];
 
@@ -386,17 +455,17 @@ const DynamicVolcanoPlot = ({
       if (!r) return false;
 
       if (
-        conditionCol &&
-        conditionFilter &&
-        String(r[conditionCol]) !== conditionFilter
+          conditionCol &&
+          conditionFilter &&
+          String(r[conditionCol]) !== conditionFilter
       ) {
         return false;
       }
 
       if (
-        pathwayCol &&
-        pathwayFilter &&
-        String(r[pathwayCol]) !== pathwayFilter
+          pathwayCol &&
+          pathwayFilter &&
+          String(r[pathwayCol]) !== pathwayFilter
       ) {
         return false;
       }
@@ -415,16 +484,15 @@ const DynamicVolcanoPlot = ({
 
     if (cellTypeCol) {
       const cellTypes = Array.from(
-        new Set(rows.map((r) => r[cellTypeCol]).filter(Boolean))
+          new Set(rows.map((r) => r[cellTypeCol]).filter(Boolean))
       );
       console.log(
-        "[DynamicVolcanoPlot] unique cell types (truncated TSV):",
-        cellTypes
+          "[DynamicVolcanoPlot] unique cell types (truncated TSV):",
+          cellTypes
       );
     }
   }, [rows, cellTypeCol]);
 
-  // Global volcano data (all rows, no filters) – for axis ranges
   const allVolcanoData = useMemo(() => {
     if (!rows || !rows.length || !log2fcCol || !pvalCol) {
       return { x: [], y: [] };
@@ -445,7 +513,6 @@ const DynamicVolcanoPlot = ({
     return { x, y };
   }, [rows, log2fcCol, pvalCol]);
 
-  // Derived default ranges from *all* data
   const defaultRanges = useMemo(() => {
     const { x, y } = allVolcanoData;
     if (!x.length || !y.length) {
@@ -469,7 +536,6 @@ const DynamicVolcanoPlot = ({
     };
   }, [allVolcanoData]);
 
-  // Volcano data after condition/pathway filters (all points)
   const volcanoData = useMemo(() => {
     if (!filteredRows.length || !log2fcCol || !pvalCol) {
       return { x: [], y: [], text: [] };
@@ -536,7 +602,6 @@ const DynamicVolcanoPlot = ({
     return { up, down, grey };
   }, [filteredRows, log2fcCol, pvalCol, symbolCol, pCutoff, log2fcCutoff]);
 
-  // Heatmap data: 2D histogram of log2FC vs –log10(p) (filtered)
   const heatmapTraces = useMemo(() => {
     const { x, y } = volcanoData;
     if (!x.length || !y.length) return [];
@@ -552,8 +617,6 @@ const DynamicVolcanoPlot = ({
     ];
   }, [volcanoData]);
 
-  // ---- Zoom handlers ----
-
   const handleRelayout = (evt) => {
     const xr0 = evt["xaxis.range[0]"];
     const xr1 = evt["xaxis.range[1]"];
@@ -564,161 +627,390 @@ const DynamicVolcanoPlot = ({
     if (yr0 != null && yr1 != null) setYRange([yr0, yr1]);
   };
 
-  const handleZoomReset = () => {
-    setXRange(defaultRanges.x);
-    setYRange(defaultRanges.y);
-  };
+  const VolcanoIcon = () => (
+      <svg
+          aria-hidden="true"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          className="de-view-icon"
+      >
 
-  const handleZoom = (factor) => {
-    const currentX = xRange || defaultRanges.x;
-    const currentY = yRange || defaultRanges.y;
-    if (!currentX || !currentY) return;
-
-    const [x0, x1] = currentX;
-    const [y0, y1] = currentY;
-
-    const xCenter = (x0 + x1) / 2;
-    const yCenter = (y0 + y1) / 2;
-
-    const xHalf = ((x1 - x0) / 2) * factor;
-    const yHalf = ((y1 - y0) / 2) * factor;
-
-    setXRange([xCenter - xHalf, xCenter + xHalf]);
-    setYRange([yCenter - yHalf, yCenter + yHalf]);
-  };
-
-  // ---- Render helpers ----
-
-  const renderControls = () => (
-    <div className="de-controls">
-      <div className="de-controls-row">
-        {/* View mode buttons are hidden for now; viewMode is driven programmatically */}
-      </div>
-
-      {/* Filters row */}
-      <div className="de-controls-row de-filters-row">
-        {/* Condition filter */}
-        {conditionCol && conditions.length > 0 && (
-          <div className="de-control-group">
-            <label className="de-control-label">
-              Condition:
-              <select
-                value={conditionFilter}
-                onChange={(e) => setConditionFilter(e.target.value)}
-              >
-                <option value="">All</option>
-                {conditions.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-        )}
-
-        {/* Pathway filter */}
-        {pathwayCol && pathways.length > 0 && (
-          <div className="de-control-group">
-            <label className="de-control-label">
-              Pathways involved in:
-              <select
-                value={pathwayFilter}
-                onChange={(e) => setPathwayFilter(e.target.value)}
-              >
-                <option value="">All</option>
-                {pathways.map((p) => (
-                  <option key={p} value={p}>
-                    {p}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-        )}
-
-        {/* p-value cutoff */}
-        {pvalCol && log2fcCol && (
-          <div className="de-control-group de-thresholds-group">
-            <div className="de-thresholds-pill">
-              <label className="de-threshold-field">
-                <span className="de-threshold-caption">padj ≤</span>
-                <input
-                  type="number"
-                  step="0.0001"
-                  min="0"
-                  max="1"
-                  value={pCutoffInput}
-                  onChange={(e) => setPCutoffInput(Number(e.target.value))}
-                  className="de-threshold-input"
-                />
-              </label>
-
-              <span className="de-threshold-separator">·</span>
-
-              <label className="de-threshold-field">
-                <span className="de-threshold-caption">|log₂FC| ≥</span>
-                <input
-                  type="number"
-                  step="0.1"
-                  min="0"
-                  value={log2fcCutoffInput}
-                  onChange={(e) =>
-                    setLog2fcCutoffInput(Number(e.target.value))
-                  }
-                  className="de-threshold-input"
-                />
-              </label>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+        <circle cx="6" cy="16" r="1.4" />
+        <circle cx="10" cy="10" r="1.4" />
+        <circle cx="14" cy="14" r="1.4" />
+        <circle cx="18" cy="7" r="1.4" />
+        <path d="M4 20h16" stroke="currentColor" strokeWidth="1.3" />
+        <path d="M4 4v16" stroke="currentColor" strokeWidth="1.3" />
+      </svg>
   );
 
+  const TableIcon = () => (
+      <svg
+          aria-hidden="true"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          className="de-view-icon"
+      >
+        <rect x="3" y="4" width="18" height="16" rx="1.5" ry="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+        <path d="M3 9h18M3 14h18" stroke="currentColor" strokeWidth="1.3" />
+        <path d="M10 4v16M16 4v16" stroke="currentColor" strokeWidth="1.3" />
+      </svg>
+  );
+
+  const renderControls = () => (
+      <div className="de-controls">
+        <div className="de-controls-row de-controls-row-top">
+          {["volcano", "table"].includes(viewMode) && (
+              <div className="de-view-toggle">
+                <button
+                    type="button"
+                    className={`de-view-btn de-view-btn-icon ${
+                        viewMode === "volcano" ? "is-active" : ""
+                    }`}
+                    onClick={() => setViewMode("volcano")}
+                    aria-label="Volcano view"
+                >
+                  <VolcanoIcon />
+                  <span className="de-view-label">Volcano</span>
+                </button>
+
+                <button
+                    type="button"
+                    className={`de-view-btn de-view-btn-icon ${
+                        viewMode === "table" ? "is-active" : ""
+                    }`}
+                    onClick={() => setViewMode("table")}
+                    aria-label="Top genes table view"
+                >
+                  <TableIcon />
+                  <span className="de-view-label">Top genes</span>
+                </button>
+              </div>
+          )}
+
+          {deConditions && deConditions.length > 0 && (
+              <div className="de-control-group de-condition-group">
+                <label className="de-control-label">
+                  KO Strategy:
+                  <select
+                      className="de-select"
+                      value={currentCondition?.condition_id || ""}
+                      onChange={(e) => setSelectedConditionId(e.target.value)}
+                  >
+                    {deConditions.map((cond) => (
+                        <option key={cond.condition_id} value={cond.condition_id}>
+                          {prettyConditionLabel(cond.condition_id)}
+                        </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+          )}
+        </div>
+
+        <div className="de-controls-row de-controls-row-bottom de-filters-row">
+          {conditionCol && conditions.length > 0 && (
+              <div className="de-control-group">
+                <label className="de-control-label">
+                  Group:
+                  <select
+                      className="de-select"
+                      value={conditionFilter}
+                      onChange={(e) => setConditionFilter(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    {conditions.map((c) => (
+                        <option key={c} value={c}>
+                          {c}
+                        </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+          )}
+
+          {pathwayCol && pathways.length > 0 && (
+              <div className="de-control-group">
+                <label className="de-control-label">
+                  Pathway:
+                  <select
+                      className="de-select"
+                      value={pathwayFilter}
+                      onChange={(e) => setPathwayFilter(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    {pathways.map((p) => (
+                        <option key={p} value={p}>
+                          {p}
+                        </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+          )}
+
+          {pvalCol && log2fcCol && (
+              <div className="de-control-group de-thresholds-group">
+                <div className="de-thresholds-pill">
+                  <label className="de-threshold-field">
+                    <span className="de-threshold-caption">padj ≤</span>
+                    <input
+                        type="number"
+                        step="0.0001"
+                        min="0"
+                        max="1"
+                        value={pCutoffInput}
+                        onChange={(e) => setPCutoffInput(Number(e.target.value))}
+                        className="de-threshold-input"
+                    />
+                  </label>
+
+                  <span className="de-threshold-separator">·</span>
+
+                  <label className="de-threshold-field">
+                    <span className="de-threshold-caption">|log₂FC| ≥</span>
+                    <input
+                        type="number"
+                        step="0.1"
+                        min="0"
+                        value={log2fcCutoffInput}
+                        onChange={(e) => setLog2fcCutoffInput(Number(e.target.value))}
+                        className="de-threshold-input"
+                    />
+                  </label>
+                </div>
+              </div>
+          )}
+        </div>
+      </div>
+  );
+
+
   const renderTable = () => {
-    if (!filteredRows.length) {
-      return <div className="de-empty">No rows pass the current filters.</div>;
+    const formatPadj = (v) => {
+      if (v == null || v === "" || Number.isNaN(Number(v))) return "–";
+      const num = Number(v);
+      if (num < 1e-4) return num.toExponential(2);
+      return num.toFixed(4);
+    };
+
+    const renderRow = (r, idx) => (
+        <tr key={`${r.gene_id || r.symbol || idx}-${idx}`}>
+          <td className="de-cell-index">{idx + 1}</td>
+          <td className="de-cell-symbol">{r.symbol || "–"}</td>
+          <td className="de-cell-id">{r.gene_id || "–"}</td>
+          <td className="de-cell-lfc">
+            {Number.isFinite(Number(r.log2fc))
+                ? Number(r.log2fc).toFixed(2)
+                : "–"}
+          </td>
+          <td className="de-cell-padj">{formatPadj(r.padj)}</td>
+        </tr>
+    );
+
+    // -------- 1) Precomputed from Mongo (preferred) -----------------
+    const precomputedUp =
+        currentCondition?.top_up_50 ||
+        currentCondition?.top_up ||
+        currentCondition?.top_up_genes_50 ||
+        [];
+    const precomputedDown =
+        currentCondition?.top_down_50 ||
+        currentCondition?.top_down ||
+        currentCondition?.top_down_genes_50 ||
+        [];
+
+    if (precomputedUp.length || precomputedDown.length) {
+      const activeIsUp = tableSide === "up";
+      const activeData = activeIsUp ? precomputedUp : precomputedDown;
+      const totalActive = activeIsUp
+          ? precomputedUp.length
+          : precomputedDown.length;
+      const label = activeIsUp ? "Up-regulated" : "Down-regulated";
+      const pillClass = activeIsUp ? "de-pill-up" : "de-pill-down";
+
+      return (
+          <div className="de-topgenes-single">
+            <div className="de-topgenes-header">
+              <div className="de-topgenes-header-left">
+                <span className={`de-topgenes-pill ${pillClass}`}>{label}</span>
+                <span className="de-topgenes-count">
+                {totalActive
+                    ? `showing ${Math.min(50, totalActive)} of ${totalActive}`
+                    : "no genes"}
+              </span>
+              </div>
+
+              <div className="de-subview-toggle">
+                <button
+                    type="button"
+                    className={`de-subview-btn ${
+                        tableSide === "up" ? "is-active" : ""
+                    }`}
+                    onClick={() => setTableSide("up")}
+                >
+                  Up
+                </button>
+                <button
+                    type="button"
+                    className={`de-subview-btn ${
+                        tableSide === "down" ? "is-active" : ""
+                    }`}
+                    onClick={() => setTableSide("down")}
+                >
+                  Down
+                </button>
+              </div>
+            </div>
+
+            {activeData.length ? (
+                <div className="de-table-scroll">
+                  <table className="de-table de-table-compact">
+                    <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Symbol</th>
+                      <th>Gene ID</th>
+                      <th>log₂FC</th>
+                      <th>padj</th>
+                    </tr>
+                    </thead>
+                    <tbody>{activeData.slice(0, 50).map(renderRow)}</tbody>
+                  </table>
+                </div>
+            ) : (
+                <div className="de-empty">
+                  No {activeIsUp ? "up-" : "down-"}regulated genes for this contrast.
+                </div>
+            )}
+          </div>
+      );
     }
 
-    const visibleCols = cols.slice(0, 8);
+    // -------- 2) Fallback: compute from TSV + thresholds ------------
+    if (!rows || !rows.length || !log2fcCol || !pvalCol) {
+      return (
+          <div className="de-empty">
+            No DE genes table available for this TSV.
+          </div>
+      );
+    }
+
+    const parsed = [];
+    filteredRows.forEach((r) => {
+      if (!r) return;
+      const lfc = Number(r[log2fcCol]);
+      const p = Number(r[pvalCol]);
+      if (!Number.isFinite(lfc) || !Number.isFinite(p) || p <= 0) return;
+
+      const isSig = p <= pCutoff && Math.abs(lfc) >= log2fcCutoff;
+      if (!isSig) return;
+
+      const sym = symbolCol ? r[symbolCol] : null;
+      const gid =
+          r.gene_ID || r.gene_id || r.EnsemblID || r.ensembl_id || null;
+
+      parsed.push({
+        gene_id: gid || sym || null,
+        symbol: sym || gid || null,
+        log2fc: lfc,
+        padj: p,
+      });
+    });
+
+    if (!parsed.length) {
+      return (
+          <div className="de-empty">
+            No genes pass the current thresholds for this contrast.
+          </div>
+      );
+    }
+
+    const ups = parsed
+        .filter((r) => r.log2fc > 0)
+        .sort((a, b) => b.log2fc - a.log2fc)
+        .slice(0, 50);
+
+    const downs = parsed
+        .filter((r) => r.log2fc < 0)
+        .sort((a, b) => a.log2fc - b.log2fc)
+        .slice(0, 50);
+
+    const activeIsUp = tableSide === "up";
+    const activeData = activeIsUp ? ups : downs;
+    const totalActive = activeIsUp
+        ? parsed.filter((r) => r.log2fc > 0).length
+        : parsed.filter((r) => r.log2fc < 0).length;
+    const label = activeIsUp ? "Up-regulated" : "Down-regulated";
+    const pillClass = activeIsUp ? "de-pill-up" : "de-pill-down";
 
     return (
-      <div className="de-table-wrapper">
-        <table className="de-table">
-          <thead>
-          <tr>
-            {visibleCols.map((c) => (
-              <th key={c}>{c}</th>
-            ))}
-          </tr>
-          </thead>
-          <tbody>
-          {filteredRows.slice(0, 500).map((row, i) => (
-            <tr key={i}>
-              {visibleCols.map((c) => (
-                <td key={c}>{row[c]}</td>
-              ))}
-            </tr>
-          ))}
-          </tbody>
-        </table>
-        {filteredRows.length > 500 && (
-          <div className="de-table-note">
-            Showing first 500 of {filteredRows.length.toLocaleString()} rows.
+        <div className="de-topgenes-single">
+          <div className="de-topgenes-header">
+            <div className="de-topgenes-header-left">
+              <span className={`de-topgenes-pill ${pillClass}`}>{label}</span>
+              <span className="de-topgenes-count">
+              {activeData.length
+                  ? `showing ${activeData.length} of ${totalActive}`
+                  : "no genes"}
+            </span>
+            </div>
+
+            <div className="de-subview-toggle">
+              <button
+                  type="button"
+                  className={`de-subview-btn ${
+                      tableSide === "up" ? "is-active" : ""
+                  }`}
+                  onClick={() => setTableSide("up")}
+              >
+                Up
+              </button>
+              <button
+                  type="button"
+                  className={`de-subview-btn ${
+                      tableSide === "down" ? "is-active" : ""
+                  }`}
+                  onClick={() => setTableSide("down")}
+              >
+                Down
+              </button>
+            </div>
           </div>
-        )}
-      </div>
+
+          {activeData.length ? (
+              <div className="de-table-scroll">
+                <table className="de-table de-table-compact">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Symbol</th>
+                    <th>Gene ID</th>
+                    <th>log₂FC</th>
+                    <th>padj</th>
+                  </tr>
+                  </thead>
+                  <tbody>{activeData.map(renderRow)}</tbody>
+                </table>
+              </div>
+          ) : (
+              <div className="de-empty">
+                No {activeIsUp ? "up-" : "down-"}regulated genes for this contrast.
+              </div>
+          )}
+        </div>
     );
   };
 
   const renderVolcano = () => {
     if (!rows || !rows.length || !log2fcCol || !pvalCol) {
       return (
-        <div className="de-empty">
-          Dynamic volcano plot unavailable for this TSV. Showing static image
-          below.
-        </div>
+          <div className="de-empty">
+            Dynamic volcano plot unavailable for this TSV. Showing static image
+            below.
+          </div>
       );
     }
 
@@ -726,133 +1018,127 @@ const DynamicVolcanoPlot = ({
     const hasPoints = up.x.length + down.x.length + grey.x.length > 0;
 
     return (
-      <Plot
-        ref={plotRef}
-        data={[
-          {
-            x: grey.x,
-            y: grey.y,
-            text: grey.text,
-            mode: "markers",
-            type: "scattergl",
-            name: "No",
-            marker: {
-              size: 5,
-              opacity: 0.5,
-              color: "rgba(150,150,150,0.6)",
-            },
-            hovertemplate: "%{text}<extra></extra>",
-          },
-          {
-            x: up.x,
-            y: up.y,
-            text: up.text,
-            mode: "markers",
-            type: "scattergl",
-            name: "Up",
-            marker: {
-              size: 6,
-              opacity: 0.9,
-              color: "rgba(220, 20, 60, 0.9)",
-            },
-            hovertemplate: "%{text}<extra></extra>",
-          },
-          {
-            x: down.x,
-            y: down.y,
-            text: down.text,
-            mode: "markers",
-            type: "scattergl",
-            name: "Down",
-            marker: {
-              size: 6,
-              opacity: 0.9,
-              color: "rgba(30, 144, 255, 0.9)",
-            },
-            hovertemplate: "%{text}<extra></extra>",
-          },
-        ]}
-        layout={{
-          title: "",
-          margin: { l: 40, r: 10, t: 10, b: 40 },
-          xaxis: {
-            title: "log2 fold change",
-            zeroline: true,
-            range: xRange || defaultRanges.x,
-          },
-          yaxis: {
-            title: "-log10(padj)",
-            zeroline: true,
-            range: yRange || defaultRanges.y,
-          },
-          showlegend: true,
-          legend: {
-            x: 1,
-            xanchor: "right",
-            y: 1,
-            yanchor: "top",
-            bgcolor: "rgba(255,255,255,0.6)",
-            bordercolor: "rgba(0,0,0,0.1)",
-            borderwidth: 1,
-            font: { size: 11 },
-            orientation: "v",
-          },
-          height,
-          hovermode: "closest",
-          uirevision: "volcano-axes",
-          annotations: !hasPoints
-            ? [
+        <Plot
+            ref={plotRef}
+            data={[
               {
-                text: "No points pass current filters",
-                xref: "paper",
-                yref: "paper",
-                x: 0.5,
-                y: 0.5,
-                showarrow: false,
-                font: { size: 14 },
+                x: grey.x,
+                y: grey.y,
+                text: grey.text,
+                mode: "markers",
+                type: "scattergl",
+                name: "No",
+                marker: {
+                  size: 5,
+                  opacity: 0.5,
+                  color: "rgba(150,150,150,0.6)",
+                },
+                hovertemplate: "%{text}<extra></extra>",
               },
-            ]
-            : [],
-          transition: { duration: 0 },
-        }}
-        config={{
-          responsive: true,
-          displayModeBar: "hover",
-          scrollZoom: true,
-        }}
-        style={{ width: "100%", height }}
-        onRelayout={handleRelayout}
-      />
+              {
+                x: up.x,
+                y: up.y,
+                text: up.text,
+                mode: "markers",
+                type: "scattergl",
+                name: "Up",
+                marker: {
+                  size: 6,
+                  opacity: 0.9,
+                  color: "rgba(220, 20, 60, 0.9)",
+                },
+                hovertemplate: "%{text}<extra></extra>",
+              },
+              {
+                x: down.x,
+                y: down.y,
+                text: down.text,
+                mode: "markers",
+                type: "scattergl",
+                name: "Down",
+                marker: {
+                  size: 6,
+                  opacity: 0.9,
+                  color: "rgba(30, 144, 255, 0.9)",
+                },
+                hovertemplate: "%{text}<extra></extra>",
+              },
+            ]}
+            layout={{
+              title: "",
+              margin: { l: 40, r: 10, t: 10, b: 40 },
+              xaxis: {
+                title: "log2 fold change",
+                zeroline: true,
+                range: xRange || defaultRanges.x,
+              },
+              yaxis: {
+                title: "-log10(padj)",
+                zeroline: true,
+                range: yRange || defaultRanges.y,
+              },
+              showlegend: true,
+              legend: {
+                x: 1,
+                xanchor: "right",
+                y: 1,
+                yanchor: "top",
+                bgcolor: "rgba(255,255,255,0.6)",
+                bordercolor: "rgba(0,0,0,0.1)",
+                borderwidth: 1,
+                font: { size: 11 },
+                orientation: "v",
+              },
+              height,
+              hovermode: "closest",
+              uirevision: "volcano-axes",
+              annotations: !hasPoints
+                  ? [
+                    {
+                      text: "No points pass current filters",
+                      xref: "paper",
+                      yref: "paper",
+                      x: 0.5,
+                      y: 0.5,
+                      showarrow: false,
+                      font: { size: 14 },
+                    },
+                  ]
+                  : [],
+              transition: { duration: 0 },
+            }}
+            config={{
+              responsive: true,
+              displayModeBar: "hover",
+              scrollZoom: true,
+            }}
+            style={{ width: "100%", height }}
+            onRelayout={handleRelayout}
+        />
     );
   };
 
   const renderDegSummaryBarplot = () => {
-    // 1) NUMBER OF DEGS CASE (uses summary / deSummaryFromApi)
     if (isNumberDegsTitle) {
-      // Prefer backend JSON blob if present
-      const summaryToUse = Array.isArray(deSummaryFromApi) && deSummaryFromApi.length
-        ? deSummaryFromApi
-        : summary;
+      const summaryToUse =
+          Array.isArray(deSummaryFromApi) && deSummaryFromApi.length
+              ? deSummaryFromApi
+              : summary;
 
       if (!deSummaryFromApi) {
-        // Only show loading / error when we rely on dynamic summary
         if (summaryError) {
           console.warn("[DynamicVolcanoPlot] summary error:", summaryError);
         }
         if (summaryLoading) {
-          return (
-            <div className="de-empty">
-              Loading DEG summary…
-            </div>
-          );
+          return <div className="de-empty">Loading DEG summary…</div>;
         }
       }
 
       if (!summaryToUse || summaryToUse.length === 0) {
         return (
-          <div className="de-empty">
-            No differentially expressed genes to summarise (summary).
-          </div>
+            <div className="de-empty">
+              No differentially expressed genes to summarise (summary).
+            </div>
         );
       }
 
@@ -861,91 +1147,86 @@ const DynamicVolcanoPlot = ({
       const downCounts = summaryToUse.map((s) => s.down);
 
       console.log(
-        "[DynamicVolcanoPlot] barplot (summary) categories:",
-        categories
+          "[DynamicVolcanoPlot] barplot (summary) categories:",
+          categories
       );
       console.log(
-        "[DynamicVolcanoPlot] barplot (summary) upCounts:",
-        upCounts
+          "[DynamicVolcanoPlot] barplot (summary) upCounts:",
+          upCounts
       );
       console.log(
-        "[DynamicVolcanoPlot] barplot (summary) downCounts:",
-        downCounts
+          "[DynamicVolcanoPlot] barplot (summary) downCounts:",
+          downCounts
       );
 
       return (
-        <Plot
-          ref={plotRef}
-          data={[
-            {
-              x: categories,
-              y: upCounts,
-              name: "Up",
-              type: "bar",
-              marker: {
-                color: "rgba(220, 20, 60, 0.9)",
-              },
-              hovertemplate:
-                "Cell type: %{x}<br>Up DEGs: %{y}<extra></extra>",
-            },
-            {
-              x: categories,
-              y: downCounts,
-              name: "Down",
-              type: "bar",
-              marker: {
-                color: "rgba(30, 144, 255, 0.9)",
-              },
-              hovertemplate:
-                "Cell type: %{x}<br>Down DEGs: %{y}<extra></extra>",
-            },
-          ]}
-          layout={{
-            title: title || "",
-            barmode: "group",
-            margin: { l: 60, r: 10, t: 40, b: 60 },
-            xaxis: {
-              title: "",
-              tickangle: -35,
-            },
-            yaxis: {
-              title: "Number of DEGs",
-              rangemode: "tozero",
-            },
-            showlegend: true,
-            legend: {
-              x: 1,
-              xanchor: "right",
-              y: 1,
-              yanchor: "top",
-              bgcolor: "rgba(255,255,255,0.6)",
-              bordercolor: "rgba(0,0,0,0.1)",
-              borderwidth: 1,
-              font: { size: 11 },
-            },
-            height,
-            hovermode: "closest",
-          }}
-          config={{
-            responsive: true,
-            displayModeBar: "hover",
-            scrollZoom: false,
-          }}
-          style={{ width: "100%", height }}
-        />
+          <Plot
+              ref={plotRef}
+              data={[
+                {
+                  x: categories,
+                  y: upCounts,
+                  name: "Up",
+                  type: "bar",
+                  marker: {
+                    color: "rgba(220, 20, 60, 0.9)",
+                  },
+                  hovertemplate:
+                      "Cell type: %{x}<br>Up DEGs: %{y}<extra></extra>",
+                },
+                {
+                  x: categories,
+                  y: downCounts,
+                  name: "Down",
+                  type: "bar",
+                  marker: {
+                    color: "rgba(30, 144, 255, 0.9)",
+                  },
+                  hovertemplate:
+                      "Cell type: %{x}<br>Down DEGs: %{y}<extra></extra>",
+                },
+              ]}
+              layout={{
+                title: title || "",
+                barmode: "group",
+                margin: { l: 60, r: 10, t: 40, b: 60 },
+                xaxis: {
+                  title: "",
+                  tickangle: -35,
+                },
+                yaxis: {
+                  title: "Number of DEGs",
+                  rangemode: "tozero",
+                },
+                showlegend: true,
+                legend: {
+                  x: 1,
+                  xanchor: "right",
+                  y: 1,
+                  yanchor: "top",
+                  bgcolor: "rgba(255,255,255,0.6)",
+                  bordercolor: "rgba(0,0,0,0.1)",
+                  borderwidth: 1,
+                  font: { size: 11 },
+                },
+                height,
+                hovermode: "closest",
+              }}
+              config={{
+                responsive: true,
+                displayModeBar: "hover",
+                scrollZoom: false,
+              }}
+              style={{ width: "100%", height }}
+          />
       );
     }
 
-    // 2) NON-#DEGS CASE: derive counts directly from existing rows
     if (!supportsDegSummaryBar || !rows || !rows.length) {
-      return (
-        <div className="de-empty">
-          Barplot unavailable for this TSV.
-        </div>
-      );
+      return <div className="de-empty">Barplot unavailable for this TSV.</div>;
     }
 
-    const countsByCellType = new Map(); // key: cell type label, value: { up, down }
+    const countsByCellType = new Map();
 
     rows.forEach((r) => {
       if (!r) return;
@@ -959,26 +1240,23 @@ const DynamicVolcanoPlot = ({
       let isDE = false;
 
       if (diffexpressedCol) {
-        // Use explicit diffexpressed flag when available
         const rawFlag = r[diffexpressedCol];
         const flag = String(rawFlag ?? "").toLowerCase();
 
         isDE =
-          !!flag &&
-          flag !== "no" &&
-          flag !== "0" &&
-          flag !== "false" &&
-          flag !== "na";
+            !!flag &&
+            flag !== "no" &&
+            flag !== "0" &&
+            flag !== "false" &&
+            flag !== "na";
       } else if (pvalCol) {
-        // Fallback: use padj + |log2FC| thresholds
         const p = Number(r[pvalCol]);
         isDE =
-          Number.isFinite(p) &&
-          p > 0 &&
-          p <= pCutoff &&
-          Math.abs(lfc) >= log2fcCutoff;
+            Number.isFinite(p) &&
+            p > 0 &&
+            p <= pCutoff &&
+            Math.abs(lfc) >= log2fcCutoff;
       } else {
-        // Last-resort: treat all non-zero log2FC as DE
         isDE = true;
       }
 
@@ -996,9 +1274,9 @@ const DynamicVolcanoPlot = ({
 
     if (!countsByCellType.size) {
       return (
-        <div className="de-empty">
-          No differentially expressed genes to summarise.
-        </div>
+          <div className="de-empty">
+            No differentially expressed genes to summarise.
+          </div>
       );
     }
 
@@ -1007,322 +1285,271 @@ const DynamicVolcanoPlot = ({
     const downCounts = categories.map((k) => countsByCellType.get(k).down);
 
     console.log(
-      "[DynamicVolcanoPlot] barplot (rows) categories:",
-      categories
+        "[DynamicVolcanoPlot] barplot (rows) categories:",
+        categories
     );
+    console.log("[DynamicVolcanoPlot] barplot (rows) upCounts:", upCounts);
     console.log(
-      "[DynamicVolcanoPlot] barplot (rows) upCounts:",
-      upCounts
-    );
-    console.log(
-      "[DynamicVolcanoPlot] barplot (rows) downCounts:",
-      downCounts
+        "[DynamicVolcanoPlot] barplot (rows) downCounts:",
+        downCounts
     );
 
     return (
-      <Plot
-        ref={plotRef}
-        data={[
-          {
-            x: categories,
-            y: upCounts,
-            name: "Up",
-            type: "bar",
-            marker: {
-              color: "rgba(220, 20, 60, 0.9)",
-            },
-            hovertemplate:
-              "Cell type: %{x}<br>Up DEGs: %{y}<extra></extra>",
-          },
-          {
-            x: categories,
-            y: downCounts,
-            name: "Down",
-            type: "bar",
-            marker: {
-              color: "rgba(30, 144, 255, 0.9)",
-            },
-            hovertemplate:
-              "Cell type: %{x}<br>Down DEGs: %{y}<extra></extra>",
-          },
-        ]}
-        layout={{
-          title: title || "",
-          barmode: "group",
-          margin: { l: 60, r: 10, t: 40, b: 60 },
-          xaxis: {
-            title: "",
-            tickangle: -35,
-          },
-          yaxis: {
-            title: "Number of DEGs",
-            rangemode: "tozero",
-          },
-          showlegend: true,
-          legend: {
-            x: 1,
-            xanchor: "right",
-            y: 1,
-            yanchor: "top",
-            bgcolor: "rgba(255,255,255,0.6)",
-            bordercolor: "rgba(0,0,0,0.1)",
-            borderwidth: 1,
-            font: { size: 11 },
-          },
-          height,
-          hovermode: "closest",
-        }}
-        config={{
-          responsive: true,
-          displayModeBar: "hover",
-          scrollZoom: false,
-        }}
-        style={{ width: "100%", height }}
-      />
+        <Plot
+            ref={plotRef}
+            data={[
+              {
+                x: categories,
+                y: upCounts,
+                name: "Up",
+                type: "bar",
+                marker: {
+                  color: "rgba(220, 20, 60, 0.9)",
+                },
+                hovertemplate:
+                    "Cell type: %{x}<br>Up DEGs: %{y}<extra></extra>",
+              },
+              {
+                x: categories,
+                y: downCounts,
+                name: "Down",
+                type: "bar",
+                marker: {
+                  color: "rgba(30, 144, 255, 0.9)",
+                },
+                hovertemplate:
+                    "Cell type: %{x}<br>Down DEGs: %{y}<extra></extra>",
+              },
+            ]}
+            layout={{
+              title: title || "",
+              barmode: "group",
+              margin: { l: 60, r: 10, t: 40, b: 60 },
+              xaxis: {
+                title: "",
+                tickangle: -35,
+              },
+              yaxis: {
+                title: "Number of DEGs",
+                rangemode: "tozero",
+              },
+              showlegend: true,
+              legend: {
+                x: 1,
+                xanchor: "right",
+                y: 1,
+                yanchor: "top",
+                bgcolor: "rgba(255,255,255,0.6)",
+                bordercolor: "rgba(0,0,0,0.1)",
+                borderwidth: 1,
+                font: { size: 11 },
+              },
+              height,
+              hovermode: "closest",
+            }}
+            config={{
+              responsive: true,
+              displayModeBar: "hover",
+              scrollZoom: false,
+            }}
+            style={{ width: "100%", height }}
+        />
     );
   };
 
   const renderHeatmap = () => {
     if (!rows || !rows.length || !log2fcCol || !pvalCol) {
       return (
-        <div className="de-empty">
-          Not enough data to build a heatmap. Showing static image below.
-        </div>
+          <div className="de-empty">
+            Not enough data to build a heatmap. Showing static image below.
+          </div>
       );
     }
 
     if (!heatmapTraces.length) {
       return (
-        <div className="de-empty">
-          No points pass current filters for heatmap.
-        </div>
+          <div className="de-empty">
+            No points pass current filters for heatmap.
+          </div>
       );
     }
 
-    const heatmapHeight = 240; // try 220–260 until it feels right
+    const heatmapHeight = 240;
 
     return (
-      <Plot
-        ref={plotRef}
-        data={heatmapTraces}
-        layout={{
-          title: "",
-          margin: {
-            l: 40,
-            r: 10,
-            t: 10,
-            b: 40,
-          },
-          xaxis: {
-            title: "log2 fold change",
-            range: xRange || defaultRanges.x,
-          },
-          yaxis: {
-            title: "-log10(padj)",
-            range: yRange || defaultRanges.y,
-          },
-          showlegend: false,
-          height: heatmapHeight,     // 👈 fixed height
-          hovermode: "closest",
-          uirevision: "volcano-axes",
-          transition: { duration: 0 },
-        }}
-        config={{
-          responsive: true,
-          displayModeBar: "hover",
-          scrollZoom: true,
-        }}
-        style={{ width: "100%", height: heatmapHeight }} // 👈 match style
-        onRelayout={handleRelayout}
-      />
+        <Plot
+            ref={plotRef}
+            data={heatmapTraces}
+            layout={{
+              title: "",
+              margin: {
+                l: 40,
+                r: 10,
+                t: 10,
+                b: 40,
+              },
+              xaxis: {
+                title: "log2 fold change",
+                range: xRange || defaultRanges.x,
+              },
+              yaxis: {
+                title: "-log10(padj)",
+                range: yRange || defaultRanges.y,
+              },
+              showlegend: false,
+              height: heatmapHeight,
+              hovermode: "closest",
+              uirevision: "volcano-axes",
+              transition: { duration: 0 },
+            }}
+            config={{
+              responsive: true,
+              displayModeBar: "hover",
+              scrollZoom: true,
+            }}
+            style={{ width: "100%", height: heatmapHeight }}
+            onRelayout={handleRelayout}
+        />
     );
   };
 
-
   const RDBU_JSON_SCALE = [
-    [0.0,  "#4575B4"],
+    [0.0, "#4575B4"],
     [0.1667, "#6D8EC3"],
     [0.3333, "#9FB1D6"],
-    [0.5,   "#E0E5F2"],
+    [0.5, "#E0E5F2"],
     [0.6667, "#F4A28E"],
     [0.8333, "#D8564A"],
-    [1.0,  "#D73027"]
+    [1.0, "#D73027"],
   ];
 
-// -------------------------------
-// Dotplot Renderer
-// -------------------------------
   const renderTopDegDotplot = () => {
     if (!isTopDegDotplot) return null;
 
-    // Prefer backend blob
     const points = rawDotplotPoints || [];
 
     if (!points.length) {
       return <div className="de-empty">No dotplot data available.</div>;
     }
 
-    // Extract fields
-    const xCats = Array.from(new Set(points.map(p => p.celltype)));
-    const yCats = Array.from(new Set(points.map(p => p.gene)));
+    const xCats = Array.from(new Set(points.map((p) => p.celltype)));
+    const yCats = Array.from(new Set(points.map((p) => p.gene)));
 
-    const x = points.map(p => xCats.indexOf(p.celltype) + 1);
-    const y = points.map(p => yCats.indexOf(p.gene) + 1);
+    const x = points.map((p) => xCats.indexOf(p.celltype) + 1);
+    const y = points.map((p) => yCats.indexOf(p.gene) + 1);
 
-    const log2fc = points.map(p => Number(p.log2fc));
-    const padj = points.map(p => Number(p.padj));
+    const log2fc = points.map((p) => Number(p.log2fc));
+    const padj = points.map((p) => Number(p.padj));
 
-    // size = -log10(padj)
-    const neglog = padj.map(v => -Math.log10(v));
-    const MIN_S = 7, MAX_S = 30;
+    const neglog = padj.map((v) => -Math.log10(v));
+    const MIN_S = 7,
+        MAX_S = 30;
 
     const minN = Math.min(...neglog);
     const maxN = Math.max(...neglog);
     const denom = maxN - minN || 1;
 
-    const sizes = neglog.map(v => MIN_S + ((v - minN) / denom) * (MAX_S - MIN_S));
+    const sizes = neglog.map(
+        (v) => MIN_S + ((v - minN) / denom) * (MAX_S - MIN_S)
+    );
 
-    const maxAbsLFC = Math.max(...log2fc.map(v => Math.abs(v))) || 1;
+    const maxAbsLFC = Math.max(...log2fc.map((v) => Math.abs(v))) || 1;
 
-    const text = points.map((p, i) =>
-      `celltype: ${p.celltype}` +
-      `<br>gene: ${p.gene}` +
-      `<br>-log10(padj): ${neglog[i].toFixed(2)}` +
-      `<br>log2FC: ${p.log2fc.toFixed(2)}`
+    const text = points.map(
+        (p, i) =>
+            `celltype: ${p.celltype}` +
+            `<br>gene: ${p.gene}` +
+            `<br>-log10(padj): ${neglog[i].toFixed(2)}` +
+            `<br>log2FC: ${p.log2fc.toFixed(2)}`
     );
 
     const dotplotHeight = Math.max(200, yCats.length * 18);
 
-    // -------------------------------
-    // ADD SIZE LEGEND (manual circles)
-    // -------------------------------
-    const sizeLegend = [
-      { label: "High significance", value: maxN },
-      { label: "Medium significance", value: (maxN + minN) / 2 },
-      { label: "Low significance", value: minN }
-    ];
-
-    const legendSizes = sizeLegend.map(s =>
-      MIN_S + ((s.value - minN) / denom) * (MAX_S - MIN_S)
-    );
-
-    const legendTrace = {
-      x: [1, 1, 1],
-      y: [1.22, 1.27, 1.32], // positioned above plot
-      mode: "markers+text",
-      text: sizeLegend.map((s) => s.label),
-      textposition: "right",
-      hoverinfo: "skip",
-      marker: {
-        size: legendSizes,
-        color: "rgba(100,100,100,0.6)",
-        line: { width: 0.8, color: "black" }
-      },
-      showlegend: false,
-      xaxis: "x2",
-      yaxis: "y2"
-    };
-
     return (
-      <Plot
-        data={[
-          {
-            type: "scattergl",
-            mode: "markers",
-            x,
-            y,
-            text,
-            hovertemplate: "%{text}<extra></extra>",
-            marker: {
-              size: sizes,
-              sizemode: "diameter",
-              color: log2fc,
-              colorscale: RDBU_JSON_SCALE,
-              cmin: -maxAbsLFC,
-              cmax: maxAbsLFC,
-              reversescale: false,
-              colorbar: {
-                title: "log2FC",
-                len: 0.5
+        <Plot
+            data={[
+              {
+                type: "scattergl",
+                mode: "markers",
+                x,
+                y,
+                text,
+                hovertemplate: "%{text}<extra></extra>",
+                marker: {
+                  size: sizes,
+                  sizemode: "diameter",
+                  color: log2fc,
+                  colorscale: RDBU_JSON_SCALE,
+                  cmin: -maxAbsLFC,
+                  cmax: maxAbsLFC,
+                  reversescale: false,
+                  colorbar: {
+                    title: "log2FC",
+                    len: 0.5,
+                  },
+                  line: { width: 0.5, color: "rgba(0,0,0,0.3)" },
+                },
               },
-              line: { width: 0.5, color: "rgba(0,0,0,0.3)" }
-            }
-          },
-          // legendTrace // ← adds size legend
-        ]}
-        layout={{
-          height: dotplotHeight,
-          margin: { t: 0, r: 20, b: 40, l: 70 },
-          hovermode: "closest",
-          xaxis: {
-            tickmode: "array",
-            tickvals: xCats.map((_, i) => i + 1),
-            ticktext: xCats,
-            tickangle: -45
-          },
-          yaxis: {
-            tickmode: "array",
-            tickvals: yCats.map((_, i) => i + 1),
-            ticktext: yCats
-          },
-
-          // extra axes for size legend
-          xaxis2: {
-            visible: false,
-            domain: [0.75, 0.95]
-          },
-          yaxis2: {
-            visible: false,
-            domain: [1.05, 1.25]
-          }
-        }}
-        config={{
-          responsive: true,
-          displaylogo: false,
-          scrollZoom: false
-        }}
-        style={{ width: "100%", height: dotplotHeight }}
-      />
+            ]}
+            layout={{
+              height: dotplotHeight,
+              margin: { t: 0, r: 20, b: 40, l: 70 },
+              hovermode: "closest",
+              xaxis: {
+                tickmode: "array",
+                tickvals: xCats.map((_, i) => i + 1),
+                ticktext: xCats,
+                tickangle: -45,
+              },
+              yaxis: {
+                tickmode: "array",
+                tickvals: yCats.map((_, i) => i + 1),
+                ticktext: yCats,
+              },
+            }}
+            config={{
+              responsive: true,
+              displaylogo: false,
+              scrollZoom: false,
+            }}
+            style={{ width: "100%", height: dotplotHeight }}
+        />
     );
   };
-
-
-
-  // ---- Top-level render ----
 
   if (!tsvKey) return null;
 
   if (loading) {
     return (
-      <div className="de-panel">
-        <div className="de-loading">Loading dynamic data…</div>
-      </div>
+        <div className="de-panel">
+          <div className="de-loading">Loading dynamic data…</div>
+        </div>
     );
   }
 
   if (error) {
     console.warn("[DynamicVolcanoPlot] error", error);
     return (
-      <div className="de-panel">
-        <div className="de-empty">
-          Dynamic plot unavailable, showing static image instead.
+        <div className="de-panel">
+          <div className="de-empty">
+            Dynamic plot unavailable, showing static image instead.
+          </div>
         </div>
-      </div>
     );
   }
 
   return (
-    <div className="de-panel">
-      {renderControls()}
+      <div className="de-panel">
+        {renderControls()}
 
-      <div className="de-visualisation">
-        {viewMode === "volcano" && renderVolcano()}
-        {viewMode === "bar" && renderDegSummaryBarplot()}
-        {viewMode === "table" && renderTable()}
-        {viewMode === "heatmap" && renderHeatmap()}
-        {viewMode === "dotplot" && renderTopDegDotplot()}
+        <div className="de-visualisation">
+          {viewMode === "volcano" && renderVolcano()}
+          {viewMode === "bar" && renderDegSummaryBarplot()}
+          {viewMode === "table" && renderTable()}
+          {viewMode === "heatmap" && renderHeatmap()}
+          {viewMode === "dotplot" && renderTopDegDotplot()}
+        </div>
       </div>
-    </div>
   );
 };
 

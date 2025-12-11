@@ -1,9 +1,6 @@
-// src/components/TopGenesTable.js
 import React, { useMemo } from 'react';
 import useDeTsvData from '../hooks/useDeTsvData';
-import { formatPadj } from '../utils/formatting'; // or inline if you prefer
 
-// If you don't have a shared formatter, you can inline:
 const defaultFormatPadj = (p) => {
   if (p === null || p === undefined || Number.isNaN(p)) return 'NA';
   if (p === 0) return '0';

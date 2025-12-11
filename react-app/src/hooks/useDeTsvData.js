@@ -1,7 +1,6 @@
-// src/hooks/useDeTsvData.js
 import { useEffect, useState } from 'react';
 
-const API_BASE = process.env.GATSBY_GENE_API || 'http://localhost:3000';
+const API_BASE = process.env.GATSBY_GENE_API || 'https://46ucfedadd.execute-api.us-east-1.amazonaws.com';
 
 function parseTsv(tsvText, analysisTitle) {
   const lines = tsvText
