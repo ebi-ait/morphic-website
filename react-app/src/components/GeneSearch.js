@@ -28,7 +28,7 @@ const GeneSearch = () => {
       try {
         // Determine the API endpoint based on the checkbox state
         const apiUrl = useMorphiCGenesOnly
-          ? `https://localhost:3000/api/release-1-gene-search?query=${searchQuery}` : `https://localhost:3000/api/gene-search?query=${searchQuery}`;
+          ? `https://46ucfedadd.execute-api.us-east-1.amazonaws.com/api/release-1-gene-search?query=${searchQuery}` : `https://46ucfedadd.execute-api.us-east-1.amazonaws.com/api/gene-search?query=${searchQuery}`;
         const response = await fetch(apiUrl);
         const data = await response.json();
         setSuggestions(data);
