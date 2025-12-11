@@ -1,5 +1,4 @@
 import React, { useMemo, useState, useRef, useEffect } from "react";
-import Plot from "react-plotly.js";
 import useDeTsvData from "../hooks/useDeTsvData";
 import useDeSummary from "../hooks/useDeSummary";
 
@@ -140,7 +139,32 @@ const DynamicVolcanoPlot = ({
                                 deConditions = [],
                                 defaultConditionId = null,
                             }) => {
-    const rawDotplotPoints = (() => {
+    // 1) Dynamic import for react-plotly.js
+    const [PlotComponent, setPlotComponent] = useState(null);
+    const plotRef = useRef(null);
+
+    useEffect(() => {
+        let cancelled = false;
+
+        if (typeof window !== "undefined") {
+            import("react-plotly.js")
+                .then((mod) => {
+                    if (!cancelled) {
+                        setPlotComponent(() => mod.default);
+                    }
+                })
+                .catch((err) => {
+                    console.error("[DynamicVolcanoPlot] Failed to load react-plotly.js", err);
+                });
+        }
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    // 2) Your dotplot points – using useMemo instead of IIFE is a small improvement
+    const rawDotplotPoints = useMemo(() => {
         if (!dotplotDataFromApi) return [];
 
         if (Array.isArray(dotplotDataFromApi.points)) {
@@ -156,7 +180,7 @@ const DynamicVolcanoPlot = ({
         }
 
         return [];
-    })();
+    }, [dotplotDataFromApi]);
 
     const hasDotplotBlob = rawDotplotPoints.length > 0;
 
@@ -261,7 +285,6 @@ const DynamicVolcanoPlot = ({
 
     const [xRange, setXRange] = useState(null);
     const [yRange, setYRange] = useState(null);
-    const plotRef = useRef(null);
 
     useEffect(() => {
         const id = setTimeout(() => {
@@ -1019,7 +1042,7 @@ const DynamicVolcanoPlot = ({
         const hasPoints = up.x.length + down.x.length + grey.x.length > 0;
 
         return (
-            <Plot
+            <PlotComponent
                 ref={plotRef}
                 data={[
                     {
@@ -1161,7 +1184,7 @@ const DynamicVolcanoPlot = ({
             );
 
             return (
-                <Plot
+                <PlotComponent
                     ref={plotRef}
                     data={[
                         {
@@ -1296,7 +1319,7 @@ const DynamicVolcanoPlot = ({
         );
 
         return (
-            <Plot
+            <PlotComponent
                 ref={plotRef}
                 data={[
                     {
@@ -1378,7 +1401,7 @@ const DynamicVolcanoPlot = ({
         const heatmapHeight = 240;
 
         return (
-            <Plot
+            <PlotComponent
                 ref={plotRef}
                 data={heatmapTraces}
                 layout={{
@@ -1467,7 +1490,7 @@ const DynamicVolcanoPlot = ({
         const dotplotHeight = Math.max(200, yCats.length * 18);
 
         return (
-            <Plot
+            <PlotComponent
                 data={[
                     {
                         type: "scattergl",
@@ -1519,6 +1542,14 @@ const DynamicVolcanoPlot = ({
     };
 
     if (!tsvKey) return null;
+
+    if (!PlotComponent) {
+        return (
+            <div className="de-panel">
+                <div className="de-loading">Loading interactive plot…</div>
+            </div>
+        );
+    }
 
     if (loading) {
         return (
