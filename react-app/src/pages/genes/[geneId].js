@@ -192,6 +192,7 @@ const GenePage = ({ params }) => {
   if (error) return <p>Error: {error}</p>;
   if (!geneData) return <p>No data found for gene {geneId}</p>;
 
+  const isPrototypeGene = geneData?.HGNC_ID === "HGNC:8620";
   const uniqueStudies = uniqueStudiesFromGene(geneData);
   const analysisResults = geneData.Analysis_Results || [];
 
@@ -462,8 +463,9 @@ const GenePage = ({ params }) => {
                                       /topdeg[-_ ]?dotplot/i.test(analysis.s3_tsv_key || ""));
 
                               const showDynamicDe =
-                                  !!analysis.s3_tsv_key &&
-                                  (isCanonicalDe || prefersDegSummaryBar || isTopDegDotplotAnalysis);
+                                isPrototypeGene &&               // <-- only for HGNC:8620
+                                !!analysis.s3_tsv_key &&
+                                (isCanonicalDe || prefersDegSummaryBar || isTopDegDotplotAnalysis);
 
                               const dotplotDataFromApi =
                                   isTopDegDotplotAnalysis && analysis.dotplot_data
