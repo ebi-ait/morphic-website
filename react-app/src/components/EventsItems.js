@@ -2,9 +2,9 @@ import React from 'react'
 import * as styles from "../styles/news.module.css"
 import { events } from "../utils/constants/EventsFeatured.js"
 
-// Utility function, convert date string (YYYY MM DD) to Date object
+// Utility function, convert date string (YYYY-MM-DD) to Date object
 const parseDate = (dateStr) => {
-  const [year, month, day] = dateStr.split();
+  const [year, month, day] = dateStr.split('-');
   return new Date(`${month} ${day}, ${year}`);
 };
 
@@ -19,14 +19,14 @@ export default function EventsItems() {
         {
           sortedEvents.map((item, index) => {
             const date = parseDate(item.date);
-            const dateTimeFormat = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+            const dateStringFormat = date.toLocaleDateString('default', { year: 'numeric', month: 'long', day: 'numeric' });
 
             return (
               <li key={index}>
                 <article className={`${styles.eventArticle}`}>
                   <header className={`${styles.grid} ${styles.gridColumns1}`}>
                     <h2 className={styles.eventTitle}>{item.title}</h2>
-                    <time dateTime={dateTimeFormat} className={`${styles.eventDate} ${styles.orderFirst}`}>{item.date}</time>
+                    <time dateTime={item.date} className={`${styles.eventDate} ${styles.orderFirst}`}>{dateStringFormat}</time>
                   </header>
                   <a className={styles.buttonOrange} href={item.videoLink} target="_blank" rel="noopener noreferrer">Watch Video →</a>
                 </article>
