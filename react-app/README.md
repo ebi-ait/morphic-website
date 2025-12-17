@@ -147,6 +147,48 @@ flowchart LR
     DE_TSV -->|served by api with row limit| GeneAPI
 ```
 
+## Gene API–centric design for UMAP and DE plot data handling
+```mermaid
+flowchart LR
+    subgraph UI
+        UI_MAIN[Gene UI page]
+    end
+
+    subgraph GeneAPI
+        API[Gene API]
+    end
+
+    subgraph GeneDB
+        G[Gene core info]
+        ANALYSIS[Gene analysis records]
+        DE_SUM[DE summary per genotype and celltype]
+        TOP[Top up and down genes]
+    end
+
+    subgraph Storage
+        META[metadata.csv UMAP coordinates]
+        DE_TSV[Genotype DE TSVs e.g. QSER1.tsv QSER1TET1.tsv]
+        CT_PROP[Cell type proportion TSVs e.g. QSER1_ct_prop.tsv]
+        PLOTS[Static plots PNG JSON]
+    end
+
+%% UI -> API
+    UI_MAIN -->|load gene page| API
+
+%% API -> DB
+    API -->|fetch gene info| G
+    API -->|resolve genotypes and plots| ANALYSIS
+    API -->|load cached DEG counts| DE_SUM
+    API -->|load cached top genes| TOP
+
+%% API -> Storage
+    API -->|filter WT vs KO rows| META
+    API -->|serve truncated DE rows| DE_TSV
+    API -->|serve ct proportions| CT_PROP
+    API -->|serve static fallback plots| PLOTS
+
+```
+
 ## Differential Expression Precomputation Pipeline
 ```mermaid
 flowchart TD
