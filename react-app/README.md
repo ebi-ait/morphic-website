@@ -166,26 +166,31 @@ flowchart LR
     end
 
     subgraph Storage
-        META[metadata.csv UMAP coordinates]
-        DE_TSV[Genotype DE TSVs e.g. QSER1.tsv QSER1TET1.tsv]
+        META[metadata.csv global UMAP coordinates]
+        UMAP_SLICE[Optional UMAP slices WT vs KO]
+        DE_TSV[Genotype DE TSVs e.g. QSER1.tsv]
         CT_PROP[Cell type proportion TSVs e.g. QSER1_ct_prop.tsv]
         PLOTS[Static plots PNG JSON]
     end
 
-%% UI -> API
-    UI_MAIN -->|load gene page| API
+%% Main flow
+    UI_MAIN --> API
 
-%% API -> DB
-    API -->|fetch gene info| G
-    API -->|resolve genotypes and plots| ANALYSIS
-    API -->|load cached DEG counts| DE_SUM
-    API -->|load cached top genes| TOP
+    API --> G
+    API --> ANALYSIS
+    API --> DE_SUM
+    API --> TOP
 
-%% API -> Storage
-    API -->|filter WT vs KO rows| META
-    API -->|serve truncated DE rows| DE_TSV
-    API -->|serve ct proportions| CT_PROP
-    API -->|serve static fallback plots| PLOTS
+    API --> META
+    API --> UMAP_SLICE
+    API --> DE_TSV
+    API --> CT_PROP
+    API --> PLOTS
+
+%% Right-side note
+    UMAP_NOTE[UMAP handling options\nOption A global metadata filtered server side\nOption B precomputed WT vs KO slices]
+
+    API -.-> UMAP_NOTE
 
 ```
 
