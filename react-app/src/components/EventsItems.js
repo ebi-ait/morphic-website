@@ -3,10 +3,7 @@ import * as styles from "../styles/news.module.css"
 import { events } from "../utils/constants/EventsFeatured.js"
 
 // Utility function, convert date string (YYYY-MM-DD) to Date object
-const parseDate = (dateStr) => {
-  const [year, month, day] = dateStr.split('-');
-  return new Date(`${month} ${day}, ${year}`);
-};
+const parseDate = (dateStr) => new Date(`${dateStr}T00:00:00Z`);
 
 // Sort events by date (newest to oldest)
 const sortedEvents = [...events].sort((a, b) => parseDate(b.date) - parseDate(a.date));
