@@ -16,15 +16,15 @@ export default function News() {
         <Navbar />
         <div className="policies-triangle"></div>
       </div>
-      
+
       <div className="about-container">
         <div className={styles.container}>
           <div className={`${styles.grid} ${styles.gap} ${styles.gridColumns3} ${styles.gridColumns1AtMd}`}>
-            
+
             {/* Side Menu */}
             <aside className={`${styles.slideContainer} ${styles.hiddenAtMd}`}>
               <div className={`${styles.card} ${styles.slidePanel}`}>
-                <h2 className="about-card-title">Insdie this page</h2>
+                <h2 className="about-card-title">Inside this page</h2>
                 <nav>
                   <ul className={styles.cardList}>
                     <li><a href="#news">News</a></li>
