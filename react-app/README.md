@@ -167,7 +167,6 @@ flowchart LR
 
     subgraph Storage
         META[metadata.csv global UMAP coordinates]
-        UMAP_SLICE[Optional UMAP slices WT vs KO]
         DE_TSV[Genotype DE TSVs e.g. QSER1.tsv]
         CT_PROP[Cell type proportion TSVs e.g. QSER1_ct_prop.tsv]
         PLOTS[Static plots PNG JSON]
@@ -182,7 +181,6 @@ flowchart LR
     API --> TOP
 
     API --> META
-    API --> UMAP_SLICE
     API --> DE_TSV
     API --> CT_PROP
     API --> PLOTS
