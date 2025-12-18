@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar"
 import Footer from "../../components/Footer"
 import NewsItems from "../../components/NewsItems"
 import PublicationItems from "../../components/PublicationItems"
+import EventsItems from "../../components/EventsItems"
 import { StaticImage } from "gatsby-plugin-image"
 import { Seo } from "../../utils/SEO";
 
@@ -27,6 +28,7 @@ export default function News() {
                 <nav>
                   <ul className={styles.cardList}>
                     <li><a href="#news">News</a></li>
+                    <li><a href="#events">Events</a></li>
                     <li><a href="#publications">Publications</a></li>
                     <li><a href="https://connect.biorxiv.org/relate/content/220" target="_blank" rel="noopener noreferrer">NHGRI MorPhiC bioRxiv</a></li>
                   </ul>
@@ -47,6 +49,15 @@ export default function News() {
                 {/*<div className={styles.newsArticleBtnWrap}>
                   <button className="button button-orange">Load more</button>
                 </div>*/}
+              </section>
+
+              {/* Events Section */}
+              <section id="events" className={`${styles.newsSection} ${styles.newsArticles} ${styles.marginTop}`}>
+                <div className="about-section-subtitle-container">
+                  <h1 className={styles.marginNone}>Events</h1>
+                </div>
+
+                <EventsItems />
               </section>
 
               {/* Publications Section */}
