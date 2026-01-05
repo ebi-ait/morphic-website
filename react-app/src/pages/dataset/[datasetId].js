@@ -22,6 +22,9 @@ import logoEMBL from "../../images/other-logos/EMBL.png";
 const valOrDash = (v) => (v == null || v === "" ? "—" : v);
 const joinOrDash = (arr, sep = ", ") =>
   Array.isArray(arr) && arr.length ? arr.join(sep) : "—";
+const GENE_API_BASE =
+  process.env.GATSBY_GENE_API ??
+  "https://46ucfedadd.execute-api.us-east-1.amazonaws.com";
 
 function resolveInstituteLogo(raw) {
   const name = (raw || "").trim();
@@ -65,7 +68,7 @@ function resolveInstituteLogo(raw) {
 
 const fetchGenesInBulk = async (genes) => {
   const res = await fetch(
-    "https://46ucfedadd.execute-api.us-east-1.amazonaws.com/api/bulk-gene-search",
+    `${GENE_API_BASE}/api/bulk-gene-search`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },

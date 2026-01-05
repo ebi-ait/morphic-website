@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { navigate } from 'gatsby';
 
+const GENE_API_BASE =
+    process.env.GATSBY_GENE_API ??
+    "https://46ucfedadd.execute-api.us-east-1.amazonaws.com";
+
 // Debounce function to limit how often the API is called
 const debounce = (func, delay) => {
   let timer;
@@ -24,11 +28,11 @@ const GeneSearch = () => {
         setIsDropdownVisible(false);
         return;
       }
-      
+
       try {
         // Determine the API endpoint based on the checkbox state
         const apiUrl = useMorphiCGenesOnly
-          ? `https://46ucfedadd.execute-api.us-east-1.amazonaws.com/api/release-1-gene-search?query=${searchQuery}` : `https://46ucfedadd.execute-api.us-east-1.amazonaws.com/api/gene-search?query=${searchQuery}`;
+          ? `${GENE_API_BASE}/api/release-1-gene-search?query=${searchQuery}` : `${GENE_API_BASE}/api/gene-search?query=${searchQuery}`;
         const response = await fetch(apiUrl);
         const data = await response.json();
         setSuggestions(data);

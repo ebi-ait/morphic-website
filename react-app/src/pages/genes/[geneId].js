@@ -5,8 +5,12 @@ import GenePhenotypeEvidence from "../../components/GenePhenotypeEvidence";
 import MousePhenotype from "../../components/MousePhenotype";
 import DynamicVolcanoPlot from "../../components/DynamicVolcanoPlot";
 import DynamicEnrichmentPlot from "../../components/DynamicEnrichmentPlot";
+import DynamicUmapPlot from "../../components/DynamicUmapPlot";
 
 const API_BASE = process.env.GATSBY_INGEST_API ?? "https://api.ingest.archive.morphic.bio";
+const GENE_API_BASE =
+  process.env.GATSBY_GENE_API ??
+  "https://46ucfedadd.execute-api.us-east-1.amazonaws.com";
 
 const formatLabel = (label) => label?.replaceAll("_", " ") ?? label;
 
@@ -116,7 +120,7 @@ const GenePage = ({ params }) => {
     (async () => {
       try {
         const response = await fetch(
-            `https://46ucfedadd.execute-api.us-east-1.amazonaws.com/api/gene/${encodeURIComponent(geneId)}`
+            `${GENE_API_BASE}/api/gene/${encodeURIComponent(geneId)}`
         );
         if (!response.ok) throw new Error('Failed to fetch gene data');
         const data = await response.json();
@@ -483,6 +487,10 @@ const GenePage = ({ params }) => {
                                   ? labelToStudyMeta[studyLabel]
                                   : undefined;
 
+                              const isUmap =
+                                /umap/i.test(analysis.title) ||
+                                /_umap/i.test(analysis.s3_png_key || "");
+
                               return (
                                   <div className="gene-card-img-placeholder" key={index}>
                                     <div className="de-analysis-header">
@@ -639,7 +647,13 @@ const GenePage = ({ params }) => {
                                     )}
 
                                     <div className="plot-frame">
-                                      {showDynamicDe ? (
+                                      {isUmap ? (
+                                        <DynamicUmapPlot
+                                          analysis={analysis}
+                                          geneName={geneData.Name}
+                                          height={420}
+                                        />
+                                      ) : showDynamicDe ? (
                                           <DynamicVolcanoPlot
                                               tsvKey={analysis.s3_tsv_key}
                                               title={analysis.title}
@@ -662,7 +676,7 @@ const GenePage = ({ params }) => {
                                           />
                                       ) : analysis.s3_png_key ? (
                                           <img
-                                              src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${encodeURIComponent(
+                                              src={`${GENE_API_BASE}/download/png?file_id=${encodeURIComponent(
                                                   analysis.s3_png_key
                                               )}`}
                                               className="img-plot"
@@ -681,7 +695,7 @@ const GenePage = ({ params }) => {
                                       {analysis?.s3_tsv_key && (
                                           <div className="gene-card-header-link download-tsv">
                                             <a
-                                                href={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download?tsv_file_id=${encodeURIComponent(
+                                                href={`${GENE_API_BASE}/download?tsv_file_id=${encodeURIComponent(
                                                     analysis.s3_tsv_key
                                                 )}&file_name=${encodeURIComponent(
                                                     analysis.title ||
@@ -754,7 +768,7 @@ const GenePage = ({ params }) => {
                                         />
                                     ) : analysis.s3_png_key ? (
                                         <img
-                                            src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${encodeURIComponent(
+                                            src={`${GENE_API_BASE}/download/png?file_id=${encodeURIComponent(
                                                 analysis.s3_png_key
                                             )}`}
                                             className="img-plot"
