@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { navigate } from 'gatsby';
+import React, { useState, useEffect, useCallback } from "react";
+import { navigate } from "gatsby";
 
 const GENE_API_BASE =
-    process.env.GATSBY_GENE_API ??
-    "https://46ucfedadd.execute-api.us-east-1.amazonaws.com";
+  process.env.GATSBY_GENE_API ??
+  "https://46ucfedadd.execute-api.us-east-1.amazonaws.com";
 
-// Debounce function to limit how often the API is called
 const debounce = (func, delay) => {
   let timer;
   return (...args) => {
@@ -14,54 +13,67 @@ const debounce = (func, delay) => {
   };
 };
 
-const GeneSearch = () => {
-  const [query, setQuery] = useState('');
+const GeneSearch = ({ variant = "home" }) => {
+  const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [useMorphiCGenesOnly, setUseMorphiCGenesOnly] = useState(false);
 
-  // Fetch suggestions function wrapped with debounce
+  const showCheckbox = variant !== "compact";
+  const effectiveMorphiCOnly = variant === "compact" ? false : useMorphiCGenesOnly;
+
   const fetchSuggestions = useCallback(
     debounce(async (searchQuery) => {
-      if (searchQuery.length === 0) {
+      const q = (searchQuery || "").trim();
+
+      if (q.length === 0) {
         setSuggestions([]);
         setIsDropdownVisible(false);
         return;
       }
 
       try {
-        // Determine the API endpoint based on the checkbox state
-        const apiUrl = useMorphiCGenesOnly
-          ? `${GENE_API_BASE}/api/release-1-gene-search?query=${searchQuery}` : `${GENE_API_BASE}/api/gene-search?query=${searchQuery}`;
+        const endpoint = effectiveMorphiCOnly
+          ? "/api/release-1-gene-search"
+          : "/api/gene-search";
+
+        const apiUrl = `${GENE_API_BASE}${endpoint}?query=${encodeURIComponent(q)}`;
+
         const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error(`Gene search failed: ${response.status}`);
         const data = await response.json();
-        setSuggestions(data);
+
+        setSuggestions(Array.isArray(data) ? data : []);
         setIsDropdownVisible(true);
       } catch (error) {
-        console.error('Error fetching suggestions:', error);
+        console.error("Error fetching suggestions:", error);
+        setSuggestions([]);
+        setIsDropdownVisible(false);
       }
-    }, 300), // 300ms debounce delay
-    [useMorphiCGenesOnly] // Add the checkbox state as a dependency
+    }, 300),
+    [effectiveMorphiCOnly]
   );
 
-  // Effect to call fetchSuggestions whenever query changes
   useEffect(() => {
     fetchSuggestions(query);
   }, [query, fetchSuggestions]);
 
-  // Handle selecting a suggestion
   const handleSuggestionClick = (hgncId) => {
     setIsDropdownVisible(false);
     navigate(`/genes/${hgncId}`);
   };
 
-  // Handle checkbox toggle
   const handleCheckboxChange = (e) => {
     setUseMorphiCGenesOnly(e.target.checked);
   };
 
+  const placeholder =
+    variant === "compact"
+      ? "Search for a gene by symbol, name, or HGNC ID..."
+      : "Search for a gene  e.g. HEY1, PAX6, PPARG";
+
   return (
-    <div className="gene-search">
+    <div className={`gene-search ${variant === "compact" ? "gene-search--compact" : ""}`}>
       <span className="search-icon">
         <svg
           width="16"
@@ -76,24 +88,33 @@ const GeneSearch = () => {
           />
         </svg>
       </span>
+
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search for a gene  e.g. HEY1, PAX6, PPARG"
-        onFocus={() => setIsDropdownVisible(true)}
-        onBlur={() => setTimeout(() => setIsDropdownVisible(false), 100)}
+        placeholder={placeholder}
+        onFocus={() => {
+          if ((query || "").trim().length > 0) setIsDropdownVisible(true);
+        }}
+        onBlur={() => setTimeout(() => setIsDropdownVisible(false), 120)}
         className="icon-search search-box"
       />
-      <div className="checkbox-container">
-        <input
-          type="checkbox"
-          id="morphic-genes-checkbox"
-          checked={useMorphiCGenesOnly}
-          onChange={handleCheckboxChange}
-        />
-        <label htmlFor="morphic-genes-checkbox" className="checkbox-label">MorPhiC genes only</label>
-      </div>
+
+      {showCheckbox && (
+        <div className="checkbox-container">
+          <input
+            type="checkbox"
+            id="morphic-genes-checkbox"
+            checked={useMorphiCGenesOnly}
+            onChange={handleCheckboxChange}
+          />
+          <label htmlFor="morphic-genes-checkbox" className="checkbox-label">
+            MorPhiC genes only
+          </label>
+        </div>
+      )}
+
       {isDropdownVisible && suggestions.length > 0 && (
         <ul className="suggestions-list">
           {suggestions.map((suggestion) => (
