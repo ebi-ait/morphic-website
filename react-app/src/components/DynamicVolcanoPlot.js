@@ -8,122 +8,6 @@ function findColumn(columns, regex) {
     return columns.find((c) => lowerRegex.test(c.toLowerCase())) || null;
 }
 
-function classifyDeColumns(cols, analysisTitle) {
-    if (!Array.isArray(cols) || !cols.length) {
-        return { log2fcCol: null, pvalCol: null };
-    }
-
-    const lower = cols.map((c) => c.toLowerCase());
-    const titleL = (analysisTitle || "").toLowerCase();
-
-    const findExact = (candidates) => {
-        for (const cand of candidates) {
-            const idx = lower.indexOf(cand.toLowerCase());
-            if (idx !== -1) return cols[idx];
-        }
-        return null;
-    };
-
-    const genericLog2fc = findExact(["log2foldchange", "log2fc", "logfc"]);
-    const genericPadj = findExact([
-        "padj",
-        "padjust",
-        "p_adj",
-        "p_adj_bh",
-        "fdr",
-        "qvalue",
-    ]);
-
-    if (genericLog2fc && genericPadj) {
-        return { log2fcCol: genericLog2fc, pvalCol: genericPadj };
-    }
-
-    const suffix = "_log2foldchange";
-    const condCols = cols.filter((c) => c.toLowerCase().endsWith(suffix));
-    if (!condCols.length) {
-        return { log2fcCol: null, pvalCol: null };
-    }
-
-    const prefixToLog2 = {};
-    condCols.forEach((col) => {
-        const prefix = col.slice(0, -suffix.length);
-        prefixToLog2[prefix] = col;
-    });
-
-    const hasAnyPadj = cols.some((c) => c.toLowerCase().endsWith("_padj"));
-
-    const findPadjForPrefixStrict = (prefix) => {
-        const cand = (prefix + "_padj").toLowerCase();
-        const idx = lower.indexOf(cand);
-        return idx !== -1 ? cols[idx] : null;
-    };
-
-    const findPadjOrPvalForPrefixLoose = (prefix) => {
-        const candidates = [
-            prefix + "_padj",
-            prefix + "_fdr",
-            prefix + "_qvalue",
-            prefix + "_p_adj",
-            prefix + "_pvalue",
-        ];
-        for (const cand of candidates) {
-            const idx = lower.indexOf(cand.toLowerCase());
-            if (idx !== -1) return cols[idx];
-        }
-        return null;
-    };
-
-    const pickByKeyword = (keywords, strict = true) => {
-        for (const kw of keywords) {
-            for (const [prefix, log2col] of Object.entries(prefixToLog2)) {
-                if (prefix.toLowerCase().includes(kw) && titleL.includes(kw)) {
-                    const padjCol = strict
-                        ? findPadjForPrefixStrict(prefix)
-                        : findPadjOrPvalForPrefixLoose(prefix);
-                    if (padjCol) return { log2fcCol: log2col, pvalCol: padjCol };
-                }
-            }
-        }
-        return null;
-    };
-
-    let choice =
-        pickByKeyword(["revert"], true) ||
-        pickByKeyword(["ko"], true) ||
-        pickByKeyword(["ptc"], true) ||
-        pickByKeyword(["ce"], true);
-
-    if (!choice) {
-        for (const [prefix, log2col] of Object.entries(prefixToLog2)) {
-            const padjCol = findPadjForPrefixStrict(prefix);
-            if (padjCol) {
-                choice = { log2fcCol: log2col, pvalCol: padjCol };
-                break;
-            }
-        }
-    }
-
-    if (!choice && !hasAnyPadj) {
-        choice =
-            pickByKeyword(["revert"], false) ||
-            pickByKeyword(["ko"], false) ||
-            pickByKeyword(["ptc"], false) ||
-            pickByKeyword(["ce"], false);
-
-        if (!choice) {
-            for (const [prefix, log2col] of Object.entries(prefixToLog2)) {
-                const padjCol = findPadjOrPvalForPrefixLoose(prefix);
-                if (padjCol) {
-                    choice = { log2fcCol: log2col, pvalCol: padjCol };
-                    break;
-                }
-            }
-        }
-    }
-
-    return choice || { log2fcCol: null, pvalCol: null };
-}
-
 function negLog10(p) {
     if (p === null || p === undefined || p <= 0) return null;
     return -Math.log10(p);
@@ -199,39 +83,6 @@ const DynamicVolcanoPlot = ({
 
     const shouldLoadTsv = !(isTopDegDotplot && hasDotplotBlob);
 
-    const { rows, loading, error } = useDeTsvData(
-        shouldLoadTsv ? tsvKey || null : null,
-        { enabled: true, title }
-    );
-
-    console.log("[DynamicVolcanoPlot] flags", {
-        title,
-        isTopDegDotplot,
-        hasDotplotBlob,
-        shouldLoadTsv,
-        hasDotplotDataFromApi: !!dotplotDataFromApi,
-    });
-
-    const [viewMode, setViewMode] = useState(
-        isTopDegDotplot
-            ? "dotplot"
-            : isNumberDegsTitle || preferDegSummaryBar
-                ? "bar"
-                : "volcano"
-    );
-
-    const [tableSide, setTableSide] = useState("up");
-
-    useEffect(() => {
-        if (isTopDegDotplot) {
-            setViewMode("dotplot");
-        } else if (isNumberDegsTitle || preferDegSummaryBar) {
-            setViewMode("bar");
-        } else {
-            setViewMode("volcano");
-        }
-    }, [isTopDegDotplot, isNumberDegsTitle, preferDegSummaryBar, tsvKey]);
-
     const [selectedConditionId, setSelectedConditionId] = useState(() => {
         if (defaultConditionId) return defaultConditionId;
         if (deConditions && deConditions.length > 0) {
@@ -266,6 +117,43 @@ const DynamicVolcanoPlot = ({
         return found || deConditions[0];
     }, [deConditions, selectedConditionId]);
 
+    const { rows, loading, error } = useDeTsvData(
+        shouldLoadTsv ? tsvKey || null : null,
+        {
+            enabled: true,
+            title,
+            condition: currentCondition
+        }
+    );
+
+    console.log("[DynamicVolcanoPlot] flags", {
+        title,
+        isTopDegDotplot,
+        hasDotplotBlob,
+        shouldLoadTsv,
+        hasDotplotDataFromApi: !!dotplotDataFromApi,
+    });
+
+    const [viewMode, setViewMode] = useState(
+        isTopDegDotplot
+            ? "dotplot"
+            : isNumberDegsTitle || preferDegSummaryBar
+                ? "bar"
+                : "volcano"
+    );
+
+    const [tableSide, setTableSide] = useState("up");
+
+    useEffect(() => {
+        if (isTopDegDotplot) {
+            setViewMode("dotplot");
+        } else if (isNumberDegsTitle || preferDegSummaryBar) {
+            setViewMode("bar");
+        } else {
+            setViewMode("volcano");
+        }
+    }, [isTopDegDotplot, isNumberDegsTitle, preferDegSummaryBar, tsvKey]);
+
     const prettyConditionLabel = (conditionId) => {
         if (!conditionId) return "";
         let label = conditionId;
@@ -277,8 +165,8 @@ const DynamicVolcanoPlot = ({
     const [pCutoff, setPCutoff] = useState(0.05);
     const [pCutoffInput, setPCutoffInput] = useState(0.05);
 
-    const [log2fcCutoffInput, setLog2fcCutoffInput] = useState("1");
-    const [log2fcCutoff, setLog2fcCutoff] = useState(1);
+    const [log2fcCutoffInput, setLog2fcCutoffInput] = useState("0.5");
+    const [log2fcCutoff, setLog2fcCutoff] = useState(0.5);
 
     const [conditionFilter, setConditionFilter] = useState("");
     const [pathwayFilter, setPathwayFilter] = useState("");
@@ -315,46 +203,23 @@ const DynamicVolcanoPlot = ({
         return [];
     }, [rows]);
 
-    const { log2fcCol, pvalCol } = useMemo(() => {
-        if (currentCondition && cols && cols.length > 0) {
-            const cond = currentCondition;
-
-            const condLog2Name =
-                cond.log2fc_col ||
-                cond.log2fcCol ||
-                cond.log2fc ||
-                cond.log2FC;
-
-            const condPadjName =
-                cond.padj_col ||
-                cond.padjCol ||
-                cond.padj ||
-                cond.pval_col ||
-                cond.pvalCol;
-
-            const hasLog2 = condLog2Name && cols.includes(condLog2Name);
-            const hasPadj = condPadjName && cols.includes(condPadjName);
-
-            if (hasLog2 && hasPadj) {
-                return {
-                    log2fcCol: condLog2Name,
-                    pvalCol: condPadjName,
-                };
-            }
-
-            console.warn("[DynamicVolcanoPlot--] Condition columns not found in TSV header", {
-                currentCondition: cond,
-                cols,
-                condLog2Name,
-                condPadjName,
-                hasLog2,
-                hasPadj,
-            });
+    useEffect(() => {
+        if (currentCondition?.thresholds?.abs_log2fc) {
+            setLog2fcCutoff(currentCondition.thresholds.abs_log2fc);
+            setLog2fcCutoffInput(currentCondition.thresholds.abs_log2fc);
         }
 
-        return classifyDeColumns(cols, title);
-    }, [cols, title, currentCondition]);
+        if (currentCondition?.thresholds?.padj) {
+            setPCutoff(currentCondition.thresholds.padj);
+            setPCutoffInput(currentCondition.thresholds.padj);
+        }
+    }, [currentCondition]);
 
+    const { log2fcCol, pvalCol } = useMemo(() => {
+        // parseTsv already resolved the correct condition columns
+        // and flattened them into "log2fc" and "padj"
+        return { log2fcCol: "log2fc", pvalCol: "padj" };
+    }, []);
 
     const conditionCol = useMemo(
         () => findColumn(cols, /condition|contrast|group|comparison/i),
@@ -682,132 +547,127 @@ const DynamicVolcanoPlot = ({
         </svg>
     );
 
-    const renderControls = () => (
-        <div className="de-controls">
-            <div className="de-controls-row de-controls-row-top">
-                {["volcano", "table"].includes(viewMode) && (
-                    <div className="de-view-toggle">
-                        <button
-                            type="button"
-                            className={`de-view-btn de-view-btn-icon ${
-                                viewMode === "volcano" ? "is-active" : ""
-                            }`}
-                            onClick={() => setViewMode("volcano")}
-                            aria-label="Volcano view"
-                        >
-                            <VolcanoIcon />
-                            <span className="de-view-label">Volcano</span>
-                        </button>
+    const renderLeftHeader = () => (
+        <div className="de-left-header">
+            {["volcano", "table"].includes(viewMode) && (
+                <div className="de-view-toggle">
+                    <button
+                        type="button"
+                        className={`de-view-btn ${viewMode === "volcano" ? "is-active" : ""}`}
+                        onClick={() => setViewMode("volcano")}
+                    >
+                        <span className="de-view-label">Volcano Plot</span>
+                    </button>
+                    <button
+                        type="button"
+                        className={`de-view-btn ${viewMode === "table" ? "is-active" : ""}`}
+                        onClick={() => setViewMode("table")}
+                    >
+                        <span className="de-view-label">Top Genes Table</span>
+                    </button>
+                </div>
+            )}
 
-                        <button
-                            type="button"
-                            className={`de-view-btn de-view-btn-icon ${
-                                viewMode === "table" ? "is-active" : ""
-                            }`}
-                            onClick={() => setViewMode("table")}
-                            aria-label="Top genes table view"
-                        >
-                            <TableIcon />
-                            <span className="de-view-label">Top genes</span>
-                        </button>
-                    </div>
-                )}
+            {pvalCol && log2fcCol && ["volcano", "table"].includes(viewMode) && (
+                <div className="de-thresholds-row">
+                    <label className="de-threshold-field">
+                        <span className="de-threshold-caption">padj ≤</span>
+                        <input
+                            type="number"
+                            step="0.0001"
+                            min="0"
+                            max="1"
+                            value={pCutoffInput}
+                            onChange={(e) => setPCutoffInput(Number(e.target.value))}
+                            className="de-threshold-input"
+                        />
+                    </label>
 
-                {deConditions && deConditions.length > 0 && (
-                    <div className="de-control-group de-condition-group">
-                        <label className="de-control-label">
-                            KO Strategy:
-                            <select
-                                className="de-select"
-                                value={currentCondition?.condition_id || ""}
-                                onChange={(e) => setSelectedConditionId(e.target.value)}
-                            >
-                                {deConditions.map((cond) => (
-                                    <option key={cond.condition_id} value={cond.condition_id}>
-                                        {prettyConditionLabel(cond.condition_id)}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                    </div>
-                )}
-            </div>
+                    <span className="de-threshold-separator">·</span>
 
-            <div className="de-controls-row de-controls-row-bottom de-filters-row">
-                {conditionCol && conditions.length > 0 && (
-                    <div className="de-control-group">
-                        <label className="de-control-label">
-                            Group:
-                            <select
-                                className="de-select"
-                                value={conditionFilter}
-                                onChange={(e) => setConditionFilter(e.target.value)}
-                            >
-                                <option value="">All</option>
-                                {conditions.map((c) => (
-                                    <option key={c} value={c}>
-                                        {c}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                    </div>
-                )}
+                    <label className="de-threshold-field">
+                        <span className="de-threshold-caption">|log₂FC| ≥</span>
+                        <input
+                            type="number"
+                            step="0.1"
+                            min="0"
+                            value={log2fcCutoffInput}
+                            onChange={(e) => setLog2fcCutoffInput(Number(e.target.value))}
+                            className="de-threshold-input"
+                        />
+                    </label>
+                </div>
+            )}
+        </div>
+    );
 
-                {pathwayCol && pathways.length > 0 && (
-                    <div className="de-control-group">
-                        <label className="de-control-label">
-                            Pathway:
-                            <select
-                                className="de-select"
-                                value={pathwayFilter}
-                                onChange={(e) => setPathwayFilter(e.target.value)}
-                            >
-                                <option value="">All</option>
-                                {pathways.map((p) => (
-                                    <option key={p} value={p}>
-                                        {p}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                    </div>
-                )}
+    const renderRightControls = () => (
+        <div className="de-right-controls">
+            {cellTypeCol && (
+                <label className="de-field">
+                    <span className="de-field-label">Cell Type</span>
+                    <select className="de-select" value={conditionFilter} onChange={(e) => setConditionFilter(e.target.value)}>
+                        {/* replace with your actual celltype options if needed */}
+                        <option value="">All</option>
+                    </select>
+                </label>
+            )}
 
-                {pvalCol && log2fcCol && ["volcano", "table"].includes(viewMode) && (
-                    <div className="de-control-group de-thresholds-group">
-                        <div className="de-thresholds-pill">
-                            <label className="de-threshold-field">
-                                <span className="de-threshold-caption">padj ≤</span>
-                                <input
-                                    type="number"
-                                    step="0.0001"
-                                    min="0"
-                                    max="1"
-                                    value={pCutoffInput}
-                                    onChange={(e) => setPCutoffInput(Number(e.target.value))}
-                                    className="de-threshold-input"
-                                />
-                            </label>
+            {/* Use your actual timepoint state/props if present */}
+            {/* <label className="de-field"> ... Timepoint ... </label> */}
 
-                            <span className="de-threshold-separator">·</span>
+            {deConditions && deConditions.length > 0 && (
+                <label className="de-field">
+                    <span className="de-field-label">Condition</span>
+                    <select
+                        className="de-select"
+                        value={currentCondition?.condition_id || ""}
+                        onChange={(e) => setSelectedConditionId(e.target.value)}
+                    >
+                        {deConditions.map((cond) => (
+                            <option key={cond.condition_id} value={cond.condition_id}>
+                                {prettyConditionLabel(cond.condition_id)}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+            )}
 
-                            <label className="de-threshold-field">
-                                <span className="de-threshold-caption">|log₂FC| ≥</span>
-                                <input
-                                    type="number"
-                                    step="0.1"
-                                    min="0"
-                                    value={log2fcCutoffInput}
-                                    onChange={(e) => setLog2fcCutoffInput(Number(e.target.value))}
-                                    className="de-threshold-input"
-                                />
-                            </label>
-                        </div>
-                    </div>
-                )}
+            {conditionCol && conditions.length > 0 && (
+                <label className="de-field">
+                    <span className="de-field-label">Group</span>
+                    <select
+                        className="de-select"
+                        value={conditionFilter}
+                        onChange={(e) => setConditionFilter(e.target.value)}
+                    >
+                        <option value="">All</option>
+                        {conditions.map((c) => (
+                            <option key={c} value={c}>
+                                {c}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+            )}
 
-            </div>
+            {pathwayCol && pathways.length > 0 && (
+                <label className="de-field">
+                    <span className="de-field-label">Pathway</span>
+                    <select
+                        className="de-select"
+                        value={pathwayFilter}
+                        onChange={(e) => setPathwayFilter(e.target.value)}
+                    >
+                        <option value="">All</option>
+                        {pathways.map((p) => (
+                            <option key={p} value={p}>
+                                {p}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+            )}
         </div>
     );
 
@@ -834,12 +694,20 @@ const DynamicVolcanoPlot = ({
             </tr>
         );
 
-        // -------- 1) Precomputed from Mongo (preferred) -----------------
+        const nSig =
+            currentCondition?.summary?.n_significant ??
+            currentCondition?.summary?.n_sig ??
+            null;
+
+        const topSource = currentCondition?.top_source || null;
+        const isEffectFallback = topSource === "effect_fallback";
+
         const precomputedUp =
             currentCondition?.top_up_50 ||
             currentCondition?.top_up ||
             currentCondition?.top_up_genes_50 ||
             [];
+
         const precomputedDown =
             currentCondition?.top_down_50 ||
             currentCondition?.top_down ||
@@ -852,7 +720,10 @@ const DynamicVolcanoPlot = ({
             const totalActive = activeIsUp
                 ? precomputedUp.length
                 : precomputedDown.length;
-            const label = activeIsUp ? "Up-regulated" : "Down-regulated";
+            const labelPrefix = isEffectFallback
+                ? "Top by effect size (no significant genes) • "
+                : "";
+            const label = activeIsUp ? `${labelPrefix}Up-regulated` : `${labelPrefix}Down-regulated`;
             const pillClass = activeIsUp ? "de-pill-up" : "de-pill-down";
 
             return (
@@ -1091,6 +962,10 @@ const DynamicVolcanoPlot = ({
                 layout={{
                     title: "",
                     margin: { l: 40, r: 10, t: 10, b: 40 },
+
+                    paper_bgcolor: "rgba(0,0,0,0)",  // transparent
+                    plot_bgcolor: "#fafafa",
+
                     xaxis: {
                         title: "log2 fold change",
                         zeroline: true,
@@ -1572,14 +1447,21 @@ const DynamicVolcanoPlot = ({
 
     return (
         <div className="de-panel">
-            {renderControls()}
+            <div className="de-two-col">
+                {/* LEFT: header + viz (plot/table) */}
+                <div className="de-left">
+                    {renderLeftHeader()}
+                    <div className="de-visualisation">
+                        {viewMode === "volcano" && renderVolcano()}
+                        {viewMode === "bar" && renderDegSummaryBarplot()}
+                        {viewMode === "table" && renderTable()}
+                        {viewMode === "heatmap" && renderHeatmap()}
+                        {viewMode === "dotplot" && renderTopDegDotplot()}
+                    </div>
+                </div>
 
-            <div className="de-visualisation">
-                {viewMode === "volcano" && renderVolcano()}
-                {viewMode === "bar" && renderDegSummaryBarplot()}
-                {viewMode === "table" && renderTable()}
-                {viewMode === "heatmap" && renderHeatmap()}
-                {viewMode === "dotplot" && renderTopDegDotplot()}
+                {/* RIGHT: controls, no box */}
+                {renderRightControls()}
             </div>
         </div>
     );

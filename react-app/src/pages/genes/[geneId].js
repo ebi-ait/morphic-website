@@ -6,6 +6,7 @@ import MousePhenotype from "../../components/MousePhenotype";
 import DynamicVolcanoPlot from "../../components/DynamicVolcanoPlot";
 import DynamicEnrichmentPlot from "../../components/DynamicEnrichmentPlot";
 import DynamicUmapPlot from "../../components/DynamicUmapPlot";
+import GeneSearch from "../../components/GeneSearch";
 
 const API_BASE = process.env.GATSBY_INGEST_API ?? "https://api.ingest.archive.morphic.bio";
 const GENE_API_BASE =
@@ -13,18 +14,6 @@ const GENE_API_BASE =
   "https://46ucfedadd.execute-api.us-east-1.amazonaws.com";
 
 const formatLabel = (label) => label?.replaceAll("_", " ") ?? label;
-
-const formatPadj = (p) => {
-  if (p === null || p === undefined || Number.isNaN(p)) return "NA";
-  if (p === 0) return "0";
-  const abs = Math.abs(p);
-  if (abs < 1e-4) return p.toExponential(1);
-  if (abs < 1e-3) return p.toExponential(2);
-  return p.toFixed(3);
-};
-
-const geneLabel = (g) =>
-    g?.symbol && g.symbol !== "" ? g.symbol : g?.gene_id?.split(".")[0] || "—";
 
 const collectStudies = (arr = []) =>
     (arr || [])
@@ -48,6 +37,58 @@ const uniqueStudiesFromGene = (gene) => {
     unique.push(s);
   }
   return unique;
+};
+
+const normalizeDeSummary = (ds) => {
+  if (!ds) return null;
+
+  // New structure
+  if (ds.summary) {
+    return {
+      ...ds,
+      n_total: ds.summary.n_total ?? 0,
+      n_significant: ds.summary.n_significant ?? 0,
+      n_up: ds.summary.n_up ?? 0,
+      n_down: ds.summary.n_down ?? 0,
+      median_abs_log2fc: ds.summary.median_abs_log2fc ?? 0,
+      thresholds: ds.thresholds ?? null,
+      top_source: ds.top_source ?? "significant",
+      top_up: ds.top_up ?? [],
+      top_down: ds.top_down ?? [],
+    };
+  }
+
+  // Old structure
+  return {
+    ...ds,
+    thresholds: ds.thresholds ?? null,
+    top_source: ds.top_source ?? "significant",
+    top_up: ds.top_up ?? [],
+    top_down: ds.top_down ?? [],
+  };
+};
+
+const pickDefaultCondition = (analysis) => {
+  const conds = Array.isArray(analysis?.de_conditions) ? analysis.de_conditions : [];
+  if (!conds.length) return null;
+  const preferred = analysis?.default_condition_id
+    ? conds.find(c => c.condition_id === analysis.default_condition_id)
+    : null;
+  return preferred || conds[0];
+};
+
+const normalizeCondSummary = (cond) => {
+  if (!cond) return null;
+  const s = cond.summary || {};
+  return {
+    n_total: s.n_total ?? 0,
+    n_significant: s.n_significant ?? 0,
+    n_up: s.n_up ?? 0,
+    n_down: s.n_down ?? 0,
+    median_abs_log2fc: s.median_abs_log2fc ?? 0,
+    top_source: s.top_source ?? "significant",
+    thresholds: cond.thresholds ?? null,
+  };
 };
 
 const pushJoinedChip = (chips, arr, kind) => {
@@ -113,6 +154,7 @@ const GenePage = ({ params }) => {
 
   const [labelToStudyId, setLabelToStudyId] = useState({});
   const [labelToStudyMeta, setLabelToStudyMeta] = useState({});
+  const [studyById, setStudyById] = useState({});
 
   useEffect(() => {
     if (!geneId) return;
@@ -176,6 +218,25 @@ const GenePage = ({ params }) => {
               };
             }
 
+            const byId = {};
+
+            for (const s of list) {
+              const id = s?.id;
+              if (!id) continue;
+
+              byId[id] = {
+                id,
+                label: s?.content?.label?.trim() ?? null,
+                studyTitle: s?.content?.study_title ?? null,
+                studyDescription: s?.content?.study_description ?? null,
+                assay: s?.content?.readout_assay ?? null,
+                institute: s?.content?.institute ?? null,
+                modelSystems: Array.isArray(s?.content?.model_organ_systems) ? s.content.model_organ_systems : [],
+                cellLines: Array.isArray(s?.content?.cell_line_names) ? s.content.cell_line_names : [],
+              };
+            }
+            setStudyById(byId);
+
             setLabelToStudyId(idMap);
             setLabelToStudyMeta(metaMap);
           } else {
@@ -201,35 +262,35 @@ const GenePage = ({ params }) => {
   const analysisResults = geneData.Analysis_Results || [];
 
   const experimentsWithSummary = analysisResults.filter(
-      (ar) => ar.de_summary && typeof ar.de_summary === "object"
+    (ar) => normalizeDeSummary(ar.de_summary)?.n_significant !== null
   );
 
   const numberOfExperiments = experimentsWithSummary.length;
   const numberOfStudies = uniqueStudies.length;
 
   const totalSignificant = experimentsWithSummary.reduce(
-      (sum, ar) => sum + (ar.de_summary?.n_significant || 0),
-      0
+    (sum, ar) => sum + (normalizeDeSummary(ar.de_summary)?.n_significant || 0),
+    0
   );
 
   const totalUp = experimentsWithSummary.reduce(
-      (sum, ar) => sum + (ar.de_summary?.n_up || 0),
-      0
+    (sum, ar) => sum + (normalizeDeSummary(ar.de_summary)?.n_up || 0),
+    0
   );
 
   const totalDown = experimentsWithSummary.reduce(
-      (sum, ar) => sum + (ar.de_summary?.n_down || 0),
-      0
+    (sum, ar) => sum + (normalizeDeSummary(ar.de_summary)?.n_down || 0),
+    0
   );
 
   const representativeGenes = (() => {
     const geneMap = new Map();
 
     experimentsWithSummary.forEach((ar) => {
-      const s = ar.de_summary || {};
+      const s = normalizeDeSummary(ar.de_summary);
       const candidates = [
-        ...(s.top_up || []),
-        ...(s.top_down || []),
+        ...(s?.top_up || []),
+        ...(s?.top_down || []),
       ];
 
       candidates.forEach((g) => {
@@ -261,9 +322,21 @@ const GenePage = ({ params }) => {
 
   return (
       <div className="about gene-page">
-        <div>
-          <Navbar />
-          <div className="policies-triangle"></div>
+        <div className="gene-header-inline gene-header-gradient gene-hero">
+          <div className="gene-header-position-top">
+            <Navbar />
+          </div>
+
+          <div className="gene-header-position-center">
+            <div className="gene-search-container">
+              <div className="gene-search-label">
+                Search the MorPhiC gene perturbation catalog
+              </div>
+              <GeneSearch variant="compact" />
+            </div>
+          </div>
+
+          <div className="gene-header-position-bottom gene-header-triangle"></div>
         </div>
 
         <div className="gene-container">
@@ -444,14 +517,16 @@ const GenePage = ({ params }) => {
                         </a>
                       </div>
 
-                      <div className="gene-card">
-                        <div className="gene-card-header">
-                          <h2>Gene expression analysis</h2>
-                        </div>
+                      <div className="gene-card gene-card--transparent">
+                        {/*<div className="gene-card-header">*/}
+                        {/*  <h2>Gene expression analysis</h2>*/}
+                        {/*</div>*/}
 
                         <div className="gene-card-body">
-                          <div className="gene-grid">
+                          <div className="dataset-stack">
                             {geneData.Analysis_Results.map((analysis, index) => {
+                              const de = normalizeDeSummary(analysis.de_summary);
+
                               const isCanonicalDe =
                                   analysis.result_type === "DE" &&
                                   analysis.role === "canonical_de" &&
@@ -467,7 +542,7 @@ const GenePage = ({ params }) => {
                                       /topdeg[-_ ]?dotplot/i.test(analysis.s3_tsv_key || ""));
 
                               const showDynamicDe =
-                                isPrototypeGene &&               // <-- only for HGNC:8620
+                                // isPrototypeGene &&               // <-- only for HGNC:8620
                                 !!analysis.s3_tsv_key &&
                                 (isCanonicalDe || prefersDegSummaryBar || isTopDegDotplotAnalysis);
 
@@ -491,224 +566,142 @@ const GenePage = ({ params }) => {
                                 /umap/i.test(analysis.title) ||
                                 /_umap/i.test(analysis.s3_png_key || "");
 
-                              return (
-                                  <div className="gene-card-img-placeholder" key={index}>
-                                    <div className="de-analysis-header">
-                                      {(studyLabel || chips.length > 0) && (
-                                          <div className="experiment-chips">
-                                            {studyLabel && (() => {
-                                              const displayLabel = formatLabel(studyLabel);
-                                              return (
-                                                  <a
-                                                      className="experiment-chip experiment-chip-study"
-                                                      href={`/data?label=${encodeURIComponent(displayLabel)}`}
-                                                      title={studyMeta?.assay || "View study dataset"}
-                                                  >
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="12"
-                                                        height="12"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        strokeWidth="2"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        style={{ marginRight: "4px" }}
-                                                    >
-                                                      <path d="M3 7v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7" />
-                                                      <path d="M3 7l9-4 9 4" />
-                                                      <path d="M12 3v18" />
-                                                    </svg>
-                                                    {displayLabel}
-                                                  </a>
-                                              );
-                                            })()}
+                              const defaultCond = pickDefaultCondition(analysis);
+                              const deHead = normalizeCondSummary(defaultCond) || normalizeDeSummary(analysis.de_summary);
 
-                                            {chips.map((chip, i) => (
-                                                <span
-                                                    key={`${chip.label}-${i}`}
-                                                    className={`experiment-chip experiment-chip-${chip.kind}`}
-                                                >
-                  {chip.label}
-                </span>
-                                            ))}
-                                          </div>
+                              const studyId = analysis.study_id;
+                              const study = studyId ? studyById[studyId] : null;
+
+                              const showMetrics = !!deHead;
+
+                              return (
+                                <div className="dataset-card" key={index}>
+                                  {/* Header */}
+                                  <div className="dataset-card-header">
+                                    <div className="dataset-head">
+                                      <div className="dataset-head-title">
+                                        {study?.label
+                                          ? formatLabel(study.label)
+                                          : analysis.title}
+                                      </div>
+
+                                      {!!study?.studyTitle && (
+                                        <div className="dataset-head-desc">
+                                          {study.studyTitle}
+                                        </div>
                                       )}
 
+                                      <div className="dataset-head-meta">
+      <span className="dataset-meta-item">
+        <span className="dataset-meta-label">Cell Line:</span>{" "}
+        <span className="dataset-meta-value">
+          {(study?.cellLines || []).join(" • ") || "—"}
+        </span>
+      </span>
+
+                                        <span className="dataset-meta-item">
+        <span className="dataset-meta-label">Model System:</span>{" "}
+                                          <span className="dataset-meta-value">
+          {(study?.modelSystems || []).join(" • ") || "—"}
+        </span>
+      </span>
+
+                                        <span className="dataset-meta-item">
+        <span className="dataset-meta-label">Assay Type:</span>{" "}
+                                          <span className="dataset-meta-value">
+          {study?.assay || "—"}
+        </span>
+      </span>
+                                      </div>
                                     </div>
 
-                                    {analysis.de_summary?.n_significant > 0 && (
-                                        <div className="de-wrapper">
-                                          <div
-                                              className="de-badge"
-                                              onClick={() =>
-                                                  setGeneData((prev) => ({
-                                                    ...prev,
-                                                    Analysis_Results: prev.Analysis_Results.map((a, i2) =>
-                                                        i2 === index ? { ...a, _expanded: !a._expanded } : a
-                                                    ),
-                                                  }))
-                                              }
-                                          >
-                                            <div className="de-badge-line">
-                                              Affects{" "}
-                                              <strong>{analysis.de_summary.n_significant}</strong>{" "}
-                                              genes
-                                            </div>
-
-                                            <div className="de-badge-counts">
-                <span className="mini-up">
-                  ↑ {analysis.de_summary.n_up}
-                </span>
-                                              <span className="mini-down">
-                  ↓ {analysis.de_summary.n_down}
-                </span>
-                                            </div>
-
-                                            <div className="de-badge-arrow">
-                                              {analysis._expanded ? "▾" : "▸"}
-                                            </div>
-                                          </div>
-
-                                          {/* Expanded block (full details) */}
-                                          {analysis._expanded && (
-                                              <div className="de-summary-panel">
-                                                <div className="de-summary-metrics">
-                                                  <div className="de-metric">
-                                                    <div className="de-metric-label">Significant</div>
-                                                    <div className="de-metric-value">
-                                                      {analysis.de_summary.n_significant.toLocaleString()}
-                                                    </div>
-                                                  </div>
-
-                                                  <div className="de-metric">
-                                                    <div className="de-metric-label">
-                                                      Median |LFC|
-                                                    </div>
-                                                    <div className="de-metric-value">
-                                                      {analysis.de_summary.median_abs_log2fc.toFixed(2)}
-                                                    </div>
-                                                  </div>
-                                                </div>
-
-                                                <div className="de-summary-separator" />
-
-                                                <div className="de-summary-top-lists">
-                                                  <div className="de-summary-column">
-                                                    <div className="de-summary-title up">Top ↑</div>
-                                                    <ul className="de-summary-list">
-                                                      {analysis.de_summary.top_up?.map((g, i) => (
-                                                          <li key={i} className="de-summary-item">
-                          <span className="de-summary-main">
-                            <span className="gene-symbol">
-                              {geneLabel(g)}
-                            </span>
-                            <span className="de-summary-arrow up">↑</span>
-                            <span className="de-summary-lfc">
-                              {g.log2fc.toFixed(2)}
-                            </span>
-                          </span>
-                                                            <span className="de-summary-meta">
-                            (padj {formatPadj(g.padj)})
-                          </span>
-                                                          </li>
-                                                      ))}
-                                                    </ul>
-                                                  </div>
-
-                                                  <div className="de-summary-column">
-                                                    <div className="de-summary-title down">Top ↓</div>
-                                                    <ul className="de-summary-list">
-                                                      {analysis.de_summary.top_down?.map((g, i) => (
-                                                          <li key={i} className="de-summary-item">
-                          <span className="de-summary-main">
-                            <span className="gene-symbol">
-                              {geneLabel(g)}
-                            </span>
-                            <span className="de-summary-arrow down">
-                              ↓
-                            </span>
-                            <span className="de-summary-lfc">
-                              {g.log2fc.toFixed(2)}
-                            </span>
-                          </span>
-                                                            <span className="de-summary-meta">
-                            (padj {formatPadj(g.padj)})
-                          </span>
-                                                          </li>
-                                                      ))}
-                                                    </ul>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                          )}
+                                    {showMetrics && (
+                                      <div className="de-affects-bar">
+                                        <div className="de-affects-left">
+                                          <span className="de-affects-label">Affects</span>
+                                          <span className="de-affects-value">
+          {(deHead.n_significant ?? 0).toLocaleString()}
+        </span>
+                                          <span className="de-affects-label">genes</span>
                                         </div>
+
+                                        <div className="de-affects-right">
+                                          <span className="de-affects-up">↑ {(deHead.n_up ?? 0).toLocaleString()}</span>
+                                          <span className="de-affects-down">↓ {(deHead.n_down ?? 0).toLocaleString()}</span>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  {/* Body */}
+                                  <div className="dataset-card-body">
+                                    {isUmap ? (
+                                      <DynamicUmapPlot
+                                        analysis={analysis}
+                                        geneName={geneData.Name}
+                                        height={420}
+                                      />
+                                    ) : showDynamicDe ? (
+                                      <DynamicVolcanoPlot
+                                        tsvKey={analysis.s3_tsv_key}
+                                        title={analysis.title}
+                                        height={360}
+                                        preferDegSummaryBar={false}
+                                        dotplotDataFromApi={dotplotDataFromApi}
+                                        deSummaryFromApi={null} // no longer used for header; table uses per-condition precomputed lists
+                                        deConditions={analysis.de_conditions || []}
+                                        defaultConditionId={analysis.default_condition_id || null}
+                                        layoutVariant="sidebar"
+                                        filterLabels={{
+                                          strategy: "Condition",
+                                          condition: "Cell Type",
+                                          pathway: "Timepoint",
+                                        }}
+                                      />
+                                    ) : analysis.svg ? (
+                                      <img
+                                        src={`data:image/svg+xml;utf8,${encodeURIComponent(analysis.svg)}`}
+                                        className="img-plot"
+                                        alt={analysis.title}
+                                        loading="lazy"
+                                        decoding="async"
+                                      />
+                                    ) : analysis.s3_png_key ? (
+                                      <img
+                                        src={`${GENE_API_BASE}/download/png?file_id=${encodeURIComponent(analysis.s3_png_key)}`}
+                                        className="img-plot"
+                                        alt={analysis.title}
+                                        loading="lazy"
+                                        decoding="async"
+                                      />
+                                    ) : (
+                                      <p>No image available</p>
+                                    )}
+                                  </div>
+
+                                  {/* Footer actions (replaces title-button-container) */}
+                                  <div className="dataset-card-footer">
+                                    <a className="btn-primary" href={`/data?label=${encodeURIComponent(formatLabel(studyLabel || ""))}`}>
+                                      Go to Full Dataset →
+                                    </a>
+
+                                    {analysis?.s3_tsv_key && (
+                                      <a
+                                        className="btn-outline"
+                                        href={`${GENE_API_BASE}/download?tsv_file_id=${encodeURIComponent(analysis.s3_tsv_key)}&file_name=${encodeURIComponent(analysis.title || geneData.Name || "download")}`}
+                                      >
+                                        Download DEG (.tsv)
+                                      </a>
                                     )}
 
-                                    <div className="plot-frame">
-                                      {isUmap ? (
-                                        <DynamicUmapPlot
-                                          analysis={analysis}
-                                          geneName={geneData.Name}
-                                          height={420}
-                                        />
-                                      ) : showDynamicDe ? (
-                                          <DynamicVolcanoPlot
-                                              tsvKey={analysis.s3_tsv_key}
-                                              title={analysis.title}
-                                              height={320}
-                                              preferDegSummaryBar={false}
-                                              dotplotDataFromApi={dotplotDataFromApi}
-                                              deSummaryFromApi={analysis.de_summary_for_numberdegs || null}
-                                              deConditions={analysis.de_conditions || []}
-                                              defaultConditionId={analysis.default_condition_id || null}
-                                          />
-                                      ) : analysis.svg ? (
-                                          <img
-                                              src={`data:image/svg+xml;utf8,${encodeURIComponent(
-                                                  analysis.svg
-                                              )}`}
-                                              className="img-plot"
-                                              alt={analysis.title}
-                                              loading="lazy"
-                                              decoding="async"
-                                          />
-                                      ) : analysis.s3_png_key ? (
-                                          <img
-                                              src={`${GENE_API_BASE}/download/png?file_id=${encodeURIComponent(
-                                                  analysis.s3_png_key
-                                              )}`}
-                                              className="img-plot"
-                                              alt={analysis.title}
-                                              loading="lazy"
-                                              decoding="async"
-                                          />
-                                      ) : (
-                                          <p>No image available</p>
-                                      )}
-                                    </div>
-
-                                    <div className="title-button-container">
-                                      <div className="svg-title">{analysis.title}</div>
-
-                                      {analysis?.s3_tsv_key && (
-                                          <div className="gene-card-header-link download-tsv">
-                                            <a
-                                                href={`${GENE_API_BASE}/download?tsv_file_id=${encodeURIComponent(
-                                                    analysis.s3_tsv_key
-                                                )}&file_name=${encodeURIComponent(
-                                                    analysis.title ||
-                                                    geneData.Name ||
-                                                    'download'
-                                                )}`}
-                                            >
-                                              Download TSV
-                                            </a>
-                                          </div>
-                                      )}
-                                    </div>
+                                    {/* only if you actually have a raw-counts pointer */}
+                                    {analysis?.s3_counts_key && (
+                                      <a className="btn-outline" href={`${GENE_API_BASE}/download?file_id=${encodeURIComponent(analysis.s3_counts_key)}`}>
+                                        Download Raw Counts (.csv)
+                                      </a>
+                                    )}
                                   </div>
+                                </div>
                               );
                             })}
                           </div>
@@ -750,7 +743,7 @@ const GenePage = ({ params }) => {
                         </div>
 
                         <div className="gene-card-body">
-                          <div className="gene-grid">
+                          <div className="dataset-stack">
                             {geneData.Enrichment_Analysis.map((analysis, index) => (
                                 <div className="gene-card-img-placeholder" key={index}>
                                   <div className="svg-title">{analysis.title}</div>
