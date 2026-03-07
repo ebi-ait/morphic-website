@@ -28,6 +28,9 @@ export default function EventsItems() {
                     <h2 className={styles.eventTitle}>{item.title}</h2>
                     <time dateTime={item.date} className={`${styles.eventDate} ${styles.orderFirst}`}>{dateStringFormat}</time>
                   </header>
+                  {item.note && (
+                    <p>{item.note}</p>
+                  )}
                   <a className={styles.buttonOrange} href={item.videoLink} target="_blank" rel="noopener noreferrer">Watch Video →</a>
                 </article>
               </li>
