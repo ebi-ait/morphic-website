@@ -1,10 +1,17 @@
 export const articles = [
-  {
+{
   "date":"28 August 2025",
   "title": '"MorPhiC: Cellular modeling at scale" - JAX speak about their role in the MorPhiC Consortium',
   "subTitle": '"MorPhiC: Cellular modeling at scale" - JAX speak about their role in the MorPhiC Consortium',
   "link": "https://www.jax.org/news-and-insights/2025/august/morphic-cellular-modeling-at-scale",
   "imageSrc": "cellular-modelling-1.jpg"
+},
+{
+  "date":"21 August 2025",
+  "title": 'Developing Tools for Studying Essential Genes in Real Time',
+  "subTitle": 'Developing Tools for Studying Essential Genes in Real Time',
+  "link": "https://news.feinberg.northwestern.edu/2025/08/21/developing-tools-for-studying-essential-genes-in-real-time/",
+  "imageSrc": "news-nw-21082025.jpg"
 },
 {
   "date":"21 August 2025",
