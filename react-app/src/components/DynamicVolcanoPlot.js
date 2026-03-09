@@ -924,7 +924,7 @@ const DynamicVolcanoPlot = ({
                         type: "scattergl",
                         name: "No",
                         marker: {
-                            size: 5,
+                            size: 8,
                             opacity: 0.5,
                             color: "rgba(150,150,150,0.6)",
                         },
@@ -938,7 +938,7 @@ const DynamicVolcanoPlot = ({
                         type: "scattergl",
                         name: "Up",
                         marker: {
-                            size: 6,
+                            size: 8,
                             opacity: 0.9,
                             color: "rgba(220, 20, 60, 0.9)",
                         },
@@ -952,7 +952,7 @@ const DynamicVolcanoPlot = ({
                         type: "scattergl",
                         name: "Down",
                         marker: {
-                            size: 6,
+                            size: 8,
                             opacity: 0.9,
                             color: "rgba(30, 144, 255, 0.9)",
                         },
