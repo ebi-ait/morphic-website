@@ -7,6 +7,8 @@ import DynamicVolcanoPlot from "../../components/DynamicVolcanoPlot";
 import DynamicEnrichmentPlot from "../../components/DynamicEnrichmentPlot";
 import DynamicUmapPlot from "../../components/DynamicUmapPlot";
 import GeneSearch from "../../components/GeneSearch";
+import { ShoppingCart } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 const API_BASE = process.env.GATSBY_INGEST_API ?? "https://api.ingest.archive.morphic.bio";
 const GENE_API_BASE =
@@ -155,6 +157,7 @@ const GenePage = ({ params }) => {
   const [labelToStudyId, setLabelToStudyId] = useState({});
   const [labelToStudyMeta, setLabelToStudyMeta] = useState({});
   const [studyById, setStudyById] = useState({});
+  const [isPhenotypeOpen, setIsPhenotypeOpen] = useState(false);
 
   useEffect(() => {
     if (!geneId) return;
@@ -320,6 +323,13 @@ const GenePage = ({ params }) => {
     return study?.label ? `/data?label=${encodeURIComponent(study.label)}` : "/data";
   };
 
+  const uniqueAnalysisStudies = uniqueStudiesFromGene({
+    Analysis_Results: geneData.Analysis_Results || [],
+    Enrichment_Analysis: [],
+  });
+
+  const analysisDatasetCount = uniqueAnalysisStudies.length;
+
   return (
       <div className="about gene-page">
         <div className="gene-header-inline gene-header-gradient gene-hero">
@@ -362,144 +372,147 @@ const GenePage = ({ params }) => {
           <div className="gene-content">
             {/* --- Overview + MorPhiC summary --- */}
             <section>
-              <div className="gene-card">
-                <div className="gene-card-header gene-card-border-bottom">
-                  <div className="gene-card-header-row">
-                    <span className="icon-radio-open"></span>
-                    <h1>Gene: {geneData.Name}</h1>
-                  </div>
-                </div>
-                <div className="gene-card-row gene-card-border-bottom">
-                  <div className="gene-card-body">
-                    <div className="gene-card-body-row">
-                      <p className="gene-card-body-bold-text">
-                        HGNC ID:{geneData.HGNC_ID.split(':')[1]}
-                      </p>
-                      <p className="gene-card-body-bold-text">
-                        {geneData.Ensembl_Gene_ID}
-                      </p>
+              <div className="gene-card gene-overview-card">
+                <div className="gene-overview-top">
+                  <div className="gene-overview-title-wrap">
+                    <div className="gene-overview-badge">
+                      <span className="gene-overview-badge-inner">
+                        <span className="gene-overview-badge-dot"></span>
+                      </span>
                     </div>
-                    <dl className="gene-card-body-dl-grid">
-                      <dt>{geneData.Name}</dt>
-                      <dd>{geneData.Full_Name}</dd>
-                      <dt>Protein class</dt>
-                      <dd>{geneData.Protein_Class}</dd>
+
+                    <div className="gene-overview-title-block">
+                      <h1 className="gene-overview-title">{geneData.Name}</h1>
+                      <p className="gene-overview-subtitle">{geneData.Full_Name}</p>
+                    </div>
+                  </div>
+
+                  <a href="/order-cell-lines/" className="gene-card-header-link">
+                    <ShoppingCart size={16} className="gene-card-header-link-icon" />
+                    <span>Order Alleles</span>
+                  </a>
+                </div>
+
+                <div className="gene-overview-content">
+                  <div className="gene-overview-info">
+                    <h2 className="gene-overview-section-title">Gene Information</h2>
+
+                    <dl className="gene-overview-info-grid">
+                      <dt>Name</dt>
+                      <dd>{geneData.Full_Name || "—"}</dd>
+
+                      <dt>Synonyms</dt>
+                      <dd>{geneData.Synonyms || "—"}</dd>
+
+                      <dt>HGNC ID</dt>
+                      <dd>
+                        <a
+                          className="gene-overview-link inline-flex items-center gap-1.5"
+                          href={`https://www.genenames.org/data/gene-symbol-report/#!/hgnc_id/${geneData.HGNC_ID}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {geneData.HGNC_ID}
+                          <ExternalLink size={14} title="Open HGNC page" />
+                        </a>
+                      </dd>
                     </dl>
                   </div>
 
-                  {/* MorPhiC summary */}
-                  <div className="gene-card-body gene-card-summary">
-                    <h2 className="gene-card-summary-title">MorPhiC summary</h2>
+                  <div className="gene-card-summary gene-overview-summary">
+                    <h2 className="gene-card-summary-title">MorPhiC Summary</h2>
 
-                    {geneData.Analysis_Results &&
-                    geneData.Analysis_Results.length > 0 ? (
-                        (() => {
-                          const analysisResults = geneData.Analysis_Results || [];
+                    {geneData.Analysis_Results && geneData.Analysis_Results.length > 0 ? (
+                      (() => {
+                        const analysisResults = geneData.Analysis_Results || [];
 
-                          const studyLabels = analysisResults
-                              .map(r => r.study_label?.trim())
-                              .filter(Boolean);
+                        const studyLabels = analysisResults
+                          .map(r => r.study_label?.trim())
+                          .filter(Boolean);
 
-                          const dpcSet = new Set();
-                          const assaySet = new Set();
+                        const dpcSet = new Set();
+                        const assaySet = new Set();
 
-                          studyLabels.forEach(label => {
-                            const meta = labelToStudyMeta[label];
-                            if (meta?.dpc) dpcSet.add(meta.dpc);
-                            if (meta?.assay) assaySet.add(meta.assay);
-                          });
+                        studyLabels.forEach(label => {
+                          const meta = labelToStudyMeta[label];
+                          if (meta?.dpc) dpcSet.add(meta.dpc);
+                          if (meta?.assay) assaySet.add(meta.assay);
+                        });
 
-                          const profiledByText = dpcSet.size
-                              ? Array.from(dpcSet).join(", ")
-                              : "Unknown";
+                        const profiledByText = dpcSet.size
+                          ? Array.from(dpcSet).join(", ")
+                          : "Unknown";
 
-                          const assayTypesText = assaySet.size
-                              ? Array.from(assaySet).join(", ")
-                              : "Unknown";
+                        const assayTypesText = assaySet.size
+                          ? Array.from(assaySet).join(", ")
+                          : "Unknown";
 
-                          const davSet = new Set();
-                          analysisResults.forEach(ar => {
-                            if (ar.analysis_center) davSet.add(ar.analysis_center);
-                          });
-                          const analysisText = davSet.size
-                              ? Array.from(davSet).join(", ")
-                              : "Not annotated";
+                        const hasAnySummary = analysisResults.some(ar => ar.de_summary);
+                        const statusText = hasAnySummary ? "ASSAYED, ANALYSED" : "ASSAYED";
 
-                          const hasAnySummary = analysisResults.some(ar => ar.de_summary);
-                          const statusText = hasAnySummary ? "ASSAYED, ANALYSED" : "ASSAYED";
+                        return (
+                          <dl className="gene-card-summary-grid">
+                            <dt>Studied by MorPhiC</dt>
+                            <dd>YES</dd>
 
-                          return (
-                              <dl className="gene-card-body-dl-grid">
-                                <dt>Studied by MorPhiC</dt>
-                                <dd>YES</dd>
+                            <dt>Profiled by</dt>
+                            <dd>{profiledByText}</dd>
 
-                                <dt>Profiled by</dt>
-                                <dd>{profiledByText}</dd>
+                            <dt>Assay types</dt>
+                            <dd>{assayTypesText}</dd>
 
-                                <dt>Assay types</dt>
-                                <dd>{assayTypesText}</dd>
-
-                                <dt>Analysis</dt>
-                                <dd>{analysisText}</dd>
-
-                                <dt>Status</dt>
-                                <dd>{statusText}</dd>
-
-                                {numberOfExperiments > 0 && (
-                                    <>
-                                      <dt>Studies</dt>
-                                      <dd>{numberOfStudies}</dd>
-
-                                      <dt>Significant affected genes</dt>
-                                      <dd>
-                                        {totalSignificant.toLocaleString()} total (
-                                        {totalUp.toLocaleString()} ↑ /{" "}
-                                        {totalDown.toLocaleString()} ↓)
-                                      </dd>
-
-                                      {affectedGenesText && (
-                                          <>
-                                            <dt>Representative affected genes |log₂FC|</dt>
-                                            <dd>{affectedGenesText}</dd>
-                                          </>
-                                      )}
-                                    </>
-                                )}
-                              </dl>
-                          );
-                        })()
+                            <dt>Status</dt>
+                            <dd>{statusText}</dd>
+                          </dl>
+                        );
+                      })()
                     ) : (
-                        <dl className="gene-card-body-dl-grid no-data">
-                          <dt className="no-data">
-                            Currently no MorPhiC results are available for this Gene
-                          </dt>
-                        </dl>
+                      <dl className="gene-card-summary-grid no-data">
+                        <dt className="no-data">
+                          Currently no MorPhiC results are available for this gene
+                        </dt>
+                      </dl>
                     )}
                   </div>
                 </div>
 
                 {/* Phenotype evidence */}
-                <div className="gene-card-body">
-                  <div>
-                    <h2 className="gene-card-body-title">Phenotype evidence</h2>
-                    <div className="gene-card-row-gap">
-                      <div className="gene-card-phenotype-data">
-                        <h3 className="gene-card-body-subtitle">Human</h3>
-                        <p className="bold">OMIM Phenotypes:</p>
-                        <GenePhenotypeEvidence geneData={geneData} />
-                      </div>
-                      <div className="gene-card-phenotype-data">
-                        <h3>Mouse</h3>
-                        <div className="gene-card-body-row">
-                          <p>
-                            Ortholog relation:{" "}
-                            {geneData?.Phenotype_Evidence?.Mouse?.MGI_ID || "N/A"}
-                          </p>
+                <div className="gene-card-body gene-card-border-top">
+                  <button
+                    type="button"
+                    className="gene-collapsible-trigger"
+                    onClick={() => setIsPhenotypeOpen((prev) => !prev)}
+                    aria-expanded={isPhenotypeOpen}
+                    aria-controls="phenotype-evidence-panel"
+                  >
+                    <span className="gene-card-body-title">Phenotype evidence</span>
+                    <span className={`gene-collapsible-icon ${isPhenotypeOpen ? "is-open" : ""}`}>
+          ▾
+        </span>
+                  </button>
+
+                  {isPhenotypeOpen && (
+                    <div id="phenotype-evidence-panel" className="gene-collapsible-content">
+                      <div className="gene-card-row-gap">
+                        <div className="gene-card-phenotype-data">
+                          <h3 className="gene-card-body-subtitle">Human</h3>
+                          <p className="bold">OMIM Phenotypes:</p>
+                          <GenePhenotypeEvidence geneData={geneData} />
                         </div>
-                        <MousePhenotype mouseData={geneData} />
+
+                        <div className="gene-card-phenotype-data">
+                          <h3>Mouse</h3>
+                          <div className="gene-card-body-row">
+                            <p>
+                              Ortholog relation:{" "}
+                              {geneData?.Phenotype_Evidence?.Mouse?.MGI_ID || "N/A"}
+                            </p>
+                          </div>
+                          <MousePhenotype mouseData={geneData} />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </section>
@@ -511,7 +524,12 @@ const GenePage = ({ params }) => {
                 geneData.Analysis_Results?.[0] && (
                     <section id="results">
                       <div className="gene-section-header">
-                        <h1 className="gene-section-title">Analysis Results</h1>
+                        <h1 className="gene-section-title">
+                          {geneData.Name} Perturbation Results{" "}
+                          <span className="gene-section-count">
+    ({analysisDatasetCount} dataset{analysisDatasetCount === 1 ? "" : "s"})
+  </span>
+                        </h1>
                         <a href="#" className="gene-section-link">
                           ↑&nbsp;Back to top
                         </a>
@@ -636,11 +654,13 @@ const GenePage = ({ params }) => {
                                   {/* Body */}
                                   <div className="dataset-card-body">
                                     {isUmap ? (
-                                      <DynamicUmapPlot
-                                        analysis={analysis}
-                                        geneName={geneData.Name}
-                                        height={420}
-                                      />
+                                      <div className="dataset-plot-frame dataset-plot-frame--umap">
+                                        <DynamicUmapPlot
+                                          analysis={analysis}
+                                          geneName={geneData.Name}
+                                          height={420}
+                                        />
+                                      </div>
                                     ) : showDynamicDe ? (
                                       <DynamicVolcanoPlot
                                         tsvKey={analysis.s3_tsv_key}
@@ -659,21 +679,25 @@ const GenePage = ({ params }) => {
                                         }}
                                       />
                                     ) : analysis.svg ? (
-                                      <img
-                                        src={`data:image/svg+xml;utf8,${encodeURIComponent(analysis.svg)}`}
-                                        className="img-plot"
-                                        alt={analysis.title}
-                                        loading="lazy"
-                                        decoding="async"
-                                      />
+                                      <div className="dataset-static-plot">
+                                        <img
+                                          src={`data:image/svg+xml;utf8,${encodeURIComponent(analysis.svg)}`}
+                                          className="dataset-static-img"
+                                          alt={analysis.title}
+                                          loading="lazy"
+                                          decoding="async"
+                                        />
+                                      </div>
                                     ) : analysis.s3_png_key ? (
-                                      <img
-                                        src={`${GENE_API_BASE}/download/png?file_id=${encodeURIComponent(analysis.s3_png_key)}`}
-                                        className="img-plot"
-                                        alt={analysis.title}
-                                        loading="lazy"
-                                        decoding="async"
-                                      />
+                                      <div className="dataset-static-plot">
+                                        <img
+                                          src={`${GENE_API_BASE}/download/png?file_id=${encodeURIComponent(analysis.s3_png_key)}`}
+                                          className="dataset-static-img"
+                                          alt={analysis.title}
+                                          loading="lazy"
+                                          decoding="async"
+                                        />
+                                      </div>
                                     ) : (
                                       <p>No image available</p>
                                     )}
@@ -708,24 +732,24 @@ const GenePage = ({ params }) => {
                         </div>
 
                         {/* Data resources: show study labels; link via study_id or fallback label map */}
-                        <div className="gene-card-body">
-                          <h3>Data resources</h3>
-                          <div className="gene-card-row">
-                            <div className="gene-card-group">
-                              {uniqueStudies.map((study, index) => (
-                                  <div key={index} className="title-group">
-                                    <div className="gene-card-icon"></div>
-                                    <div className="column-layout">
-                                      <h4>{study.label}</h4>
-                                      <div className="gene-card-group-link">
-                                        <a href={datasetHrefForStudy(study)}>View dataset</a>
-                                      </div>
-                                    </div>
-                                  </div>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
+                        {/*<div className="gene-card-body">*/}
+                        {/*  <h3>Data resources</h3>*/}
+                        {/*  <div className="gene-card-row">*/}
+                        {/*    <div className="gene-card-group">*/}
+                        {/*      {uniqueStudies.map((study, index) => (*/}
+                        {/*          <div key={index} className="title-group">*/}
+                        {/*            <div className="gene-card-icon"></div>*/}
+                        {/*            <div className="column-layout">*/}
+                        {/*              <h4>{study.label}</h4>*/}
+                        {/*              <div className="gene-card-group-link">*/}
+                        {/*                <a href={datasetHrefForStudy(study)}>View dataset</a>*/}
+                        {/*              </div>*/}
+                        {/*            </div>*/}
+                        {/*          </div>*/}
+                        {/*      ))}*/}
+                        {/*    </div>*/}
+                        {/*  </div>*/}
+                        {/*</div>*/}
 
                       </div>
                     </section>
@@ -737,7 +761,7 @@ const GenePage = ({ params }) => {
                 geneData.tags.includes('release-1') &&
                 geneData.Enrichment_Analysis?.[0] && (
                     <section id="enrichment">
-                      <div className="gene-card">
+                      <div className="gene-card gene-card--transparent">
                         <div className="gene-card-header">
                           <h2>Enrichment Analysis</h2>
                         </div>
@@ -745,56 +769,60 @@ const GenePage = ({ params }) => {
                         <div className="gene-card-body">
                           <div className="dataset-stack">
                             {geneData.Enrichment_Analysis.map((analysis, index) => (
-                                <div className="gene-card-img-placeholder" key={index}>
-                                  <div className="svg-title">{analysis.title}</div>
+                              <div className="dataset-card" key={index}>
+                                <div className="dataset-card-header">
+                                  <div className="dataset-head">
+                                    <div className="dataset-head-title">{analysis.title}</div>
+                                  </div>
+                                </div>
 
-                                  <div className="plot-frame">
+                                <div className="dataset-card-body">
+                                  <div className="dataset-static-plot">
                                     {analysis.s3_tsv_key ? (
-                                        <DynamicEnrichmentPlot analysis={analysis} />
+                                      <DynamicEnrichmentPlot analysis={analysis} />
                                     ) : analysis.svg ? (
-                                        <img
-                                            src={`data:image/svg+xml;utf8,${encodeURIComponent(
-                                                analysis.svg
-                                            )}`}
-                                            className="img-plot"
-                                            alt={analysis.title}
-                                        />
+                                      <img
+                                        src={`data:image/svg+xml;utf8,${encodeURIComponent(analysis.svg)}`}
+                                        className="dataset-static-img"
+                                        alt={analysis.title}
+                                      />
                                     ) : analysis.s3_png_key ? (
-                                        <img
-                                            src={`${GENE_API_BASE}/download/png?file_id=${encodeURIComponent(
-                                                analysis.s3_png_key
-                                            )}`}
-                                            className="img-plot"
-                                            alt={analysis.title}
-                                        />
+                                      <img
+                                        src={`${GENE_API_BASE}/download/png?file_id=${encodeURIComponent(
+                                          analysis.s3_png_key
+                                        )}`}
+                                        className="dataset-static-img"
+                                        alt={analysis.title}
+                                      />
                                     ) : (
-                                        <p>No image available</p>
+                                      <p>No image available</p>
                                     )}
                                   </div>
                                 </div>
+                              </div>
                             ))}
                           </div>
                         </div>
 
                         {/* Data resources: same uniqueStudies list */}
-                        <div className="gene-card-body">
-                          <h3>Data resources</h3>
-                          <div className="gene-card-row">
-                            <div className="gene-card-group">
-                              {uniqueStudies.map((study, index) => (
-                                  <div key={index} className="title-group">
-                                    <div className="gene-card-icon"></div>
-                                    <div className="column-layout">
-                                      <h4>{study.label}</h4>
-                                      <div className="gene-card-group-link">
-                                        <a href={datasetHrefForStudy(study)}>View dataset</a>
-                                      </div>
-                                    </div>
-                                  </div>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
+                        {/*<div className="gene-card-body">*/}
+                        {/*  <h3>Data resources</h3>*/}
+                        {/*  <div className="gene-card-row">*/}
+                        {/*    <div className="gene-card-group">*/}
+                        {/*      {uniqueStudies.map((study, index) => (*/}
+                        {/*          <div key={index} className="title-group">*/}
+                        {/*            <div className="gene-card-icon"></div>*/}
+                        {/*            <div className="column-layout">*/}
+                        {/*              <h4>{study.label}</h4>*/}
+                        {/*              <div className="gene-card-group-link">*/}
+                        {/*                <a href={datasetHrefForStudy(study)}>View dataset</a>*/}
+                        {/*              </div>*/}
+                        {/*            </div>*/}
+                        {/*          </div>*/}
+                        {/*      ))}*/}
+                        {/*    </div>*/}
+                        {/*  </div>*/}
+                        {/*</div>*/}
 
                       </div>
                     </section>
