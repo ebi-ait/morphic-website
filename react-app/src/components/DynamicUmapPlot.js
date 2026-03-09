@@ -125,7 +125,7 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
         showlegend: colIdx === 0,
         xaxis,
         yaxis,
-        marker: { size: 3, opacity: 0.8, color: celltypeColor[ct] },
+        marker: { size: 6, opacity: 0.8, color: celltypeColor[ct] },
         hovertemplate:
           `Cell type: ${ct}<br>` +
           `Genotype: ${gt}<br>` +
@@ -195,6 +195,7 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
       y: -0.25,
       xanchor: "center",
       x: 0.5,
+      font: { size: 12 }
     },
     grid: { rows: 1, columns: genotypeOrder.length, pattern: "independent" },
     annotations,
