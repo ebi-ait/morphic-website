@@ -7,6 +7,7 @@ export const events = [
 {
     "title": "The 106th Meeting of the National Advisory Council for Human Genome Research",
     "date": "2025-09-16",
-    "videoLink": "https://videocast.nih.gov/watch=56903&start=6626&stop=9310"
+    "note": "DRACC presentation starts at 1 hour 51 minutes.",
+    "videoLink": "https://videocast.nih.gov/watch/d81d7afc-d5db-11f0-9cf9-12c45c580ad9"
 }
 ];
