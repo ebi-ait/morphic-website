@@ -341,7 +341,41 @@ const GenePage = ({ params }) => {
     );
   };
 
+  const getAnalysisPriority = (analysis) => {
+    const title = (analysis?.title || "").toLowerCase();
+    const tsvKey = (analysis?.s3_tsv_key || "").toLowerCase();
+    const pngKey = (analysis?.s3_png_key || "").toLowerCase();
+
+    const isNumberDegs =
+      /number[-_ ]?degs?/i.test(title) ||
+      /#\s*degs?/i.test(title) ||
+      /number[-_ ]?degs?/i.test(tsvKey);
+
+    const isCanonicalDe =
+      analysis?.result_type === "DE" &&
+      analysis?.role === "canonical_de" &&
+      !!analysis?.s3_tsv_key;
+
+    const isVolcanoDe = isCanonicalDe && !isNumberDegs;
+
+    const isUmap =
+      /umap/i.test(title) ||
+      /_umap/i.test(pngKey);
+
+    if (isVolcanoDe) return 0;   // volcano first
+    if (isNumberDegs) return 1;  // DEG barplots second
+    if (isUmap) return 2;        // UMAP third
+    return 3;                    // everything else after
+  };
+
   const sortedAnalysisResults = [...(geneData.Analysis_Results || [])].sort((a, b) => {
+    const priorityA = getAnalysisPriority(a);
+    const priorityB = getAnalysisPriority(b);
+
+    if (priorityA !== priorityB) {
+      return priorityA - priorityB;
+    }
+
     return getAffectedGeneCount(b) - getAffectedGeneCount(a);
   });
 
@@ -607,7 +641,12 @@ const GenePage = ({ params }) => {
                               const studyId = analysis.study_id;
                               const study = studyId ? studyById[studyId] : null;
 
-                              const showMetrics = !!deHead;
+                              const isNumberDegsAnalysis =
+                                /number[-_ ]?degs?/i.test(analysis.title || "") ||
+                                /#\s*degs?/i.test(analysis.title || "") ||
+                                /number[-_ ]?degs?/i.test(analysis.s3_tsv_key || "");
+
+                              const showMetrics = !!deHead && !isNumberDegsAnalysis;
 
                               return (
                                 <div className="dataset-card" key={index}>
@@ -682,6 +721,7 @@ const GenePage = ({ params }) => {
                                       <DynamicVolcanoPlot
                                         tsvKey={analysis.s3_tsv_key}
                                         title={analysis.title}
+                                        geneName={geneData.Name}
                                         height={360}
                                         preferDegSummaryBar={false}
                                         // dotplotDataFromApi={dotplotDataFromApi}
