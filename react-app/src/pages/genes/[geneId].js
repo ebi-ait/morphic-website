@@ -329,6 +329,21 @@ const GenePage = ({ params }) => {
   });
 
   const analysisDatasetCount = uniqueAnalysisStudies.length;
+  const getAffectedGeneCount = (analysis) => {
+    const defaultCond = pickDefaultCondition(analysis);
+    const condSummary = normalizeCondSummary(defaultCond);
+    const deSummary = normalizeDeSummary(analysis.de_summary);
+
+    return (
+      condSummary?.n_significant ??
+      deSummary?.n_significant ??
+      0
+    );
+  };
+
+  const sortedAnalysisResults = [...(geneData.Analysis_Results || [])].sort((a, b) => {
+    return getAffectedGeneCount(b) - getAffectedGeneCount(a);
+  });
 
   return (
       <div className="about gene-page">
@@ -542,7 +557,7 @@ const GenePage = ({ params }) => {
 
                         <div className="gene-card-body">
                           <div className="dataset-stack">
-                            {geneData.Analysis_Results.map((analysis, index) => {
+                            {sortedAnalysisResults.map((analysis, index) => {
                               const de = normalizeDeSummary(analysis.de_summary);
 
                               const isCanonicalDe =
@@ -554,20 +569,22 @@ const GenePage = ({ params }) => {
                                   /number[-_ ]?degs?/i.test(analysis.title || "") ||
                                   /#\s*degs?/i.test(analysis.title || "");
 
-                              const isTopDegDotplotAnalysis =
-                                  !!analysis.s3_tsv_key &&
-                                  (/topdeg[-_ ]?dotplot/i.test(analysis.title || "") ||
-                                      /topdeg[-_ ]?dotplot/i.test(analysis.s3_tsv_key || ""));
+                              // const isTopDegDotplotAnalysis =
+                              //     !!analysis.s3_tsv_key &&
+                              //     (/topdeg[-_ ]?dotplot/i.test(analysis.title || "") ||
+                              //         /topdeg[-_ ]?dotplot/i.test(analysis.s3_tsv_key || ""));
 
                               const showDynamicDe =
-                                // isPrototypeGene &&               // <-- only for HGNC:8620
-                                !!analysis.s3_tsv_key &&
-                                (isCanonicalDe || prefersDegSummaryBar || isTopDegDotplotAnalysis);
+                                !!analysis.s3_tsv_key && isCanonicalDe;
 
-                              const dotplotDataFromApi =
-                                  isTopDegDotplotAnalysis && analysis.dotplot_data
-                                      ? analysis.dotplot_data
-                                      : null;
+                              // const showDynamicDe =
+                              //   !!analysis.s3_tsv_key &&
+                              //   (isCanonicalDe || prefersDegSummaryBar || isTopDegDotplotAnalysis);
+
+                              // const dotplotDataFromApi =
+                              //     isTopDegDotplotAnalysis && analysis.dotplot_data
+                              //         ? analysis.dotplot_data
+                              //         : null;
 
                               const chips = buildExperimentChips(
                                   analysis,
@@ -667,8 +684,8 @@ const GenePage = ({ params }) => {
                                         title={analysis.title}
                                         height={360}
                                         preferDegSummaryBar={false}
-                                        dotplotDataFromApi={dotplotDataFromApi}
-                                        deSummaryFromApi={null} // no longer used for header; table uses per-condition precomputed lists
+                                        // dotplotDataFromApi={dotplotDataFromApi}
+                                        // deSummaryFromApi={null} // no longer used for header; table uses per-condition precomputed lists
                                         deConditions={analysis.de_conditions || []}
                                         defaultConditionId={analysis.default_condition_id || null}
                                         layoutVariant="sidebar"

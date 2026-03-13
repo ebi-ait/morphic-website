@@ -2925,8 +2925,8 @@ h2.gene-card-body-title {
   font-weight:700;
 }
 
-.de-affects-up{ color:#ef4444; }   /* red */
-.de-affects-down{ color:#3b82f6; } /* blue */
+.de-affects-up{ color:#E8524A; }   /* red */
+.de-affects-down{ color:#5B8FF9; } /* blue */
 
 /* --- Responsive tweaks -------------------------------------------- */
 
@@ -3109,14 +3109,29 @@ h2.gene-card-body-title {
 /* Two-column internal layout */
 .de-two-col {
   display: grid;
-  grid-template-columns: minmax(520px, 1fr) 260px; /* <-- makes plot area narrower */
+  grid-template-columns: minmax(520px, 1fr) 260px;
   gap: 18px;
   align-items: start;
 }
 
-/* Left column content */
+.de-two-col.is-table-mode {
+  grid-template-columns: 1fr;
+}
+
 .de-left {
+  background: #fafafa;
+  border-radius: 16px;
+  padding: 18px;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.de-left.is-table-mode {
+  height: 483px;
+  min-height: 483px;
+  overflow: hidden;
 }
 
 .de-left-header{
@@ -3267,11 +3282,10 @@ h2.gene-card-body-title {
 /* --- Table styling ------------------------------------------------ */
 
 .de-table-scroll {
-  max-height: 260px;
-  overflow: auto;
-  border-radius: 0.5rem;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 /* keep your base .de-table if you have it, otherwise: */
@@ -3342,15 +3356,31 @@ h2.gene-card-body-title {
   color: #4b5563;
 }
 
-/* Single top-genes panel (instead of grid) */
-.de-topgenes-single {
-  background: #f9fafb;
-  border-radius: 0.75rem;
-  border: 1px solid #e5e7eb;
-  padding: 0.5rem 0.6rem 0.6rem;
+.de-visualisation {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+}
+
+.de-visualisation.is-table-mode {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.de-topgenes-single.is-table-mode {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.de-topgenes-single {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .de-topgenes-header {
@@ -3369,8 +3399,7 @@ h2.gene-card-body-title {
 
 /* Small toggle inside the table header: Up / Down */
 .de-subview-toggle {
-  display: inline-flex;
-  gap: 0.25rem;
+  margin-top: 12px;
 }
 
 .de-subview-btn {
@@ -3660,13 +3689,6 @@ h2.gene-card-body-title {
   padding: 0 !important;
   border: 0 !important;
   box-shadow: none !important;
-}
-
-.de-left{
-  background: #fafafa;
-  border-radius: 16px;
-  padding: 18px;
-  min-width: 0;
 }
 
 .de-right-controls{
@@ -4428,3 +4450,171 @@ h2.gene-card-body-title {
   height: 14px;
   opacity: 0.75;
 }
+
+.de-table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+  width: 100%;
+  min-width: 0;
+  flex-wrap: nowrap;
+}
+
+.de-table-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.de-table-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.de-table-toggle-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.7rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #666666;
+  cursor: pointer;
+}
+
+.de-table-toggle-btn.is-up-active {
+  background: #e84e0f !important;
+  color: #ffffff !important;
+  border-color: #e84e0f !important;
+}
+
+.de-table-toggle-btn.is-down-active {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #2563eb !important;
+}
+
+.de-topgenes-count {
+  font-size: 0.95rem;
+  color: #666666;
+  white-space: nowrap;
+}
+
+.de-table-search {
+  position: relative;
+  flex: 0 1 260px;
+  width: 100%;
+  max-width: 260px;
+  min-width: 170px;
+}
+
+.de-table-search-input {
+  width: 100%;
+  height: 2.4rem;
+  padding: 0 2.75rem 0 0.95rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  font-size: 0.92rem;
+  color: #444444;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.de-table-search-input::placeholder {
+  color: #9a9a9a;
+}
+
+.de-table-search-input:focus {
+  border-color: #bdbdbd;
+}
+
+.de-table-search-icon {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8a8a8a;
+  pointer-events: none;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.de-table.de-table-compact {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  table-layout: fixed;
+}
+
+.de-table.de-table-compact thead th {
+  text-align: left;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #999999;
+  padding: 1rem 0.5rem;
+  background: #f5f5f5;
+}
+
+.de-table.de-table-compact tbody td {
+  padding: 1.1rem 0.5rem;
+  border-top: 1px solid #e9e9e9;
+  font-size: 0.96rem;
+  color: #555555;
+  vertical-align: middle;
+}
+
+.de-cell-index {
+  width: 56px;
+  color: #8a8a8a;
+}
+
+.de-cell-symbol {
+  font-weight: 700;
+  color: #222222;
+}
+
+.de-cell-id,
+.de-cell-type,
+.de-cell-padj {
+  color: #5f5f5f;
+}
+
+.de-cell-lfc {
+  font-weight: 700;
+  color: #222222;
+}
+
+@media (max-width: 900px) {
+  .de-table-toolbar {
+    align-items: stretch;
+  }
+
+  .de-table-toolbar-left {
+    justify-content: space-between;
+  }
+
+  .de-table-search {
+    max-width: none;
+  }
+}
+
+.de-fallback-note {
+  margin-bottom: 0.6rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+
