@@ -17,6 +17,7 @@ function negLog10(p) {
 const DynamicVolcanoPlot = ({
                                 tsvKey,
                                 title,
+                                geneName = null,
                                 height = 320,
                                 preferDegSummaryBar = false,
                                 dotplotDataFromApi = null,
@@ -75,6 +76,8 @@ const DynamicVolcanoPlot = ({
         const pattern = /(number[-_ ]?degs?)|(#\s*degs)/;
         return pattern.test(t) || pattern.test(key);
     }, [title, tsvKey]);
+
+    const isDegSummaryBarplot = isNumberDegsTitle || preferDegSummaryBar;
 
     const isTopDegDotplot = useMemo(() => {
         const t = (title || "").toLowerCase();
@@ -571,7 +574,7 @@ const DynamicVolcanoPlot = ({
                 </div>
             )}
 
-            {pvalCol && log2fcCol && viewMode !== "table" && (
+            {pvalCol && log2fcCol && viewMode !== "table" && !isDegSummaryBarplot && (
                 <div className="de-thresholds-row">
                     <label className="de-threshold-field">
                         <span className="de-threshold-caption">padj ≤</span>
@@ -1066,7 +1069,76 @@ const DynamicVolcanoPlot = ({
         );
     };
 
+    function parseDegContrastTitle(title = "", fallback = "KO") {
+        const t = String(title || "").trim();
+        const afterColon = t.includes(":")
+            ? t.split(":").slice(1).join(":").trim()
+            : t;
+
+        if (!afterColon) {
+            return {
+                label: fallback,
+                isComplex: false,
+            };
+        }
+
+        const cleaned = afterColon
+            .replace(/_number[-_ ]?degs?$/i, "")
+            .replace(/number[-_ ]?degs?$/i, "")
+            .replace(/_umap$/i, "")
+            .trim();
+
+        const normalised = cleaned.replace(/\s+/g, "_");
+
+        const isComplex =
+            /double[_ ]knockout/i.test(cleaned) ||
+            /triple[_ ]knockout/i.test(cleaned) ||
+            /\|/.test(cleaned) ||
+            /^[A-Z0-9]+_[A-Z0-9]+/.test(normalised);
+
+        if (isComplex) {
+            const shortLabel = cleaned
+                .replace(/_double[_ ]knockout/i, "")
+                .replace(/_triple[_ ]knockout/i, "")
+                .replace(/_heterozygous/i, "")
+                .trim();
+
+            return {
+                label: shortLabel,
+                isComplex: true,
+            };
+        }
+
+        const first = cleaned.split("_")[0]?.trim();
+
+        return {
+            label: first || fallback,
+            isComplex: false,
+        };
+    }
+
+    const degContrast = useMemo(() => {
+        return parseDegContrastTitle(title, geneName || "KO");
+    }, [title, geneName]);
+
+    const degPlotTitle = useMemo(() => {
+        if (!degContrast?.label) return "";
+
+        if (degContrast.isComplex) {
+            return `${degContrast.label} vs WT`;
+        }
+
+        return `${degContrast.label} vs WT`;
+    }, [degContrast]);
+
     const renderDegSummaryBarplot = () => {
+        const UP_COLOR = "#E8524A";
+        const DOWN_COLOR = "#5B8FF9";
+
+        let categories = [];
+        let upCounts = [];
+        let downCounts = [];
+
         if (isNumberDegsTitle) {
             const summaryToUse =
                 Array.isArray(deSummaryFromApi) && deSummaryFromApi.length
@@ -1085,29 +1157,88 @@ const DynamicVolcanoPlot = ({
             if (!summaryToUse || summaryToUse.length === 0) {
                 return (
                     <div className="de-empty">
-                        No differentially expressed genes to summarise (summary).
+                        No differentially expressed genes to summarise.
                     </div>
                 );
             }
 
-            const categories = summaryToUse.map((s) => s.celltype);
-            const upCounts = summaryToUse.map((s) => s.up);
-            const downCounts = summaryToUse.map((s) => s.down);
+            categories = summaryToUse.map((s) => s.celltype);
+            upCounts = summaryToUse.map((s) => s.up);
+            downCounts = summaryToUse.map((s) => s.down);
 
-            console.log(
-                "[DynamicVolcanoPlot] barplot (summary) categories:",
-                categories
-            );
-            console.log(
-                "[DynamicVolcanoPlot] barplot (summary) upCounts:",
-                upCounts
-            );
-            console.log(
-                "[DynamicVolcanoPlot] barplot (summary) downCounts:",
-                downCounts
-            );
+            console.log("[DynamicVolcanoPlot] barplot (summary) categories:", categories);
+            console.log("[DynamicVolcanoPlot] barplot (summary) upCounts:", upCounts);
+            console.log("[DynamicVolcanoPlot] barplot (summary) downCounts:", downCounts);
+        } else {
+            if (!supportsDegSummaryBar || !rows || !rows.length) {
+                return <div className="de-empty">Barplot unavailable for this TSV.</div>;
+            }
 
-            return (
+            const countsByCellType = new Map();
+
+            rows.forEach((r) => {
+                if (!r) return;
+
+                const ct = r[cellTypeCol];
+                if (!ct) return;
+
+                const lfc = Number(r[log2fcCol]);
+                if (!Number.isFinite(lfc) || lfc === 0) return;
+
+                let isDE = false;
+
+                if (diffexpressedCol) {
+                    const rawFlag = r[diffexpressedCol];
+                    const flag = String(rawFlag ?? "").toLowerCase();
+
+                    isDE =
+                        !!flag &&
+                        flag !== "no" &&
+                        flag !== "0" &&
+                        flag !== "false" &&
+                        flag !== "na";
+                } else if (pvalCol) {
+                    const p = Number(r[pvalCol]);
+                    isDE =
+                        Number.isFinite(p) &&
+                        p > 0 &&
+                        p <= pCutoff &&
+                        Math.abs(lfc) >= log2fcCutoff;
+                } else {
+                    isDE = true;
+                }
+
+                if (!isDE) return;
+
+                const key = String(ct);
+                if (!countsByCellType.has(key)) {
+                    countsByCellType.set(key, { up: 0, down: 0 });
+                }
+
+                const entry = countsByCellType.get(key);
+                if (lfc > 0) entry.up += 1;
+                else if (lfc < 0) entry.down += 1;
+            });
+
+            if (!countsByCellType.size) {
+                return (
+                    <div className="de-empty">
+                        No differentially expressed genes to summarise.
+                    </div>
+                );
+            }
+
+            categories = Array.from(countsByCellType.keys());
+            upCounts = categories.map((k) => countsByCellType.get(k).up);
+            downCounts = categories.map((k) => countsByCellType.get(k).down);
+
+            console.log("[DynamicVolcanoPlot] barplot (rows) categories:", categories);
+            console.log("[DynamicVolcanoPlot] barplot (rows) upCounts:", upCounts);
+            console.log("[DynamicVolcanoPlot] barplot (rows) downCounts:", downCounts);
+        }
+
+        return (
+            <div className="de-barplot-wrap">
                 <PlotComponent
                     ref={plotRef}
                     data={[
@@ -1116,48 +1247,62 @@ const DynamicVolcanoPlot = ({
                             y: upCounts,
                             name: "Up",
                             type: "bar",
-                            marker: {
-                                color: "rgba(220, 20, 60, 0.9)",
-                            },
+                            marker: { color: UP_COLOR },
                             hovertemplate:
-                                "Cell type: %{x}<br>Up DEGs: %{y}<extra></extra>",
+                                "Cell type: %{x}<br>Up-regulated in KO vs WT: %{y}<extra></extra>",
                         },
                         {
                             x: categories,
                             y: downCounts,
                             name: "Down",
                             type: "bar",
-                            marker: {
-                                color: "rgba(30, 144, 255, 0.9)",
-                            },
+                            marker: { color: DOWN_COLOR },
                             hovertemplate:
-                                "Cell type: %{x}<br>Down DEGs: %{y}<extra></extra>",
+                                "Cell type: %{x}<br>Down-regulated in KO vs WT: %{y}<extra></extra>",
                         },
                     ]}
                     layout={{
-                        title: title || "",
+                        title: {
+                            text: degPlotTitle,
+                            x: 0.5,
+                            xanchor: "center",
+                            font: { size: 20 },
+                        },
                         barmode: "group",
-                        margin: { l: 60, r: 10, t: 40, b: 60 },
+
+                        /* tighter margins -> more vertical plotting area */
+                        margin: { l: 70, r: 20, t: 45, b: 80 },
+
                         xaxis: {
                             title: "",
-                            tickangle: -35,
+                            tickangle: -30,
+                            tickfont: { size: 12 },
                         },
                         yaxis: {
-                            title: "Number of DEGs",
+                            title: {
+                                text: "Number of DEGs",
+                                font: { size: 14 },
+                            },
                             rangemode: "tozero",
+                            gridcolor: "rgba(0,0,0,0.08)",
                         },
                         showlegend: true,
                         legend: {
-                            x: 1,
-                            xanchor: "right",
-                            y: 1,
+                            title: { text: "Regulation" },
+                            x: 1.02,
+                            xanchor: "left",
+                            y: 0.98,
                             yanchor: "top",
-                            bgcolor: "rgba(255,255,255,0.6)",
+                            bgcolor: "rgba(255,255,255,0.7)",
                             bordercolor: "rgba(0,0,0,0.1)",
                             borderwidth: 1,
-                            font: { size: 11 },
+                            font: { size: 12 },
                         },
-                        height,
+
+                        paper_bgcolor: "rgba(0,0,0,0)",
+                        plot_bgcolor: "#fafafa",
+
+                        height: undefined,   // IMPORTANT → let container control height
                         hovermode: "closest",
                     }}
                     config={{
@@ -1165,143 +1310,9 @@ const DynamicVolcanoPlot = ({
                         displayModeBar: "hover",
                         scrollZoom: false,
                     }}
-                    style={{ width: "100%", height }}
+                    style={{ width: "100%", height: "100%" }}
                 />
-            );
-        }
-
-        if (!supportsDegSummaryBar || !rows || !rows.length) {
-            return <div className="de-empty">Barplot unavailable for this TSV.</div>;
-        }
-
-        const countsByCellType = new Map();
-
-        rows.forEach((r) => {
-            if (!r) return;
-
-            const ct = r[cellTypeCol];
-            if (!ct) return;
-
-            const lfc = Number(r[log2fcCol]);
-            if (!Number.isFinite(lfc) || lfc === 0) return;
-
-            let isDE = false;
-
-            if (diffexpressedCol) {
-                const rawFlag = r[diffexpressedCol];
-                const flag = String(rawFlag ?? "").toLowerCase();
-
-                isDE =
-                    !!flag &&
-                    flag !== "no" &&
-                    flag !== "0" &&
-                    flag !== "false" &&
-                    flag !== "na";
-            } else if (pvalCol) {
-                const p = Number(r[pvalCol]);
-                isDE =
-                    Number.isFinite(p) &&
-                    p > 0 &&
-                    p <= pCutoff &&
-                    Math.abs(lfc) >= log2fcCutoff;
-            } else {
-                isDE = true;
-            }
-
-            if (!isDE) return;
-
-            const key = String(ct);
-            if (!countsByCellType.has(key)) {
-                countsByCellType.set(key, { up: 0, down: 0 });
-            }
-
-            const entry = countsByCellType.get(key);
-            if (lfc > 0) entry.up += 1;
-            else if (lfc < 0) entry.down += 1;
-        });
-
-        if (!countsByCellType.size) {
-            return (
-                <div className="de-empty">
-                    No differentially expressed genes to summarise.
-                </div>
-            );
-        }
-
-        const categories = Array.from(countsByCellType.keys());
-        const upCounts = categories.map((k) => countsByCellType.get(k).up);
-        const downCounts = categories.map((k) => countsByCellType.get(k).down);
-
-        console.log(
-            "[DynamicVolcanoPlot] barplot (rows) categories:",
-            categories
-        );
-        console.log("[DynamicVolcanoPlot] barplot (rows) upCounts:", upCounts);
-        console.log(
-            "[DynamicVolcanoPlot] barplot (rows) downCounts:",
-            downCounts
-        );
-
-        return (
-            <PlotComponent
-                ref={plotRef}
-                data={[
-                    {
-                        x: categories,
-                        y: upCounts,
-                        name: "Up",
-                        type: "bar",
-                        marker: {
-                            color: "rgba(220, 20, 60, 0.9)",
-                        },
-                        hovertemplate:
-                            "Cell type: %{x}<br>Up DEGs: %{y}<extra></extra>",
-                    },
-                    {
-                        x: categories,
-                        y: downCounts,
-                        name: "Down",
-                        type: "bar",
-                        marker: {
-                            color: "rgba(30, 144, 255, 0.9)",
-                        },
-                        hovertemplate:
-                            "Cell type: %{x}<br>Down DEGs: %{y}<extra></extra>",
-                    },
-                ]}
-                layout={{
-                    title: title || "",
-                    barmode: "group",
-                    margin: { l: 60, r: 10, t: 40, b: 60 },
-                    xaxis: {
-                        title: "",
-                        tickangle: -35,
-                    },
-                    yaxis: {
-                        title: "Number of DEGs",
-                        rangemode: "tozero",
-                    },
-                    showlegend: true,
-                    legend: {
-                        x: 1,
-                        xanchor: "right",
-                        y: 1,
-                        yanchor: "top",
-                        bgcolor: "rgba(255,255,255,0.6)",
-                        bordercolor: "rgba(0,0,0,0.1)",
-                        borderwidth: 1,
-                        font: { size: 11 },
-                    },
-                    height,
-                    hovermode: "closest",
-                }}
-                config={{
-                    responsive: true,
-                    displayModeBar: "hover",
-                    scrollZoom: false,
-                }}
-                style={{ width: "100%", height }}
-            />
+            </div>
         );
     };
 
@@ -1496,10 +1507,24 @@ const DynamicVolcanoPlot = ({
 
     return (
         <div className="de-panel">
-            <div className={`de-two-col ${viewMode === "table" ? "is-table-mode" : ""}`}>
-                <div className={`de-left ${viewMode === "table" ? "is-table-mode" : ""}`}>
+            <div
+                className={`de-two-col ${
+                    viewMode === "table" || isDegSummaryBarplot ? "is-table-mode" : ""
+                }`}
+            >
+                <div
+                    className={`de-left ${
+                        viewMode === "table" || isDegSummaryBarplot ? "is-table-mode" : ""
+                    }`}
+                >
                     {renderLeftHeader()}
-                    <div className={`de-visualisation ${viewMode === "table" ? "is-table-mode" : ""}`}>                        {viewMode === "volcano" && renderVolcano()}
+
+                    <div
+                        className={`de-visualisation ${
+                            viewMode === "table" || isDegSummaryBarplot ? "is-table-mode" : ""
+                        }`}
+                    >
+                        {viewMode === "volcano" && renderVolcano()}
                         {viewMode === "bar" && renderDegSummaryBarplot()}
                         {viewMode === "table" && renderTable()}
                         {viewMode === "heatmap" && renderHeatmap()}
@@ -1507,8 +1532,7 @@ const DynamicVolcanoPlot = ({
                     </div>
                 </div>
 
-                {/* RIGHT: controls, no box */}
-                {viewMode !== "table" && renderRightControls()}
+                {!isDegSummaryBarplot && viewMode !== "table" && renderRightControls()}
             </div>
         </div>
     );
