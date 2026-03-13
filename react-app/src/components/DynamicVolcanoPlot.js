@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useRef, useEffect } from "react";
 import useDeTsvData from "../hooks/useDeTsvData";
 import useDeSummary from "../hooks/useDeSummary";
+import { Search } from "lucide-react";
 
 function findColumn(columns, regex) {
     if (!Array.isArray(columns)) return null;
@@ -173,6 +174,8 @@ const DynamicVolcanoPlot = ({
 
     const [xRange, setXRange] = useState(null);
     const [yRange, setYRange] = useState(null);
+
+    const [tableSearch, setTableSearch] = useState("");
 
     useEffect(() => {
         const id = setTimeout(() => {
@@ -568,7 +571,7 @@ const DynamicVolcanoPlot = ({
                 </div>
             )}
 
-            {pvalCol && log2fcCol && ["volcano", "table"].includes(viewMode) && (
+            {pvalCol && log2fcCol && viewMode !== "table" && (
                 <div className="de-thresholds-row">
                     <label className="de-threshold-field">
                         <span className="de-threshold-caption">padj ≤</span>
@@ -618,7 +621,7 @@ const DynamicVolcanoPlot = ({
 
             {deConditions && deConditions.length > 0 && (
                 <label className="de-field">
-                    <span className="de-field-label">Condition</span>
+                    <span className="de-field-label">KO Strategy</span>
                     <select
                         className="de-select"
                         value={currentCondition?.condition_id || ""}
@@ -716,10 +719,24 @@ const DynamicVolcanoPlot = ({
 
         if (precomputedUp.length || precomputedDown.length) {
             const activeIsUp = tableSide === "up";
-            const activeData = activeIsUp ? precomputedUp : precomputedDown;
-            const totalActive = activeIsUp
-                ? precomputedUp.length
-                : precomputedDown.length;
+
+            const rawActiveData = activeIsUp ? precomputedUp : precomputedDown;
+            const totalActive = rawActiveData.length;
+
+            const activeData = rawActiveData.filter((r) => {
+                const q = tableSearch.trim().toLowerCase();
+                if (!q) return true;
+
+                return [
+                    r.symbol,
+                    r.gene_id,
+                    r.celltype,
+                    r.condition,
+                ]
+                    .filter(Boolean)
+                    .some((v) => String(v).toLowerCase().includes(q));
+            });
+
             const labelPrefix = isEffectFallback
                 ? "Top by effect size (no significant genes) • "
                 : "";
@@ -727,38 +744,53 @@ const DynamicVolcanoPlot = ({
             const pillClass = activeIsUp ? "de-pill-up" : "de-pill-down";
 
             return (
-                <div className="de-topgenes-single">
-                    <div className="de-topgenes-header">
-                        <div className="de-topgenes-header-left">
-                            <span className={`de-topgenes-pill ${pillClass}`}>{label}</span>
+                <div className="de-topgenes-single is-table-mode">
+                    <div className="de-table-toolbar">
+                        <div className="de-table-toolbar-left">
+                            <div className="de-table-toggle">
+                                <button
+                                    type="button"
+                                    className={`de-table-toggle-btn ${tableSide === "up" ? "is-up-active" : ""}`}
+                                    onClick={() => setTableSide("up")}
+                                >
+                                    Up-regulated
+                                </button>
+
+                                <button
+                                    type="button"
+                                    className={`de-table-toggle-btn ${tableSide === "down" ? "is-down-active" : ""}`}
+                                    onClick={() => setTableSide("down")}
+                                >
+                                    Down-regulated
+                                </button>
+                            </div>
+
                             <span className="de-topgenes-count">
-                {totalActive
-                    ? `showing ${Math.min(50, totalActive)} of ${totalActive}`
-                    : "no genes"}
-              </span>
+  {isEffectFallback
+      ? `showing ${Math.min(50, activeData.length)} fallback genes`
+      : activeData.length
+          ? `showing ${Math.min(50, activeData.length)} of ${totalActive}`
+          : `showing 0 of ${totalActive}`}
+</span>
                         </div>
 
-                        <div className="de-subview-toggle">
-                            <button
-                                type="button"
-                                className={`de-subview-btn ${
-                                    tableSide === "up" ? "is-active" : ""
-                                }`}
-                                onClick={() => setTableSide("up")}
-                            >
-                                Up
-                            </button>
-                            <button
-                                type="button"
-                                className={`de-subview-btn ${
-                                    tableSide === "down" ? "is-active" : ""
-                                }`}
-                                onClick={() => setTableSide("down")}
-                            >
-                                Down
-                            </button>
+                        <div className="de-table-search">
+                            <input
+                                type="text"
+                                value={tableSearch}
+                                onChange={(e) => setTableSearch(e.target.value)}
+                                placeholder="Search gene symbol or ID..."
+                                className="de-table-search-input"
+                            />
+                            <Search className="de-table-search-icon" size={18} strokeWidth={2.2} />
                         </div>
                     </div>
+
+                    {isEffectFallback && (
+                        <div className="de-fallback-note">
+                            No genes passed the current significance criteria. Showing top genes ranked by effect size instead.
+                        </div>
+                    )}
 
                     {activeData.length ? (
                         <div className="de-table-scroll">
@@ -834,44 +866,61 @@ const DynamicVolcanoPlot = ({
             .slice(0, 50);
 
         const activeIsUp = tableSide === "up";
-        const activeData = activeIsUp ? ups : downs;
-        const totalActive = activeIsUp
-            ? parsed.filter((r) => r.log2fc > 0).length
-            : parsed.filter((r) => r.log2fc < 0).length;
+        const rawActiveData = activeIsUp ? ups : downs;
+        const totalActive = rawActiveData.length;
+
+        const activeData = rawActiveData.filter((r) => {
+            const q = tableSearch.trim().toLowerCase();
+            if (!q) return true;
+
+            return [r.symbol, r.gene_id]
+                .filter(Boolean)
+                .some((v) => String(v).toLowerCase().includes(q));
+        });
+
         const label = activeIsUp ? "Up-regulated" : "Down-regulated";
         const pillClass = activeIsUp ? "de-pill-up" : "de-pill-down";
 
         return (
-            <div className="de-topgenes-single">
-                <div className="de-topgenes-header">
-                    <div className="de-topgenes-header-left">
-                        <span className={`de-topgenes-pill ${pillClass}`}>{label}</span>
+            <div className="de-topgenes-single is-table-mode">
+                <div className="de-table-toolbar">
+                    <div className="de-table-toolbar-left">
+                        <div className="de-table-toggle">
+                            <button
+                                type="button"
+                                className={`de-table-toggle-btn ${tableSide === "up" ? "is-up-active" : ""}`}
+                                onClick={() => setTableSide("up")}
+                            >
+                                Up-regulated
+                            </button>
+
+                            <button
+                                type="button"
+                                className={`de-table-toggle-btn ${tableSide === "down" ? "is-down-active" : ""}`}
+                                onClick={() => setTableSide("down")}
+                            >
+                                Down-regulated
+                            </button>
+                        </div>
+
                         <span className="de-topgenes-count">
-              {activeData.length
-                  ? `showing ${activeData.length} of ${totalActive}`
-                  : "no genes"}
-            </span>
+  {isEffectFallback
+      ? `showing ${Math.min(50, activeData.length)} fallback genes`
+      : activeData.length
+          ? `showing ${Math.min(50, activeData.length)} of ${totalActive}`
+          : `showing 0 of ${totalActive}`}
+</span>
                     </div>
 
-                    <div className="de-subview-toggle">
-                        <button
-                            type="button"
-                            className={`de-subview-btn ${
-                                tableSide === "up" ? "is-active" : ""
-                            }`}
-                            onClick={() => setTableSide("up")}
-                        >
-                            Up
-                        </button>
-                        <button
-                            type="button"
-                            className={`de-subview-btn ${
-                                tableSide === "down" ? "is-active" : ""
-                            }`}
-                            onClick={() => setTableSide("down")}
-                        >
-                            Down
-                        </button>
+                    <div className="de-table-search">
+                        <input
+                            type="text"
+                            value={tableSearch}
+                            onChange={(e) => setTableSearch(e.target.value)}
+                            placeholder="Search gene symbol or ID..."
+                            className="de-table-search-input"
+                        />
+                        <Search className="de-table-search-icon" size={18} strokeWidth={2.2} />
                     </div>
                 </div>
 
@@ -881,10 +930,10 @@ const DynamicVolcanoPlot = ({
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Symbol</th>
-                                <th>Gene ID</th>
-                                <th>log₂FC</th>
-                                <th>padj</th>
+                                <th>SYMBOL</th>
+                                <th>CELL TYPE</th>
+                                <th>LOG₂FC</th>
+                                <th>PADJ</th>
                             </tr>
                             </thead>
                             <tbody>{activeData.map(renderRow)}</tbody>
@@ -940,7 +989,7 @@ const DynamicVolcanoPlot = ({
                         marker: {
                             size: 8,
                             opacity: 0.9,
-                            color: "rgba(220, 20, 60, 0.9)",
+                            color: "#E8524A",
                         },
                         hovertemplate: "%{text}<extra></extra>",
                     },
@@ -954,7 +1003,7 @@ const DynamicVolcanoPlot = ({
                         marker: {
                             size: 8,
                             opacity: 0.9,
-                            color: "rgba(30, 144, 255, 0.9)",
+                            color: "#5B8FF9",
                         },
                         hovertemplate: "%{text}<extra></extra>",
                     },
@@ -1447,12 +1496,10 @@ const DynamicVolcanoPlot = ({
 
     return (
         <div className="de-panel">
-            <div className="de-two-col">
-                {/* LEFT: header + viz (plot/table) */}
-                <div className="de-left">
+            <div className={`de-two-col ${viewMode === "table" ? "is-table-mode" : ""}`}>
+                <div className={`de-left ${viewMode === "table" ? "is-table-mode" : ""}`}>
                     {renderLeftHeader()}
-                    <div className="de-visualisation">
-                        {viewMode === "volcano" && renderVolcano()}
+                    <div className={`de-visualisation ${viewMode === "table" ? "is-table-mode" : ""}`}>                        {viewMode === "volcano" && renderVolcano()}
                         {viewMode === "bar" && renderDegSummaryBarplot()}
                         {viewMode === "table" && renderTable()}
                         {viewMode === "heatmap" && renderHeatmap()}
@@ -1461,7 +1508,7 @@ const DynamicVolcanoPlot = ({
                 </div>
 
                 {/* RIGHT: controls, no box */}
-                {renderRightControls()}
+                {viewMode !== "table" && renderRightControls()}
             </div>
         </div>
     );
