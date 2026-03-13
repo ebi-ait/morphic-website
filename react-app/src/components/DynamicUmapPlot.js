@@ -1,45 +1,67 @@
 import React, { useEffect, useMemo, useState } from "react";
 import useUmapData from "../hooks/useUmapData";
 
-function inferKOFromAnalysisTitle(title = "") {
-  // Example titles:
-  // "MSK Pooled scRNA-seq: HHEXe_umap"
-  // "MSK Pooled scRNA-seq: HHEX_enhancer_deletion_umap"
-  // "MSK Pooled scRNA-seq: HHEXe_heterozygous_umap"
-  //
-  // We want the token after ":" up to the first "_" => "HHEXe" / "HHEX"
+function parseUmapTarget(title = "", geneName = null) {
+  const t = String(title || "");
+  const afterColon = t.includes(":")
+      ? t.split(":").slice(1).join(":").trim()
+      : t.trim();
 
-  const t = String(title);
-  const afterColon = t.includes(":") ? t.split(":").slice(1).join(":").trim() : t.trim();
-  if (!afterColon) return null;
+  if (!afterColon) {
+    return {
+      koLabel: geneName || null,
+      allowDynamic: !!geneName,
+      reason: "no_title_target_found_falling_back_to_geneName",
+    };
+  }
 
-  // If the string starts with the KO label, it will be the first token before underscore
-  const first = afterColon.split("_")[0]?.trim();
-  return first || null;
+  const labelPart = afterColon.replace(/_umap$/i, "").trim();
+
+  // Combined / multi-gene perturbations:
+  // for now do NOT attempt dynamic filtering; use static fallback instead
+  if (
+      /double[_ ]knockout/i.test(labelPart) ||
+      /triple[_ ]knockout/i.test(labelPart) ||
+      /\|/.test(labelPart) ||
+      /^[A-Z0-9]+_[A-Z0-9]+_/.test(labelPart)
+  ) {
+    return {
+      koLabel: null,
+      allowDynamic: false,
+      reason: "combined_or_multi_gene_perturbation",
+    };
+  }
+
+  const first = labelPart.split("_")[0]?.trim();
+
+  return {
+    koLabel: first || geneName || null,
+    allowDynamic: !!(first || geneName),
+    reason: first ? "parsed_from_title" : "fell_back_to_geneName",
+  };
 }
 
 const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
   const [PlotComponent, setPlotComponent] = useState(null);
 
   const isUmap = useMemo(
-    () =>
-      /umap/i.test(analysis?.title || "") || /_umap/i.test(analysis?.s3_png_key || ""),
-    [analysis]
+      () =>
+          /umap/i.test(analysis?.title || "") ||
+          /_umap/i.test(analysis?.s3_png_key || ""),
+      [analysis]
   );
 
-  // NEW: infer KO label from analysis.title first (so HHEXe works)
-  const koLabel = useMemo(() => {
-    return inferKOFromAnalysisTitle(analysis?.title) || geneName || null;
+  const { koLabel, allowDynamic, reason } = useMemo(() => {
+    return parseUmapTarget(analysis?.title, geneName);
   }, [analysis?.title, geneName]);
 
-  // NEW: keep a stable facet order: WT then KO
   const genotypes = useMemo(() => {
+    if (!allowDynamic || !koLabel) return [];
     const out = ["WT"];
-    if (koLabel && koLabel !== "WT") out.push(koLabel);
+    if (koLabel !== "WT") out.push(koLabel);
     return out;
-  }, [koLabel]);
+  }, [allowDynamic, koLabel]);
 
-  // dynamic import plotly
   useEffect(() => {
     let cancelled = false;
     if (typeof window !== "undefined") {
@@ -52,32 +74,77 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
     };
   }, []);
 
-  const { data, loading, error } = useUmapData(genotypes, { enabled: isUmap });
+  const { data, loading, error } = useUmapData(genotypes, {
+    enabled: isUmap && allowDynamic && genotypes.length > 0,
+  });
+
+  const returnedGenotypes = useMemo(() => {
+    return Array.from(
+        new Set((data?.points || []).map((p) => p.genotype ?? "Unknown"))
+    );
+  }, [data]);
+
+  const hasKOPoints = useMemo(() => {
+    if (!koLabel || koLabel === "WT") return false;
+    return (data?.points || []).some(
+        (p) => (p.genotype ?? "Unknown") === koLabel
+    );
+  }, [data, koLabel]);
+
+  const shouldUseDynamic = useMemo(() => {
+    if (!isUmap) return false;
+    if (!allowDynamic) return false;
+    if (!koLabel || koLabel === "WT") return false;
+    if (!data?.points?.length) return false;
+    return hasKOPoints;
+  }, [isUmap, allowDynamic, koLabel, data, hasKOPoints]);
+
+  useEffect(() => {
+    console.log("[UMAP] title:", analysis?.title);
+    console.log("[UMAP] geneName:", geneName);
+    console.log("[UMAP] parse reason:", reason);
+    console.log("[UMAP] koLabel:", koLabel);
+    console.log("[UMAP] allowDynamic:", allowDynamic);
+    console.log("[UMAP] requested genotypes:", genotypes);
+    console.log("[UMAP] returned genotypes:", returnedGenotypes);
+    console.log("[UMAP] hasKOPoints:", hasKOPoints);
+    console.log("[UMAP] shouldUseDynamic:", shouldUseDynamic);
+  }, [
+    analysis?.title,
+    geneName,
+    reason,
+    koLabel,
+    allowDynamic,
+    genotypes,
+    returnedGenotypes,
+    hasKOPoints,
+    shouldUseDynamic,
+  ]);
 
   if (!isUmap) return null;
 
-  if (!PlotComponent || loading) {
+  if (!PlotComponent && allowDynamic) {
     return <div className="de-loading">Loading interactive UMAP…</div>;
   }
 
-  if (error || !data?.points?.length) {
+  if (allowDynamic && loading) {
+    return <div className="de-loading">Loading interactive UMAP…</div>;
+  }
+
+  if (error || !shouldUseDynamic) {
     if (analysis?.s3_png_key) {
       return (
-        <img
-          src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${encodeURIComponent(
-            analysis.s3_png_key
-          )}`}
-          alt={analysis.title}
-          className="img-plot"
-        />
+          <img
+              src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${encodeURIComponent(
+                  analysis.s3_png_key
+              )}`}
+              alt={analysis.title}
+              className="img-plot"
+          />
       );
     }
     return <div className="de-empty">UMAP unavailable</div>;
   }
-
-  // =========================
-  // Build plot: facet by genotype, color by cell type
-  // =========================
 
   const PALETTE = [
     "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
@@ -89,11 +156,11 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
   const genotypeOrder = genotypes;
 
   const celltypes = Array.from(
-    new Set(data.points.map((p) => p.celltype ?? "Unknown"))
+      new Set(data.points.map((p) => p.celltype ?? "Unknown"))
   ).sort();
 
   const celltypeColor = Object.fromEntries(
-    celltypes.map((ct, i) => [ct, PALETTE[i % PALETTE.length]])
+      celltypes.map((ct, i) => [ct, PALETTE[i % PALETTE.length]])
   );
 
   const byGT_CT = {};
@@ -127,10 +194,10 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
         yaxis,
         marker: { size: 6, opacity: 0.8, color: celltypeColor[ct] },
         hovertemplate:
-          `Cell type: ${ct}<br>` +
-          `Genotype: ${gt}<br>` +
-          `UMAP1: %{x:.3f}<br>` +
-          `UMAP2: %{y:.3f}<extra></extra>`,
+            `Cell type: ${ct}<br>` +
+            `Genotype: ${gt}<br>` +
+            `UMAP1: %{x:.3f}<br>` +
+            `UMAP2: %{y:.3f}<extra></extra>`,
       });
     });
   });
@@ -148,7 +215,10 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
   const axisPack = {};
   for (let i = 1; i <= Math.max(2, genotypeOrder.length); i++) {
     const suffix = i === 1 ? "" : String(i);
-    axisPack[`xaxis${suffix}`] = { visible: false, scaleanchor: `yaxis${suffix}` };
+    axisPack[`xaxis${suffix}`] = {
+      visible: false,
+      scaleanchor: `yaxis${suffix}`,
+    };
     axisPack[`yaxis${suffix}`] = { visible: false };
   }
 
@@ -195,7 +265,7 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
       y: -0.25,
       xanchor: "center",
       x: 0.5,
-      font: { size: 12 }
+      font: { size: 12 },
     },
     grid: { rows: 1, columns: genotypeOrder.length, pattern: "independent" },
     annotations,
@@ -206,12 +276,12 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
   };
 
   return (
-    <PlotComponent
-      data={traces}
-      layout={layout}
-      config={{ responsive: true, displayModeBar: false }}
-      style={{ width: "100%", height }}
-    />
+      <PlotComponent
+          data={traces}
+          layout={layout}
+          config={{ responsive: true, displayModeBar: false }}
+          style={{ width: "100%", height }}
+      />
   );
 };
 
