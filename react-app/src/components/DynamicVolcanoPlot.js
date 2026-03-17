@@ -179,6 +179,8 @@ const DynamicVolcanoPlot = ({
     const [yRange, setYRange] = useState(null);
 
     const [tableSearch, setTableSearch] = useState("");
+    const [sortKey, setSortKey] = useState(null);
+    const [sortDir, setSortDir] = useState("desc");
 
     useEffect(() => {
         const id = setTimeout(() => {
@@ -386,6 +388,31 @@ const DynamicVolcanoPlot = ({
             );
         }
     }, [rows, cellTypeCol]);
+
+    const handleSort = (key) => {
+        if (sortKey === key) {
+            setSortDir((prev) => (prev === "asc" ? "desc" : "asc"));
+        } else {
+            setSortKey(key);
+            setSortDir(key === "symbol" || key === "gene_id" ? "asc" : "desc");
+        }
+    };
+
+    const renderSortLabel = (label, key) => {
+        const isActive = sortKey === key;
+        const arrow = !isActive ? "↕" : sortDir === "asc" ? "↑" : "↓";
+
+        return (
+            <button
+                type="button"
+                className={`de-sort-btn ${isActive ? "is-active" : ""}`}
+                onClick={() => handleSort(key)}
+            >
+                <span>{label}</span>
+                <span className="de-sort-arrow">{arrow}</span>
+            </button>
+        );
+    };
 
     const allVolcanoData = useMemo(() => {
         if (!rows || !rows.length || !log2fcCol || !pvalCol) {
@@ -740,6 +767,32 @@ const DynamicVolcanoPlot = ({
                     .some((v) => String(v).toLowerCase().includes(q));
             });
 
+            const sortedActiveData = [...activeData];
+
+            if (sortKey) {
+                sortedActiveData.sort((a, b) => {
+                    const aVal = a[sortKey];
+                    const bVal = b[sortKey];
+
+                    if (sortKey === "symbol" || sortKey === "gene_id") {
+                        const aStr = String(aVal || "").toLowerCase();
+                        const bStr = String(bVal || "").toLowerCase();
+                        return sortDir === "asc"
+                            ? aStr.localeCompare(bStr)
+                            : bStr.localeCompare(aStr);
+                    }
+
+                    const aNum = Number(aVal);
+                    const bNum = Number(bVal);
+
+                    if (!Number.isFinite(aNum) && !Number.isFinite(bNum)) return 0;
+                    if (!Number.isFinite(aNum)) return 1;
+                    if (!Number.isFinite(bNum)) return -1;
+
+                    return sortDir === "asc" ? aNum - bNum : bNum - aNum;
+                });
+            }
+
             const labelPrefix = isEffectFallback
                 ? "Top by effect size (no significant genes) • "
                 : "";
@@ -801,13 +854,13 @@ const DynamicVolcanoPlot = ({
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Symbol</th>
-                                    <th>Gene ID</th>
-                                    <th>log₂FC</th>
-                                    <th>padj</th>
+                                    <th>{renderSortLabel("Symbol", "symbol")}</th>
+                                    <th>{renderSortLabel("Gene ID", "gene_id")}</th>
+                                    <th>{renderSortLabel("log₂FC", "log2fc")}</th>
+                                    <th>{renderSortLabel("padj", "padj")}</th>
                                 </tr>
                                 </thead>
-                                <tbody>{activeData.slice(0, 50).map(renderRow)}</tbody>
+                                <tbody>{sortedActiveData.slice(0, 50).map(renderRow)}</tbody>
                             </table>
                         </div>
                     ) : (
@@ -881,6 +934,32 @@ const DynamicVolcanoPlot = ({
                 .some((v) => String(v).toLowerCase().includes(q));
         });
 
+        const sortedActiveData = [...activeData];
+
+        if (sortKey) {
+            sortedActiveData.sort((a, b) => {
+                const aVal = a[sortKey];
+                const bVal = b[sortKey];
+
+                if (sortKey === "symbol" || sortKey === "gene_id") {
+                    const aStr = String(aVal || "").toLowerCase();
+                    const bStr = String(bVal || "").toLowerCase();
+                    return sortDir === "asc"
+                        ? aStr.localeCompare(bStr)
+                        : bStr.localeCompare(aStr);
+                }
+
+                const aNum = Number(aVal);
+                const bNum = Number(bVal);
+
+                if (!Number.isFinite(aNum) && !Number.isFinite(bNum)) return 0;
+                if (!Number.isFinite(aNum)) return 1;
+                if (!Number.isFinite(bNum)) return -1;
+
+                return sortDir === "asc" ? aNum - bNum : bNum - aNum;
+            });
+        }
+
         const label = activeIsUp ? "Up-regulated" : "Down-regulated";
         const pillClass = activeIsUp ? "de-pill-up" : "de-pill-down";
 
@@ -933,13 +1012,13 @@ const DynamicVolcanoPlot = ({
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>SYMBOL</th>
-                                <th>CELL TYPE</th>
-                                <th>LOG₂FC</th>
-                                <th>PADJ</th>
+                                <th>{renderSortLabel("Symbol", "symbol")}</th>
+                                <th>{renderSortLabel("Gene ID", "gene_id")}</th>
+                                <th>{renderSortLabel("log₂FC", "log2fc")}</th>
+                                <th>{renderSortLabel("padj", "padj")}</th>
                             </tr>
                             </thead>
-                            <tbody>{activeData.map(renderRow)}</tbody>
+                            <tbody>{sortedActiveData.map(renderRow)}</tbody>
                         </table>
                     </div>
                 ) : (
