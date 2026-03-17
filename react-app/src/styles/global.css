@@ -62,6 +62,8 @@ body {
   --dl-color-bg-white: #f5f5f5;
   --dl-color-brand-orange: #e84e0f;
   --dl-color-light-blue: #d7e7e9;
+  --de-surface: #fafafa; /* match figma */
+  --de-divider: rgba(0,0,0,0.06);
 }
 
 html, body {
@@ -2105,40 +2107,13 @@ ul {
   border-bottom: solid 1px rgb(153,153,153,.3);
 }
 
-.gene-card-header h1 {
-  margin: 0;
-  font-family: Inter;
-  font-size: 62px;
-  font-weight: 600;
-  line-height: 62px;
-  letter-spacing: -0.04em;
-  text-align: left;
-}
-
 .gene-card-header-row {
   display: flex;
   align-items: flex-end;
   gap: 1rem;
 }
 
-.gene-card-header-link {
-  font-family: Inter;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 18.15px;
-  letter-spacing: -0.02em;
-  text-align: center;
-  padding: 7px 20px 7px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: var(--dl-color-brand-orange);
-  color: var(--dl-color-default-absolutewhite);
-}
-
-.gene-card-body {
-  padding: 2rem;
-}
-
+.gene-card-body { padding: 18px 22px; }
 
 /*.gene-grid {*/
 /*  display: grid;*/
@@ -2159,8 +2134,10 @@ ul {
   gap: 2rem;
 }
 
-.gene-card-row {
+.gene-card-row{
   display: flex;
+  gap: 40px;
+  align-items: flex-start;
 }
 
 .gene-card-row-gap {
@@ -2192,13 +2169,18 @@ h2.gene-card-body-title {
 
 }
 
-.gene-card-body dt {
-  font-family: Inter;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 30px;
-  letter-spacing: -0.04em;
-  text-align: left;
+.gene-card-summary .gene-card-body-dl-grid,
+.gene-card-summary-grid{
+  display: grid;
+  grid-template-columns: 190px 1fr;  /* tighter */
+  column-gap: 24px;
+  row-gap: 12px;
+}
+
+.gene-card-summary dt{
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
 }
 
 .gene-card-body dt.no-data {
@@ -2207,30 +2189,24 @@ h2.gene-card-body-title {
   text-align: center;
 }
 
-.gene-card-body dd {
-  font-family: Inter;
-  font-size: 15px;
+.gene-card-summary dd{
+  font-size: 16px;
   font-weight: 400;
-  line-height: 30px;
-  letter-spacing: -0.04em;
-  text-align: left;
+  color: #2d2d2d;
 }
 
-.gene-card-summary {
-  width: 470px;
-  flex-grow: 1;
-  background-color: rgba(207, 230, 233, 1);
+.gene-card-summary{
+  background: #d8e7ea;
+  border-radius: 16px;
+  padding: 28px 32px;   /* reduce padding */
+  min-height: auto;     /* remove forced height */
 }
 
-.gene-card-summary-title {
-  color: var(--dl-color-default-darkblue);
-  font-family: Inter;
-  font-size: 20px;
+.gene-card-summary-title{
+  margin: 0 0 20px 0;
+  font-size: 24px;
   font-weight: 700;
-  line-height: 24.2px;
-  letter-spacing: -0.04em;
-  text-align: left;
-  margin: 0;
+  color: #0f6e73;
 }
 
 .gene-card-body-link {
@@ -2254,18 +2230,24 @@ h2.gene-card-body-title {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 2rem 0;
-  color: var(--dl-color-brand-orange);
+  padding: 0 0 0.75rem 0;   /* much smaller gap below title */
+  color: inherit;           /* don't make whole header orange */
 }
 
 .gene-section-title {
   margin: 0;
   font-family: Inter;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 62px;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.15;
   letter-spacing: -0.04em;
   text-align: left;
+  color: #111111;           /* main title black */
+}
+
+.gene-section-count {
+  color: #6b7280;           /* lighter grey for "(4 datasets)" */
+  font-weight: 600;
 }
 
 .gene-section-link {
@@ -2707,61 +2689,244 @@ h2.gene-card-body-title {
 }
 
 /* pill container */
-.de-thresholds-pill {
+/* Make the thresholds row match Figma: separate boxes */
+.de-thresholds-pill{
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;     /* same border as summary panel */
-  background: #f9fafb;           /* very light grey */
+  gap: 14px;
 }
 
-/* each field inside the pill */
-.de-threshold-field {
+.de-threshold-separator{
+  color: #cfd6de;
+  font-weight: 700;
+}
+
+/* outer mini box */
+.de-threshold-field{
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  font-size: 0.78rem;
-  color: #4b5563;                /* grey-600 */
+  gap: 10px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 8px;          /* less rounded */
+  border: 1px solid #dfe3e8;   /* thinner/lighter */
+  background: #fff;
 }
 
-.de-threshold-caption {
+/* label text inside */
+.de-threshold-caption{
+  font-size: 14px;
+  font-weight: 700;
+  color: #6b7280;
   white-space: nowrap;
+  line-height: 1;
 }
 
-/* small separator dot */
-.de-threshold-separator {
-  font-size: 0.85rem;
-  color: #d1d5db;                /* grey-300 */
-}
-
-/* numeric inputs */
-.de-threshold-input {
-  width: 4.2rem;
-  padding: 0.15rem 0.35rem;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  font-size: 0.78rem;
-  color: #111827;                /* near-black */
+/* the numeric input should be WHITE + not pill */
+.de-threshold-field .de-threshold-input{
+  width: 64px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 6px;          /* not pill */
+  border: 1px solid #dfe3e8;   /* thinner */
+  background: #fff;            /* white as per figma */
+  color: #111827;
+  font-size: 14px;
+  font-weight: 700;
   text-align: right;
-  -moz-appearance: textfield;
+  box-shadow: none;
+  outline: none;
 }
 
-/* hide spinners in number input (Chrome, Edge, Safari) */
-.de-threshold-input::-webkit-outer-spin-button,
-.de-threshold-input::-webkit-inner-spin-button {
+/* remove spinners */
+.de-threshold-field .de-threshold-input::-webkit-outer-spin-button,
+.de-threshold-field .de-threshold-input::-webkit-inner-spin-button{
   -webkit-appearance: none;
   margin: 0;
 }
-
-/* focus state */
-.de-threshold-input:focus {
-  outline: none;
-  border-color: #60a5fa;         /* blue-400 */
-  box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.35);
+.de-threshold-field .de-threshold-input{
+  -moz-appearance: textfield;
 }
+
+/* subtle focus, still thin */
+.de-threshold-field .de-threshold-input:focus{
+  border-color: #cfd6de;
+}
+
+.dataset-card{
+  background: #fff;
+  border: 0;                 /* remove the “box” line */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06); /* keep separation via shadow */
+}
+
+/* header more “airy” and less dense */
+.dataset-card-header{ padding: 0; }
+
+.dataset-head-title{
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 8px;   /* adds space below title */
+}
+
+.dataset-head{
+  background: #f5f5f5;
+  padding: 18px;
+  border-radius: 12px 12px 0 0;   /* only top corners rounded */
+  margin: 0;                      /* IMPORTANT */
+}
+
+.dataset-head-desc{
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.dataset-head-meta{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.dataset-meta-label{
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+.dataset-meta-value{
+  font-weight: 600;
+  color: #111827;
+}
+.experiment-chips{ margin: 2px 0 10px; gap: 6px; }
+.dataset-title{ font-size: 18px; font-weight: 700; margin-top: 6px; }
+.dataset-desc{ margin-top: 6px; max-width: 950px; }
+
+.dataset-card-body{
+  padding: 18px;
+}
+
+/*.de-panel {*/
+/*  background: #F3F4F6;   !* unified light grey like Figma *!*/
+/*  border: none;          !* remove border *!*/
+/*  border-radius: 16px;   !* slightly softer rounding *!*/
+/*  padding: 18px;*/
+/*}*/
+
+.dataset-title{
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.dataset-desc{
+  margin-top: 6px;
+  color: #555;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.dataset-metrics-row{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  padding-top: 10px;
+  margin-top: 10px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.dataset-updown{ display:flex; gap: 12px; font-weight: 600; }
+.metric-up{ color: #d64545; }
+.metric-down{ color: #3b78e7; }
+
+.dataset-card-body{
+  padding: 12px 16px 14px 16px;
+}
+
+.dataset-card-footer{
+  display:flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  background: #ebf2f3;
+}
+
+.btn-primary{
+  background:#e65b2a;
+  color:#fff;
+  padding:10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration:none;
+}
+
+.btn-outline{
+  border: 1px solid #0d8a8a;
+  color:#0d8a8a;
+  padding:10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration:none;
+  background:#fff;
+}
+
+.dataset-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.dataset-stack .dataset-card {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Figma-like “Affects … genes” top bar */
+.de-affects-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 14px 16px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  background: var(--de-surface);
+  margin: 0;
+}
+
+.de-affects-left{
+  display:flex;
+  align-items:baseline;
+  gap: 10px;
+}
+
+.de-affects-label{
+  color:#6b7280;              /* muted gray */
+  font-size:16px;
+  font-weight:500;
+}
+
+.de-affects-value{
+  color:#111827;
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:-0.01em;
+}
+
+.de-affects-right{
+  display:flex;
+  gap: 18px;
+  font-size:20px;
+  font-weight:700;
+}
+
+.de-affects-up{ color:#E8524A; }   /* red */
+.de-affects-down{ color:#5B8FF9; } /* blue */
 
 /* --- Responsive tweaks -------------------------------------------- */
 
@@ -2776,50 +2941,278 @@ h2.gene-card-body-title {
   }
 }
 
-/* --- View toggle (Volcano / Top genes) ---------------------------- */
-
+/* ---------- Toggle wrapper ---------- */
 .de-view-toggle {
-  margin-bottom: 0.35rem;
-  gap: 0.4rem;
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid #d9dee3;   /* thin, subtle border */
+  border-radius: 6px;          /* not very rounded */
+  overflow: hidden;
+  background: #ffffff;
+  height: 36px;
 }
 
+/* each segment */
 .de-view-btn {
-  border: 1px solid #e5e7eb;       /* gray-200 */
-  background: #f9fafb;             /* gray-50 */
-  color: #4b5563;                  /* gray-600 */
-  font-size: 0.78rem;
-  padding: 0.25rem 0.9rem;
-  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  height: 36px;
+
+  background: #ffffff;
+  color: #374151;              /* dark grey like figma */
+  font-size: 14px;
+  font-weight: 700;
+
+  border: none;
   cursor: pointer;
-  transition:
-          background 0.15s ease,
-          border-color 0.15s ease,
-          color 0.15s ease,
-          box-shadow 0.15s ease;
 }
 
+/* divider between the two */
+.de-view-btn + .de-view-btn {
+  border-left: 1px solid #d9dee3;
+}
+
+/* ACTIVE STATE */
 .de-view-btn.is-active {
-  background: #ecfdf5;             /* soft teal tint */
-  border-color: #2dd4bf;           /* teal-400 */
-  color: #0f766e;                  /* teal-700 */
-  box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.25);
+  background: #05989e;         /* teal */
+  color: #ffffff;              /* white text */
 }
 
-.de-view-btn:hover:not(.is-active) {
-  background: #f3f4f6;             /* gray-100 */
+/* make icons follow text color */
+.de-view-btn svg {
+  width: 16px;
+  height: 16px;
 }
 
+.de-view-btn svg * {
+  stroke: currentColor;
+  fill: currentColor;
+}
+
+/* "Volcano" / "Top genes" text */
+.de-view-label{
+  font-size: 14px;                  /* bold label feel */
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+
+/* ---------- Threshold row container ---------- */
+/* Your current code uses: .de-thresholds-group > .de-thresholds-pill */
+.de-thresholds-group{
+  margin-left: 0;                   /* don’t squeeze */
+}
+
+.de-thresholds-pill{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.de-threshold-separator{
+  color: #d1d5db;
+  font-weight: 400;   /* not bold */
+  margin: 0 2px;
+}
+
+/* outer box */
+.de-threshold-field{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 36px;                /* smaller */
+  padding: 0 10px;
+  border-radius: 6px;          /* match switch */
+  border: 1px solid #dfe3e8;   /* thin subtle border */
+  background: #fff;
+}
+
+/* caption text */
+.de-threshold-caption{
+  font-size: 14px;
+  font-weight: 400;            /* plain text */
+  color: #6b7280;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* inner input */
+.de-threshold-field .de-threshold-input{
+  width: 56px;                 /* narrower */
+  height: 24px;                /* smaller */
+  padding: 0 6px;
+  border-radius: 4px;          /* NOT pill */
+  border: 1px solid #dfe3e8;
+  background: #ffffff;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 400;            /* plain */
+  text-align: center;
+  box-shadow: none;
+  outline: none;
+}
+
+/* remove browser number spinners */
+.de-threshold-field .de-threshold-input::-webkit-outer-spin-button,
+.de-threshold-field .de-threshold-input::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+}
+.de-threshold-field .de-threshold-input{
+  -moz-appearance: textfield;
+}
+
+.de-threshold-field .de-threshold-input:focus{
+  outline: none;
+  border-color: #cbd5e1;
+}
+
+/* --- spacing so controls "breathe" like figma --- */
+.de-controls-row-top{
+  gap: 18px;
+  align-items: center;
+}
+
+.de-controls-row-bottom{
+  margin-top: 12px;
+  gap: 16px;
+  align-items: center;
+}
+
+.de-threshold-input{
+  -moz-appearance: textfield;
+}
+
+.de-threshold-input:focus{
+  border-color: rgba(5,152,158,0.35);
+  box-shadow: 0 0 0 3px rgba(5,152,158,0.10) !important;
+}
+
+
+/* ---------- Layout breathing room (matches screenshot spacing) ---------- */
+.de-controls-row-top{
+  gap: 18px;
+  align-items: center;
+}
+
+.de-controls-row-bottom{
+  gap: 16px;
+  align-items: center;
+}
+
+/* make sure filter row doesn't compress everything */
+.de-filters-row{
+  margin-top: 14px;
+}
+
+/* Two-column internal layout */
+.de-two-col {
+  display: grid;
+  grid-template-columns: minmax(520px, 1fr) 260px;
+  gap: 18px;
+  align-items: start;
+}
+
+.de-two-col.is-table-mode {
+  grid-template-columns: 1fr;
+}
+
+.de-left {
+  background: #fafafa;
+  border-radius: 16px;
+  padding: 18px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.de-left.is-table-mode {
+  height: 483px;
+  min-height: 483px;
+  overflow: hidden;
+}
+
+.de-left-header{
+  display: grid !important;
+  grid-auto-flow: row;
+  gap: 10px;
+  justify-items: start;
+  align-items: start;
+}
+
+.de-thresholds-row{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 0; /* keep tight like figma */
+}
+
+/* hard lock toggle to content */
+.de-view-toggle {
+  width: max-content;       /* better than fit-content in some browsers */
+  max-width: 100%;
+}
+
+/* ensure buttons never expand */
+.de-view-btn {
+  flex: 0 0 auto;
+  width: auto;
+  white-space: nowrap;
+}
+
+/* Right column controls: NO box, NO border, just flow */
+.de-right-controls {
+  padding-top: 2px;     /* aligns with plot top visually */
+  display: grid;
+  gap: 12px;
+}
+
+/* Field styling */
+.de-field {
+  display: grid;
+  gap: 6px;
+}
+
+.de-field-label {
+  font-size: 12px;
+  color: rgba(0,0,0,0.65);
+}
+
+/* Threshold row stays compact */
+.de-thresholds-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.de-threshold-input {
+  width: 78px;
+  height: 30px;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 8px;
+  padding: 0 8px;
+  font-size: 13px;
+}
+
+/* Responsive collapse: controls drop below plot */
+@media (max-width: 980px) {
+  .de-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .de-right-controls {
+    padding-top: 0;
+  }
+}
 /* --- Compact select styling --------------------------------------- */
 
 .de-select {
-  margin-left: 0.4rem;
-  padding: 0.15rem 0.6rem;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  font-size: 0.78rem;
-  color: #111827;
-  outline: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px 6px;   /* control arrow size here */
 }
 
 .de-select:focus {
@@ -2889,11 +3282,10 @@ h2.gene-card-body-title {
 /* --- Table styling ------------------------------------------------ */
 
 .de-table-scroll {
-  max-height: 260px;
-  overflow: auto;
-  border-radius: 0.5rem;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 /* keep your base .de-table if you have it, otherwise: */
@@ -2964,15 +3356,31 @@ h2.gene-card-body-title {
   color: #4b5563;
 }
 
-/* Single top-genes panel (instead of grid) */
-.de-topgenes-single {
-  background: #f9fafb;
-  border-radius: 0.75rem;
-  border: 1px solid #e5e7eb;
-  padding: 0.5rem 0.6rem 0.6rem;
+.de-visualisation {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+}
+
+.de-visualisation.is-table-mode {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.de-topgenes-single.is-table-mode {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.de-topgenes-single {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .de-topgenes-header {
@@ -2991,8 +3399,7 @@ h2.gene-card-body-title {
 
 /* Small toggle inside the table header: Up / Down */
 .de-subview-toggle {
-  display: inline-flex;
-  gap: 0.25rem;
+  margin-top: 12px;
 }
 
 .de-subview-btn {
@@ -3023,13 +3430,12 @@ h2.gene-card-body-title {
 
 
 /* Container around each dynamic DE plot */
-.de-panel {
-  margin-top: 0.5rem;
-  border-radius: 0.75rem;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  padding: 0.5rem 0.75rem 0.75rem;
-}
+/*.de-panel{*/
+/*  background: var(--de-surface);  !* let dataset-card-body show *!*/
+/*  border: 0 !important;*/
+/*  box-shadow: none !important;*/
+/*  padding: 0 !important;*/
+/*}*/
 
 /* Top row with contrast, view toggle, thresholds */
 .de-panel-header {
@@ -3060,29 +3466,41 @@ h2.gene-card-body-title {
 }
 
 /* View toggle pills (Volcano / Top genes) */
-.de-view-toggle {
-  background: #f3f4f6;          /* gray-100 */
-  border-radius: 999px;
-  padding: 2px;
+.de-view-toggle{
   display: inline-flex;
-  gap: 2px;
+  align-items: stretch;
+  border: 1px solid #dfe3e8;   /* thinner/lighter */
+  border-radius: 8px;          /* less rounded than pill */
+  overflow: hidden;
+  background: #fff;
+  height: 36px;
 }
 
-.de-view-btn {
-  border: none;
-  background: transparent;
-  padding: 0.15rem 0.7rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  color: #6b7280;               /* gray-500 */
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+.de-view-btn{
+  height: 36px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 700;
+  border: 0;
 }
 
-.de-view-btn.is-active {
-  background: #ffffff;
-  color: #111827;               /* gray-900 */
-  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+.de-view-btn + .de-view-btn{
+  border-left: 1px solid #dfe3e8;
+}
+
+/* active = teal background + WHITE TEXT */
+.de-view-btn.is-active{
+  background: #05989e;
+  color: #fff;
+}
+
+.de-view-btn.is-active svg{
+  color: #fff;
 }
 
 /* Secondary filters row */
@@ -3094,52 +3512,23 @@ h2.gene-card-body-title {
   margin-bottom: 0.3rem;
 }
 
-/* Shared select styling */
-.de-select {
-  margin-left: 0.3rem;
-  padding: 0.15rem 0.6rem;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  font-size: 0.78rem;
-  color: #111827;
-}
 
 .de-select-sm {
   padding: 0.12rem 0.5rem;
 }
 
-.de-view-toggle {
-  display: inline-flex;
-  gap: 0.25rem;
-  border-radius: 999px;
-  padding: 2px;
-  background: #f4f5f7;
-}
 
-.de-view-btn.de-view-btn-icon {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  border-radius: 999px;
-  border: none;
+/* Right column should not look like a separate panel */
+.de-right-controls {
   background: transparent;
-  padding: 4px 10px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  color: #555;
+  border: none;
+  box-shadow: none;
 }
 
-.de-view-btn.de-view-btn-icon .de-view-icon {
-  display: inline-block;
-}
-
-.de-view-btn.de-view-btn-icon.is-active {
-  background: white;
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
-  color: #111;
-}
-
+/* --- SWITCH WIDTH FIX --- */
+.de-left-header { justify-items: start; align-items: start; }
+.de-view-toggle { width: max-content; max-width: 100%; }
+.de-view-btn { flex: 0 0 auto; width: auto; white-space: nowrap; }
 
 
 /* --- CONTACT US PAGE --- */
@@ -3240,7 +3629,6 @@ h2.gene-card-body-title {
   max-width: fit-content;
 }
 
-
 .order-cell-lines.pagination-row {
   display: flex;
   align-items: center;
@@ -3289,4 +3677,976 @@ h2.gene-card-body-title {
   padding: 0 6px;
   color: var(--dl-color-default-grey);
   font-size: 18px;
+}
+
+/* =========================================================
+   DE PANEL – FINAL OVERRIDES (keep at very bottom)
+   ========================================================= */
+
+/* FINAL: Grey only on LEFT */
+.de-panel{
+  background: transparent !important;
+  padding: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.de-right-controls{
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.de-view-toggle {
+  width: max-content !important;   /* hug content */
+  flex: 0 0 auto !important;
+}
+
+.de-view-btn {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  white-space: nowrap;
+}
+
+.de-right-controls .de-select{
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+
+  height: 34px !important;
+  padding: 0 28px 0 10px !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(153,153,153,1) !important;
+
+  background-color: #fff !important;
+  background-image: url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  background-size: 11px 7px !important;
+
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: #374151 !important;
+
+  margin: 0 !important;
+  line-height: 34px !important;
+}
+
+.de-right-controls .de-field-label{
+  font-size: 12px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.de-secondary-filters .de-select {
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  height: auto;
+  font-size: 0.78rem;
+}
+
+.de-right-controls{
+  gap: 10px; /* was 12+ */
+}
+.de-right-controls .de-field{
+  gap: 6px;
+}
+
+.gene-card--transparent{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.gene-card--transparent .gene-card-body{
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.gene-header-inline{
+  position: relative;
+  overflow: visible; /* critical: don’t cut shadows */
+}
+
+.gene-header-position-top{
+  position: relative;
+  z-index: 5;
+}
+
+.gene-header-position-center{
+  position: relative;
+  z-index: 6; /* above overlays */
+  display: flex;
+  justify-content: center;
+  padding: 28px 0 34px;
+}
+
+.gene-search-container{
+  width: min(760px, calc(100% - 48px));
+}
+
+.gene-hero{
+  position: relative;
+  overflow: visible;
+  z-index: 2;
+}
+
+.gene-hero-search{
+  width: min(860px, calc(100% - 48px));
+  margin: 20px auto 32px auto;
+  position: relative;
+  z-index: 10;
+}
+
+.gene-hero-search::before{
+  content: "";
+  position: absolute;
+  inset: -40px -60px;
+  z-index: -1;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255,255,255,0.18) 0%,
+      rgba(255,255,255,0.08) 35%,
+      rgba(255,255,255,0.03) 55%,
+      transparent 75%
+    );
+
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.gene-header-position-bottom{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  z-index: 1;
+}
+
+/* Make sure the search sits above the hero background and triangle */
+.gene-search-container,
+.gene-search.gene-search--compact{
+  position: relative;
+  z-index: 10;
+}
+
+.gene-header-inline{
+  position: relative;
+  overflow: visible; /* critical: don’t cut shadows */
+}
+
+.gene-header-position-top{
+  position: relative;
+  z-index: 5;
+}
+
+.gene-header-position-center{
+  position: relative;
+  z-index: 6; /* above overlays */
+  display: flex;
+  justify-content: center;
+  padding: 28px 0 34px;
+}
+
+.gene-search-container{
+  width: min(760px, calc(100% - 48px));
+}
+
+/* ============================= */
+/* Gene Hero Wrapper             */
+/* ============================= */
+
+.gene-hero{
+  position: relative;
+  overflow: visible;
+  z-index: 2;
+}
+
+.gene-hero-search{
+  width: min(860px, calc(100% - 48px));
+  margin: 24px auto 36px auto;
+  position: relative;
+  z-index: 10;
+}
+
+/* Soft fog glow around search */
+.gene-hero-search::before{
+  content: "";
+  position: absolute;
+  inset: -50px -70px;
+  z-index: -1;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255,255,255,0.22) 0%,
+      rgba(255,255,255,0.10) 35%,
+      rgba(255,255,255,0.04) 55%,
+      transparent 75%
+    );
+
+  filter: blur(45px);
+  pointer-events: none;
+}
+
+
+/* ============================= */
+/* Compact Search Base           */
+/* ============================= */
+
+.gene-search.gene-search--compact{
+  position: relative;
+  width: 100%;
+}
+
+/* ============================= */
+/* Glass Input Styling           */
+/* ============================= */
+
+.gene-search.gene-search--compact .search-box{
+  width: 100%;
+  height: 50px;
+  padding: 0 18px 0 46px;
+
+  border-radius: 14px;
+
+  background: rgba(255,255,255,0.14);
+
+  border: 1px solid rgba(255,255,255,0.35);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.35);
+
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 400;
+
+  transition: all 0.25s ease;
+}
+
+
+/* Placeholder */
+.gene-search.gene-search--compact .search-box::placeholder{
+  color: rgba(255,255,255,0.8);
+}
+
+
+/* Focus state */
+.gene-search.gene-search--compact .search-box:focus{
+  outline: none;
+
+  border: 1px solid rgba(255,255,255,0.55);
+
+  box-shadow:
+    0 16px 42px rgba(0,0,0,0.35),
+    0 0 0 3px rgba(255,255,255,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.45);
+}
+
+
+/* ============================= */
+/* Suggestions Dropdown          */
+/* ============================= */
+
+.gene-search.gene-search--compact .suggestions-list{
+  position: absolute;
+  top: calc(50px + 14px);
+  left: 0;
+  right: 0;
+  z-index: 999;
+
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+
+  border-radius: 14px;
+
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  border: 1px solid rgba(0,0,0,0.08);
+
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.18);
+
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+
+/* Suggestion item */
+.gene-search.gene-search--compact .suggestions-list li{
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+
+/* Hover effect */
+.gene-search.gene-search--compact .suggestions-list li:hover{
+  background: #f3f4f6;
+}
+
+/* Fog layer across the hero (starts near search, fades down) */
+.gene-header-inline{
+  position: relative;
+  overflow: hidden;
+}
+
+.gene-hero{
+  position: relative;
+  overflow: visible;
+}
+
+.gene-header-inline::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 140px;
+  height: 260px;
+  pointer-events: none;
+  z-index: 2;
+
+  background:
+    radial-gradient(
+      1400px 280px at 50% 0%,
+      rgba(255,255,255,0.28) 0%,
+      rgba(255,255,255,0.16) 40%,
+      rgba(255,255,255,0.06) 65%,
+      rgba(255,255,255,0.00) 85%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(245,245,245,0.28) 0%,
+      rgba(245,245,245,0.14) 45%,
+      rgba(245,245,245,0.00) 100%
+    );
+
+  filter: blur(10px);
+  opacity: 0.4;
+}
+
+/* Ensure navbar + search sit ABOVE the fog */
+.gene-hero .navbar-container,
+.gene-hero .header-position-top,
+.gene-hero-search{
+  position: relative;
+  z-index: 10;
+}
+
+/* Ensure the hero image is BEHIND the fog */
+.gene-hero .header-image,
+.gene-hero img,
+.gene-hero picture{
+  position: relative;
+  z-index: 0;
+}
+
+.gene-search-label{
+  text-align: center;
+
+  font-size: 12px;
+  font-weight: 400;
+
+  color: rgba(255,255,255,0.75);
+
+  margin-bottom: 8px;
+}
+
+.dataset-static-plot{
+  width: 100%;
+  height: 420px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.dataset-static-img{
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.dataset-plot-frame{
+  width: 100%;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.dataset-plot-frame--umap{
+  min-height: 452px; /* tune this until it visually matches volcano cards */
+  display: flex;
+  align-items: stretch;
+}
+
+.dataset-plot-frame--umap > *{
+  width: 100%;
+}
+
+.gene-card {
+  width: 1145px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 0;
+  background-color: #f8f8f8;
+  margin-bottom: 50px;
+  overflow: hidden;
+}
+
+.gene-overview-card {
+  background: #f7f7f7;
+}
+
+.gene-overview-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 34px 48px 24px 48px;
+}
+
+.gene-overview-title-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.gene-overview-badge{
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: #0f9aa7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gene-overview-badge-inner{
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gene-overview-badge-dot{
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #0f9aa7;
+  display: block;
+}
+
+.gene-overview-title {
+  margin: 0;
+  font-size: 32px !important;
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #202124;
+}
+
+.gene-overview-subtitle {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: 400;
+  color: #666;
+}
+
+.gene-card-header-link{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;               /* space between icon and text */
+  padding: 10px 18px;     /* shorter height */
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  border: none;
+  border-radius: 12px;
+  background-color: var(--dl-color-brand-orange);
+  color: var(--dl-color-default-absolutewhite);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.gene-card-header-link-icon{
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+}
+
+.gene-overview-content {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 520px;
+  padding: 0 40px 28px 40px !important;
+  gap: 40px;
+  align-items: start;
+}
+
+.gene-overview-info {
+  min-width: 0;
+}
+
+.gene-overview-section-title {
+  margin: 0 0 28px 0;
+  font-size: 22px !important;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #202124;
+}
+
+.gene-overview-info-grid {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  row-gap: 22px;
+  column-gap: 38px;
+  margin: 0;
+}
+
+.gene-overview-info-grid dt,
+.gene-overview-info-grid dd {
+  margin: 0;
+}
+
+.gene-overview-info-grid dt {
+  font-size: 18px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #202124;
+}
+
+.gene-overview-info-grid dd {
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 400;
+  color: #202124;
+}
+
+.gene-overview-link {
+  color: #1197a2;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.gene-overview-link:hover {
+  text-decoration: underline;
+}
+
+.gene-card-summary {
+  background: #d9ebee;
+  border-radius: 18px;
+  padding: 34px 40px;
+  min-height: auto;
+}
+
+.gene-overview-summary {
+  justify-self: end !important;
+  max-width: 520px !important;
+  width: 100%;
+}
+
+.gene-card-summary-title {
+  margin: 0 0 28px 0;
+  font-size: 20px !important;
+  line-height: 1.15;
+  font-weight: 700;
+  color: #0c747c;
+  letter-spacing: -0.02em;
+}
+
+.gene-card-summary-grid {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  column-gap: 20px;
+  row-gap: 8px !important;
+}
+
+.gene-card-summary dt,
+.gene-card-summary dd {
+  margin: 0;
+}
+
+.gene-card-summary dt {
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #1f1f1f;
+}
+
+.gene-card-summary dd {
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 400;
+  color: #1f1f1f;
+}
+
+.gene-card-border-top {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.gene-card-body {
+  padding: 24px 48px 32px 48px;
+}
+
+.gene-card-body-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.gene-collapsible-trigger {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  text-align: left;
+}
+
+.gene-collapsible-trigger .gene-card-body-title{
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  letter-spacing: 0.01em;
+}
+
+.gene-collapsible-icon{
+  font-size: 16px;
+  color: #6b7280;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.gene-collapsible-trigger:hover .gene-collapsible-icon{
+  color: #111827;
+}
+
+.gene-collapsible-icon.is-open{
+  transform: rotate(180deg);
+}
+
+.gene-collapsible-content{
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.gene-overview-top{
+  padding: 18px 28px 14px 28px !important;
+}
+
+.gene-overview-content{
+  padding: 0 28px 20px 28px !important;
+  gap: 28px !important;
+  padding-top: 10px !important;
+}
+
+.gene-card-summary{
+  padding: 20px 22px !important;
+  border-radius: 16px !important;
+}
+
+.gene-overview-section-title{
+  margin: 0 0 18px 0 !important;
+}
+
+.gene-card-summary-title{
+  margin: 0 0 18px 0 !important;
+}
+
+.gene-overview-info-grid{
+  margin-top: 0 !important;
+  row-gap: 12px !important;
+}
+
+.gene-overview-info-grid dt,
+.gene-overview-info-grid dd,
+.gene-card-summary dt,
+.gene-card-summary dd{
+  line-height: 1.15 !important;
+}
+
+.gene-overview-info-grid,
+.gene-card-summary-grid{
+  grid-template-columns: 170px minmax(0,1fr) !important;
+  column-gap: 12px !important;
+}
+
+/* labels */
+.gene-overview-info-grid dt,
+.gene-card-summary dt{
+  white-space: normal;
+}
+
+/* values */
+.gene-overview-info-grid dd,
+.gene-card-summary dd{
+  font-size: 15px !important;
+  line-height: 1.25 !important;
+}
+
+.gene-overview-info-grid{
+  grid-template-columns: 120px minmax(0,1fr) !important;
+  column-gap: 12px !important;
+}
+
+.gene-card-summary-grid{
+  grid-template-columns: 170px minmax(0,1fr) !important;
+  column-gap: 12px !important;
+}
+
+.gene-card-summary dt{
+  white-space: nowrap;
+}
+
+.gene-overview-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #04989e;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.gene-overview-link:hover{
+  text-decoration: underline;
+}
+
+.gene-overview-link-icon{
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  opacity: 0.75;
+}
+
+.de-table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+  width: 100%;
+  min-width: 0;
+  flex-wrap: nowrap;
+}
+
+.de-table-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.de-table-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.de-table-toggle-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.7rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #666666;
+  cursor: pointer;
+}
+
+.de-table-toggle-btn.is-up-active {
+  background: #e84e0f !important;
+  color: #ffffff !important;
+  border-color: #e84e0f !important;
+}
+
+.de-table-toggle-btn.is-down-active {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #2563eb !important;
+}
+
+.de-topgenes-count {
+  font-size: 0.95rem;
+  color: #666666;
+  white-space: nowrap;
+}
+
+.de-table-search {
+  position: relative;
+  flex: 0 1 260px;
+  width: 100%;
+  max-width: 260px;
+  min-width: 170px;
+}
+
+.de-table-search-input {
+  width: 100%;
+  height: 2.4rem;
+  padding: 0 2.75rem 0 0.95rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  font-size: 0.92rem;
+  color: #444444;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.de-table-search-input::placeholder {
+  color: #9a9a9a;
+}
+
+.de-table-search-input:focus {
+  border-color: #bdbdbd;
+}
+
+.de-table-search-icon {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8a8a8a;
+  pointer-events: none;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.de-table.de-table-compact {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  table-layout: fixed;
+}
+
+.de-table.de-table-compact thead th {
+  text-align: left;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #999999;
+  padding: 1rem 0.5rem;
+  background: #f5f5f5;
+}
+
+.de-table.de-table-compact tbody td {
+  padding: 1.1rem 0.5rem;
+  border-top: 1px solid #e9e9e9;
+  font-size: 0.96rem;
+  color: #555555;
+  vertical-align: middle;
+}
+
+.de-cell-index {
+  width: 56px;
+  color: #8a8a8a;
+}
+
+.de-cell-symbol {
+  font-weight: 700;
+  color: #222222;
+}
+
+.de-cell-id,
+.de-cell-type,
+.de-cell-padj {
+  color: #5f5f5f;
+}
+
+.de-cell-lfc {
+  font-weight: 700;
+  color: #222222;
+}
+
+@media (max-width: 900px) {
+  .de-table-toolbar {
+    align-items: stretch;
+  }
+
+  .de-table-toolbar-left {
+    justify-content: space-between;
+  }
+
+  .de-table-search {
+    max-width: none;
+  }
+}
+
+.de-fallback-note {
+  margin-bottom: 0.6rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.de-barplot-wrap {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;   /* match volcano visual height */
+  display: flex;
+}
+
+.de-barplot-wrap .js-plotly-plot,
+.de-barplot-wrap > div {
+  width: 100%;
+  height: 100%;
+}
+
+.de-sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+
+.de-sort-btn.is-active {
+  font-weight: 600;
+}
+
+.de-sort-arrow {
+  font-size: 12px;
+  opacity: 0.7;
 }
