@@ -14,6 +14,54 @@ function negLog10(p) {
     return -Math.log10(p);
 }
 
+function extractPerturbationLabel(title = "") {
+    const t = String(title || "").trim();
+    const afterColon = t.includes(":")
+        ? t.split(":").slice(1).join(":").trim()
+        : t;
+
+    if (!afterColon) return null;
+
+    return afterColon
+        .replace(/_number[-_ ]?degs?$/i, "")
+        .replace(/number[-_ ]?degs?$/i, "")
+        .replace(/_topdeg[-_ ]?dotplot$/i, "")
+        .replace(/_celltype-proportion$/i, "")
+        .replace(/_umap$/i, "")
+        .trim();
+}
+
+function formatPerturbationLabel(label = "") {
+    return String(label)
+        .replace(/_+/g, " ")
+        .replace(/\bko\b/i, "KO")
+        .replace(/\bwt\b/i, "WT")
+        .trim();
+}
+
+function parseDegContrastTitle(title = "", fallback = "KO") {
+    const raw = extractPerturbationLabel(title);
+
+    if (!raw) {
+        return {
+            label: fallback,
+            isComplex: false,
+        };
+    }
+
+    const cleaned = String(raw).trim();
+
+    const isComplex =
+        /double[_ ]knockout/i.test(cleaned) ||
+        /triple[_ ]knockout/i.test(cleaned) ||
+        /\|/.test(cleaned);
+
+    return {
+        label: formatPerturbationLabel(cleaned),
+        isComplex,
+    };
+}
+
 const DynamicVolcanoPlot = ({
                                 tsvKey,
                                 title,
@@ -1148,65 +1196,12 @@ const DynamicVolcanoPlot = ({
         );
     };
 
-    function parseDegContrastTitle(title = "", fallback = "KO") {
-        const t = String(title || "").trim();
-        const afterColon = t.includes(":")
-            ? t.split(":").slice(1).join(":").trim()
-            : t;
-
-        if (!afterColon) {
-            return {
-                label: fallback,
-                isComplex: false,
-            };
-        }
-
-        const cleaned = afterColon
-            .replace(/_number[-_ ]?degs?$/i, "")
-            .replace(/number[-_ ]?degs?$/i, "")
-            .replace(/_umap$/i, "")
-            .trim();
-
-        const normalised = cleaned.replace(/\s+/g, "_");
-
-        const isComplex =
-            /double[_ ]knockout/i.test(cleaned) ||
-            /triple[_ ]knockout/i.test(cleaned) ||
-            /\|/.test(cleaned) ||
-            /^[A-Z0-9]+_[A-Z0-9]+/.test(normalised);
-
-        if (isComplex) {
-            const shortLabel = cleaned
-                .replace(/_double[_ ]knockout/i, "")
-                .replace(/_triple[_ ]knockout/i, "")
-                .replace(/_heterozygous/i, "")
-                .trim();
-
-            return {
-                label: shortLabel,
-                isComplex: true,
-            };
-        }
-
-        const first = cleaned.split("_")[0]?.trim();
-
-        return {
-            label: first || fallback,
-            isComplex: false,
-        };
-    }
-
     const degContrast = useMemo(() => {
         return parseDegContrastTitle(title, geneName || "KO");
     }, [title, geneName]);
 
     const degPlotTitle = useMemo(() => {
         if (!degContrast?.label) return "";
-
-        if (degContrast.isComplex) {
-            return `${degContrast.label} vs WT`;
-        }
-
         return `${degContrast.label} vs WT`;
     }, [degContrast]);
 
@@ -1480,6 +1475,7 @@ const DynamicVolcanoPlot = ({
         const padj = points.map((p) => Number(p.padj));
 
         const neglog = padj.map((v) => -Math.log10(v));
+
         const MIN_S = 7,
             MAX_S = 30;
 
