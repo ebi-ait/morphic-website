@@ -30,7 +30,7 @@ export default function PublicationItems() {
                   <p><i>{item.journal}</i>, {item.date}{journalReferenceInfo}</p>
                   <p><b>{item.authors}</b></p>
                   <p>
-                    {item.centers.split(" ").map((center) => (
+                    {item.centers.split(", ").map((center) => (
                         <span className={styles.badge}>{center}</span>
                     ))}
                   </p>
