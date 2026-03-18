@@ -43,6 +43,7 @@ const GenePage = ({ params }) => {
 
   // Map study_label -> study id (fallback when some records lack study_id)
   const [labelToStudyId, setLabelToStudyId] = useState({});
+  const [labelToStudyMeta, setLabelToStudyMeta] = useState({});
 
   useEffect(() => {
     if (!geneId) return;
@@ -50,7 +51,7 @@ const GenePage = ({ params }) => {
     (async () => {
       try {
         // Fetch gene details
-        const response = await fetch(`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/api/gene/${encodeURIComponent(geneId)}`);
+        const response = await fetch(`http://127.0.0.1:3000/api/gene/${encodeURIComponent(geneId)}`);
         if (!response.ok) throw new Error('Failed to fetch gene data');
         const data = await response.json();
         setGeneData(data);
@@ -63,15 +64,28 @@ const GenePage = ({ params }) => {
           if (studiesRes.ok) {
             const studiesJson = await studiesRes.json();
             const list = studiesJson?._embedded?.studies ?? [];
-            const map = {};
+
+            const idMap = {};
+            const metaMap = {};
+
             for (const s of list) {
               const label = s?.content?.label?.trim();
               const id = s?.id;
-              if (label && id) map[label] = id;
+              if (!label) continue;
+
+              if (id) idMap[label] = id;
+
+              metaMap[label] = {
+                id: id || null,
+                dpc: s?.content?.institute ?? null,
+                assay: s?.content?.readout_assay ?? null,
+              };
             }
-            setLabelToStudyId(map);
+
+            setLabelToStudyId(idMap);
+            setLabelToStudyMeta(metaMap);
           } else {
-            console.warn("Could not fetch studies to build label→id map");
+            console.warn("Could not fetch studies to build label→id/meta map");
           }
         } catch (e) {
           console.warn("Failed to build study label → id map", e);
@@ -97,8 +111,33 @@ const GenePage = ({ params }) => {
   //   return id ? `/dataset/${encodeURIComponent(id)}` : "/data";
   // };
 
+  const analysisResults = geneData.Analysis_Results || [];
+
+  const studyLabels = analysisResults
+    .map((r) => r.study_label?.trim())
+    .filter(Boolean);
+
+  const dpcSet = new Set();
+  const assaySet = new Set();
+
+  studyLabels.forEach((label) => {
+    const meta = labelToStudyMeta[label];
+    if (meta?.dpc) dpcSet.add(meta.dpc);
+    if (meta?.assay) assaySet.add(meta.assay);
+  });
+
+  const profiledByText = dpcSet.size
+    ? Array.from(dpcSet).join(", ")
+    : "Unknown";
+
+  const assayTypesText = assaySet.size
+    ? Array.from(assaySet).join(", ")
+    : "Unknown";
+
+  const hasAnySummary = analysisResults.some((ar) => ar.de_summary);
+  const statusText = hasAnySummary ? "ASSAYED, ANALYSED" : "ASSAYED";
+
   const datasetHrefForStudy = (study) => {
-    // Send users to the Data page, preselecting/highlighting by label
     return study?.label ? `/data?label=${encodeURIComponent(study.label)}` : "/data";
   };
 
@@ -152,10 +191,10 @@ const GenePage = ({ params }) => {
                   <h2 className="gene-card-summary-title">MorPhiC summary</h2>
                   {geneData.tags && Array.isArray(geneData.tags) && geneData.tags.includes('release-1') ? (
                     <dl className="gene-card-body-dl-grid">
-                      <dt>Studied by MorPhic</dt><dd>YES</dd>
-                      <dt>DPC</dt><dd>The Jackson Laboratory (JAX)</dd>
-                      <dt>Readout assay type</dt><dd>RNA-seq</dd>
-                      <dt>Analysis</dt><dd>Fred Hutch Cancer Center</dd>
+                      <dt>Studied by MorPhiC</dt><dd>YES</dd>
+                      <dt>Profiled by</dt><dd>{profiledByText}</dd>
+                      <dt>Assay types</dt><dd>{assayTypesText}</dd>
+                      <dt>Status</dt><dd>{statusText}</dd>
                     </dl>
                   ) : (
                     <dl className="gene-card-body-dl-grid no-data">
@@ -230,7 +269,7 @@ const GenePage = ({ params }) => {
                             />
                           ) : analysis.s3_png_key ? (
                             <img
-                              src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${encodeURIComponent(analysis.s3_png_key)}`}
+                              src={`http://127.0.0.1:3000/download/png?file_id=${encodeURIComponent(analysis.s3_png_key)}`}
                               className="img-plot"
                               alt={analysis.title}
                               loading="lazy"
