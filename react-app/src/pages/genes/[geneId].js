@@ -51,7 +51,7 @@ const GenePage = ({ params }) => {
     (async () => {
       try {
         // Fetch gene details
-        const response = await fetch(`http://127.0.0.1:3000/api/gene/${encodeURIComponent(geneId)}`);
+        const response = await fetch(`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/api/gene/${encodeURIComponent(geneId)}`);
         if (!response.ok) throw new Error('Failed to fetch gene data');
         const data = await response.json();
         setGeneData(data);
@@ -269,7 +269,7 @@ const GenePage = ({ params }) => {
                             />
                           ) : analysis.s3_png_key ? (
                             <img
-                              src={`http://127.0.0.1:3000/download/png?file_id=${encodeURIComponent(analysis.s3_png_key)}`}
+                              src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${encodeURIComponent(analysis.s3_png_key)}`}
                               className="img-plot"
                               alt={analysis.title}
                               loading="lazy"
