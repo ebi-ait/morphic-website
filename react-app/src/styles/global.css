@@ -4650,3 +4650,22 @@ h2.gene-card-body-title {
   font-size: 12px;
   opacity: 0.7;
 }
+
+.gene-results-footnote {
+  width: 100%;
+  max-width: 1145px;
+  box-sizing: border-box;
+  margin: 0.5rem 0 1.25rem 0;
+  padding: 0.85rem 1rem;
+  border-left: 4px solid var(--dl-color-brand-orange);
+  border-radius: 10px;
+  background: #fff7f2;
+  color: #5b6470;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.gene-results-footnote-label {
+  font-weight: 700;
+  color: var(--dl-color-brand-orange);
+}

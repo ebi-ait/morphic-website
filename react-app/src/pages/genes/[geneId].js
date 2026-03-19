@@ -379,6 +379,56 @@ const GenePage = ({ params }) => {
     return getAffectedGeneCount(b) - getAffectedGeneCount(a);
   });
 
+  const hasVolcanoPlot = sortedAnalysisResults.some((analysis) => {
+    const title = (analysis?.title || "").toLowerCase();
+    const tsvKey = (analysis?.s3_tsv_key || "").toLowerCase();
+    const pngKey = (analysis?.s3_png_key || "").toLowerCase();
+
+    const isNumberDegs =
+      /number[-_ ]?degs?/i.test(title) ||
+      /#\s*degs?/i.test(title) ||
+      /number[-_ ]?degs?/i.test(tsvKey);
+
+    const isUmap =
+      /umap/i.test(title) ||
+      /_umap/i.test(pngKey);
+
+    const isCanonicalDe =
+      analysis?.result_type === "DE" &&
+      analysis?.role === "canonical_de" &&
+      !!analysis?.s3_tsv_key;
+
+    return isCanonicalDe && !isNumberDegs && !isUmap;
+  });
+
+  const buildExternalResourceLink = (accession) => {
+    if (!accession) return null;
+
+    const acc = String(accession).trim();
+
+    if (!acc) return null;
+
+    // GEO
+    if (acc.startsWith("GSE") || acc.startsWith("GSM")) {
+      return `https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=${encodeURIComponent(acc)}`;
+    }
+
+    // ArrayExpress
+    if (acc.startsWith("E-MTAB")) {
+      return `https://www.ebi.ac.uk/biostudies/arrayexpress/studies/${encodeURIComponent(acc)}`;
+    }
+
+    // ENA / sequencing-style accessions
+    return `https://www.ebi.ac.uk/ena/browser/view/${encodeURIComponent(acc)}`;
+  };
+
+  const getPrimaryRawAccession = (studyMeta) => {
+    if (!studyMeta?.accessions || !Array.isArray(studyMeta.accessions)) return null;
+    if (!studyMeta.accessions.length) return null;
+
+    return studyMeta.accessions[0];
+  };
+
   return (
       <div className="about gene-page">
         <div className="gene-header-inline gene-header-gradient gene-hero">
@@ -584,6 +634,13 @@ const GenePage = ({ params }) => {
                         </a>
                       </div>
 
+                      {hasVolcanoPlot && (
+                        <div className="gene-results-footnote">
+                          <span className="gene-results-footnote-label">Note:</span>{" "}
+                          Volcano plots start with precomputed significance thresholds of padj ≤ 0.05 and |log2FC| ≥ 0.5. These defaults can be adjusted in the UI.
+                        </div>
+                      )}
+
                       <div className="gene-card gene-card--transparent">
                         {/*<div className="gene-card-header">*/}
                         {/*  <h2>Gene expression analysis</h2>*/}
@@ -630,6 +687,9 @@ const GenePage = ({ params }) => {
                               const studyMeta = studyLabel
                                   ? labelToStudyMeta[studyLabel]
                                   : undefined;
+
+                              const rawAccession = getPrimaryRawAccession(studyMeta);
+                              const rawDataHref = buildExternalResourceLink(rawAccession);
 
                               const isUmap =
                                 /umap/i.test(analysis.title) ||
@@ -762,23 +822,35 @@ const GenePage = ({ params }) => {
 
                                   {/* Footer actions (replaces title-button-container) */}
                                   <div className="dataset-card-footer">
-                                    <a className="btn-primary" href={`/data?label=${encodeURIComponent(formatLabel(studyLabel || ""))}`}>
+                                    <a
+                                      className="btn-primary"
+                                      href={`/data?label=${encodeURIComponent(formatLabel(studyLabel || ""))}`}
+                                      title="Open this study in the Data Catalogue"
+                                    >
                                       Go to Full Dataset →
                                     </a>
 
                                     {analysis?.s3_tsv_key && (
                                       <a
                                         className="btn-outline"
-                                        href={`${GENE_API_BASE}/download?tsv_file_id=${encodeURIComponent(analysis.s3_tsv_key)}&file_name=${encodeURIComponent(analysis.title || geneData.Name || "download")}`}
+                                        href={`${GENE_API_BASE}/download?tsv_file_id=${encodeURIComponent(
+                                          analysis.s3_tsv_key
+                                        )}&file_name=${encodeURIComponent(analysis.title || geneData.Name || "download")}`}
+                                        title="Download differential expression results table (processed data)"
                                       >
-                                        Download DEG (.tsv)
+                                        Download Data (.tsv)
                                       </a>
                                     )}
 
-                                    {/* only if you actually have a raw-counts pointer */}
-                                    {analysis?.s3_counts_key && (
-                                      <a className="btn-outline" href={`${GENE_API_BASE}/download?file_id=${encodeURIComponent(analysis.s3_counts_key)}`}>
-                                        Download Raw Counts (.csv)
+                                    {rawDataHref && (
+                                      <a
+                                        className="btn-outline"
+                                        href={rawDataHref}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        title="Open raw sequencing dataset in external archive"
+                                      >
+                                        Download Raw Counts
                                       </a>
                                     )}
                                   </div>
