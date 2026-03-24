@@ -3769,7 +3769,7 @@ h2.gene-card-body-title {
 
 .gene-header-inline{
   position: relative;
-  overflow: visible; /* critical: don’t cut shadows */
+  overflow: visible;
 }
 
 .gene-header-position-top{
@@ -3779,10 +3779,10 @@ h2.gene-card-body-title {
 
 .gene-header-position-center{
   position: relative;
-  z-index: 6; /* above overlays */
+  z-index: 6;
   display: flex;
   justify-content: center;
-  padding: 28px 0 34px;
+  padding: 10px 0 14px;   /* was 28px 0 34px */
 }
 
 .gene-search-container{
@@ -3797,28 +3797,14 @@ h2.gene-card-body-title {
 
 .gene-hero-search{
   width: min(860px, calc(100% - 48px));
-  margin: 20px auto 32px auto;
+  margin: 8px auto 14px auto;   /* was ~20–36px */
   position: relative;
   z-index: 10;
 }
 
+/* REMOVE FOG */
 .gene-hero-search::before{
-  content: "";
-  position: absolute;
-  inset: -40px -60px;
-  z-index: -1;
-
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(255,255,255,0.18) 0%,
-      rgba(255,255,255,0.08) 35%,
-      rgba(255,255,255,0.03) 55%,
-      transparent 75%
-    );
-
-  filter: blur(40px);
-  pointer-events: none;
+  display: none;
 }
 
 .gene-header-position-bottom{
@@ -3829,72 +3815,64 @@ h2.gene-card-body-title {
   z-index: 1;
 }
 
-/* Make sure the search sits above the hero background and triangle */
+/* Make sure the search sits above hero bg */
 .gene-search-container,
 .gene-search.gene-search--compact{
   position: relative;
   z-index: 10;
 }
 
-.gene-header-inline{
-  position: relative;
-  overflow: visible; /* critical: don’t cut shadows */
-}
+/* ============================= */
+/* Compact Search Base           */
+/* ============================= */
 
-.gene-header-position-top{
+.gene-search.gene-search--compact{
   position: relative;
-  z-index: 5;
-}
-
-.gene-header-position-center{
-  position: relative;
-  z-index: 6; /* above overlays */
-  display: flex;
-  justify-content: center;
-  padding: 28px 0 34px;
-}
-
-.gene-search-container{
-  width: min(760px, calc(100% - 48px));
+  width: 100%;
 }
 
 /* ============================= */
-/* Gene Hero Wrapper             */
+/* Glass Input Styling (UNCHANGED) */
 /* ============================= */
 
-.gene-hero{
-  position: relative;
-  overflow: visible;
-  z-index: 2;
+.gene-search.gene-search--compact .search-box{
+  width: 100%;
+  height: 50px;
+  padding: 0 18px 0 46px;
+
+  border-radius: 14px;
+
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.35);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.35);
+
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 400;
+
+  transition: all 0.25s ease;
 }
 
-.gene-hero-search{
-  width: min(860px, calc(100% - 48px));
-  margin: 24px auto 36px auto;
-  position: relative;
-  z-index: 10;
+.gene-search.gene-search--compact .search-box::placeholder{
+  color: rgba(255,255,255,0.8);
 }
 
-/* Soft fog glow around search */
-.gene-hero-search::before{
-  content: "";
-  position: absolute;
-  inset: -50px -70px;
-  z-index: -1;
+.gene-search.gene-search--compact .search-box:focus{
+  outline: none;
 
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(255,255,255,0.22) 0%,
-      rgba(255,255,255,0.10) 35%,
-      rgba(255,255,255,0.04) 55%,
-      transparent 75%
-    );
+  border: 1px solid rgba(255,255,255,0.55);
 
-  filter: blur(45px);
-  pointer-events: none;
+  box-shadow:
+    0 16px 42px rgba(0,0,0,0.35),
+    0 0 0 3px rgba(255,255,255,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.45);
 }
-
 
 /* ============================= */
 /* Compact Search Base           */
@@ -3999,60 +3977,9 @@ h2.gene-card-body-title {
   background: #f3f4f6;
 }
 
-/* Fog layer across the hero (starts near search, fades down) */
-.gene-header-inline{
-  position: relative;
-  overflow: hidden;
-}
-
 .gene-hero{
   position: relative;
   overflow: visible;
-}
-
-.gene-header-inline::before{
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 140px;
-  height: 260px;
-  pointer-events: none;
-  z-index: 2;
-
-  background:
-    radial-gradient(
-      1400px 280px at 50% 0%,
-      rgba(255,255,255,0.28) 0%,
-      rgba(255,255,255,0.16) 40%,
-      rgba(255,255,255,0.06) 65%,
-      rgba(255,255,255,0.00) 85%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(245,245,245,0.28) 0%,
-      rgba(245,245,245,0.14) 45%,
-      rgba(245,245,245,0.00) 100%
-    );
-
-  filter: blur(10px);
-  opacity: 0.4;
-}
-
-/* Ensure navbar + search sit ABOVE the fog */
-.gene-hero .navbar-container,
-.gene-hero .header-position-top,
-.gene-hero-search{
-  position: relative;
-  z-index: 10;
-}
-
-/* Ensure the hero image is BEHIND the fog */
-.gene-hero .header-image,
-.gene-hero img,
-.gene-hero picture{
-  position: relative;
-  z-index: 0;
 }
 
 .gene-search-label{
@@ -4489,15 +4416,15 @@ h2.gene-card-body-title {
 }
 
 .de-table-toggle-btn.is-up-active {
-  background: #e84e0f !important;
+  background: #E8524A !important;
   color: #ffffff !important;
-  border-color: #e84e0f !important;
+  border-color: #E8524A !important;
 }
 
 .de-table-toggle-btn.is-down-active {
-  background: #2563eb !important;
+  background: #5B8FF9 !important;
   color: #ffffff !important;
-  border-color: #2563eb !important;
+  border-color: #5B8FF9 !important;
 }
 
 .de-topgenes-count {
@@ -4668,4 +4595,99 @@ h2.gene-card-body-title {
 .gene-results-footnote-label {
   font-weight: 700;
   color: var(--dl-color-brand-orange);
+}
+
+.de-table-compact th:first-child,
+.de-table-compact td:first-child {
+  width: 44px;
+  min-width: 44px;
+  max-width: 44px;
+  text-align: left;
+  padding-left: 10px;
+  padding-right: 4px;
+}
+
+.de-table-compact th:nth-child(2),
+.de-table-compact td:nth-child(2) {
+  width: 160px;
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+.de-symbol-with-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.de-symbol-arrow {
+  font-size: 0.9rem;
+  line-height: 1;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.de-symbol-text {
+  font-weight: 600;
+}
+
+.de-symbol-with-arrow.is-up .de-symbol-arrow {
+  color: #E8524A;
+}
+
+.de-symbol-with-arrow.is-down .de-symbol-arrow {
+  color: #5B8FF9;
+}
+
+.de-symbol-with-arrow.is-up .de-symbol-text {
+  color: #c53f37;
+}
+
+.de-symbol-with-arrow.is-down .de-symbol-text {
+  color: #3f6fd6;
+}
+
+.de-table-compact tbody tr:hover .de-symbol-text {
+  text-decoration: underline;
+}
+
+.gene-protein-class {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: baseline;
+}
+
+.gene-protein-class-label {
+  color: inherit;
+}
+
+.gene-protein-class-code {
+  color: #6b7280;
+  font-size: 0.92em;
+}
+
+.dataset-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-link-subtle {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: none;
+}
+
+.btn-link-subtle:hover {
+  color: #374151;
+  text-decoration: underline;
 }

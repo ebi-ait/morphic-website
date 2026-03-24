@@ -699,7 +699,7 @@ const DynamicVolcanoPlot = ({
 
             {deConditions && deConditions.length > 0 && (
                 <label className="de-field">
-                    <span className="de-field-label">KO Strategy</span>
+                    <span className="de-field-label">Perturbation Strategy</span>
                     <select
                         className="de-select"
                         value={currentCondition?.condition_id || ""}
@@ -761,19 +761,31 @@ const DynamicVolcanoPlot = ({
             return num.toFixed(4);
         };
 
-        const renderRow = (r, idx) => (
-            <tr key={`${r.gene_id || r.symbol || idx}-${idx}`}>
-                <td className="de-cell-index">{idx + 1}</td>
-                <td className="de-cell-symbol">{r.symbol || "–"}</td>
-                <td className="de-cell-id">{r.gene_id || "–"}</td>
-                <td className="de-cell-lfc">
-                    {Number.isFinite(Number(r.log2fc))
-                        ? Number(r.log2fc).toFixed(2)
-                        : "–"}
-                </td>
-                <td className="de-cell-padj">{formatPadj(r.padj)}</td>
-            </tr>
-        );
+        const renderRow = (r, idx) => {
+            const isUpRow = Number(r.log2fc) > 0;
+            const arrow = isUpRow ? "↑" : "↓";
+
+            return (
+                <tr key={`${r.gene_id || r.symbol || idx}-${idx}`}>
+                    <td className="de-cell-index">{idx + 1}</td>
+                    <td className="de-cell-symbol">
+  <span className={`de-symbol-with-arrow ${Number(r.log2fc) > 0 ? "is-up" : "is-down"}`}>
+    <span className="de-symbol-arrow" aria-hidden="true">
+      {Number(r.log2fc) > 0 ? "↑" : "↓"}
+    </span>
+    <span className="de-symbol-text">{r.symbol || "–"}</span>
+  </span>
+                    </td>
+                    <td className="de-cell-id">{r.gene_id || "–"}</td>
+                    <td className="de-cell-lfc">
+                        {Number.isFinite(Number(r.log2fc))
+                            ? Number(r.log2fc).toFixed(2)
+                            : "–"}
+                    </td>
+                    <td className="de-cell-padj">{formatPadj(r.padj)}</td>
+                </tr>
+            );
+        };
 
         const nSig =
             currentCondition?.summary?.n_significant ??
@@ -898,14 +910,22 @@ const DynamicVolcanoPlot = ({
 
                     {activeData.length ? (
                         <div className="de-table-scroll">
-                            <table className="de-table de-table-compact">
+                            <table className="de-table de-table-compact de-topgenes-table">
+                                <colgroup>
+                                    <col className="de-col-index" />
+                                    <col className="de-col-symbol" />
+                                    <col className="de-col-geneid" />
+                                    <col className="de-col-lfc" />
+                                    <col className="de-col-padj" />
+                                </colgroup>
+
                                 <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>{renderSortLabel("Symbol", "symbol")}</th>
-                                    <th>{renderSortLabel("Gene ID", "gene_id")}</th>
-                                    <th>{renderSortLabel("log₂FC", "log2fc")}</th>
-                                    <th>{renderSortLabel("padj", "padj")}</th>
+                                    <th className="de-th-index">#</th>
+                                    <th className="de-th-symbol">{renderSortLabel("Symbol", "symbol")}</th>
+                                    <th className="de-th-id">{renderSortLabel("Gene ID", "gene_id")}</th>
+                                    <th className="de-th-lfc">{renderSortLabel("log₂FC", "log2fc")}</th>
+                                    <th className="de-th-padj">{renderSortLabel("padj", "padj")}</th>
                                 </tr>
                                 </thead>
                                 <tbody>{sortedActiveData.slice(0, 50).map(renderRow)}</tbody>
@@ -1056,14 +1076,22 @@ const DynamicVolcanoPlot = ({
 
                 {activeData.length ? (
                     <div className="de-table-scroll">
-                        <table className="de-table de-table-compact">
+                        <table className="de-table de-table-compact de-topgenes-table">
+                            <colgroup>
+                                <col className="de-col-index" />
+                                <col className="de-col-symbol" />
+                                <col className="de-col-geneid" />
+                                <col className="de-col-lfc" />
+                                <col className="de-col-padj" />
+                            </colgroup>
+
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>{renderSortLabel("Symbol", "symbol")}</th>
-                                <th>{renderSortLabel("Gene ID", "gene_id")}</th>
-                                <th>{renderSortLabel("log₂FC", "log2fc")}</th>
-                                <th>{renderSortLabel("padj", "padj")}</th>
+                                <th className="de-th-index">#</th>
+                                <th className="de-th-symbol">{renderSortLabel("Symbol", "symbol")}</th>
+                                <th className="de-th-id">{renderSortLabel("Gene ID", "gene_id")}</th>
+                                <th className="de-th-lfc">{renderSortLabel("log₂FC", "log2fc")}</th>
+                                <th className="de-th-padj">{renderSortLabel("padj", "padj")}</th>
                             </tr>
                             </thead>
                             <tbody>{sortedActiveData.map(renderRow)}</tbody>
@@ -1146,12 +1174,20 @@ const DynamicVolcanoPlot = ({
                     plot_bgcolor: "#fafafa",
 
                     xaxis: {
-                        title: "log2 fold change",
+                        title: {
+                            text: "log2FoldChange",
+                            font: { size: 13, color: "#374151" },
+                            standoff: 10,
+                        },
                         zeroline: true,
                         range: xRange || defaultRanges.x,
                     },
                     yaxis: {
-                        title: "-log10(padj)",
+                        title: {
+                            text: "-log10(padj)",
+                            font: { size: 13, color: "#374151" },
+                            standoff: 10,
+                        },
                         zeroline: true,
                         range: yRange || defaultRanges.y,
                     },

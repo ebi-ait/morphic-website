@@ -401,25 +401,12 @@ const GenePage = ({ params }) => {
     return isCanonicalDe && !isNumberDegs && !isUmap;
   });
 
-  const buildExternalResourceLink = (accession) => {
-    if (!accession) return null;
-
-    const acc = String(accession).trim();
-
-    if (!acc) return null;
-
-    // GEO
-    if (acc.startsWith("GSE") || acc.startsWith("GSM")) {
-      return `https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=${encodeURIComponent(acc)}`;
-    }
-
-    // ArrayExpress
-    if (acc.startsWith("E-MTAB")) {
-      return `https://www.ebi.ac.uk/biostudies/arrayexpress/studies/${encodeURIComponent(acc)}`;
-    }
-
-    // ENA / sequencing-style accessions
-    return `https://www.ebi.ac.uk/ena/browser/view/${encodeURIComponent(acc)}`;
+  const getGeoAccession = (studyMeta) => {
+    const accessions = Array.isArray(studyMeta?.accessions) ? studyMeta.accessions : [];
+    return accessions.find((acc) => {
+      const v = String(acc || "").trim().toUpperCase();
+      return v.startsWith("GSE") || v.startsWith("GSM");
+    }) || null;
   };
 
   const getPrimaryRawAccession = (studyMeta) => {
@@ -427,6 +414,21 @@ const GenePage = ({ params }) => {
     if (!studyMeta.accessions.length) return null;
 
     return studyMeta.accessions[0];
+  };
+
+  const renderProteinClass = (value) => {
+    if (!value) return "—";
+
+    const match = String(value).match(/^(.*?)(\s*\(([^)]+)\))?$/);
+    const label = match?.[1]?.trim();
+    const code = match?.[3]?.trim();
+
+    return (
+      <span className="gene-protein-class">
+      <span className="gene-protein-class-label">{label || value}</span>
+        {code && <span className="gene-protein-class-code">({code})</span>}
+    </span>
+    );
   };
 
   return (
@@ -438,9 +440,6 @@ const GenePage = ({ params }) => {
 
           <div className="gene-header-position-center">
             <div className="gene-search-container">
-              <div className="gene-search-label">
-                Search the MorPhiC gene perturbation catalog
-              </div>
               <GeneSearch variant="compact" />
             </div>
           </div>
@@ -515,6 +514,9 @@ const GenePage = ({ params }) => {
                           <ExternalLink size={14} title="Open HGNC page" />
                         </a>
                       </dd>
+
+                      <dt>Protein class</dt>
+                      <dd>{renderProteinClass(geneData.Protein_Class)}</dd>
                     </dl>
                   </div>
 
@@ -584,7 +586,7 @@ const GenePage = ({ params }) => {
                     aria-expanded={isPhenotypeOpen}
                     aria-controls="phenotype-evidence-panel"
                   >
-                    <span className="gene-card-body-title">Phenotype evidence</span>
+                    <span className="gene-card-body-title">Phenotype evidence - external resources</span>
                     <span className={`gene-collapsible-icon ${isPhenotypeOpen ? "is-open" : ""}`}>
           ▾
         </span>
@@ -637,7 +639,7 @@ const GenePage = ({ params }) => {
                       {hasVolcanoPlot && (
                         <div className="gene-results-footnote">
                           <span className="gene-results-footnote-label">Note:</span>{" "}
-                          Volcano plots start with precomputed significance thresholds of padj ≤ 0.05 and |log2FC| ≥ 0.5. These defaults can be adjusted in the UI.
+                          Volcano plots start with precomputed thresholds of padj ≤ 0.05 and |log2FC| ≥ 0.5, which can be adjusted in the UI. Top Genes Tables show the top 50 up- and down-regulated genes ranked by log2FC within each direction, with padj used to break ties. If no genes meet the significance thresholds, genes are instead ranked by effect size.
                         </div>
                       )}
 
@@ -688,8 +690,10 @@ const GenePage = ({ params }) => {
                                   ? labelToStudyMeta[studyLabel]
                                   : undefined;
 
-                              const rawAccession = getPrimaryRawAccession(studyMeta);
-                              const rawDataHref = buildExternalResourceLink(rawAccession);
+                              const geoAccession = getGeoAccession(studyMeta);
+                              const rawDataHref = geoAccession
+                                ? `https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=${encodeURIComponent(geoAccession)}`
+                                : null;
 
                               const isUmap =
                                 /umap/i.test(analysis.title) ||
@@ -822,17 +826,9 @@ const GenePage = ({ params }) => {
 
                                   {/* Footer actions (replaces title-button-container) */}
                                   <div className="dataset-card-footer">
-                                    <a
-                                      className="btn-primary"
-                                      href={`/data?label=${encodeURIComponent(formatLabel(studyLabel || ""))}`}
-                                      title="Open this study in the Data Catalogue"
-                                    >
-                                      Go to Full Dataset →
-                                    </a>
-
                                     {analysis?.s3_tsv_key && (
                                       <a
-                                        className="btn-outline"
+                                        className="btn-primary"
                                         href={`${GENE_API_BASE}/download?tsv_file_id=${encodeURIComponent(
                                           analysis.s3_tsv_key
                                         )}&file_name=${encodeURIComponent(analysis.title || geneData.Name || "download")}`}
@@ -853,6 +849,14 @@ const GenePage = ({ params }) => {
                                         Download Raw Counts
                                       </a>
                                     )}
+
+                                    <a
+                                      className="btn-link-subtle"
+                                      href={`/data?label=${encodeURIComponent(formatLabel(studyLabel || ""))}`}
+                                      title="Open this study in the Data Catalogue"
+                                    >
+                                      Go to Full Dataset →
+                                    </a>
                                   </div>
                                 </div>
                               );
