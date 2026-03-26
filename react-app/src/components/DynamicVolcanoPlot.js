@@ -63,15 +63,20 @@ function parseDegContrastTitle(title = "", fallback = "KO") {
 }
 
 const DynamicVolcanoPlot = ({
-                                tsvKey,
-                                title,
-                                geneName = null,
-                                height = 320,
-                                preferDegSummaryBar = false,
-                                dotplotDataFromApi = null,
-                                deSummaryFromApi = null,
-                                deConditions = [],
-                                defaultConditionId = null,
+                              tsvKey,
+                              title,
+                              geneName = null,
+                              height = 320,
+                              preferDegSummaryBar = false,
+                              dotplotDataFromApi = null,
+                              deSummaryFromApi = null,
+                              deConditions = [],
+                              defaultConditionId = null,
+                              analysisContext = {},
+                              externalFilters = {},
+                              filterLabels = {},
+                              lockConditionToDefault = false,
+                              onExperimentConditionChange = null,
                             }) => {
     // 1) Dynamic import for react-plotly.js
     const [PlotComponent, setPlotComponent] = useState(null);
@@ -682,76 +687,57 @@ const DynamicVolcanoPlot = ({
         </div>
     );
 
-    const renderRightControls = () => (
+    const renderRightControls = () => {
+      const modelSystemLabel = filterLabels?.condition || "Model System";
+      const timepointLabel = filterLabels?.pathway || "Timepoint";
+      const strategyLabel = filterLabels?.strategy || "Perturbation Strategy";
+
+      return (
         <div className="de-right-controls">
-            {cellTypeCol && (
-                <label className="de-field">
-                    <span className="de-field-label">Cell Type</span>
-                    <select className="de-select" value={conditionFilter} onChange={(e) => setConditionFilter(e.target.value)}>
-                        {/* replace with your actual celltype options if needed */}
-                        <option value="">All</option>
-                    </select>
-                </label>
-            )}
+          <label className="de-field">
+            <span className="de-field-label">{modelSystemLabel}</span>
+            <select className="de-select" value={externalFilters?.modelSystem || ""} disabled>
+              <option value={externalFilters?.modelSystem || ""}>
+                {externalFilters?.modelSystem || "—"}
+              </option>
+            </select>
+          </label>
 
-            {/* Use your actual timepoint state/props if present */}
-            {/* <label className="de-field"> ... Timepoint ... </label> */}
+          <label className="de-field">
+            <span className="de-field-label">{timepointLabel}</span>
+            <select className="de-select" value={externalFilters?.timepoint || ""} disabled>
+              <option value={externalFilters?.timepoint || ""}>
+                {externalFilters?.timepoint || "—"}
+              </option>
+            </select>
+          </label>
 
-            {deConditions && deConditions.length > 0 && (
-                <label className="de-field">
-                    <span className="de-field-label">Perturbation Strategy</span>
-                    <select
-                        className="de-select"
-                        value={currentCondition?.condition_id || ""}
-                        onChange={(e) => setSelectedConditionId(e.target.value)}
-                    >
-                        {deConditions.map((cond) => (
-                            <option key={cond.condition_id} value={cond.condition_id}>
-                                {prettyConditionLabel(cond.condition_id)}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-            )}
-
-            {conditionCol && conditions.length > 0 && (
-                <label className="de-field">
-                    <span className="de-field-label">Group</span>
-                    <select
-                        className="de-select"
-                        value={conditionFilter}
-                        onChange={(e) => setConditionFilter(e.target.value)}
-                    >
-                        <option value="">All</option>
-                        {conditions.map((c) => (
-                            <option key={c} value={c}>
-                                {c}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-            )}
-
-            {pathwayCol && pathways.length > 0 && (
-                <label className="de-field">
-                    <span className="de-field-label">Pathway</span>
-                    <select
-                        className="de-select"
-                        value={pathwayFilter}
-                        onChange={(e) => setPathwayFilter(e.target.value)}
-                    >
-                        <option value="">All</option>
-                        {pathways.map((p) => (
-                            <option key={p} value={p}>
-                                {p}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-            )}
+          <label className="de-field">
+            <span className="de-field-label">{strategyLabel}</span>
+            <select
+              className="de-select"
+              value={currentCondition?.condition_id || ""}
+              onChange={(e) => {
+                setSelectedConditionId(e.target.value);
+                if (onExperimentConditionChange) {
+                  onExperimentConditionChange(e.target.value);
+                }
+              }}
+              disabled={lockConditionToDefault || !(deConditions && deConditions.length > 0)}
+            >
+              {(deConditions && deConditions.length > 0
+                  ? deConditions
+                  : [{ condition_id: "", label: "—" }]
+              ).map((cond) => (
+                <option key={cond.condition_id || cond.label} value={cond.condition_id || ""}>
+                  {cond.label || cond.condition_id || "—"}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
-    );
-
+      );
+    };
 
     const renderTable = () => {
         const formatPadj = (v) => {

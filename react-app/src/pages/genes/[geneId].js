@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import GenePhenotypeEvidence from "../../components/GenePhenotypeEvidence";
@@ -16,6 +16,543 @@ const GENE_API_BASE =
   "https://46ucfedadd.execute-api.us-east-1.amazonaws.com";
 
 const formatLabel = (label) => label?.replaceAll("_", " ") ?? label;
+
+const safeArray = (value) => (Array.isArray(value) ? value.filter(Boolean) : []);
+
+const titleCase = (value) => {
+  if (!value) return value;
+  return String(value)
+    .replaceAll("_", " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+};
+
+const formatPerturbationState = (value) => {
+  if (!value) return null;
+  if (value === "default") return "Default";
+  return titleCase(value);
+};
+
+const formatPerturbationType = (value) => {
+  if (!value) return null;
+
+  const map = {
+    single_gene_knockout: "Single-gene knockout",
+    multi_gene_knockout: "Multi-gene knockout",
+    enhancer_deletion: "Enhancer deletion",
+    regulatory_perturbation: "Regulatory perturbation",
+  };
+
+  return map[value] || titleCase(value);
+};
+
+const getPlotKind = (analysis) => {
+  const title = String(analysis?.title || "").toLowerCase();
+  const pngKey = String(analysis?.s3_png_key || "").toLowerCase();
+  const tsvKey = String(analysis?.s3_tsv_key || "").toLowerCase();
+
+  if (/umap/i.test(title) || /_umap/i.test(pngKey)) return "umap";
+  if (/celltype[-_ ]?proportion/i.test(title) || /celltype[-_ ]?proportion/i.test(pngKey)) {
+    return "celltype_proportion";
+  }
+  if (/number[-_ ]?degs?/i.test(title) || /#\s*degs?/i.test(title) || /number[-_ ]?degs?/i.test(tsvKey)) {
+    return "deg_count";
+  }
+  if (/topdeg[-_ ]?dotplot/i.test(title) || /topdeg[-_ ]?dotplot/i.test(tsvKey)) {
+    return "topdeg_dotplot";
+  }
+  if (analysis?.result_type === "DE" && analysis?.role === "canonical_de" && analysis?.s3_tsv_key) {
+    return "volcano";
+  }
+  return "static";
+};
+
+const getAnalysisContext = (analysis = {}) => analysis?.analysis_context || {};
+
+const resolveAnalysisDisplayMeta = ({ analysis, study, studyMeta, geneName }) => {
+  const ctx = getAnalysisContext(analysis);
+
+  const modelSystems = safeArray(ctx.study_model_systems).length
+    ? safeArray(ctx.study_model_systems)
+    : safeArray(study?.modelSystems).length
+      ? safeArray(study?.modelSystems)
+      : safeArray(studyMeta?.modelSystems);
+
+  const cellLines = safeArray(ctx.study_cell_lines).length
+    ? safeArray(ctx.study_cell_lines)
+    : safeArray(study?.cellLines).length
+      ? safeArray(study?.cellLines)
+      : safeArray(studyMeta?.cellLines);
+
+  return {
+    studyLabel: study?.label ? formatLabel(study.label) : formatLabel(analysis?.study_label),
+    studyTitle: study?.studyTitle || studyMeta?.studyTitle || null,
+    studyDescription: study?.studyDescription || studyMeta?.studyDescription || null,
+    assay: ctx.study_assay || study?.assay || studyMeta?.assay || null,
+    modelSystems,
+    cellLines,
+    lineageLabel: ctx.lineage_label || modelSystems[0] || null,
+    timepointLabel: ctx.timepoint_label || null,
+    timepointValue: ctx.timepoint_value ?? null,
+    comparisonLabel: ctx.comparison_label || analysis?.title || null,
+    perturbationType: formatPerturbationType(ctx.perturbation_type),
+    perturbationState: formatPerturbationState(ctx.perturbation_state),
+    analysisSubset: ctx.analysis_subset || null,
+    targetGeneSymbols: safeArray(ctx.target_gene_symbols).length
+      ? safeArray(ctx.target_gene_symbols)
+      : geneName
+        ? [geneName]
+        : [],
+    metadataConflict: !!ctx.metadata_conflict,
+    parseConfidence: ctx.parse_confidence || null,
+    plotKind: getPlotKind(analysis),
+  };
+};
+
+const getDatasetGroupKey = (analysis) => {
+  return analysis?.study_id || analysis?.study_label || "unknown-study";
+};
+
+const groupAnalysisResults = (analyses, studyById, labelToStudyMeta, geneName) => {
+  const groups = new Map();
+
+  analyses.forEach((analysis) => {
+    const studyId = analysis?.study_id;
+    const study = studyId ? studyById[studyId] : null;
+
+    const studyLabel = analysis?.study_label?.trim();
+    const studyMeta = studyLabel ? labelToStudyMeta[studyLabel] : null;
+
+    const displayMeta = resolveAnalysisDisplayMeta({
+      analysis,
+      study,
+      studyMeta,
+      geneName,
+    });
+
+    const key = getDatasetGroupKey(analysis);
+
+    if (!groups.has(key)) {
+      groups.set(key, {
+        key,
+        study,
+        studyMeta,
+        displayMeta,
+        items: [],
+      });
+    }
+
+    groups.get(key).items.push({
+      analysis,
+      study,
+      studyMeta,
+      displayMeta,
+    });
+  });
+
+  return Array.from(groups.values());
+};
+
+const buildUniqueOptions = (items, getter) => {
+  const seen = new Set();
+  const out = [];
+
+  items.forEach((item) => {
+    const value = getter(item);
+    if (!value || seen.has(value)) return;
+    seen.add(value);
+    out.push(value);
+  });
+
+  return out;
+};
+
+const getSelectedAnalysisForPanel = ({
+                                       items,
+                                       selectedLineage,
+                                       selectedTimepoint,
+                                       selectedComparison,
+                                       selectedPlotKind,
+                                     }) => {
+  const exact = items.find((item) => {
+    const m = item.displayMeta;
+    return (
+      (selectedLineage ? m.lineageLabel === selectedLineage : true) &&
+      (selectedTimepoint ? m.timepointLabel === selectedTimepoint : true) &&
+      (selectedComparison ? m.comparisonLabel === selectedComparison : true) &&
+      (selectedPlotKind ? m.plotKind === selectedPlotKind : true)
+    );
+  });
+
+  if (exact) return exact;
+
+  const partial = items.find((item) => {
+    const m = item.displayMeta;
+    return (
+      (selectedLineage ? m.lineageLabel === selectedLineage : true) &&
+      (selectedTimepoint ? m.timepointLabel === selectedTimepoint : true) &&
+      (selectedComparison ? m.comparisonLabel === selectedComparison : true)
+    );
+  });
+
+  return partial || items[0];
+};
+
+const isGroupableVolcanoAnalysis = (analysis) => {
+  const title = String(analysis?.title || "").toLowerCase();
+  const tsvKey = String(analysis?.s3_tsv_key || "").toLowerCase();
+  const pngKey = String(analysis?.s3_png_key || "").toLowerCase();
+
+  const isNumberDegs =
+    /number[-_ ]?degs?/i.test(title) ||
+    /#\s*degs?/i.test(title) ||
+    /number[-_ ]?degs?/i.test(tsvKey);
+
+  const isUmap =
+    /umap/i.test(title) ||
+    /_umap/i.test(pngKey);
+
+  return (
+    analysis?.result_type === "DE" &&
+    analysis?.role === "canonical_de" &&
+    !!analysis?.s3_tsv_key &&
+    !isNumberDegs &&
+    !isUmap
+  );
+};
+
+const GroupedDatasetPanel = ({
+                               group,
+                               geneName,
+                               GENE_API_BASE,
+                               getGeoAccession,
+                             }) => {
+  const { items, displayMeta, studyMeta } = group;
+
+  const lineageOptions = buildUniqueOptions(items, (x) => x.displayMeta.lineageLabel);
+  const timepointOptions = buildUniqueOptions(items, (x) => x.displayMeta.timepointLabel);
+  const comparisonOptions = buildUniqueOptions(items, (x) => x.displayMeta.comparisonLabel);
+  const plotKindOptions = buildUniqueOptions(items, (x) => x.displayMeta.plotKind);
+
+  const [selectedLineage, setSelectedLineage] = useState(lineageOptions[0] || "");
+  const [selectedTimepoint, setSelectedTimepoint] = useState(timepointOptions[0] || "");
+  const [selectedComparison, setSelectedComparison] = useState(comparisonOptions[0] || "");
+  const [selectedPlotKind, setSelectedPlotKind] = useState(
+    plotKindOptions.includes("volcano")
+      ? "volcano"
+      : plotKindOptions[0] || ""
+  );
+
+  useEffect(() => {
+    if (!lineageOptions.includes(selectedLineage)) {
+      setSelectedLineage(lineageOptions[0] || "");
+    }
+  }, [lineageOptions, selectedLineage]);
+
+  useEffect(() => {
+    if (!timepointOptions.includes(selectedTimepoint)) {
+      setSelectedTimepoint(timepointOptions[0] || "");
+    }
+  }, [timepointOptions, selectedTimepoint]);
+
+  useEffect(() => {
+    if (!comparisonOptions.includes(selectedComparison)) {
+      setSelectedComparison(comparisonOptions[0] || "");
+    }
+  }, [comparisonOptions, selectedComparison]);
+
+  useEffect(() => {
+    if (!plotKindOptions.includes(selectedPlotKind)) {
+      setSelectedPlotKind(
+        plotKindOptions.includes("volcano") ? "volcano" : plotKindOptions[0] || ""
+      );
+    }
+  }, [plotKindOptions, selectedPlotKind]);
+
+  const selectedItem = useMemo(
+    () =>
+      getSelectedAnalysisForPanel({
+        items,
+        selectedLineage,
+        selectedTimepoint,
+        selectedComparison,
+        selectedPlotKind,
+      }),
+    [items, selectedLineage, selectedTimepoint, selectedComparison, selectedPlotKind]
+  );
+
+  if (!selectedItem) return null;
+
+  const { analysis, study, studyMeta: selectedStudyMeta, displayMeta: selectedMeta } = selectedItem;
+
+  const defaultCond = pickDefaultCondition(analysis);
+  const deHead = normalizeCondSummary(defaultCond) || normalizeDeSummary(analysis.de_summary);
+
+  const isNumberDegsAnalysis =
+    /number[-_ ]?degs?/i.test(analysis.title || "") ||
+    /#\s*degs?/i.test(analysis.title || "") ||
+    /number[-_ ]?degs?/i.test(analysis.s3_tsv_key || "");
+
+  const showMetrics = !!deHead && !isNumberDegsAnalysis;
+
+  const geoAccession = getGeoAccession(selectedStudyMeta);
+  const rawDataHref = geoAccession
+    ? `https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=${encodeURIComponent(geoAccession)}`
+    : null;
+
+  const plotKindLabelMap = {
+    volcano: "Volcano Plot",
+    umap: "UMAP",
+    celltype_proportion: "Cell Type Proportion",
+    deg_count: "DEG Summary",
+    topdeg_dotplot: "Top DEG Dotplot",
+    static: "Plot",
+  };
+
+  return (
+    <div className="dataset-card">
+      <div className="dataset-card-header">
+        <div className="dataset-head">
+          <div className="dataset-head-title">
+            {selectedMeta.studyLabel || analysis.title}
+          </div>
+
+          {!!selectedMeta.studyTitle && (
+            <div className="dataset-head-desc">
+              {selectedMeta.studyTitle}
+            </div>
+          )}
+
+          <div className="dataset-head-meta">
+            <span className="dataset-meta-item">
+              <span className="dataset-meta-label">Model System:</span>{" "}
+              <span className="dataset-meta-value">
+                {selectedMeta.lineageLabel || "—"}
+              </span>
+            </span>
+
+            {/*<span className="dataset-meta-item">*/}
+            {/*  <span className="dataset-meta-label">Timepoint:</span>{" "}*/}
+            {/*  <span className="dataset-meta-value">*/}
+            {/*    {selectedMeta.timepointLabel || "—"}*/}
+            {/*  </span>*/}
+            {/*</span>*/}
+
+            {/*<span className="dataset-meta-item">*/}
+            {/*  <span className="dataset-meta-label">Perturbation Strategy:</span>{" "}*/}
+            {/*  <span className="dataset-meta-value">*/}
+            {/*    {selectedMeta.comparisonLabel || "—"}*/}
+            {/*  </span>*/}
+            {/*</span>*/}
+
+            <span className="dataset-meta-item">
+              <span className="dataset-meta-label">Cell Line:</span>{" "}
+              <span className="dataset-meta-value">
+                {selectedMeta.cellLines.join(" • ") || "—"}
+              </span>
+            </span>
+
+            <span className="dataset-meta-item">
+              <span className="dataset-meta-label">Assay Type:</span>{" "}
+              <span className="dataset-meta-value">
+                {selectedMeta.assay || "—"}
+              </span>
+            </span>
+          </div>
+        </div>
+
+        {showMetrics && (
+          <div className="de-affects-bar">
+            <div className="de-affects-left">
+              <span className="de-affects-label">Affects</span>
+              <span className="de-affects-value">
+                {(deHead.n_significant ?? 0).toLocaleString()}
+              </span>
+              <span className="de-affects-label">genes</span>
+            </div>
+
+            <div className="de-affects-right">
+              <span className="de-affects-up">↑ {(deHead.n_up ?? 0).toLocaleString()}</span>
+              <span className="de-affects-down">↓ {(deHead.n_down ?? 0).toLocaleString()}</span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/*<div className="dataset-panel-controls">*/}
+      {/*  {lineageOptions.length > 1 && (*/}
+      {/*    <label className="de-field">*/}
+      {/*      <span className="de-field-label">Model System</span>*/}
+      {/*      <select*/}
+      {/*        className="de-select"*/}
+      {/*        value={selectedLineage}*/}
+      {/*        onChange={(e) => setSelectedLineage(e.target.value)}*/}
+      {/*      >*/}
+      {/*        {lineageOptions.map((option) => (*/}
+      {/*          <option key={option} value={option}>*/}
+      {/*            {option}*/}
+      {/*          </option>*/}
+      {/*        ))}*/}
+      {/*      </select>*/}
+      {/*    </label>*/}
+      {/*  )}*/}
+
+      {/*  {timepointOptions.length > 1 && (*/}
+      {/*    <label className="de-field">*/}
+      {/*      <span className="de-field-label">Timepoint</span>*/}
+      {/*      <select*/}
+      {/*        className="de-select"*/}
+      {/*        value={selectedTimepoint}*/}
+      {/*        onChange={(e) => setSelectedTimepoint(e.target.value)}*/}
+      {/*      >*/}
+      {/*        {timepointOptions.map((option) => (*/}
+      {/*          <option key={option} value={option}>*/}
+      {/*            {option}*/}
+      {/*          </option>*/}
+      {/*        ))}*/}
+      {/*      </select>*/}
+      {/*    </label>*/}
+      {/*  )}*/}
+
+      {/*  {comparisonOptions.length > 1 && (*/}
+      {/*    <label className="de-field">*/}
+      {/*      <span className="de-field-label">Perturbation Strategy</span>*/}
+      {/*      <select*/}
+      {/*        className="de-select"*/}
+      {/*        value={selectedComparison}*/}
+      {/*        onChange={(e) => setSelectedComparison(e.target.value)}*/}
+      {/*      >*/}
+      {/*        {comparisonOptions.map((option) => (*/}
+      {/*          <option key={option} value={option}>*/}
+      {/*            {option}*/}
+      {/*          </option>*/}
+      {/*        ))}*/}
+      {/*      </select>*/}
+      {/*    </label>*/}
+      {/*  )}*/}
+
+      {/*  {plotKindOptions.length > 1 && (*/}
+      {/*    <label className="de-field">*/}
+      {/*      <span className="de-field-label">Plot Type</span>*/}
+      {/*      <select*/}
+      {/*        className="de-select"*/}
+      {/*        value={selectedPlotKind}*/}
+      {/*        onChange={(e) => setSelectedPlotKind(e.target.value)}*/}
+      {/*      >*/}
+      {/*        {plotKindOptions.map((option) => (*/}
+      {/*          <option key={option} value={option}>*/}
+      {/*            {plotKindLabelMap[option] || option}*/}
+      {/*          </option>*/}
+      {/*        ))}*/}
+      {/*      </select>*/}
+      {/*    </label>*/}
+      {/*  )}*/}
+      {/*</div>*/}
+
+      <div className="dataset-card-body">
+        {selectedMeta.plotKind === "umap" ? (
+          <div className="dataset-plot-frame dataset-plot-frame--umap">
+            <DynamicUmapPlot
+              analysis={analysis}
+              geneName={geneName}
+              height={420}
+            />
+          </div>
+        ) : analysis?.s3_tsv_key ? (
+          <DynamicVolcanoPlot
+            tsvKey={analysis.s3_tsv_key}
+            title={analysis.title}
+            geneName={geneName}
+            height={360}
+            preferDegSummaryBar={false}
+            deConditions={items.map((item) => ({
+              condition_id: item.analysis.default_condition_id || item.analysis.title,
+              label: item.displayMeta.comparisonLabel || item.analysis.title,
+              analysisRef: item.analysis,
+            }))}
+            defaultConditionId={analysis.default_condition_id || analysis.title}
+            analysisContext={analysis.analysis_context || {}}
+            externalFilters={{
+              modelSystem: selectedMeta.lineageLabel || "",
+              timepoint: selectedMeta.timepointLabel || "",
+              experimentCondition: selectedMeta.comparisonLabel || "",
+            }}
+            filterLabels={{
+              strategy: "Perturbation Strategy",
+              condition: "Model System",
+              pathway: "Timepoint",
+            }}
+            lockConditionToDefault={false}
+            onExperimentConditionChange={(value) => {
+              const matched = items.find(
+                (item) => (item.analysis.default_condition_id || item.analysis.title) === value
+              );
+
+              if (matched) {
+                setSelectedComparison(matched.displayMeta.comparisonLabel || "");
+              }
+            }}
+          />
+        ) : analysis?.svg ? (
+          <div className="dataset-static-plot">
+            <img
+              src={`data:image/svg+xml;utf8,${encodeURIComponent(analysis.svg)}`}
+              className="dataset-static-img"
+              alt={analysis.title}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        ) : analysis?.s3_png_key ? (
+          <div className="dataset-static-plot">
+            <img
+              src={`${GENE_API_BASE}/download/png?file_id=${encodeURIComponent(analysis.s3_png_key)}`}
+              className="dataset-static-img"
+              alt={analysis.title}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        ) : (
+          <p>No image available</p>
+        )}
+      </div>
+
+      <div className="dataset-card-footer">
+        {analysis?.s3_tsv_key && (
+          <a
+            className="btn-primary"
+            href={`${GENE_API_BASE}/download?tsv_file_id=${encodeURIComponent(
+              analysis.s3_tsv_key
+            )}&file_name=${encodeURIComponent(analysis.title || geneName || "download")}`}
+            title="Download differential expression results table (processed data)"
+          >
+            Download Data (.tsv)
+          </a>
+        )}
+
+        {rawDataHref && (
+          <a
+            className="btn-outline"
+            href={rawDataHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Open raw sequencing dataset in external archive"
+          >
+            Download Raw Counts
+          </a>
+        )}
+
+        <a
+          className="btn-link-subtle"
+          href={`/data?label=${encodeURIComponent(formatLabel(analysis.study_label || ""))}`}
+          title="Open this study in the Data Catalogue"
+        >
+          Go to Full Dataset →
+        </a>
+      </div>
+    </div>
+  );
+};
 
 const collectStudies = (arr = []) =>
     (arr || [])
@@ -379,6 +916,18 @@ const GenePage = ({ params }) => {
     return getAffectedGeneCount(b) - getAffectedGeneCount(a);
   });
 
+  const groupedVolcanoAnalyses = sortedAnalysisResults.filter(isGroupableVolcanoAnalysis);
+  const standaloneAnalyses = sortedAnalysisResults.filter(
+    (analysis) => !isGroupableVolcanoAnalysis(analysis)
+  );
+
+  const groupedAnalysisPanels = groupAnalysisResults(
+    groupedVolcanoAnalyses,
+    studyById,
+    labelToStudyMeta,
+    geneData.Name
+  );
+
   const hasVolcanoPlot = sortedAnalysisResults.some((analysis) => {
     const title = (analysis?.title || "").toLowerCase();
     const tsvKey = (analysis?.s3_tsv_key || "").toLowerCase();
@@ -650,45 +1199,38 @@ const GenePage = ({ params }) => {
 
                         <div className="gene-card-body">
                           <div className="dataset-stack">
+                            {/*{groupedAnalysisPanels.map((group) => (*/}
+                            {/*  <GroupedDatasetPanel*/}
+                            {/*    key={group.key}*/}
+                            {/*    group={group}*/}
+                            {/*    geneName={geneData.Name}*/}
+                            {/*    GENE_API_BASE={GENE_API_BASE}*/}
+                            {/*    getGeoAccession={getGeoAccession}*/}
+                            {/*  />*/}
+                            {/*))}*/}
+
                             {sortedAnalysisResults.map((analysis, index) => {
-                              const de = normalizeDeSummary(analysis.de_summary);
-
                               const isCanonicalDe =
-                                  analysis.result_type === "DE" &&
-                                  analysis.role === "canonical_de" &&
-                                  !!analysis.s3_tsv_key;
+                                analysis.result_type === "DE" &&
+                                analysis.role === "canonical_de" &&
+                                !!analysis.s3_tsv_key;
 
-                              const prefersDegSummaryBar =
-                                  /number[-_ ]?degs?/i.test(analysis.title || "") ||
-                                  /#\s*degs?/i.test(analysis.title || "");
+                              const showDynamicDe = !!analysis.s3_tsv_key && isCanonicalDe;
 
-                              // const isTopDegDotplotAnalysis =
-                              //     !!analysis.s3_tsv_key &&
-                              //     (/topdeg[-_ ]?dotplot/i.test(analysis.title || "") ||
-                              //         /topdeg[-_ ]?dotplot/i.test(analysis.s3_tsv_key || ""));
-
-                              const showDynamicDe =
-                                !!analysis.s3_tsv_key && isCanonicalDe;
-
-                              // const showDynamicDe =
-                              //   !!analysis.s3_tsv_key &&
-                              //   (isCanonicalDe || prefersDegSummaryBar || isTopDegDotplotAnalysis);
-
-                              // const dotplotDataFromApi =
-                              //     isTopDegDotplotAnalysis && analysis.dotplot_data
-                              //         ? analysis.dotplot_data
-                              //         : null;
-
-                              const chips = buildExperimentChips(
-                                  analysis,
-                                  geneData.Name,
-                                  labelToStudyMeta
-                              );
+                              const studyId = analysis.study_id;
+                              const study = studyId ? studyById[studyId] : null;
 
                               const studyLabel = analysis.study_label?.trim();
                               const studyMeta = studyLabel
-                                  ? labelToStudyMeta[studyLabel]
-                                  : undefined;
+                                ? labelToStudyMeta[studyLabel]
+                                : undefined;
+
+                              const displayMeta = resolveAnalysisDisplayMeta({
+                                analysis,
+                                study,
+                                studyMeta,
+                                geneName: geneData.Name,
+                              });
 
                               const geoAccession = getGeoAccession(studyMeta);
                               const rawDataHref = geoAccession
@@ -700,10 +1242,9 @@ const GenePage = ({ params }) => {
                                 /_umap/i.test(analysis.s3_png_key || "");
 
                               const defaultCond = pickDefaultCondition(analysis);
-                              const deHead = normalizeCondSummary(defaultCond) || normalizeDeSummary(analysis.de_summary);
-
-                              const studyId = analysis.study_id;
-                              const study = studyId ? studyById[studyId] : null;
+                              const deHead =
+                                normalizeCondSummary(defaultCond) ||
+                                normalizeDeSummary(analysis.de_summary);
 
                               const isNumberDegsAnalysis =
                                 /number[-_ ]?degs?/i.test(analysis.title || "") ||
@@ -712,44 +1253,72 @@ const GenePage = ({ params }) => {
 
                               const showMetrics = !!deHead && !isNumberDegsAnalysis;
 
+                              const volcanoConditionOptions =
+                                Array.isArray(analysis.de_conditions) && analysis.de_conditions.length > 0
+                                  ? analysis.de_conditions.map((cond) => ({
+                                    ...cond,
+                                    label:
+                                      displayMeta.comparisonLabel ||
+                                      cond.condition_label ||
+                                      cond.condition_id ||
+                                      analysis.title,
+                                  }))
+                                  : [
+                                    {
+                                      condition_id: analysis.default_condition_id || analysis.title,
+                                      label: displayMeta.comparisonLabel || analysis.title,
+                                    },
+                                  ];
+
                               return (
-                                <div className="dataset-card" key={index}>
-                                  {/* Header */}
+                                <div className="dataset-card" key={`${analysis.study_id || analysis.title}-${index}`}>
                                   <div className="dataset-card-header">
                                     <div className="dataset-head">
                                       <div className="dataset-head-title">
-                                        {study?.label
-                                          ? formatLabel(study.label)
-                                          : analysis.title}
+                                        {displayMeta.studyLabel || analysis.title}
                                       </div>
 
-                                      {!!study?.studyTitle && (
+                                      {!!displayMeta.studyTitle && (
                                         <div className="dataset-head-desc">
-                                          {study.studyTitle}
+                                          {displayMeta.studyTitle}
                                         </div>
                                       )}
 
                                       <div className="dataset-head-meta">
-      <span className="dataset-meta-item">
-        <span className="dataset-meta-label">Cell Line:</span>{" "}
-        <span className="dataset-meta-value">
-          {(study?.cellLines || []).join(" • ") || "—"}
-        </span>
-      </span>
+            <span className="dataset-meta-item">
+              <span className="dataset-meta-label">Model System:</span>{" "}
+              <span className="dataset-meta-value">
+                {displayMeta.lineageLabel || displayMeta.modelSystems.join(" • ") || "—"}
+              </span>
+            </span>
+
+            {/*                            <span className="dataset-meta-item">*/}
+            {/*  <span className="dataset-meta-label">Timepoint:</span>{" "}*/}
+            {/*                              <span className="dataset-meta-value">*/}
+            {/*    {displayMeta.timepointLabel || "—"}*/}
+            {/*  </span>*/}
+            {/*</span>*/}
+
+            {/*                            <span className="dataset-meta-item">*/}
+            {/*  <span className="dataset-meta-label">Perturbation Strategy:</span>{" "}*/}
+            {/*                              <span className="dataset-meta-value">*/}
+            {/*    {displayMeta.comparisonLabel || "—"}*/}
+            {/*  </span>*/}
+            {/*</span>*/}
 
                                         <span className="dataset-meta-item">
-        <span className="dataset-meta-label">Model System:</span>{" "}
+              <span className="dataset-meta-label">Cell Line:</span>{" "}
                                           <span className="dataset-meta-value">
-          {(study?.modelSystems || []).join(" • ") || "—"}
-        </span>
-      </span>
+                {displayMeta.cellLines.join(" • ") || "—"}
+              </span>
+            </span>
 
                                         <span className="dataset-meta-item">
-        <span className="dataset-meta-label">Assay Type:</span>{" "}
+              <span className="dataset-meta-label">Assay Type:</span>{" "}
                                           <span className="dataset-meta-value">
-          {study?.assay || "—"}
-        </span>
-      </span>
+                {displayMeta.assay || "—"}
+              </span>
+            </span>
                                       </div>
                                     </div>
 
@@ -758,8 +1327,8 @@ const GenePage = ({ params }) => {
                                         <div className="de-affects-left">
                                           <span className="de-affects-label">Affects</span>
                                           <span className="de-affects-value">
-          {(deHead.n_significant ?? 0).toLocaleString()}
-        </span>
+                {(deHead.n_significant ?? 0).toLocaleString()}
+              </span>
                                           <span className="de-affects-label">genes</span>
                                         </div>
 
@@ -771,7 +1340,6 @@ const GenePage = ({ params }) => {
                                     )}
                                   </div>
 
-                                  {/* Body */}
                                   <div className="dataset-card-body">
                                     {isUmap ? (
                                       <div className="dataset-plot-frame dataset-plot-frame--umap">
@@ -788,16 +1356,24 @@ const GenePage = ({ params }) => {
                                         geneName={geneData.Name}
                                         height={360}
                                         preferDegSummaryBar={false}
-                                        // dotplotDataFromApi={dotplotDataFromApi}
-                                        // deSummaryFromApi={null} // no longer used for header; table uses per-condition precomputed lists
-                                        deConditions={analysis.de_conditions || []}
-                                        defaultConditionId={analysis.default_condition_id || null}
-                                        layoutVariant="sidebar"
+                                        deConditions={volcanoConditionOptions}
+                                        defaultConditionId={
+                                          analysis.default_condition_id ||
+                                          volcanoConditionOptions[0]?.condition_id ||
+                                          null
+                                        }
+                                        analysisContext={analysis.analysis_context || {}}
+                                        externalFilters={{
+                                          modelSystem: displayMeta.lineageLabel || "",
+                                          timepoint: displayMeta.timepointLabel || "",
+                                          experimentCondition: displayMeta.comparisonLabel || "",
+                                        }}
                                         filterLabels={{
-                                          strategy: "Condition",
-                                          condition: "Cell Type",
+                                          strategy: "Perturbation Strategy",
+                                          condition: "Model System",
                                           pathway: "Timepoint",
                                         }}
+                                        lockConditionToDefault={volcanoConditionOptions.length <= 1}
                                       />
                                     ) : analysis.svg ? (
                                       <div className="dataset-static-plot">
@@ -824,7 +1400,6 @@ const GenePage = ({ params }) => {
                                     )}
                                   </div>
 
-                                  {/* Footer actions (replaces title-button-container) */}
                                   <div className="dataset-card-footer">
                                     {analysis?.s3_tsv_key && (
                                       <a
@@ -861,6 +1436,192 @@ const GenePage = ({ params }) => {
                                 </div>
                               );
                             })}
+
+              {/*              {standaloneAnalyses.map((analysis, index) => {*/}
+              {/*                const isCanonicalDe =*/}
+              {/*                  analysis.result_type === "DE" &&*/}
+              {/*                  analysis.role === "canonical_de" &&*/}
+              {/*                  !!analysis.s3_tsv_key;*/}
+
+              {/*                const showDynamicDe = !!analysis.s3_tsv_key && isCanonicalDe;*/}
+
+              {/*                const studyId = analysis.study_id;*/}
+              {/*                const study = studyId ? studyById[studyId] : null;*/}
+
+              {/*                const studyLabel = analysis.study_label?.trim();*/}
+              {/*                const studyMeta = studyLabel*/}
+              {/*                  ? labelToStudyMeta[studyLabel]*/}
+              {/*                  : undefined;*/}
+
+              {/*                const displayMeta = resolveAnalysisDisplayMeta({*/}
+              {/*                  analysis,*/}
+              {/*                  study,*/}
+              {/*                  studyMeta,*/}
+              {/*                  geneName: geneData.Name,*/}
+              {/*                });*/}
+
+              {/*                const geoAccession = getGeoAccession(studyMeta);*/}
+              {/*                const rawDataHref = geoAccession*/}
+              {/*                  ? `https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=${encodeURIComponent(geoAccession)}`*/}
+              {/*                  : null;*/}
+
+              {/*                const isUmap =*/}
+              {/*                  /umap/i.test(analysis.title) ||*/}
+              {/*                  /_umap/i.test(analysis.s3_png_key || "");*/}
+
+              {/*                const defaultCond = pickDefaultCondition(analysis);*/}
+              {/*                const deHead =*/}
+              {/*                  normalizeCondSummary(defaultCond) ||*/}
+              {/*                  normalizeDeSummary(analysis.de_summary);*/}
+
+              {/*                const isNumberDegsAnalysis =*/}
+              {/*                  /number[-_ ]?degs?/i.test(analysis.title || "") ||*/}
+              {/*                  /#\s*degs?/i.test(analysis.title || "") ||*/}
+              {/*                  /number[-_ ]?degs?/i.test(analysis.s3_tsv_key || "");*/}
+
+              {/*                const showMetrics = !!deHead && !isNumberDegsAnalysis;*/}
+
+              {/*                return (*/}
+              {/*                  <div className="dataset-card" key={`${analysis.study_id || analysis.title}-${index}`}>*/}
+              {/*                    <div className="dataset-card-header">*/}
+              {/*                      <div className="dataset-head">*/}
+              {/*                        <div className="dataset-head-title">*/}
+              {/*                          {displayMeta.studyLabel || analysis.title}*/}
+              {/*                        </div>*/}
+
+              {/*                        {!!displayMeta.studyTitle && (*/}
+              {/*                          <div className="dataset-head-desc">*/}
+              {/*                            {displayMeta.studyTitle}*/}
+              {/*                          </div>*/}
+              {/*                        )}*/}
+
+              {/*                        <div className="dataset-head-meta">*/}
+              {/*<span className="dataset-meta-item">*/}
+              {/*  <span className="dataset-meta-label">Model System:</span>{" "}*/}
+              {/*  <span className="dataset-meta-value">*/}
+              {/*    {displayMeta.lineageLabel || displayMeta.modelSystems.join(" • ") || "—"}*/}
+              {/*  </span>*/}
+              {/*</span>*/}
+
+              {/*                          <span className="dataset-meta-item">*/}
+              {/*  <span className="dataset-meta-label">Cell Line:</span>{" "}*/}
+              {/*                            <span className="dataset-meta-value">*/}
+              {/*    {displayMeta.cellLines.join(" • ") || "—"}*/}
+              {/*  </span>*/}
+              {/*</span>*/}
+
+              {/*                          <span className="dataset-meta-item">*/}
+              {/*  <span className="dataset-meta-label">Assay Type:</span>{" "}*/}
+              {/*                            <span className="dataset-meta-value">*/}
+              {/*    {displayMeta.assay || "—"}*/}
+              {/*  </span>*/}
+              {/*</span>*/}
+              {/*                        </div>*/}
+              {/*                      </div>*/}
+
+              {/*                      {showMetrics && (*/}
+              {/*                        <div className="de-affects-bar">*/}
+              {/*                          <div className="de-affects-left">*/}
+              {/*                            <span className="de-affects-label">Affects</span>*/}
+              {/*                            <span className="de-affects-value">*/}
+              {/*    {(deHead.n_significant ?? 0).toLocaleString()}*/}
+              {/*  </span>*/}
+              {/*                            <span className="de-affects-label">genes</span>*/}
+              {/*                          </div>*/}
+
+              {/*                          <div className="de-affects-right">*/}
+              {/*                            <span className="de-affects-up">↑ {(deHead.n_up ?? 0).toLocaleString()}</span>*/}
+              {/*                            <span className="de-affects-down">↓ {(deHead.n_down ?? 0).toLocaleString()}</span>*/}
+              {/*                          </div>*/}
+              {/*                        </div>*/}
+              {/*                      )}*/}
+              {/*                    </div>*/}
+
+              {/*                    <div className="dataset-card-body">*/}
+              {/*                      {isUmap ? (*/}
+              {/*                        <div className="dataset-plot-frame dataset-plot-frame--umap">*/}
+              {/*                          <DynamicUmapPlot*/}
+              {/*                            analysis={analysis}*/}
+              {/*                            geneName={geneData.Name}*/}
+              {/*                            height={420}*/}
+              {/*                          />*/}
+              {/*                        </div>*/}
+              {/*                      ) : showDynamicDe ? (*/}
+              {/*                        <DynamicVolcanoPlot*/}
+              {/*                          tsvKey={analysis.s3_tsv_key}*/}
+              {/*                          title={analysis.title}*/}
+              {/*                          geneName={geneData.Name}*/}
+              {/*                          height={360}*/}
+              {/*                          preferDegSummaryBar={false}*/}
+              {/*                          deConditions={analysis.de_conditions || []}*/}
+              {/*                          defaultConditionId={analysis.default_condition_id || null}*/}
+              {/*                          filterLabels={{*/}
+              {/*                            strategy: "Condition",*/}
+              {/*                            condition: "Cell Type",*/}
+              {/*                            pathway: "Timepoint",*/}
+              {/*                          }}*/}
+              {/*                        />*/}
+              {/*                      ) : analysis.svg ? (*/}
+              {/*                        <div className="dataset-static-plot">*/}
+              {/*                          <img*/}
+              {/*                            src={`data:image/svg+xml;utf8,${encodeURIComponent(analysis.svg)}`}*/}
+              {/*                            className="dataset-static-img"*/}
+              {/*                            alt={analysis.title}*/}
+              {/*                            loading="lazy"*/}
+              {/*                            decoding="async"*/}
+              {/*                          />*/}
+              {/*                        </div>*/}
+              {/*                      ) : analysis.s3_png_key ? (*/}
+              {/*                        <div className="dataset-static-plot">*/}
+              {/*                          <img*/}
+              {/*                            src={`${GENE_API_BASE}/download/png?file_id=${encodeURIComponent(analysis.s3_png_key)}`}*/}
+              {/*                            className="dataset-static-img"*/}
+              {/*                            alt={analysis.title}*/}
+              {/*                            loading="lazy"*/}
+              {/*                            decoding="async"*/}
+              {/*                          />*/}
+              {/*                        </div>*/}
+              {/*                      ) : (*/}
+              {/*                        <p>No image available</p>*/}
+              {/*                      )}*/}
+              {/*                    </div>*/}
+
+              {/*                    <div className="dataset-card-footer">*/}
+              {/*                      {analysis?.s3_tsv_key && (*/}
+              {/*                        <a*/}
+              {/*                          className="btn-primary"*/}
+              {/*                          href={`${GENE_API_BASE}/download?tsv_file_id=${encodeURIComponent(*/}
+              {/*                            analysis.s3_tsv_key*/}
+              {/*                          )}&file_name=${encodeURIComponent(analysis.title || geneData.Name || "download")}`}*/}
+              {/*                          title="Download differential expression results table (processed data)"*/}
+              {/*                        >*/}
+              {/*                          Download Data (.tsv)*/}
+              {/*                        </a>*/}
+              {/*                      )}*/}
+
+              {/*                      {rawDataHref && (*/}
+              {/*                        <a*/}
+              {/*                          className="btn-outline"*/}
+              {/*                          href={rawDataHref}*/}
+              {/*                          target="_blank"*/}
+              {/*                          rel="noopener noreferrer"*/}
+              {/*                          title="Open raw sequencing dataset in external archive"*/}
+              {/*                        >*/}
+              {/*                          Download Raw Counts*/}
+              {/*                        </a>*/}
+              {/*                      )}*/}
+
+              {/*                      <a*/}
+              {/*                        className="btn-link-subtle"*/}
+              {/*                        href={`/data?label=${encodeURIComponent(formatLabel(studyLabel || ""))}`}*/}
+              {/*                        title="Open this study in the Data Catalogue"*/}
+              {/*                      >*/}
+              {/*                        Go to Full Dataset →*/}
+              {/*                      </a>*/}
+              {/*                    </div>*/}
+              {/*                  </div>*/}
+              {/*                );*/}
+              {/*              })}*/}
                           </div>
                         </div>
 
