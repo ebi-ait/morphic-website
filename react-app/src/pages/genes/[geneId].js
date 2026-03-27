@@ -223,6 +223,8 @@ const isGroupableVolcanoAnalysis = (analysis) => {
 const GroupedDatasetPanel = ({
                                group,
                                geneName,
+                               resolvableSymbols = [],
+                               previousSymbols = [],
                                GENE_API_BASE,
                                getGeoAccession,
                              }) => {
@@ -237,14 +239,12 @@ const GroupedDatasetPanel = ({
   const [selectedTimepoint, setSelectedTimepoint] = useState(timepointOptions[0] || "");
   const [selectedComparison, setSelectedComparison] = useState(comparisonOptions[0] || "");
   const [selectedPlotKind, setSelectedPlotKind] = useState(
-    plotKindOptions.includes("volcano")
-      ? "volcano"
-      : plotKindOptions[0] || ""
+    plotKindOptions.includes("volcano") ? "volcano" : plotKindOptions[0] || ""
   );
 
   const [selectedConditionId, setSelectedConditionId] = useState(
-    analysis?.default_condition_id ||
-    analysis?.de_conditions?.[0]?.condition_id ||
+    items?.[0]?.analysis?.default_condition_id ||
+    items?.[0]?.analysis?.de_conditions?.[0]?.condition_id ||
     null
   );
 
@@ -465,6 +465,8 @@ const GroupedDatasetPanel = ({
             <DynamicUmapPlot
               analysis={analysis}
               geneName={geneName}
+              resolvableSymbols={resolvableSymbols}
+              previousSymbols={previousSymbols}
               height={420}
             />
           </div>
@@ -621,6 +623,8 @@ const normalizeDeSummary = (ds) => {
 const AnalysisResultCard = ({
                               analysis,
                               geneName,
+                              resolvableSymbols = [],
+                              previousSymbols = [],
                               studyById,
                               labelToStudyMeta,
                               getGeoAccession,
@@ -781,6 +785,8 @@ const AnalysisResultCard = ({
             <DynamicUmapPlot
               analysis={analysis}
               geneName={geneName}
+              resolvableSymbols={resolvableSymbols}
+              previousSymbols={previousSymbols}
               height={420}
             />
           </div>
@@ -1317,7 +1323,11 @@ const GenePage = ({ params }) => {
                       {/*<dd>{geneData.Full_Name || "—"}</dd>*/}
 
                       <dt>Synonyms</dt>
-                      <dd>{geneData.Synonyms || "—"}</dd>
+                      <dd>
+                        {safeArray(geneData.Synonyms).length
+                          ? safeArray(geneData.Synonyms).join(", ")
+                          : "—"}
+                      </dd>
 
                       <dt>HGNC ID</dt>
                       <dd>
@@ -1482,6 +1492,8 @@ const GenePage = ({ params }) => {
                                 key={`${analysis.study_id || analysis.title}-${index}`}
                                 analysis={analysis}
                                 geneName={geneData.Name}
+                                resolvableSymbols={geneData.Resolvable_Symbols || []}
+                                previousSymbols={geneData.Previous_Symbols || []}
                                 studyById={studyById}
                                 labelToStudyMeta={labelToStudyMeta}
                                 getGeoAccession={getGeoAccession}

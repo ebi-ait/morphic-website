@@ -1,13 +1,91 @@
 import React, { useEffect, useMemo, useState } from "react";
 import useUmapData from "../hooks/useUmapData";
 
-function parseUmapTarget(title = "", geneName = null) {
-  const t = String(title || "");
-  const afterColon = t.includes(":")
-      ? t.split(":").slice(1).join(":").trim()
-      : t.trim();
+function normalizeSymbol(value = "") {
+  return String(value || "").trim().toUpperCase();
+}
 
-  if (!afterColon) {
+function compactToken(value = "") {
+  return String(value || "")
+    .trim()
+    .toUpperCase()
+    .replace(/[_\s/-]+/g, "")
+    .replace(/\|/g, "");
+}
+
+function extractPerturbationLabel(title = "") {
+  const t = String(title || "").trim();
+  const afterColon = t.includes(":")
+    ? t.split(":").slice(1).join(":").trim()
+    : t;
+
+  if (!afterColon) return null;
+
+  return afterColon
+    .replace(/_umap$/i, "")
+    .replace(/_number[-_ ]?degs?$/i, "")
+    .replace(/_topdeg[-_ ]?dotplot$/i, "")
+    .replace(/_celltype-proportion$/i, "")
+    .trim();
+}
+
+function parsePerturbationToken(rawLabel = "") {
+  const raw = String(rawLabel || "").trim();
+  if (!raw) {
+    return {
+      baseToken: "",
+      genotypeSuffix: "",
+      mode: "empty",
+    };
+  }
+
+  if (/_heterozygous$/i.test(raw)) {
+    const base = raw.replace(/_heterozygous$/i, "");
+    return {
+      baseToken: compactToken(base),
+      genotypeSuffix: "het",
+      mode: "heterozygous",
+    };
+  }
+
+  if (/_enhancer_deletion$/i.test(raw)) {
+    const base = raw.replace(/_enhancer_deletion$/i, "");
+    return {
+      baseToken: compactToken(base),
+      genotypeSuffix: "e",
+      mode: "enhancer_deletion",
+    };
+  }
+
+  if (/_double_knockout$/i.test(raw)) {
+    const base = raw.replace(/_double_knockout$/i, "");
+    return {
+      baseToken: compactToken(base),
+      genotypeSuffix: "",
+      mode: "double_knockout",
+    };
+  }
+
+  if (/_triple_knockout$/i.test(raw)) {
+    const base = raw.replace(/_triple_knockout$/i, "");
+    return {
+      baseToken: compactToken(base),
+      genotypeSuffix: "",
+      mode: "triple_knockout",
+    };
+  }
+
+  return {
+    baseToken: compactToken(raw),
+    genotypeSuffix: "",
+    mode: "default",
+  };
+}
+
+function parseUmapTarget(title = "", geneName = null) {
+  const label = extractPerturbationLabel(title);
+
+  if (!label) {
     return {
       koLabel: geneName || null,
       allowDynamic: !!geneName,
@@ -15,74 +93,74 @@ function parseUmapTarget(title = "", geneName = null) {
     };
   }
 
-  const labelPart = afterColon.replace(/_umap$/i, "").trim();
-
-  // Only treat clearly combined perturbations as unsupported for dynamic mode
-  if (
-      /double[_ ]knockout/i.test(labelPart) ||
-      /triple[_ ]knockout/i.test(labelPart) ||
-      /\|/.test(labelPart)
-  ) {
-    return {
-      koLabel: null,
-      allowDynamic: false,
-      reason: "combined_or_multi_gene_perturbation",
-    };
-  }
-
-  const first = labelPart.split("_")[0]?.trim();
-
   return {
-    koLabel: first || geneName || null,
-    allowDynamic: !!(first || geneName),
-    reason: first ? "parsed_from_title" : "fell_back_to_geneName",
+    koLabel: label,
+    allowDynamic: true,
+    reason: "parsed_from_title",
   };
 }
 
-function extractPerturbationLabel(title = "") {
-  const t = String(title || "").trim();
-  const afterColon = t.includes(":")
-      ? t.split(":").slice(1).join(":").trim()
-      : t;
-
-  if (!afterColon) return null;
-
-  return afterColon
-      .replace(/_umap$/i, "")
-      .replace(/_number[-_ ]?degs?$/i, "")
-      .replace(/_topdeg[-_ ]?dotplot$/i, "")
-      .replace(/_celltype-proportion$/i, "")
-      .trim();
-}
-
-function getRequestedUmapGenotypes(title = "", geneName = null) {
+function buildGenotypeCandidates(title = "", geneName = null, resolvableSymbols = []) {
   const raw = extractPerturbationLabel(title) || geneName || "";
   const cleaned = String(raw).trim();
 
   if (!cleaned) return ["WT"];
 
-  const baseGene = cleaned.split("_")[0]?.trim() || cleaned;
+  const { baseToken, genotypeSuffix, mode } = parsePerturbationToken(cleaned);
 
-  if (!baseGene) return ["WT"];
+  const normalizedResolvable = new Set(
+    (Array.isArray(resolvableSymbols) ? resolvableSymbols : [])
+      .map(normalizeSymbol)
+      .filter(Boolean)
+  );
 
-  if (/_heterozygous$/i.test(cleaned)) {
-    return ["WT", `${baseGene}het`];
+  const candidates = [];
+  const pushUnique = (value) => {
+    if (!value) return;
+    if (!candidates.includes(value)) candidates.push(value);
+  };
+
+  // Exact title-derived genotype first
+  if (baseToken) {
+    pushUnique(`${baseToken}${genotypeSuffix}`);
   }
 
-  if (/_enhancer_deletion$/i.test(cleaned)) {
-    return ["WT", `${baseGene}e`];
+  // For simple single-gene cases, also try page gene + aliases
+  const titleLooksSingleGene =
+    mode === "default" ||
+    mode === "heterozygous" ||
+    mode === "enhancer_deletion";
+
+  if (titleLooksSingleGene) {
+    const normalizedBase = normalizeSymbol(baseToken);
+
+    if (!baseToken || normalizedResolvable.has(normalizedBase) || geneName) {
+      if (geneName) {
+        pushUnique(`${geneName}${genotypeSuffix}`);
+      }
+
+      for (const sym of Array.isArray(resolvableSymbols) ? resolvableSymbols : []) {
+        pushUnique(`${sym}${genotypeSuffix}`);
+      }
+    }
   }
 
-  return ["WT", baseGene];
+  return ["WT", ...candidates];
 }
 
-const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
+const DynamicUmapPlot = ({
+                           analysis,
+                           geneName,
+                           resolvableSymbols = [],
+                           previousSymbols = [],
+                           height = 420,
+                         }) => {
   const [PlotComponent, setPlotComponent] = useState(null);
 
   const isUmap = useMemo(() => {
     return (
-        /umap/i.test(analysis?.title || "") ||
-        /_umap/i.test(analysis?.s3_png_key || "")
+      /umap/i.test(analysis?.title || "") ||
+      /_umap/i.test(analysis?.s3_png_key || "")
     );
   }, [analysis?.title, analysis?.s3_png_key]);
 
@@ -95,20 +173,24 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
   }, [analysis?.title, geneName]);
 
   const requestedGenotypes = useMemo(() => {
-    return getRequestedUmapGenotypes(analysis?.title, geneName);
-  }, [analysis?.title, geneName]);
+    return buildGenotypeCandidates(
+      analysis?.title,
+      geneName,
+      resolvableSymbols
+    );
+  }, [analysis?.title, geneName, resolvableSymbols]);
 
   useEffect(() => {
     let cancelled = false;
 
     if (typeof window !== "undefined") {
       import("react-plotly.js")
-          .then((mod) => {
-            if (!cancelled) setPlotComponent(() => mod.default);
-          })
-          .catch((err) => {
-            console.error("[UMAP] Failed to load react-plotly.js", err);
-          });
+        .then((mod) => {
+          if (!cancelled) setPlotComponent(() => mod.default);
+        })
+        .catch((err) => {
+          console.error("[UMAP] Failed to load react-plotly.js", err);
+        });
     }
 
     return () => {
@@ -122,19 +204,29 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
 
   const returnedGenotypes = useMemo(() => {
     return Array.from(
-        new Set((data?.points || []).map((p) => String(p.genotype ?? "Unknown").trim()))
+      new Set((data?.points || []).map((p) => String(p.genotype ?? "Unknown").trim()))
     );
   }, [data]);
 
   const requestedKO = useMemo(() => {
-    return requestedGenotypes.find((g) => g !== "WT") || null;
-  }, [requestedGenotypes]);
+    const nonWtReturned = new Set(
+      returnedGenotypes.filter((g) => g && g !== "WT")
+    );
+
+    for (const candidate of requestedGenotypes) {
+      if (candidate !== "WT" && nonWtReturned.has(candidate)) {
+        return candidate;
+      }
+    }
+
+    return null;
+  }, [requestedGenotypes, returnedGenotypes]);
 
   const hasKOPoints = useMemo(() => {
     if (!requestedKO) return false;
 
     return (data?.points || []).some(
-        (p) => String(p.genotype ?? "Unknown").trim() === requestedKO
+      (p) => String(p.genotype ?? "Unknown").trim() === requestedKO
     );
   }, [data, requestedKO]);
 
@@ -152,6 +244,7 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
     console.log("[UMAP] parse reason:", reason);
     console.log("[UMAP] koLabel:", koLabel);
     console.log("[UMAP] perturbationLabel:", perturbationLabel);
+    console.log("[UMAP] resolvableSymbols:", resolvableSymbols);
     console.log("[UMAP] requestedGenotypes:", requestedGenotypes);
     console.log("[UMAP] requestedKO:", requestedKO);
     console.log("[UMAP] returnedGenotypes:", returnedGenotypes);
@@ -163,6 +256,7 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
     reason,
     koLabel,
     perturbationLabel,
+    resolvableSymbols,
     requestedGenotypes,
     requestedKO,
     returnedGenotypes,
@@ -183,13 +277,13 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
   if (error || !shouldUseDynamic) {
     if (analysis?.s3_png_key) {
       return (
-          <img
-              src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${encodeURIComponent(
-                  analysis.s3_png_key
-              )}`}
-              alt={analysis?.title || "UMAP"}
-              className="img-plot"
-          />
+        <img
+          src={`https://46ucfedadd.execute-api.us-east-1.amazonaws.com/download/png?file_id=${encodeURIComponent(
+            analysis.s3_png_key
+          )}`}
+          alt={analysis?.title || "UMAP"}
+          className="img-plot"
+        />
       );
     }
 
@@ -223,11 +317,11 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
   const points = data?.points || [];
 
   const celltypes = Array.from(
-      new Set(points.map((p) => p.celltype ?? "Unknown"))
+    new Set(points.map((p) => p.celltype ?? "Unknown"))
   ).sort();
 
   const celltypeColor = Object.fromEntries(
-      celltypes.map((ct, i) => [ct, PALETTE[i % PALETTE.length]])
+    celltypes.map((ct, i) => [ct, PALETTE[i % PALETTE.length]])
   );
 
   const byGT_CT = {};
@@ -267,10 +361,10 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
           color: celltypeColor[ct],
         },
         hovertemplate:
-            `Cell type: ${ct}<br>` +
-            `Genotype: ${gt}<br>` +
-            `UMAP1: %{x:.3f}<br>` +
-            `UMAP2: %{y:.3f}<extra></extra>`,
+          `Cell type: ${ct}<br>` +
+          `Genotype: ${gt}<br>` +
+          `UMAP1: %{x:.3f}<br>` +
+          `UMAP2: %{y:.3f}<extra></extra>`,
       });
     });
   });
@@ -358,12 +452,12 @@ const DynamicUmapPlot = ({ analysis, geneName, height = 420 }) => {
   };
 
   return (
-      <PlotComponent
-          data={traces}
-          layout={layout}
-          config={{ responsive: true, displayModeBar: false }}
-          style={{ width: "100%", height }}
-      />
+    <PlotComponent
+      data={traces}
+      layout={layout}
+      config={{ responsive: true, displayModeBar: false }}
+      style={{ width: "100%", height }}
+    />
   );
 };
 
