@@ -220,16 +220,6 @@ export const publications = [
     "link": "https://doi.org/10.1371/journal.pcbi.1011912"
 },
 {
-    "title": "Comparative analysis and directed protein evolution yield an improved degron technology with minimal basal degradation, rapid inducible depletion, and faster recovery of target proteins",
-    "authors": "Adli M, Xing D, Bai T, Neyisci O, Paylakhi S, Duval A, Tekin Y",
-    "journal": "Research Square",
-    "date": "2024 Nov 15",
-    "journalReferenceInfo": "rs-3",
-    "centers": "NWU",
-    "pmid": "39606491",
-    "link": "https://doi.org/10.21203/rs.3.rs-5348956/v1"
-},
-{
     "title": "Unveiling challenges in Mendelian randomization for gene\u2013environment interaction",
     "authors": "Gorfine M, Qu C, Peters U, Hsu L",
     "journal": "Genetic epidemiology",
@@ -239,24 +229,4 @@ export const publications = [
     "pmid": "38420714",
     "link": "https://doi.org/10.1002/gepi.22552"
 },
-{
-    "title": "Parallel genome-scale CRISPR-Cas9 screens uncouple human pluripotent stem cell identity versus fitness",
-    "authors": "Rosen BP, Li QV, Cho HS, Liu D, Yang D, Graff S, Yan J, Luo R, Verma N, Damodaran JR, Kale HT",
-    "journal": "Nature communications",
-    "date": "2024 Oct 17",
-    "journalReferenceInfo": "15(1):8966",
-    "centers": "MSK",
-    "pmid": "39419994",
-    "link": "https://doi.org/10.1038/s41467-024-53284-4"
-},
-{
-    "title": "Depletion of lamins B1 and B2 promotes chromatin mobility and induces differential gene expression by a mesoscale-motion-dependent mechanism",
-    "authors": "Pujadas Liwag EM, Wei X, Acosta N, Carter LM, Yang J, Almassalha LM, Jain S, Daneshkhah A, Rao SS, Seker-Polat F, MacQuarrie KL",
-    "journal": "Genome biology",
-    "date": "2024 Mar 22",
-    "journalReferenceInfo": "25(1):77",
-    "centers": "NWU",
-    "pmid": "38519987",
-    "link": "https://doi.org/10.1186/s13059-024-03212-y"
-}
 ];
