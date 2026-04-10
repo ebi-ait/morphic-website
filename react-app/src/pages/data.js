@@ -228,7 +228,7 @@ export default function Data() {
               All data generated as part of the MorPhiC program is made available in scheduled
               data releases and in public data repositories for wider use by the scientific community.
             </p>
-            <p>Current data release: 2.0, September 2025.</p>
+            <p>Current data release: 3.0, April 2026.</p>
           </div>
         </div>
       </div>
