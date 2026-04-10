@@ -10,7 +10,7 @@ import GeneSearch from "../../components/GeneSearch";
 import { ShoppingCart } from "lucide-react";
 import { ExternalLink } from "lucide-react";
 
-const API_BASE = process.env.GATSBY_INGEST_API ?? "https://api.ingest.archive.morphic.bio";
+const API_BASE = process.env.GATSBY_INGEST_API ?? "https://api.ingest.dev.archive.morphic.bio";
 const GENE_API_BASE =
   process.env.GATSBY_GENE_API ??
   "https://46ucfedadd.execute-api.us-east-1.amazonaws.com";
