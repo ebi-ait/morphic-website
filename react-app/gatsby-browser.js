@@ -1,6 +1,7 @@
 import "./src/styles/global.css"
 import React from 'react';
 import CookieConsent from 'react-cookie-consent';
+import RootElement from './src/components/root-element';
 // import { BrowserRouter } from 'react-router-dom';
 
 // export const wrapRootElement = ({ element }) => (
@@ -10,7 +11,7 @@ import CookieConsent from 'react-cookie-consent';
 // );
 
 export const wrapPageElement = ({ element }) => (
-  <>
+  <RootElement>
     <CookieConsent
       location="bottom"
       buttonText="I agree, dismiss this message"
@@ -59,5 +60,5 @@ export const wrapPageElement = ({ element }) => (
     </div>
     </CookieConsent>
     {element}
-  </>
+  </RootElement>
 );
