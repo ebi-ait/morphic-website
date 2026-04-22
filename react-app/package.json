@@ -10,7 +10,8 @@
     "start": "gatsby develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "local": "GATSBY_PROXY_ENABLED=TRUE concurrently \"lcp --proxyUrl $(grep GATSBY_BULK_SEARCH_URL .env | cut -d '=' -f2)\" \"gatsby develop\""
   },
   "dependencies": {
     "@tanstack/react-query": "^5.99.2",
@@ -31,5 +32,9 @@
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "local-cors-proxy": "^1.1.0"
   }
 }
