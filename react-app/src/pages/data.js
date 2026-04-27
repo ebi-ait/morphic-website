@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import {QueryClientProvider, QueryClient, useQuery} from '@tanstack/react-query';
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -9,10 +10,15 @@ import Download from "../components/Data/DownloadDataset";
 import FilterDropdown from "../components/DataTrackerFilters/FilterDropdown";
 import FilterTags from "../components/DataTrackerFilters/FilterTags";
 import { Seo } from "../utils/SEO";
+import { fetchGenesInBulk } from "../data/api";
+
+const API_BASE = process.env.GATSBY_INGEST_API ?? "https://api.ingest.archive.morphic.bio";
+
+const queryClient = new QueryClient();
 
 function Layout({ children }) {
   return (
-    <div>
+    <QueryClientProvider client={queryClient}>
       <div className="header-inline header-gradient">
         <img className="header-image" src={cover} alt="" />
         <div className="header-position-top">
@@ -26,22 +32,39 @@ function Layout({ children }) {
         </div>
         <Footer />
       </div>
-    </div>
+    </QueryClientProvider>
   );
 }
 
-export default function Data() {
-  const [studiesData, setStudiesData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+const fetchStudiesWithGenes = async () => {
+  const response = await fetch(
+    `${API_BASE}/studies/search/findByReleaseStatus?releaseStatus=PUBLIC&page=0&size=20`
+  );
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  const resultStudiesData = await response.json();
+  const allTargetGenes =
+    resultStudiesData?._embedded?.studies?.flatMap((s) => s.content?.target_genes || []) || [];
+  const uniqueGenes = [...new Set(allTargetGenes)];
+  let targetGenesMap = {};
+  if (uniqueGenes.length) {
+    const genesWithIDs = await fetchGenesInBulk(uniqueGenes);
+    targetGenesMap = genesWithIDs.reduce((map, gene) => {
+      map[gene.Name] = gene.HGNC_ID;
+      return map;
+    }, {});
+  }
+  return { studiesData: resultStudiesData, targetGenesMap };
+}
 
+export default function Data() {
   const [collapse, setCollapse] = useState(true);
   const handleCollapse = () => setCollapse(!collapse);
 
   const [searchInput, setSearchInput] = useState("");
 
   const [geneListId, setGeneListId] = useState(-1);
-  const [targetGenesMap, setTargetGenesMap] = useState({});
 
   const [selectedCenters, setSelectedCenters] = useState(new Set());
   const [selectedAssay, setSelectedAssay] = useState(new Set());
@@ -51,8 +74,6 @@ export default function Data() {
 
   const [requestedLabel, setRequestedLabel] = useState(null);
   const [didScrollToLabel, setDidScrollToLabel] = useState(false);
-
-  const API_BASE = process.env.GATSBY_INGEST_API ?? "https://api.ingest.dev.archive.morphic.bio";
 
   const handleClearAll = () => {
     setSearchInput("");
@@ -82,51 +103,17 @@ export default function Data() {
   const handleSelectedPerturbationType = (type) => setSelectedPerturbationType(updateSet(selectedPerturbationType, type));
   const handleSelectedModelSystem = (type) => setSelectedModelSystem(updateSet(selectedModelSystem, type));
 
-  const fetchGenesInBulk = async (genes) => {
-    const response = await fetch(
-      "https://46ucfedadd.execute-api.us-east-1.amazonaws.com/api/bulk-gene-search",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ genes }),
-      }
-    );
-    return response.json();
-  };
-
-  useEffect(() => {
-    const getStudiesData = async () => {
-      try {
-        const response = await fetch(
-          `${API_BASE}/studies/search/findByReleaseStatus?releaseStatus=PUBLIC&page=0&size=20`
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const resultStudiesData = await response.json();
-        setStudiesData(resultStudiesData);
-
-        const allTargetGenes =
-          resultStudiesData?._embedded?.studies?.flatMap((s) => s.content?.target_genes || []) || [];
-        const uniqueGenes = [...new Set(allTargetGenes)];
-        if (uniqueGenes.length) {
-          const genesWithIDs = await fetchGenesInBulk(uniqueGenes);
-          const geneMap = genesWithIDs.reduce((map, gene) => {
-            map[gene.Name] = gene.HGNC_ID;
-            return map;
-          }, {});
-          setTargetGenesMap(geneMap);
-        }
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    getStudiesData();
-  }, [API_BASE]);
+  const {
+    data,
+    isLoading,
+    error
+  } = useQuery({
+    queryKey: ["studies", "public"],
+    queryFn: fetchStudiesWithGenes,
+    staleTime: 5 * 6 * 1000,
+  })
+  const studiesData = data?.studiesData;
+  const targetGenesMap = data?.targetGenesMap;
 
   useEffect(() => {
     // read ?label=... from the URL (only in browser)
