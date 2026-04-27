@@ -10,7 +10,7 @@ import Download from "../components/Data/DownloadDataset";
 import FilterDropdown from "../components/DataTrackerFilters/FilterDropdown";
 import FilterTags from "../components/DataTrackerFilters/FilterTags";
 import { Seo } from "../utils/SEO";
-import { fetchGenesInBulk } from "../data/api";
+import { fetchGenesInBulk } from "../utils/api";
 
 const API_BASE = process.env.GATSBY_INGEST_API ?? "https://api.ingest.archive.morphic.bio";
 
