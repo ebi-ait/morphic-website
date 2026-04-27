@@ -2,17 +2,20 @@
 .footer-wrap {
   display: flex;
   justify-content: center;
-  margin-bottom: 1rem;
 }
 
 .footer {
   margin-top: 100px;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .footer-logo-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 2rem;
+  margin-top: auto;
 }
 
 .footer-logo {
@@ -25,6 +28,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  margin-top: auto;
 }
 
 .footer-menu {
@@ -54,13 +58,13 @@
   line-height: 20px;
   text-align: right;
   opacity: 0.3;
-  margin: auto 0 15px;
 }
 
 .footer-copyright-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 .footer-copyright-title {
@@ -76,13 +80,13 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
-  text-align: right;
+  text-align: center;
 }
 
 @media (width >= 1440px) {
   .footer {
     width: 1380px;
-    height: 192px;
+    height: 173px;
   }
 
   .footer-content {
