@@ -50,6 +50,127 @@
   background-repeat: no-repeat;
 }
 
+.card {
+  background-color: var(--dl-colo-default-almostwhite);
+  border-radius: 8px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.card-title {
+	text-transform: uppercase;
+	font-family: Inter;
+	font-size: 10px;
+	font-weight: 500;
+	line-height: 12.1px;
+	letter-spacing: 0.1em;
+	text-align: left;
+	color: rgba(153, 153, 153, 1);
+
+  margin-bottom: 0.75rem;
+}
+
+.card-body {
+  padding: 24px;
+}
+
+.card-footer {
+  padding: 16px 24px;
+  border-radius: 0 0 8px 8px;
+  background-color: #EBF2F3;
+}
+
+.card .card-footer a {
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 100%;
+  height: 16px;
+  width: 100%;
+}
+
+.dropdown-btn {
+  color: #ececec;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.dropdown-menu {
+  position: absolute;
+  left: 50%;
+  z-index: 10;
+  min-width: 160px;
+  width: max-content;
+
+  visibility: hidden;
+
+  opacity: 0;
+  color: var(--dl-color-default-smartblack);
+
+  transform: translateX(-50%) translateY(0);
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.dropdown .card-body ul li:last-child a {
+  margin-bottom: 0;
+}
+
+ul li:last-child .dropdown-menu {
+  left: auto;
+  right: 0;
+  transform: translateX(0);
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(8px);
+}
+
+ul li:last-child:hover .dropdown-menu,
+ul li:last-child:focus-within .dropdown-menu {
+  transform: translateY(8px);
+}
+
+.dropdown-menu li {
+  display: block;
+}
+
+.dropdown-menu a {
+  display: block;
+  margin: 0.75rem 0;
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu a:focus {
+  color: var(--dl-color-brand-orange);
+}
+
+.inline-text,
+.dropdown-menu .inline-text {
+  display: flex;
+  align-items: center;
+  column-gap: 0.25rem;
+}
+
+.inline-list {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 2.5rem;
+}
+
 .mobile-menu-btn {
   display: none;
 }
