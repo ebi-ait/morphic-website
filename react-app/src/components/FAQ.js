@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useLocation } from "@reach/router"
 
 export default function FAQ() {
   const [faqNumber, setFaqNumber] = useState(0);
@@ -16,10 +17,15 @@ export default function FAQ() {
     setFaqNumber((faqNumber === 4 ? 0 : 4));
   }
 
+  const location = useLocation(); //Get current page path
+  const currentPath = location.pathname;
+
+  const triangleSeparator = <div className="home-questions-triangle"></div>;
+
   return (
     <>
         <section className="home-questions-section" id="faq">
-            <div className="home-questions-triangle"></div>
+            {currentPath === "/" && triangleSeparator}
 
             <div className="home-questions-container">
                 <div className="home-questions-content">
