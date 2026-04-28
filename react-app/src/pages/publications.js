@@ -1,14 +1,13 @@
 import React from "react"
-import Navbar from "../../components/Navbar"
-import Footer from "../../components/Footer"
-import NewsItems from "../../components/NewsItems"
-import EventsItems from "../../components/EventsItems"
-import { StaticImage } from "gatsby-plugin-image"
-import { Seo } from "../../utils/SEO";
+import Navbar from "../components/Navbar"
+import Footer from "../components/Footer"
+import PublicationItems from "../components/PublicationItems"
+import { Seo } from '../utils/SEO';
+import { ExternalLink } from "lucide-react";
 
-import * as styles from "../../styles/news.module.css"
+import * as styles from "../styles/news.module.css"
 
-export default function News() {
+export default function Publications() {
   return (
     <div className="about">
       <div>
@@ -26,8 +25,14 @@ export default function News() {
                 <h2 className="about-card-title">Inside this page</h2>
                 <nav>
                   <ul className={styles.cardList}>
-                    <li><a href="#news">News</a></li>
-                    <li><a href="#events">Events</a></li>
+                    <li><a href="#publications">Publications</a></li>
+                    <li><a href="#pre-prints">Pre-prints</a></li>
+                    <li>
+                      <a href="https://connect.biorxiv.org/relate/content/220" target="_blank" rel="noopener noreferrer">
+                        <span style={{ paddingRight: "0.5rem" }}>NHGRI MorPhiC bioRxiv</span>
+                        <ExternalLink size={16} />
+                      </a>
+                    </li>
                   </ul>
                 </nav>
               </div>
@@ -36,25 +41,20 @@ export default function News() {
             {/* Main Content */}
             <div className={styles.marginXAutoAtMd}>
 
-              {/* News Section */}
-              <section id="news" className={`${styles.newsSection} ${styles.newsArticles}`}>
+              {/* Publications Section */}
+              <section id="publications" className={`${styles.newsSection} ${styles.newsArticles}`}>
                 <div className="about-section-subtitle-container">
-                  <h1 className={styles.marginNone}>News</h1>
+                  <h1 className={styles.marginNone}>Publications</h1>
                 </div>
-                <NewsItems />
 
-                {/*<div className={styles.newsArticleBtnWrap}>
-                  <button className="button button-orange">Load more</button>
-                </div>*/}
+                <PublicationItems />
               </section>
 
-              {/* Events Section */}
-              <section id="events" className={`${styles.newsSection} ${styles.newsArticles} ${styles.marginTop}`}>
+              {/* Pre-prints Section */}
+              <section id="pre-prints" className={`${styles.newsSection} ${styles.newsArticles} ${styles.marginTop}`}>
                 <div className="about-section-subtitle-container">
-                  <h1 className={styles.marginNone}>Events</h1>
+                  <h1 className={styles.marginNone}>Pre-prints</h1>
                 </div>
-
-                <EventsItems />
               </section>
             </div>
 
@@ -65,6 +65,7 @@ export default function News() {
     </div>
   )
 }
+
 
 export function Head() {
   return <Seo title="MorPhiC program: Molecular Phenotypes of Null Alleles in Cells" />;
