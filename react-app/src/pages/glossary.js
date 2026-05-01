@@ -71,7 +71,7 @@ export default function Glossary() {
               <h2>U</h2>
               <p><b>UMI</b>&nbsp;<i>(Unique Molecular Identifier)</i>: A short, random DNA barcode attached to individual molecules before sequencing. UMIs allow MorPhiC researchers to detect and remove PCR duplicates, improving the accuracy of quantification in single-cell and bulk sequencing experiments.</p>
               <hr/>
-              <small>This glossary covers key terms used across the MorPhiC program and its associated data, methods, and infrastructure. For full details, refer to the consortium's Nature Perspective (Adli et al., 2025).</small>
+              <small>This glossary covers key terms used across the MorPhiC program and its associated data, methods, and infrastructure. For full details, refer to the consortium's <a href="https://www.nature.com/articles/s41586-024-08243-w" target="_blank" rel="noopener noreferrer">Nature Perspective (Adli et al., 2025).</a></small>
             </div>
           </div>
         </div>
