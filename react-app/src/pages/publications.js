@@ -26,7 +26,6 @@ export default function Publications() {
                 <nav>
                   <ul className={styles.cardList}>
                     <li><a href="#publications">Publications</a></li>
-                    <li><a href="#pre-prints">Pre-prints</a></li>
                     <li>
                       <a href="https://connect.biorxiv.org/relate/content/220" target="_blank" rel="noopener noreferrer">
                         <span style={{ paddingRight: "0.5rem" }}>NHGRI MorPhiC bioRxiv</span>
@@ -48,13 +47,6 @@ export default function Publications() {
                 </div>
 
                 <PublicationItems />
-              </section>
-
-              {/* Pre-prints Section */}
-              <section id="pre-prints" className={`${styles.newsSection} ${styles.newsArticles} ${styles.marginTop}`}>
-                <div className="about-section-subtitle-container">
-                  <h1 className={styles.marginNone}>Pre-prints</h1>
-                </div>
               </section>
             </div>
 
