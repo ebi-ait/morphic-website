@@ -48,6 +48,7 @@ module.exports = {
         },
       },
     },
+    // Instance for general site images
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -55,5 +56,14 @@ module.exports = {
         path: `${__dirname}/src/images/`
       },
     },
+    // Instance for docs
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `docs`,
+        path: `${__dirname}/src/docs/`
+      },
+    },
+    "gatsby-plugin-mdx",
   ],
 }

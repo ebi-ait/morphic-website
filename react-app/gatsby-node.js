@@ -1,4 +1,6 @@
 // gatsby-node.js
+const { graphql } = require("gatsby");
+const path = require("path");
 
 exports.onCreatePage = async ({ page, actions }) => {
   const { createPage, deletePage } = actions;
@@ -14,4 +16,34 @@ exports.onCreatePage = async ({ page, actions }) => {
     deletePage(oldPage);
     createPage(page);
   }
+};
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions;
+
+  const result = await graphql(
+    `
+      {
+        allMdx {
+          nodes {
+            id
+            frontmatter {
+              slug
+            }
+          }
+        }
+      }
+    `
+  );
+
+  // Page for every doc file, asumes slug path starts with '/docs'
+  result.data.allMdx.nodes.forEach(node => {
+    createPage({
+      path: node.frontmatter.slug,
+      component: path.resolve(`./src/templates/doc-template.js`),
+      context: {
+        id: node.id,
+      },
+    });
+  });
 };
